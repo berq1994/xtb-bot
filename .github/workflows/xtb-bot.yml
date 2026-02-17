@@ -1,19 +1,17 @@
-name: XTB Bot Daily
+name: XTB Bot Alerts
 
 on:
   schedule:
-    # GitHub běží v UTC. Kvůli letnímu času spustíme 2× denně:
-    # 13:30 UTC = 15:30 v létě (CEST)
-    # 14:30 UTC = 15:30 v zimě (CET)
-    - cron: "30 13 * * *"
-    - cron: "30 14 * * *"
+    # každých 15 minut (UTC)
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 jobs:
   run:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -29,7 +27,7 @@ jobs:
           restore-keys: |
             xtb-state-
 
-      - name: Install deps
+      - name: Install dependencies
         run: |
           pip install yfinance requests feedparser deep-translator
 
@@ -37,10 +35,5 @@ jobs:
         env:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
-          EMAIL_SENDER: berq1994@gmail.com
-          EMAIL_RECEIVER: berq1994@gmail.com
-          EMAIL_ENABLED: "true"
         run: |
           python ahoj.py
