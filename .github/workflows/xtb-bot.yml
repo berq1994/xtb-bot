@@ -6,8 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  run-bot:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Ping
-        run: echo "scheduled run OK"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install yfinance requests feedparser deep-translator
+
+      - name: Run bot
+        env:
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+          EMAIL_SENDER: berq1994@gmail.com
+          EMAIL_RECEIVER: berq1994@gmail.com
+          EMAIL_ENABLED: "true"
+        run: python ahoj.py
