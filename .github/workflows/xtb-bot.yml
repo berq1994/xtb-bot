@@ -2,7 +2,6 @@ name: XTB Bot Alerts
 
 on:
   schedule:
-    # každých 15 minut (UTC)
     - cron: "*/15 * * * *"
   workflow_dispatch:
 
@@ -19,21 +18,11 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Restore state cache
-        uses: actions/cache@v4
-        with:
-          path: .state
-          key: xtb-state-${{ github.run_id }}
-          restore-keys: |
-            xtb-state-
-
       - name: Install dependencies
-        run: |
-          pip install yfinance requests feedparser deep-translator
+        run: pip install yfinance requests feedparser deep-translator
 
       - name: Run bot
+        run: python ahoj.py
         env:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
-        run: |
-          python ahoj.py
