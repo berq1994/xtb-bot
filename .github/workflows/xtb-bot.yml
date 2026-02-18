@@ -1,9 +1,9 @@
-name: XTB Bot Alerts
+name: XTB Bot PRO
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
-
+    # každých 15 minut (běží v UTC, časové okno řeší skript)
+    - cron: "*/15 * * * 1-5"
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -29,24 +29,19 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install yfinance requests matplotlib feedparser deep-translator
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Run bot
         env:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
 
-          TZ: Europe/Prague
-          ALERTS_START: "15:30"
-          ALERTS_END: "21:00"
-          ALERT_THRESHOLD_PCT: "5"
+          TIMEZONE: "Europe/Prague"
+          ALERT_START: "15:30"
+          ALERT_END: "21:00"
           REPORT_TIME: "15:30"
-
-          EMAIL_ENABLED: "true"
-          EMAIL_SENDER: "berq1994@gmail.com"
-          EMAIL_RECEIVER: "berq1994@gmail.com"
-
+          ALERT_THRESHOLD: "5"
         run: |
           python ahoj.py
