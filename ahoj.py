@@ -1,238 +1,330 @@
+# ahoj.py
+# XTB Bot Alerts – GitHub Actions friendly (stateless run + cache)
+# - Alerty ±5 % od dnešního OPEN (market open)
+# - Běh jen 15:30–21:00 Praha
+# - Volitelně 1× denně email "velký report"
+
 import os
 import json
-from datetime import datetime
+import math
+import smtplib
+from email.mime.text import MIMEText
+from datetime import datetime, date, time as dtime
 
 import requests
 import yfinance as yf
-import feedparser
 
-# ====== ČASOVÁ ZÓNA (Praha) ======
 try:
     from zoneinfo import ZoneInfo
-    CZ_TZ = ZoneInfo("Europe/Prague")
-except Exception:
-    CZ_TZ = None
+except ImportError:
+    # Python <3.9 by neměl být v Actions, ale pro jistotu:
+    ZoneInfo = None
 
+# =========================
+# KONFIG (z ENV / SECRETS)
+# =========================
+TELEGRAM_TOKEN = os.getenv("TELEGRAMTOKEN", "").strip()
+CHAT_ID = os.getenv("CHATID", "").strip()
 
-def now_cz() -> datetime:
-    return datetime.now(tz=CZ_TZ) if CZ_TZ else datetime.now()
+FMP_API_KEY = os.getenv("FMPAPIKEY", "").strip()  # zatím nepovinné, do budoucna
+EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "false").lower().strip() == "true"
+EMAIL_SENDER = os.getenv("EMAIL_SENDER", "").strip()
+EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "").strip()
+GMAIL_PASSWORD = os.getenv("GMAILPASSWORD", "").strip()
 
+REPORT_TIME_LOCAL = os.getenv("REPORT_TIME", "15:30").strip()  # jen informativní
 
-def today_key() -> str:
-    return now_cz().strftime("%Y-%m-%d")
-
-
-# ====== SECRETS z GitHubu ======
-TELEGRAMTOKEN = os.getenv("TELEGRAMTOKEN", "").strip()
-CHATID = os.getenv("CHATID", "").strip()
-
-# ====== PORTFOLIO (ticker symboly) ======
+# Portfolio – můžeš nechat natvrdo nebo přepnout na config.json (níž je připraveno)
 PORTFOLIO = [
-    "CENX", "S", "NVO", "PYPL", "AMZN", "MSFT",
-    "CVX", "NVDA", "TSM", "CAG", "META", "SNDK",
-    "AAPL", "GOOGL", "TSLA",
-    "PLTR", "SPY", "FCX", "IREN",
+    "CENX", "S", "NVO", "PYPL", "AMZN", "MSFT", "CVX", "NVDA", "TSM", "CAG",
+    "META", "SNDK", "AAPL", "GOOGL", "TSLA", "PLTR", "SPY", "FCX", "IREN"
 ]
 
-# ====== NASTAVENÍ ALERTŮ ======
-ALERT_THRESHOLD_PCT = 5.0         # ±5 % od dnešního open
-CHECK_ONLY_MARKET_HOURS = True    # mimo 15:30–22:05 CZ nic neposílá
-INTRADAY_INTERVAL = "5m"          # stabilní; 1m bývá limitované
+# Celé názvy (tam kde je známe jistě)
+COMPANY_NAMES = {
+    "CENX": "Centrus Energy",
+    "S": "SentinelOne",
+    "NVO": "Novo Nordisk",
+    "PYPL": "PayPal",
+    "AMZN": "Amazon",
+    "MSFT": "Microsoft",
+    "CVX": "Chevron",
+    "NVDA": "NVIDIA",
+    "TSM": "Taiwan Semiconductor Manufacturing Co. (TSMC)",
+    "CAG": "Conagra Brands",
+    "META": "Meta Platforms",
+    "SNDK": "Sandisk / Western Digital (ticker se může lišit)",
+    "AAPL": "Apple",
+    "GOOGL": "Alphabet (Google)",
+    "TSLA": "Tesla",
+    "PLTR": "Palantir",
+    "SPY": "SPDR S&P 500 ETF Trust (SPY)",
+    "FCX": "Freeport-McMoRan",
+    "IREN": "Iris Energy"
+}
 
-# ====== STATE (aby to nespamovalo) ======
+# Časové okno (Praha)
+WINDOW_START = dtime(15, 30)  # 15:30
+WINDOW_END = dtime(21, 0)     # 21:00
+
+# Stav – ukládá se do cache (.state)
 STATE_DIR = ".state"
-os.makedirs(STATE_DIR, exist_ok=True)
-CROSS_STATE_FILE = os.path.join(STATE_DIR, "cross_state.json")
+STATE_FILE = os.path.join(STATE_DIR, "state.json")
 
+# =========================
+# UTIL
+# =========================
+def prague_now() -> datetime:
+    if ZoneInfo is None:
+        return datetime.now()
+    return datetime.now(ZoneInfo("Europe/Prague"))
 
-# ====== TELEGRAM ======
-def tg_send(text: str) -> None:
-    if not TELEGRAMTOKEN or not CHATID:
-        print("Chybí TELEGRAMTOKEN nebo CHATID (GitHub Secrets).")
-        return
-    text = (text or "").strip()
-    if not text:
-        return
+def ensure_state_dir():
+    os.makedirs(STATE_DIR, exist_ok=True)
 
-    url = f"https://api.telegram.org/bot{TELEGRAMTOKEN}/sendMessage"
-    max_len = 3800
-    for i in range(0, len(text), max_len):
-        chunk = text[i:i + max_len]
+def load_state() -> dict:
+    ensure_state_dir()
+    if os.path.exists(STATE_FILE):
         try:
-            r = requests.post(url, data={"chat_id": CHATID, "text": chunk}, timeout=20)
-            if r.status_code != 200:
-                print("Telegram status:", r.status_code, r.text)
-        except Exception as e:
-            print("Telegram chyba:", e)
-
-
-# ====== PŘEKLAD HEADLINE (pokud není knihovna, jede bez překladu) ======
-try:
-    from deep_translator import GoogleTranslator
-
-    def translate_cs(s: str) -> str:
-        try:
-            return GoogleTranslator(source="auto", target="cs").translate(s)
-        except Exception:
-            return s
-except Exception:
-    def translate_cs(s: str) -> str:
-        return s
-
-
-# ====== MARKET HOURS (Praha) ======
-def is_market_hours_prague() -> bool:
-    """
-    US regular session v Praze typicky 15:30–22:00.
-    Dáváme rezervu do 22:05.
-    """
-    t = now_cz()
-    if t.weekday() >= 5:  # So/Ne
-        return False
-    hhmm = t.strftime("%H:%M")
-    return "15:30" <= hhmm <= "22:05"
-
-
-# ====== STATE ======
-def load_cross_state() -> dict:
-    """
-    Ukládá pro každý ticker a den poslední "stav":
-    - IN: mezi -thr a +thr
-    - UP: nad +thr
-    - DOWN: pod -thr
-    """
-    if os.path.exists(CROSS_STATE_FILE):
-        try:
-            with open(CROSS_STATE_FILE, "r", encoding="utf-8") as f:
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception:
             return {}
     return {}
 
-
-def save_cross_state(state: dict) -> None:
-    with open(CROSS_STATE_FILE, "w", encoding="utf-8") as f:
+def save_state(state: dict):
+    ensure_state_dir()
+    with open(STATE_FILE, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False, indent=2)
 
-
-def get_state_key(ticker: str, day: str) -> str:
-    return f"{ticker}:{day}"
-
-
-# ====== DATA (yfinance) ======
-def get_intraday_df(ticker: str):
-    """
-    Intraday data pro dnešek, regular session (prepost=False).
-    """
-    try:
-        t = yf.Ticker(ticker)
-        df = t.history(period="1d", interval=INTRADAY_INTERVAL, prepost=False)
-        if df is None or df.empty:
-            return None
-        return df
-    except Exception:
-        return None
-
-
-def get_today_open_regular_session(ticker: str):
-    df = get_intraday_df(ticker)
-    if df is None:
-        return None
-    try:
-        return float(df["Open"].dropna().iloc[0])
-    except Exception:
-        return None
-
-
-def get_last_price_intraday(ticker: str):
-    df = get_intraday_df(ticker)
-    if df is None:
-        return None
-    try:
-        return float(df["Close"].dropna().iloc[-1])
-    except Exception:
-        return None
-
-
-def get_news_headline(ticker: str):
-    try:
-        feed = feedparser.parse(
-            f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US&lang=en-US"
-        )
-        if not feed.entries:
-            return None
-        return feed.entries[0].title
-    except Exception:
-        return None
-
-
-# ====== CROSSING LOGIKA ======
-def classify_zone(change_pct: float, thr: float) -> str:
-    """Vrátí IN / UP / DOWN podle změny od open."""
-    if change_pct >= thr:
-        return "UP"
-    if change_pct <= -thr:
-        return "DOWN"
-    return "IN"
-
-
-def check_alerts_crossing_from_open(tickers, threshold_pct: float = 5.0) -> None:
-    """
-    Alert jen při překročení hranice od open:
-    - IN -> UP  (překročilo +thr)
-    - IN -> DOWN (překročilo -thr)
-    - DOWN -> IN -> DOWN (znovu překročí) => pošle znovu, protože se nejdřív vrátilo do IN
-    - UP -> IN -> UP analogicky
-    """
-    state = load_cross_state()
-    day = today_key()
-    sent = 0
-
-    for ticker in tickers:
-        open_price = get_today_open_regular_session(ticker)
-        last_price = get_last_price_intraday(ticker)
-
-        if open_price is None or last_price is None or open_price == 0:
-            continue
-
-        change_pct = ((last_price - open_price) / open_price) * 100.0
-        zone_now = classify_zone(change_pct, threshold_pct)
-
-        key = get_state_key(ticker, day)
-        zone_prev = state.get(key, "IN")  # default IN (na začátku dne)
-
-        # Pokud se stav nezměnil, nic neposíláme
-        if zone_now == zone_prev:
-            continue
-
-        # Uložíme nový stav vždy (aby fungoval crossing)
-        state[key] = zone_now
-
-        # Alert posíláme jen při přechodu do UP nebo DOWN
-        if zone_now in ("UP", "DOWN"):
-            emoji = "📈" if zone_now == "UP" else "📉"
-            headline = get_news_headline(ticker)
-            reason = f"\n📰 {translate_cs(headline)}" if headline else ""
-
-            tg_send(
-                f"⚠️ ALERT – překročení hranice od open ({day})\n"
-                f"{emoji} {ticker}: {change_pct:+.2f} % od open\n"
-                f"Open: {open_price:.2f} USD | Teď: {last_price:.2f} USD"
-                f"{reason}"
-            )
-            sent += 1
-
-    save_cross_state(state)
-    print(f"Hotovo. Odesláno alertů: {sent}")
-
-
-def main():
-    if CHECK_ONLY_MARKET_HOURS and not is_market_hours_prague():
-        print("Mimo obchodní hodiny (Praha). Končím.")
+def telegram_send(text: str):
+    if not TELEGRAM_TOKEN or not CHAT_ID:
+        print("⚠️ Telegram není nastaven (TELEGRAMTOKEN/CHATID).")
         return
 
-    check_alerts_crossing_from_open(PORTFOLIO, threshold_pct=ALERT_THRESHOLD_PCT)
+    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    payload = {
+        "chat_id": CHAT_ID,
+        "text": text,
+        "disable_web_page_preview": True
+    }
+    r = requests.post(url, data=payload, timeout=30)
+    print("Telegram status:", r.status_code)
+    if r.status_code >= 400:
+        print("Telegram error body:", r.text)
 
+def send_email(subject: str, body: str):
+    if not EMAIL_ENABLED:
+        return
+    if not (EMAIL_SENDER and EMAIL_RECEIVER and GMAIL_PASSWORD):
+        print("⚠️ Email není plně nastaven (EMAIL_SENDER/EMAIL_RECEIVER/GMAILPASSWORD).")
+        return
+
+    msg = MIMEText(body, "plain", "utf-8")
+    msg["Subject"] = subject
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = EMAIL_RECEIVER
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+        smtp.login(EMAIL_SENDER, GMAIL_PASSWORD)
+        smtp.sendmail(EMAIL_SENDER, [EMAIL_RECEIVER], msg.as_string())
+
+# =========================
+# DATA (Yahoo)
+# =========================
+def safe_float(x):
+    try:
+        if x is None:
+            return None
+        if isinstance(x, float) and (math.isnan(x) or math.isinf(x)):
+            return None
+        return float(x)
+    except Exception:
+        return None
+
+def fetch_open_and_last(tickers):
+    """
+    Vrátí dict:
+      { "AAPL": {"open": 123.0, "last": 125.0}, ... }
+    Používá 1m data pro dnešní den.
+    """
+    result = {}
+    # yfinance download umí více tickerů najednou (rychlejší)
+    try:
+        data = yf.download(
+            tickers=tickers,
+            period="1d",
+            interval="1m",
+            group_by="ticker",
+            auto_adjust=False,
+            threads=True,
+            progress=False
+        )
+    except Exception as e:
+        print("Chyba při yf.download:", e)
+        return result
+
+    for t in tickers:
+        try:
+            if len(tickers) == 1:
+                df = data
+            else:
+                if t not in data.columns.get_level_values(0):
+                    continue
+                df = data[t]
+
+            if df is None or df.empty:
+                continue
+
+            # první řádek = open svíčky
+            open_price = safe_float(df["Open"].iloc[0])
+            last_price = safe_float(df["Close"].iloc[-1])
+
+            if open_price is None or last_price is None:
+                continue
+
+            result[t] = {"open": open_price, "last": last_price}
+        except Exception as e:
+            print(f"Chyba při zpracování {t}:", e)
+
+    return result
+
+# =========================
+# LOGIKA
+# =========================
+def in_time_window(now_local: datetime) -> bool:
+    t = now_local.time()
+    return (t >= WINDOW_START) and (t <= WINDOW_END)
+
+def pct_change(open_price: float, last_price: float) -> float:
+    if open_price == 0:
+        return 0.0
+    return ((last_price - open_price) / open_price) * 100.0
+
+def nice_name(ticker: str) -> str:
+    return COMPANY_NAMES.get(ticker, ticker)
+
+def build_alert_message(now_local: datetime, alerts: list) -> str:
+    # “lepší grafické znázornění” = čisté bloky + emoji
+    header = f"🚨 *ALERT ±5%* ({now_local.strftime('%d.%m.%Y %H:%M')} Praha)\n"
+    lines = []
+    for a in alerts:
+        # a: dict {ticker,name,open,last,chg}
+        direction = "🟢" if a["chg"] >= 0 else "🔴"
+        lines.append(
+            f"{direction} {a['ticker']} — {a['name']}\n"
+            f"   Open: {a['open']:.2f} → Now: {a['last']:.2f} USD\n"
+            f"   Změna od open: {a['chg']:+.2f}%"
+        )
+    return header + "\n\n".join(lines)
+
+def build_daily_report(now_local: datetime, snapshot: dict) -> str:
+    # Velký report (pro email) – všechny tickery
+    lines = []
+    lines.append(f"Denní report ({now_local.strftime('%d.%m.%Y')}), časy Praha")
+    lines.append(f"Okno alertů: {WINDOW_START.strftime('%H:%M')}–{WINDOW_END.strftime('%H:%M')}")
+    lines.append("")
+    lines.append("Ticker | Firma | Open | Now | Změna od open")
+    lines.append("-" * 70)
+
+    # seřadit podle největší změny
+    rows = []
+    for t, v in snapshot.items():
+        chg = pct_change(v["open"], v["last"])
+        rows.append((abs(chg), t, v["open"], v["last"], chg))
+    rows.sort(reverse=True)
+
+    for _, t, op, last, chg in rows:
+        lines.append(
+            f"{t:5} | {nice_name(t)} | {op:.2f} | {last:.2f} | {chg:+.2f}%"
+        )
+
+    return "\n".join(lines)
+
+def main():
+    now = prague_now()
+    state = load_state()
+
+    # 1) pojistka – mimo okno neřešíme alerty (ale můžeme poslat email report jednou denně)
+    if not in_time_window(now):
+        print("Mimo časové okno alertů (Praha).")
+
+        # email report – max 1× denně, po 21:00 klidně
+        if EMAIL_ENABLED:
+            last_email_date = state.get("last_email_date")
+            today = now.date().isoformat()
+            if last_email_date != today and now.time() >= WINDOW_END:
+                snapshot = fetch_open_and_last(PORTFOLIO)
+                if snapshot:
+                    body = build_daily_report(now, snapshot)
+                    send_email(
+                        subject=f"Denní report {now.strftime('%d.%m.%Y')}",
+                        body=body
+                    )
+                    state["last_email_date"] = today
+                    save_state(state)
+                    print("✅ Email report odeslán.")
+        return
+
+    # 2) stáhnout open+last pro celý watchlist
+    snapshot = fetch_open_and_last(PORTFOLIO)
+    if not snapshot:
+        print("⚠️ Nepřišla žádná data z Yahoo.")
+        return
+
+    # 3) spočítat alerty ±5%
+    alerts = []
+    for t, v in snapshot.items():
+        chg = pct_change(v["open"], v["last"])
+        if abs(chg) >= 5.0:
+            alerts.append({
+                "ticker": t,
+                "name": nice_name(t),
+                "open": v["open"],
+                "last": v["last"],
+                "chg": chg
+            })
+
+    # 4) anti-spam: neposílat stejné alerty pořád dokola
+    # ukládáme "alert_signature" pro aktuální 15min bucket
+    bucket = now.strftime("%Y-%m-%d %H:%M")
+    # bucket zaokrouhlíme na 15 minut (aby se při dvojím cron běhu nespamovalo)
+    minute = (now.minute // 15) * 15
+    bucket = now.replace(minute=minute, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M")
+
+    last_bucket_sent = state.get("last_bucket_sent")
+    last_signature = state.get("last_signature")
+
+    signature = "|".join(sorted([f"{a['ticker']}:{round(a['chg'],2)}" for a in alerts])) if alerts else ""
+
+    if alerts:
+        if last_bucket_sent == bucket and last_signature == signature:
+            print("Stejný alert už byl v tomto 15min okně poslaný – neodesílám znovu.")
+        else:
+            msg = build_alert_message(now, alerts)
+            # Telegram neumí MarkdownV2 bez escapování; posíláme plain text:
+            msg_plain = msg.replace("*", "")
+            telegram_send(msg_plain)
+            state["last_bucket_sent"] = bucket
+            state["last_signature"] = signature
+            save_state(state)
+            print(f"✅ Odesláno alertů: {len(alerts)}")
+    else:
+        print("Hotovo. Odesláno alertů: 0")
+
+    # 5) Email report (max 1× denně) – po 21:00 nebo kdy chceš; tady nechávám po 21:00
+    # (aby se to neposílalo uprostřed dne)
+    if EMAIL_ENABLED and now.time() >= WINDOW_END:
+        today = now.date().isoformat()
+        if state.get("last_email_date") != today:
+            body = build_daily_report(now, snapshot)
+            send_email(
+                subject=f"Denní report {now.strftime('%d.%m.%Y')}",
+                body=body
+            )
+            state["last_email_date"] = today
+            save_state(state)
+            print("✅ Email report odeslán.")
 
 if __name__ == "__main__":
     main()
