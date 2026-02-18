@@ -1,17 +1,17 @@
 name: XTB Bot Alerts
 
 on:
+  # Každých 15 minut.
+  # GitHub schedule je v UTC. Proto dáváme 2 rozsahy hodin – jeden pro CET a druhý pro CEST.
+  # Skript má navíc vlastní pojistku a reálně posílá jen v okně 15:30–21:00 Praha.
   schedule:
-    # běh každých 15 minut
-    - cron: "*/15 * * * *"
-
-  # umožní ruční spuštění tlačítkem
+    - cron: "*/15 13-20 * * 1-5"  # cca 15:00–22:00 Praha v létě (CEST)
+    - cron: "*/15 14-20 * * 1-5"  # cca 15:00–21:00 Praha v zimě (CET)
   workflow_dispatch:
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,26 +21,28 @@ jobs:
         with:
           python-version: "3.11"
 
+      # Cache pro .state (aby si pamatoval "už poslané alerty" a "email poslán dnes")
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-
+
       - name: Install dependencies
         run: |
-          pip install yfinance requests matplotlib
+          pip install yfinance requests
 
       - name: Run bot
         env:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          EMAIL_ENABLED: ${{ secrets.EMAIL_ENABLED }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
-
-          TZ: Europe/Prague
-          ALERTS_START: "15:30"
-          ALERTS_END: "21:00"
-          ALERT_THRESHOLD_PCT: "5"
           REPORT_TIME: "15:30"
-
-          EMAIL_ENABLED: "true"
-          EMAIL_SENDER: "berq1994@gmail.com"
-          EMAIL_RECEIVER: "berq1994@gmail.com"
-
         run: |
           python ahoj.py
