@@ -2,7 +2,10 @@ name: XTB Bot Alerts
 
 on:
   schedule:
+    # běh každých 15 minut
     - cron: "*/15 * * * *"
+
+  # umožní ruční spuštění tlačítkem
   workflow_dispatch:
 
 jobs:
@@ -19,7 +22,8 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install yfinance requests feedparser deep-translator
+        run: |
+          pip install yfinance requests matplotlib
 
       - name: Run bot
         env:
@@ -27,7 +31,16 @@ jobs:
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
-          EMAIL_SENDER: berq1994@gmail.com
-          EMAIL_RECEIVER: berq1994@gmail.com
+
+          TZ: Europe/Prague
+          ALERTS_START: "15:30"
+          ALERTS_END: "21:00"
+          ALERT_THRESHOLD_PCT: "5"
+          REPORT_TIME: "15:30"
+
           EMAIL_ENABLED: "true"
-        run: python ahoj.py
+          EMAIL_SENDER: "berq1994@gmail.com"
+          EMAIL_RECEIVER: "berq1994@gmail.com"
+
+        run: |
+          python ahoj.py
