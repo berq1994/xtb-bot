@@ -1,0 +1,5 @@
+yfinance
+requests
+feedparser
+deep-translator
+pytz
