@@ -1,330 +1,370 @@
-# ahoj.py
-# XTB Bot Alerts – GitHub Actions friendly (stateless run + cache)
-# - Alerty ±5 % od dnešního OPEN (market open)
-# - Běh jen 15:30–21:00 Praha
-# - Volitelně 1× denně email "velký report"
-
 import os
 import json
+import time
 import math
-import smtplib
-from email.mime.text import MIMEText
-from datetime import datetime, date, time as dtime
-
+import pytz
 import requests
+import feedparser
 import yfinance as yf
+from datetime import datetime, date
+from deep_translator import GoogleTranslator
 
-try:
-    from zoneinfo import ZoneInfo
-except ImportError:
-    # Python <3.9 by neměl být v Actions, ale pro jistotu:
-    ZoneInfo = None
+# =========================================================
+# PRO XTB BOT (GitHub Actions friendly)
+# - Alerty jen 15:30–21:00 Europe/Prague
+# - Alert jen při změně od dnešního OPEN >= ±5%
+# - Denní report max 1× denně (Telegram + volitelně email v budoucnu)
+# - Lepší formát zpráv + celé názvy firem + krátký popis
+# - Stav se ukládá do .state/ (cache v Actions)
+# =========================================================
 
-# =========================
-# KONFIG (z ENV / SECRETS)
-# =========================
+# ====== ENV (GitHub Secrets) ======
 TELEGRAM_TOKEN = os.getenv("TELEGRAMTOKEN", "").strip()
-CHAT_ID = os.getenv("CHATID", "").strip()
+CHAT_ID = str(os.getenv("CHATID", "")).strip()
+FMP_API_KEY = os.getenv("FMPAPIKEY", "").strip()
 
-FMP_API_KEY = os.getenv("FMPAPIKEY", "").strip()  # zatím nepovinné, do budoucna
-EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "false").lower().strip() == "true"
-EMAIL_SENDER = os.getenv("EMAIL_SENDER", "").strip()
-EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "").strip()
-GMAIL_PASSWORD = os.getenv("GMAILPASSWORD", "").strip()
+# ====== Nastavení ======
+TIMEZONE = os.getenv("TIMEZONE", "Europe/Prague").strip()
+ALERT_START = os.getenv("ALERT_START", "15:30").strip()  # Praha
+ALERT_END = os.getenv("ALERT_END", "21:00").strip()      # Praha
+REPORT_TIME = os.getenv("REPORT_TIME", "15:30").strip()  # Praha
 
-REPORT_TIME_LOCAL = os.getenv("REPORT_TIME", "15:30").strip()  # jen informativní
+ALERT_THRESHOLD = float(os.getenv("ALERT_THRESHOLD", "5"))  # v %
 
-# Portfolio – můžeš nechat natvrdo nebo přepnout na config.json (níž je připraveno)
-PORTFOLIO = [
-    "CENX", "S", "NVO", "PYPL", "AMZN", "MSFT", "CVX", "NVDA", "TSM", "CAG",
-    "META", "SNDK", "AAPL", "GOOGL", "TSLA", "PLTR", "SPY", "FCX", "IREN"
+# Portfolio lze přepsat env proměnnou PORTFOLIO="AAPL,MSFT,..."
+PORTFOLIO_ENV = os.getenv("PORTFOLIO", "").strip()
+
+DEFAULT_PORTFOLIO = [
+    "CENX","S","NVO","PYPL","AMZN","MSFT","CVX","NVDA","TSM","CAG","META","AAPL","GOOGL","TSLA",
+    "PLTR","SPY","FCX","IREN"
 ]
 
-# Celé názvy (tam kde je známe jistě)
-COMPANY_NAMES = {
-    "CENX": "Centrus Energy",
-    "S": "SentinelOne",
-    "NVO": "Novo Nordisk",
-    "PYPL": "PayPal",
-    "AMZN": "Amazon",
-    "MSFT": "Microsoft",
-    "CVX": "Chevron",
-    "NVDA": "NVIDIA",
-    "TSM": "Taiwan Semiconductor Manufacturing Co. (TSMC)",
-    "CAG": "Conagra Brands",
-    "META": "Meta Platforms",
-    "SNDK": "Sandisk / Western Digital (ticker se může lišit)",
-    "AAPL": "Apple",
-    "GOOGL": "Alphabet (Google)",
-    "TSLA": "Tesla",
-    "PLTR": "Palantir",
-    "SPY": "SPDR S&P 500 ETF Trust (SPY)",
-    "FCX": "Freeport-McMoRan",
-    "IREN": "Iris Energy"
+PORTFOLIO = [t.strip().upper() for t in PORTFOLIO_ENV.split(",") if t.strip()] if PORTFOLIO_ENV else DEFAULT_PORTFOLIO
+
+# ====== Firma -> celé jméno + krátce co dělá ======
+COMPANY_INFO = {
+    "CENX": ("Century Aluminum Company", "Hliník (výroba/produkce). Citlivé na cenu energie a průmyslovou poptávku."),
+    "S": ("SentinelOne, Inc.", "Kyberbezpečnost (endpoint/cloud). Růstový sektor, vyšší volatilita."),
+    "NVO": ("Novo Nordisk A/S", "Farmacie (diabetes/obezita). Defenzivnější růstový titul."),
+    "PYPL": ("PayPal Holdings, Inc.", "Platby/fintech. Citlivé na spotřebu a konkurenci."),
+    "AMZN": ("Amazon.com, Inc.", "E-commerce + AWS cloud. Mix růstu a cashflow."),
+    "MSFT": ("Microsoft Corporation", "Software + cloud + AI. Jedna z hlavních AI platforem."),
+    "CVX": ("Chevron Corporation", "Ropa a plyn. Citlivé na cenu ropy, často dividendové."),
+    "NVDA": ("NVIDIA Corporation", "GPU/AI čipy. Vysoký růst + volatilita."),
+    "TSM": ("Taiwan Semiconductor Manufacturing Co.", "Největší foundry. Klíčové pro čipy a AI."),
+    "CAG": ("Conagra Brands, Inc.", "Potraviny (defenziva). Stabilnější, menší volatilita."),
+    "META": ("Meta Platforms, Inc.", "Sociální sítě + reklama + AI. Cyklus reklamy."),
+    "AAPL": ("Apple Inc.", "Hardware + služby. Silná značka, stabilnější."),
+    "GOOGL": ("Alphabet Inc.", "Vyhledávání + reklama + cloud + AI. Silná AI infrastruktura."),
+    "TSLA": ("Tesla, Inc.", "EV + energy. Velká volatilita, citlivé na sentiment."),
+    "PLTR": ("Palantir Technologies Inc.", "Data/AI platformy pro firmy a stát. Volatilní růstovka."),
+    "SPY": ("SPDR S&P 500 ETF Trust", "ETF na S&P 500. Široká diverzifikace USA trhu."),
+    "FCX": ("Freeport-McMoRan Inc.", "Měď. Téma elektrifikace/AI infrastruktury."),
+    "IREN": ("Iris Energy Limited", "Datacentra/AI + energetika. Vyšší riziko/volatilita."),
 }
 
-# Časové okno (Praha)
-WINDOW_START = dtime(15, 30)  # 15:30
-WINDOW_END = dtime(21, 0)     # 21:00
-
-# Stav – ukládá se do cache (.state)
+# ====== Stav ======
 STATE_DIR = ".state"
+os.makedirs(STATE_DIR, exist_ok=True)
+
 STATE_FILE = os.path.join(STATE_DIR, "state.json")
 
-# =========================
-# UTIL
-# =========================
-def prague_now() -> datetime:
-    if ZoneInfo is None:
-        return datetime.now()
-    return datetime.now(ZoneInfo("Europe/Prague"))
-
-def ensure_state_dir():
-    os.makedirs(STATE_DIR, exist_ok=True)
-
-def load_state() -> dict:
-    ensure_state_dir()
+def load_state():
     if os.path.exists(STATE_FILE):
         try:
             with open(STATE_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except Exception:
+        except:
             return {}
     return {}
 
-def save_state(state: dict):
-    ensure_state_dir()
+def save_state(state):
     with open(STATE_FILE, "w", encoding="utf-8") as f:
         json.dump(state, f, ensure_ascii=False, indent=2)
 
-def telegram_send(text: str):
+STATE = load_state()
+
+# ====== Pomocné ======
+def now_local():
+    tz = pytz.timezone(TIMEZONE)
+    return datetime.now(tz)
+
+def hm_to_minutes(hm: str) -> int:
+    h, m = hm.split(":")
+    return int(h) * 60 + int(m)
+
+def in_alert_window(dt: datetime) -> bool:
+    cur = dt.hour * 60 + dt.minute
+    return hm_to_minutes(ALERT_START) <= cur <= hm_to_minutes(ALERT_END)
+
+def is_report_time(dt: datetime) -> bool:
+    # tolerujeme okno 15 minut (Actions běží po 15 min)
+    target = hm_to_minutes(REPORT_TIME)
+    cur = dt.hour * 60 + dt.minute
+    return abs(cur - target) <= 7  # +-7 minut
+
+def send_telegram(text: str):
     if not TELEGRAM_TOKEN or not CHAT_ID:
-        print("⚠️ Telegram není nastaven (TELEGRAMTOKEN/CHATID).")
-        return
+        print("Chybí TELEGRAMTOKEN nebo CHATID.")
+        return False
 
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": CHAT_ID,
-        "text": text,
-        "disable_web_page_preview": True
-    }
+    payload = {"chat_id": CHAT_ID, "text": text, "disable_web_page_preview": True}
     r = requests.post(url, data=payload, timeout=30)
     print("Telegram status:", r.status_code)
-    if r.status_code >= 400:
-        print("Telegram error body:", r.text)
+    if r.status_code != 200:
+        print("Telegram odpověď:", r.text)
+        return False
+    return True
 
-def send_email(subject: str, body: str):
-    if not EMAIL_ENABLED:
-        return
-    if not (EMAIL_SENDER and EMAIL_RECEIVER and GMAIL_PASSWORD):
-        print("⚠️ Email není plně nastaven (EMAIL_SENDER/EMAIL_RECEIVER/GMAILPASSWORD).")
-        return
-
-    msg = MIMEText(body, "plain", "utf-8")
-    msg["Subject"] = subject
-    msg["From"] = EMAIL_SENDER
-    msg["To"] = EMAIL_RECEIVER
-
-    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-        smtp.login(EMAIL_SENDER, GMAIL_PASSWORD)
-        smtp.sendmail(EMAIL_SENDER, [EMAIL_RECEIVER], msg.as_string())
-
-# =========================
-# DATA (Yahoo)
-# =========================
-def safe_float(x):
+def translate_to_cs(text: str) -> str:
     try:
-        if x is None:
-            return None
-        if isinstance(x, float) and (math.isnan(x) or math.isinf(x)):
-            return None
-        return float(x)
-    except Exception:
-        return None
+        return GoogleTranslator(source="auto", target="cs").translate(text)
+    except:
+        return text
 
-def fetch_open_and_last(tickers):
+# ====== Data (cena + open) ======
+def get_open_and_last(ticker: str):
     """
-    Vrátí dict:
-      { "AAPL": {"open": 123.0, "last": 125.0}, ... }
-    Používá 1m data pro dnešní den.
+    Vrací (open_today, last_price).
+    Používá denní data. Pokud dnešní řádek chybí (svátek), vrátí (None, None).
     """
-    result = {}
-    # yfinance download umí více tickerů najednou (rychlejší)
     try:
-        data = yf.download(
-            tickers=tickers,
-            period="1d",
-            interval="1m",
-            group_by="ticker",
-            auto_adjust=False,
-            threads=True,
-            progress=False
-        )
-    except Exception as e:
-        print("Chyba při yf.download:", e)
-        return result
+        t = yf.Ticker(ticker)
+        hist = t.history(period="5d", interval="1d")
+        if hist is None or hist.empty:
+            return None, None
 
-    for t in tickers:
+        # vezmeme poslední dostupný den (většinou dnešek nebo včerejšek)
+        last_row = hist.iloc[-1]
+        open_price = float(last_row["Open"]) if not math.isnan(float(last_row["Open"])) else None
+        last_price = float(last_row["Close"]) if not math.isnan(float(last_row["Close"])) else None
+
+        # zkusíme fast_info last_price (čerstvější), když jde
         try:
-            if len(tickers) == 1:
-                df = data
-            else:
-                if t not in data.columns.get_level_values(0):
-                    continue
-                df = data[t]
+            fi = t.fast_info
+            lp = fi.get("last_price", None)
+            if lp is not None:
+                last_price = float(lp)
+        except:
+            pass
 
-            if df is None or df.empty:
-                continue
+        return open_price, last_price
+    except Exception as e:
+        print(f"{ticker}: chyba při cenách: {e}")
+        return None, None
 
-            # první řádek = open svíčky
-            open_price = safe_float(df["Open"].iloc[0])
-            last_price = safe_float(df["Close"].iloc[-1])
+# ====== Novinky (Yahoo RSS -> přeložit titulky) ======
+def get_top_news_lines(ticker: str, limit: int = 2):
+    try:
+        url = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={ticker}&region=US&lang=en-US"
+        feed = feedparser.parse(url)
+        entries = feed.entries[:limit] if feed and feed.entries else []
+        lines = []
+        for e in entries:
+            title = translate_to_cs(getattr(e, "title", "").strip())
+            if title:
+                lines.append(f"• {title}")
+        return lines
+    except:
+        return []
 
-            if open_price is None or last_price is None:
-                continue
+# ====== Earnings (primárně FMP, fallback yfinance) ======
+def fmp_income_quarter(ticker: str):
+    """
+    Vrátí (date_str, net_income, revenue) nebo (None, None, None)
+    """
+    if not FMP_API_KEY:
+        return None, None, None
+    try:
+        url = f"https://financialmodelingprep.com/api/v3/income-statement/{ticker}?period=quarter&limit=1&apikey={FMP_API_KEY}"
+        r = requests.get(url, timeout=30)
+        if r.status_code != 200:
+            return None, None, None
+        data = r.json()
+        if not isinstance(data, list) or not data:
+            return None, None, None
+        row = data[0]
+        d = row.get("date")
+        net = row.get("netIncome")
+        rev = row.get("revenue")
+        return d, net, rev
+    except:
+        return None, None, None
 
-            result[t] = {"open": open_price, "last": last_price}
-        except Exception as e:
-            print(f"Chyba při zpracování {t}:", e)
+def yfin_income_quarter(ticker: str):
+    """
+    Fallback: zkusí yfinance financials (může být prázdné)
+    """
+    try:
+        t = yf.Ticker(ticker)
+        fin = t.quarterly_financials
+        if fin is None or fin.empty:
+            return None, None, None
+        # poslední sloupec je nejnovější kvartál
+        col = fin.columns[0]
+        net = fin.loc["Net Income", col] if "Net Income" in fin.index else None
+        rev = fin.loc["Total Revenue", col] if "Total Revenue" in fin.index else None
+        d = str(col.date()) if hasattr(col, "date") else str(col)
+        return d, None if net is None else float(net), None if rev is None else float(rev)
+    except:
+        return None, None, None
 
-    return result
+def get_earnings(ticker: str):
+    d, net, rev = fmp_income_quarter(ticker)
+    if d is not None and (net is not None or rev is not None):
+        return d, net, rev
 
-# =========================
-# LOGIKA
-# =========================
-def in_time_window(now_local: datetime) -> bool:
-    t = now_local.time()
-    return (t >= WINDOW_START) and (t <= WINDOW_END)
+    d2, net2, rev2 = yfin_income_quarter(ticker)
+    return d2, net2, rev2
 
-def pct_change(open_price: float, last_price: float) -> float:
-    if open_price == 0:
-        return 0.0
-    return ((last_price - open_price) / open_price) * 100.0
+# ====== Formátování ======
+def fmt_money(x):
+    if x is None:
+        return "—"
+    try:
+        x = float(x)
+        if abs(x) >= 1e9:
+            return f"{x/1e9:.2f}B"
+        if abs(x) >= 1e6:
+            return f"{x/1e6:.2f}M"
+        return f"{x:,.0f}".replace(",", " ")
+    except:
+        return "—"
 
-def nice_name(ticker: str) -> str:
-    return COMPANY_NAMES.get(ticker, ticker)
+def company_line(ticker: str):
+    name, desc = COMPANY_INFO.get(ticker, (ticker, ""))
+    return f"{ticker} — {name}\n{desc}".strip()
 
-def build_alert_message(now_local: datetime, alerts: list) -> str:
-    # “lepší grafické znázornění” = čisté bloky + emoji
-    header = f"🚨 *ALERT ±5%* ({now_local.strftime('%d.%m.%Y %H:%M')} Praha)\n"
+# ====== Alerty ======
+def send_alert(ticker: str, open_p: float, last_p: float, change_pct: float, ts: datetime):
+    direction = "📈" if change_pct > 0 else "📉"
+    name = COMPANY_INFO.get(ticker, (ticker, ""))[0]
+
+    msg = (
+        f"🚨 *ALERT {direction}*\n"
+        f"{ticker} — {name}\n"
+        f"Změna od OPEN: {change_pct:+.2f}%\n"
+        f"OPEN: {open_p:.2f}  →  NOW: {last_p:.2f}\n"
+        f"Čas: {ts.strftime('%d.%m.%Y %H:%M')} ({TIMEZONE})"
+    )
+    # Telegram bez markdown režimu kvůli jednoduchosti
+    msg = msg.replace("*", "")
+    send_telegram(msg)
+
+# ====== Denní report ======
+def send_daily_report(ts: datetime):
+    today = ts.strftime("%Y-%m-%d")
+    last_sent = STATE.get("last_daily_report_date")
+    if last_sent == today:
+        print("Denní report už dnes byl odeslán.")
+        return
+
     lines = []
-    for a in alerts:
-        # a: dict {ticker,name,open,last,chg}
-        direction = "🟢" if a["chg"] >= 0 else "🔴"
-        lines.append(
-            f"{direction} {a['ticker']} — {a['name']}\n"
-            f"   Open: {a['open']:.2f} → Now: {a['last']:.2f} USD\n"
-            f"   Změna od open: {a['chg']:+.2f}%"
-        )
-    return header + "\n\n".join(lines)
-
-def build_daily_report(now_local: datetime, snapshot: dict) -> str:
-    # Velký report (pro email) – všechny tickery
-    lines = []
-    lines.append(f"Denní report ({now_local.strftime('%d.%m.%Y')}), časy Praha")
-    lines.append(f"Okno alertů: {WINDOW_START.strftime('%H:%M')}–{WINDOW_END.strftime('%H:%M')}")
+    lines.append(f"📊 DENNÍ REPORT — {ts.strftime('%d.%m.%Y %H:%M')} ({TIMEZONE})")
     lines.append("")
-    lines.append("Ticker | Firma | Open | Now | Změna od open")
-    lines.append("-" * 70)
 
-    # seřadit podle největší změny
-    rows = []
-    for t, v in snapshot.items():
-        chg = pct_change(v["open"], v["last"])
-        rows.append((abs(chg), t, v["open"], v["last"], chg))
-    rows.sort(reverse=True)
+    sent_any = False
 
-    for _, t, op, last, chg in rows:
-        lines.append(
-            f"{t:5} | {nice_name(t)} | {op:.2f} | {last:.2f} | {chg:+.2f}%"
-        )
+    for ticker in PORTFOLIO:
+        open_p, last_p = get_open_and_last(ticker)
+        if open_p is None or last_p is None:
+            lines.append(f"{ticker}: data nejsou dostupná.")
+            lines.append("")
+            continue
 
-    return "\n".join(lines)
+        change_pct = ((last_p - open_p) / open_p) * 100 if open_p else 0.0
 
+        name, desc = COMPANY_INFO.get(ticker, (ticker, ""))
+        lines.append(f"✅ {ticker} — {name}")
+        lines.append(f"Cena: {last_p:.2f} | od OPEN: {change_pct:+.2f}%")
+        if desc:
+            lines.append(f"Co dělá: {desc}")
+
+        news = get_top_news_lines(ticker, limit=2)
+        if news:
+            lines.append("Novinky:")
+            lines.extend(news)
+
+        d, net, rev = get_earnings(ticker)
+        if d:
+            # Net income/revenue můžou být None — nevypisujeme NaN
+            ni = fmt_money(net) if net is not None else "—"
+            rv = fmt_money(rev) if rev is not None else "—"
+            lines.append(f"Earnings (kvartál {d}): Net income={ni}, Revenue={rv}")
+
+        lines.append("")  # mezera mezi firmami
+        sent_any = True
+
+    if not sent_any:
+        send_telegram("⚠️ Denní report: žádná data.")
+        return
+
+    # Telegram limit zprávy — pro jistotu pošleme po blocích
+    chunk = []
+    total = 0
+    for line in lines:
+        add = (line + "\n")
+        if total + len(add) > 3500:
+            send_telegram("".join(chunk))
+            chunk = []
+            total = 0
+        chunk.append(add)
+        total += len(add)
+    if chunk:
+        send_telegram("".join(chunk))
+
+    STATE["last_daily_report_date"] = today
+    save_state(STATE)
+
+# ====== Kontrola alertů (jen v okně 15:30–21:00) ======
+def check_alerts(ts: datetime):
+    if not in_alert_window(ts):
+        print("Mimo alert okno.")
+        return
+
+    today = ts.strftime("%Y-%m-%d")
+    sent = STATE.get("alerts_sent", {})  # { "YYYY-MM-DD": { "TICKER:sign": true } }
+    sent_today = sent.get(today, {})
+
+    alerts_count = 0
+
+    for ticker in PORTFOLIO:
+        open_p, last_p = get_open_and_last(ticker)
+        if open_p is None or last_p is None or not open_p:
+            continue
+
+        change_pct = ((last_p - open_p) / open_p) * 100
+        if abs(change_pct) < ALERT_THRESHOLD:
+            continue
+
+        sign = "UP" if change_pct > 0 else "DOWN"
+        key = f"{ticker}:{sign}"
+
+        # aby to nechodilo furt dokola: 1× denně pro směr
+        if sent_today.get(key):
+            continue
+
+        send_alert(ticker, open_p, last_p, change_pct, ts)
+        sent_today[key] = True
+        alerts_count += 1
+
+    sent[today] = sent_today
+    STATE["alerts_sent"] = sent
+    save_state(STATE)
+
+    print(f"Hotovo. Odesláno alertů: {alerts_count}")
+
+# ====== MAIN ======
 def main():
-    now = prague_now()
-    state = load_state()
+    ts = now_local()
 
-    # 1) pojistka – mimo okno neřešíme alerty (ale můžeme poslat email report jednou denně)
-    if not in_time_window(now):
-        print("Mimo časové okno alertů (Praha).")
+    # 1) Alerty (pokud jsme v okně)
+    check_alerts(ts)
 
-        # email report – max 1× denně, po 21:00 klidně
-        if EMAIL_ENABLED:
-            last_email_date = state.get("last_email_date")
-            today = now.date().isoformat()
-            if last_email_date != today and now.time() >= WINDOW_END:
-                snapshot = fetch_open_and_last(PORTFOLIO)
-                if snapshot:
-                    body = build_daily_report(now, snapshot)
-                    send_email(
-                        subject=f"Denní report {now.strftime('%d.%m.%Y')}",
-                        body=body
-                    )
-                    state["last_email_date"] = today
-                    save_state(state)
-                    print("✅ Email report odeslán.")
-        return
-
-    # 2) stáhnout open+last pro celý watchlist
-    snapshot = fetch_open_and_last(PORTFOLIO)
-    if not snapshot:
-        print("⚠️ Nepřišla žádná data z Yahoo.")
-        return
-
-    # 3) spočítat alerty ±5%
-    alerts = []
-    for t, v in snapshot.items():
-        chg = pct_change(v["open"], v["last"])
-        if abs(chg) >= 5.0:
-            alerts.append({
-                "ticker": t,
-                "name": nice_name(t),
-                "open": v["open"],
-                "last": v["last"],
-                "chg": chg
-            })
-
-    # 4) anti-spam: neposílat stejné alerty pořád dokola
-    # ukládáme "alert_signature" pro aktuální 15min bucket
-    bucket = now.strftime("%Y-%m-%d %H:%M")
-    # bucket zaokrouhlíme na 15 minut (aby se při dvojím cron běhu nespamovalo)
-    minute = (now.minute // 15) * 15
-    bucket = now.replace(minute=minute, second=0, microsecond=0).strftime("%Y-%m-%d %H:%M")
-
-    last_bucket_sent = state.get("last_bucket_sent")
-    last_signature = state.get("last_signature")
-
-    signature = "|".join(sorted([f"{a['ticker']}:{round(a['chg'],2)}" for a in alerts])) if alerts else ""
-
-    if alerts:
-        if last_bucket_sent == bucket and last_signature == signature:
-            print("Stejný alert už byl v tomto 15min okně poslaný – neodesílám znovu.")
-        else:
-            msg = build_alert_message(now, alerts)
-            # Telegram neumí MarkdownV2 bez escapování; posíláme plain text:
-            msg_plain = msg.replace("*", "")
-            telegram_send(msg_plain)
-            state["last_bucket_sent"] = bucket
-            state["last_signature"] = signature
-            save_state(state)
-            print(f"✅ Odesláno alertů: {len(alerts)}")
-    else:
-        print("Hotovo. Odesláno alertů: 0")
-
-    # 5) Email report (max 1× denně) – po 21:00 nebo kdy chceš; tady nechávám po 21:00
-    # (aby se to neposílalo uprostřed dne)
-    if EMAIL_ENABLED and now.time() >= WINDOW_END:
-        today = now.date().isoformat()
-        if state.get("last_email_date") != today:
-            body = build_daily_report(now, snapshot)
-            send_email(
-                subject=f"Denní report {now.strftime('%d.%m.%Y')}",
-                body=body
-            )
-            state["last_email_date"] = today
-            save_state(state)
-            print("✅ Email report odeslán.")
+    # 2) Denní report (max 1× denně)
+    if is_report_time(ts):
+        send_daily_report(ts)
 
 if __name__ == "__main__":
     main()
