@@ -1,5 +1,5 @@
 yfinance
 requests
 feedparser
-deep-translator
+matplotlib
 pytz
