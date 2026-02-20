@@ -2,7 +2,6 @@ name: XTB Bot PRO
 
 on:
   schedule:
-    # každých 15 minut (běží v UTC, časové okno řeší skript)
     - cron: "*/15 * * * 1-5"
   workflow_dispatch:
 
@@ -37,11 +36,23 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }} # volitelné (může být prázdné)
+
+          EMAIL_ENABLED: "true"
+          EMAIL_SENDER: "berq1994@gmail.com"
+          EMAIL_RECEIVER: "berq1994@gmail.com"
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
 
           TIMEZONE: "Europe/Prague"
+
+          PREMARKET_TIME: "12:00"
+          EVENING_TIME: "20:00"
+          OPPORTUNITY_MAX: "5"
+
           ALERT_START: "15:30"
           ALERT_END: "21:00"
-          REPORT_TIME: "15:30"
-          ALERT_THRESHOLD: "5"
+          ALERT_THRESHOLD: "3"
+
+          NEWS_PER_TICKER: "2"
         run: |
           python ahoj.py
