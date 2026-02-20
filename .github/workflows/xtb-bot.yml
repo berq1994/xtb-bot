@@ -45,7 +45,7 @@ jobs:
 
           TIMEZONE: "Europe/Prague"
 
-          PREMARKET_TIME: "12:00"
+          PREMARKET_TIME: "10:00"
           EVENING_TIME: "20:00"
           OPPORTUNITY_MAX: "5"
 
