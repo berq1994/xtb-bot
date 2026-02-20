@@ -5,13 +5,12 @@ import pytz
 import requests
 import feedparser
 import yfinance as yf
-import matplotlib.pyplot as plt
 from datetime import datetime, date, timedelta
 
+# ===== Email (volitelné) =====
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.image import MIMEImage
 
 
 # =========================
@@ -19,7 +18,6 @@ from email.mime.image import MIMEImage
 # =========================
 TELEGRAM_TOKEN = os.getenv("TELEGRAMTOKEN", "").strip()
 CHAT_ID = str(os.getenv("CHATID", "")).strip()
-
 FMP_API_KEY = os.getenv("FMPAPIKEY", "").strip()
 
 EMAIL_ENABLED = os.getenv("EMAIL_ENABLED", "false").lower().strip() == "true"
@@ -31,15 +29,16 @@ TIMEZONE = os.getenv("TIMEZONE", "Europe/Prague").strip()
 tz = pytz.timezone(TIMEZONE)
 
 # Časy (Praha)
-PREMARKET_TIME = os.getenv("PREMARKET_TIME", "12:00").strip()
-EVENING_TIME = os.getenv("EVENING_TIME", "20:00").strip()
-ALERT_START = os.getenv("ALERT_START", "12:00").strip()
-ALERT_END = os.getenv("ALERT_END", "21:00").strip()
-ALERT_THRESHOLD = float(os.getenv("ALERT_THRESHOLD", "3"))  # %
+PREMARKET_TIME = os.getenv("PREMARKET_TIME", "12:00").strip()   # report ve 12:00
+EVENING_TIME = os.getenv("EVENING_TIME", "20:00").strip()       # večerní shrnutí ve 20:00
+ALERT_START = os.getenv("ALERT_START", "12:00").strip()         # kontrola od 12:00
+ALERT_END = os.getenv("ALERT_END", "21:00").strip()             # kontrola do 21:00
+ALERT_THRESHOLD = float(os.getenv("ALERT_THRESHOLD", "3"))       # %
 
 NEWS_PER_TICKER = int(os.getenv("NEWS_PER_TICKER", "2"))
 OPPORTUNITY_MAX = int(os.getenv("OPPORTUNITY_MAX", "5"))
 
+# Portfolio
 PORTFOLIO_ENV = os.getenv("PORTFOLIO", "").strip()
 DEFAULT_PORTFOLIO = [
     "CENX","S","NVO","PYPL","AMZN","MSFT","CVX","NVDA","TSM","CAG","META","AAPL","GOOGL","TSLA",
@@ -47,50 +46,73 @@ DEFAULT_PORTFOLIO = [
 ]
 PORTFOLIO = [t.strip().upper() for t in PORTFOLIO_ENV.split(",") if t.strip()] if PORTFOLIO_ENV else DEFAULT_PORTFOLIO
 
-# Watchlist příležitostí (AI / čipy / kovy) – můžeš rozšířit kdykoliv
+# Watchlist příležitostí (AI / čipy / kovy)
 OPPORTUNITY_WATCHLIST = [
+    # AI / čipy
     "NVDA","TSM","ASML","AMD","AVGO","MU","ARM","INTC","QCOM","SMCI",
+    # cloud / AI infra
     "AMZN","MSFT","GOOGL",
+    # kovy / těžba
     "FCX","RIO","BHP","SCCO","AA","CENX","TECK"
 ]
 
+# ===== Scoring váhy =====
+SCORE_WEIGHTS = {
+    "move": 1.0,      # |%| včera
+    "volume": 0.7,    # volume spike
+    "news": 0.4,      # news count
+    "earnings": 0.6,  # blízkost earnings
+}
 
 # =========================
-# Názvy firem (lepší čitelnost v reportu)
+# FIRMY: název + sektor + teze
 # =========================
-COMPANY_NAMES = {
-    "CENX": "Century Aluminum",
-    "S": "SentinelOne",
-    "NVO": "Novo Nordisk",
-    "PYPL": "PayPal",
-    "AMZN": "Amazon",
-    "MSFT": "Microsoft",
-    "CVX": "Chevron",
-    "NVDA": "NVIDIA",
-    "TSM": "TSMC",
-    "CAG": "Conagra Brands",
-    "META": "Meta Platforms",
-    "AAPL": "Apple",
-    "GOOGL": "Alphabet (Google)",
-    "TSLA": "Tesla",
-    "PLTR": "Palantir",
-    "SPY": "SPDR S&P 500 ETF",
-    "FCX": "Freeport-McMoRan",
-    "IREN": "Iris Energy",
-    "ASML": "ASML",
-    "AMD": "AMD",
-    "AVGO": "Broadcom",
-    "MU": "Micron",
-    "ARM": "Arm",
-    "INTC": "Intel",
-    "QCOM": "Qualcomm",
-    "SMCI": "Super Micro Computer",
-    "RIO": "Rio Tinto",
-    "BHP": "BHP",
-    "SCCO": "Southern Copper",
-    "AA": "Alcoa",
-    "TECK": "Teck Resources",
+COMPANY = {
+    "NVDA": ("NVIDIA", "AI/Čipy", "Lídr v AI akcelerátorech (GPU) a ekosystému CUDA. Těží z růstu AI výpočtů v datacentrech."),
+    "TSM": ("TSMC", "Čipy", "Nejdůležitější světový foundry výrobce čipů. Kritický dodavatel špičkových čipů pro AI/mobil/server."),
+    "ASML": ("ASML", "Čipy", "Klíčový dodavatel EUV litografie. Bez ASML nelze vyrábět nejmodernější čipy; silná bariéra vstupu."),
+    "AMD": ("AMD", "AI/Čipy", "CPU/GPU pro servery a AI. Potenciál růstu v datacentrech a AI akcelerátorech."),
+    "AVGO": ("Broadcom", "Čipy/Infra", "Síťové čipy a infrastruktura pro datacentra + software. Těží z růstu AI konektivity."),
+    "MU": ("Micron", "Čipy", "Paměti (DRAM/NAND) a HBM pro AI. AI zvyšuje poptávku po pamětech; cyklické, ale s potenciálem."),
+    "ARM": ("Arm", "Čipy", "IP architektury CPU (licencování). Expozice na růst ARM v mobilech i serverech/AI edge."),
+    "INTC": ("Intel", "Čipy", "Obratový příběh: foundry ambice + produktové cykly. Vyšší riziko, ale případně velká páka na úspěch."),
+    "QCOM": ("Qualcomm", "Čipy", "Chipy pro mobil/edge; trend AI on-device. Těží z AI funkcí v telefonech a embedded."),
+    "SMCI": ("Super Micro Computer", "AI/Infra", "Serverová infrastruktura (AI servery). Těží z capex hyperscalerů do AI clusterů."),
+
+    "MSFT": ("Microsoft", "Cloud/AI", "Azure cloud + AI integrace do produktů. Stabilní cashflow, AI monetizace přes enterprise."),
+    "AMZN": ("Amazon", "Cloud/AI", "AWS je páteř cloudu. AI workloady zvyšují poptávku po výpočetním výkonu a službách."),
+    "GOOGL": ("Alphabet (Google)", "Cloud/AI", "AI modely + Google Cloud + reklama. Kombinace AI inovace a robustního byznysu."),
+
+    "FCX": ("Freeport-McMoRan", "Kovy", "Měď jako páteř elektrifikace (sítě, datacentra, EV). Dlouhodobá teze na růst poptávky."),
+    "RIO": ("Rio Tinto", "Kovy", "Diverzifikovaná těžba. Expozice na průmyslové kovy a komoditní cyklus."),
+    "BHP": ("BHP", "Kovy", "Globální těžař s diverzifikací. Profit z komoditního cyklu a dlouhodobé poptávky po surovinách."),
+    "SCCO": ("Southern Copper", "Kovy", "Silná expozice na měď. Benefituje z dlouhodobého trendu elektrifikace."),
+    "AA": ("Alcoa", "Kovy", "Hliník – lehký kov pro průmysl. Citlivé na cyklus a ceny energií."),
+    "CENX": ("Century Aluminum", "Kovy", "Hliník; cyklické. Potenciál při růstu cen hliníku a zlepšení marží."),
+    "TECK": ("Teck Resources", "Kovy", "Těžba kovů/komodit. Expozice na průmyslové kovy."),
+
+    # portfolio navíc
+    "META": ("Meta Platforms", "Tech/AI", "Reklama + AI optimalizace + platformy. Silná ziskovost, AI zvyšuje efektivitu."),
+    "TSLA": ("Tesla", "Tech/EV", "EV + software + energie. Vysoce volatilní; teze na inovace a škálování."),
+    "PLTR": ("Palantir", "AI/Software", "Datová analytika a AI platformy pro enterprise/government. Těží z adopce AI v organizacích."),
+    "SPY": ("SPDR S&P 500 ETF", "ETF", "Jádro portfolia: široká diverzifikace, nižší riziko než jednotlivé akcie."),
+    "NVO": ("Novo Nordisk", "Health", "Farmacie: GLP-1/obezita a diabetes. Dlouhodobý strukturální růst poptávky."),
+    "PYPL": ("PayPal", "Fintech", "Platby/fintech. Obratovka: marže, růst TPV, konkurence; hlídat výsledky a guidance."),
+    "CVX": ("Chevron", "Energy", "Energie. Dividendový profil + citlivost na cenu ropy; defenzivnější složka."),
+    "CAG": ("Conagra Brands", "Defenziva", "Potraviny: defenzivní spotřeba. Stabilnější, citlivé na marže/inflaci."),
+    "AAPL": ("Apple", "Tech", "Ecosystém hardware+services. Silná značka, cashflow, buybacky."),
+    "S": ("SentinelOne", "Cyber", "Kyberbezpečnost. Růstový sektor; hlídat cash burn, marže a konkurenci."),
+    "IREN": ("Iris Energy", "Infra", "Vyšší riziko; expozice na energeticky náročnou infrastrukturu."),
 }
+
+def company_name(t: str) -> str:
+    return COMPANY.get(t, (t, "—", ""))[0]
+
+def company_sector(t: str) -> str:
+    return COMPANY.get(t, (t, "—", ""))[1]
+
+def company_thesis(t: str) -> str:
+    return COMPANY.get(t, (t, "—", "Teze není doplněná – lze přidat."))[2]
 
 
 # =========================
@@ -114,10 +136,10 @@ def save_json(path, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 STATE = load_json(STATE_FILE, {})
-STATE.setdefault("premarket_sent_date", None)      # YYYY-MM-DD
-STATE.setdefault("evening_sent_date", None)        # YYYY-MM-DD
-STATE.setdefault("email_sent_date", None)          # YYYY-MM-DD
-STATE.setdefault("alerts_sent", {})                # {date: { "TICKER:UP/DOWN": true }}
+STATE.setdefault("premarket_sent_date", None)
+STATE.setdefault("evening_sent_date", None)
+STATE.setdefault("email_sent_date", None)
+STATE.setdefault("alerts_sent", {})  # {YYYY-MM-DD: {"TICKER:UP":true,"TICKER:DOWN":true}}
 
 
 # =========================
@@ -153,24 +175,14 @@ def pct_change(new, old):
         return None
     return ((new - old) / old) * 100.0
 
-def name_for(ticker: str) -> str:
-    return COMPANY_NAMES.get(ticker.upper(), ticker.upper())
-
 def bar(pct: float) -> str:
-    """
-    Hezčí "grafika" do Telegramu: 10 bloků dle absolutní změny.
-    """
     if pct is None:
         return ""
     a = abs(pct)
-    # 0–10% mapujeme na 0–10 bloků, víc než 10% = plno
-    blocks = min(10, int(round(a)))
+    blocks = min(10, int(round(a)))  # 0–10%
     return "█" * blocks + "░" * (10 - blocks)
 
 def chunk_telegram(text: str, limit: int = 3500):
-    """
-    Telegram má limit ~4096 znaků; necháme rezervu.
-    """
     parts = []
     buf = ""
     for line in text.splitlines(True):
@@ -181,6 +193,9 @@ def chunk_telegram(text: str, limit: int = 3500):
     if buf.strip():
         parts.append(buf)
     return parts
+
+def clamp(x, lo=0.0, hi=10.0):
+    return max(lo, min(hi, x))
 
 
 # =========================
@@ -205,34 +220,22 @@ def send_telegram_long(text: str):
 
 
 # =========================
-# Email (HTML + inline obrázky)
+# Email (volitelné 1× denně)
 # =========================
-def send_email_html(subject: str, html_body: str, inline_images: dict) -> bool:
+def send_email(subject: str, html_body: str) -> bool:
     if not EMAIL_ENABLED:
         return False
     if not (EMAIL_SENDER and EMAIL_RECEIVER and GMAIL_APP_PASSWORD):
         print("⚠️ Email zapnutý, ale chybí EMAIL_SENDER/EMAIL_RECEIVER/GMAILPASSWORD.")
         return False
 
-    msg = MIMEMultipart("related")
+    msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
     msg["From"] = EMAIL_SENDER
     msg["To"] = EMAIL_RECEIVER
 
-    alt = MIMEMultipart("alternative")
-    alt.attach(MIMEText("Report je v HTML formátu.", "plain", "utf-8"))
-    alt.attach(MIMEText(html_body, "html", "utf-8"))
-    msg.attach(alt)
-
-    for cid, path in inline_images.items():
-        try:
-            with open(path, "rb") as f:
-                img = MIMEImage(f.read())
-            img.add_header("Content-ID", f"<{cid}>")
-            img.add_header("Content-Disposition", "inline", filename=os.path.basename(path))
-            msg.attach(img)
-        except Exception as e:
-            print("⚠️ Nelze připojit obrázek:", path, e)
+    msg.attach(MIMEText("Report je v HTML formátu.", "plain", "utf-8"))
+    msg.attach(MIMEText(html_body, "html", "utf-8"))
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=45) as server:
@@ -246,13 +249,10 @@ def send_email_html(subject: str, html_body: str, inline_images: dict) -> bool:
 
 
 # =========================
-# Prices – PRO: intraday 5m (open vs last) + fallback daily close
+# Data: Prices
 # =========================
 def intraday_open_last(ticker: str):
-    """
-    Pokus o intraday data (5m). Vrací (open, last).
-    Když trh zavřený / Yahoo nedá intraday, vrátí None.
-    """
+    """Intraday 5m: (open, last). Když Yahoo nedá data, vrátí None."""
     try:
         h = yf.Ticker(ticker).history(period="1d", interval="5m")
         if h is None or h.empty:
@@ -284,9 +284,33 @@ def get_yday_change(ticker: str):
     last, prev = closes
     return last, prev, pct_change(last, prev)
 
+def avg_volume_20d(ticker: str):
+    try:
+        h = yf.Ticker(ticker).history(period="2mo", interval="1d")
+        if h is None or h.empty or "Volume" not in h:
+            return None
+        v = h["Volume"].dropna()
+        if len(v) < 10:
+            return None
+        return float(v.tail(20).mean())
+    except:
+        return None
+
+def last_volume(ticker: str):
+    try:
+        h = yf.Ticker(ticker).history(period="10d", interval="1d")
+        if h is None or h.empty or "Volume" not in h:
+            return None
+        v = h["Volume"].dropna()
+        if len(v) < 2:
+            return None
+        return float(v.iloc[-1])
+    except:
+        return None
+
 
 # =========================
-# News sources – Yahoo RSS + SeekingAlpha RSS + GoogleNews RSS
+# Data: News (RSS)
 # =========================
 def rss_entries(url: str, limit: int):
     feed = feedparser.parse(url)
@@ -317,7 +341,6 @@ def combined_news(ticker: str, limit_each: int):
     items += news_seekingalpha(ticker, limit_each)
     items += news_google(ticker, limit_each)
 
-    # dedup titulky
     seen = set()
     uniq = []
     for src, title, link in items:
@@ -330,7 +353,35 @@ def combined_news(ticker: str, limit_each: int):
 
 
 # =========================
-# Earnings – FMP (datum)
+# News → "Proč se to hýbe" heuristika
+# =========================
+WHY_KEYWORDS = [
+    (["earnings", "results", "quarter", "q1", "q2", "q3", "q4", "beat", "miss"], "kvůli výsledkům (earnings) / překvapení oproti očekávání"),
+    (["guidance", "outlook", "forecast", "raises", "cuts"], "kvůli výhledu (guidance) / změně očekávání"),
+    (["upgrade", "downgrade", "price target", "initiated", "rating"], "kvůli doporučení analytiků (upgrade/downgrade/target)"),
+    (["acquire", "acquisition", "merger", "m&a", "deal"], "kvůli M&A / akvizici / transakci"),
+    (["sec", "investigation", "lawsuit", "regulator", "antitrust", "ban"], "kvůli regulaci / vyšetřování / právním zprávám"),
+    (["contract", "partnership", "agreement", "customer", "orders"], "kvůli zakázkám / partnerství / objednávkám"),
+    (["chip", "ai", "gpu", "data center", "datacenter", "semiconductor"], "kvůli AI/čipovým zprávám a sentimentu v sektoru"),
+    (["supply", "shortage", "inventory", "production", "factory"], "kvůli supply chain / výrobě / zásobám"),
+    (["dividend", "buyback", "repurchase"], "kvůli dividendě nebo buybacku"),
+]
+
+def why_moving_from_headlines(news_items):
+    if not news_items:
+        return "bez jasné zprávy – může jít o sektorový sentiment, technický pohyb nebo širší trh."
+    titles = " ".join([t for (_, t, _) in news_items]).lower()
+    hits = []
+    for keys, reason in WHY_KEYWORDS:
+        if any(k in titles for k in keys):
+            hits.append(reason)
+    if not hits:
+        return "bez jasné zprávy – může jít o sektorový sentiment, technický pohyb nebo širší trh."
+    # max 2 důvody
+    return "; ".join(hits[:2]) + "."
+
+# =========================
+# Earnings (FMP)
 # =========================
 def fmp_next_earnings_date(ticker: str):
     if not FMP_API_KEY:
@@ -359,44 +410,125 @@ def fmp_next_earnings_date(ticker: str):
     except:
         return None
 
-
-# =========================
-# Charts (lepší vizuál: zelená/červená linka)
-# =========================
-def make_chart_7d(ticker: str, out_path: str):
-    try:
-        h = yf.Ticker(ticker).history(period="30d", interval="1d")
-        if h is None or h.empty:
-            return None
-        closes = h["Close"].dropna()
-        if len(closes) < 5:
-            return None
-        closes = closes.iloc[-7:]
-        delta = closes.iloc[-1] - closes.iloc[0]
-        color = "green" if delta >= 0 else "red"
-
-        plt.figure(figsize=(6.4, 2.4))
-        plt.plot(closes.index, closes.values, color=color, linewidth=2)
-        plt.title(f"{ticker} — posledních 7 dní")
-        plt.xticks(rotation=0, fontsize=8)
-        plt.tight_layout()
-        plt.savefig(out_path, dpi=140)
-        plt.close()
-        return out_path
-    except:
+def earnings_days_away(ticker: str):
+    ed = fmp_next_earnings_date(ticker)
+    if not ed:
         return None
+    return (ed - date.today()).days
+
+def earnings_score(days_away: int):
+    if days_away is None:
+        return 0.0
+    if days_away <= 2:
+        return 3.0
+    if days_away <= 7:
+        return 2.0
+    if days_away <= 14:
+        return 1.0
+    return 0.0
+
+def earnings_risk_note(days_away: int):
+    if days_away is None:
+        return ""
+    if days_away <= 2:
+        return "⚠️ Earnings do 48h: vyšší riziko gapu a volatility."
+    if days_away <= 7:
+        return "⚠️ Earnings do týdne: počítej s vyšší volatilitou."
+    if days_away <= 14:
+        return "ℹ️ Earnings do 2 týdnů: může růst nervozita trhu."
+    return ""
+
+
+# =========================
+# SCORING + vysvětlení faktorů
+# =========================
+def explain_scoring(move_abs, vol_spike, news_count, earn_days):
+    parts = []
+    if move_abs >= 4:
+        parts.append("silný pohyb ceny")
+    elif move_abs >= 2:
+        parts.append("výraznější pohyb ceny")
+    else:
+        parts.append("menší pohyb ceny")
+
+    if vol_spike >= 1.8:
+        parts.append("výrazně vyšší objem (zájem trhu)")
+    elif vol_spike >= 1.2:
+        parts.append("vyšší objem než obvykle")
+    else:
+        parts.append("objem bez výrazného spike")
+
+    if news_count >= 5:
+        parts.append("hodně novinek (mediální tlak)")
+    elif news_count >= 2:
+        parts.append("několik novinek")
+    else:
+        parts.append("málo novinek")
+
+    if earn_days is not None:
+        if earn_days <= 2:
+            parts.append("earnings velmi blízko (risk/gap)")
+        elif earn_days <= 7:
+            parts.append("earnings v týdnu")
+        elif earn_days <= 14:
+            parts.append("earnings do 2 týdnů")
+
+    return ", ".join(parts) + "."
+
+
+def build_opportunities_scored():
+    rows = []
+    for t in OPPORTUNITY_WATCHLIST:
+        last, prev, pct = get_yday_change(t)
+        if last is None:
+            continue
+
+        move_abs = abs(pct) if pct is not None else 0.0
+
+        av = avg_volume_20d(t)
+        lv = last_volume(t)
+        vol_spike = (lv / av) if (av and lv and av > 0) else 1.0
+
+        news_items = combined_news(t, NEWS_PER_TICKER)
+        news_count = float(len(news_items))
+
+        d = earnings_days_away(t)
+        e_score = earnings_score(d)
+
+        score = (
+            SCORE_WEIGHTS["move"] * clamp(move_abs, 0, 10) +
+            SCORE_WEIGHTS["volume"] * clamp(vol_spike, 0, 5) +
+            SCORE_WEIGHTS["news"] * clamp(news_count, 0, 6) +
+            SCORE_WEIGHTS["earnings"] * clamp(e_score, 0, 3)
+        )
+
+        rows.append({
+            "ticker": t,
+            "name": company_name(t),
+            "sector": company_sector(t),
+            "thesis": company_thesis(t),
+            "last": last,
+            "pct": pct,
+            "score": score,
+            "move_abs": move_abs,
+            "vol_spike": vol_spike,
+            "news_count": int(news_count),
+            "earn_days": d,
+            "risk_note": earnings_risk_note(d),
+            "news_items": news_items,
+            "top_news": (news_items[0] if news_items else None),
+            "why_move": why_moving_from_headlines(news_items),
+        })
+
+    rows.sort(key=lambda r: r["score"], reverse=True)
+    return rows[:OPPORTUNITY_MAX]
 
 
 # =========================
 # JOBS
 # =========================
 def premarket_job():
-    """
-    12:00 Praha – report:
-    - earnings dnes/zítra
-    - včerejší změny (close vs close)
-    - top 1 headline pro každou akcii (rychle)
-    """
+    """12:00 Praha – report: earnings dnes/zítra, včerejší změny, top titulky."""
     ts = now_local()
     today_str = ts.strftime("%Y-%m-%d")
 
@@ -426,6 +558,8 @@ def premarket_job():
 
     msg = []
     msg.append(f"🕛 REPORT 12:00 ({ts.strftime('%d.%m.%Y %H:%M')})")
+    msg.append("⚠️ Informativní přehled (ne investiční doporučení).")
+    msg.append("")
     if e_today:
         msg.append("📣 Earnings DNES: " + ", ".join(e_today))
     if e_tom:
@@ -433,14 +567,16 @@ def premarket_job():
     msg.append("")
     msg.append("📌 Včerejší změny (close vs close):")
     for (t, last, pct) in rows[:12]:
-        nm = name_for(t)
+        nm = company_name(t)
+        sec = company_sector(t)
         if pct is None:
-            msg.append(f"• {t} — {nm}: {last:.2f} (n/a)")
+            msg.append(f"• {t} — {nm} [{sec}]: {last:.2f} (n/a)")
         else:
             sign = "+" if pct >= 0 else ""
-            msg.append(f"• {t} — {nm}: {last:.2f} ({sign}{pct:.2f}%) {bar(pct)}")
+            msg.append(f"• {t} — {nm} [{sec}]: {last:.2f} ({sign}{pct:.2f}%) {bar(pct)}")
+
     msg.append("")
-    msg.append("📰 Top zprávy (1 headline / ticker):")
+    msg.append("📰 Top titulky (1 headline / ticker):")
     for (t, _, _) in rows[:8]:
         news = combined_news(t, 1)
         if news:
@@ -457,9 +593,9 @@ def premarket_job():
 
 def alerts_job():
     """
-    12:00–21:00 Praha – každých 15 min.
-    Alerty ±3 % od dnešního intraday OPEN (5m data), pokud dostupné.
-    Anti-spam: 1× UP a 1× DOWN za den pro ticker.
+    12:00–21:00 Praha – kontrola.
+    Alerty ±3 % od dnešního OPEN (intraday 5m) – pokud Yahoo dá intraday.
+    Anti-spam: max 1× UP a 1× DOWN za ticker za den.
     """
     ts = now_local()
     if not in_window(ts, ALERT_START, ALERT_END):
@@ -477,18 +613,19 @@ def alerts_job():
         if pct is None or abs(pct) < ALERT_THRESHOLD:
             continue
 
-        sign_key = "UP" if pct > 0 else "DOWN"
-        key = f"{t}:{sign_key}"
+        direction = "UP" if pct > 0 else "DOWN"
+        key = f"{t}:{direction}"
         if sent_today.get(key):
             continue
 
         arrow = "📈" if pct > 0 else "📉"
-        nm = name_for(t)
+        nm = company_name(t)
+        sec = company_sector(t)
         send_telegram(
-            f"🚨 ALERT {arrow}  {t}\n"
-            f"{nm}\n"
+            f"🚨 ALERT {arrow} {t}\n"
+            f"{nm} [{sec}]\n"
             f"Změna od dnešního OPEN: {pct:+.2f}% {bar(pct)}\n"
-            f"Aktuálně: {last:.2f}\n"
+            f"Aktuální cena: {last:.2f}\n"
             f"Čas: {ts.strftime('%H:%M')}"
         )
         sent_today[key] = True
@@ -497,168 +634,94 @@ def alerts_job():
     save_json(STATE_FILE, STATE)
 
 
-def build_opportunities():
-    """
-    PRO výběr: z watchlistu AI/čipy/kovy vezmeme TOP dle absolutní včerejší změny
-    + přidáme 1 headline.
-    """
-    rows = []
-    for t in OPPORTUNITY_WATCHLIST:
-        last, prev, pct = get_yday_change(t)
-        if last is None:
-            continue
-        score = abs(pct) if pct is not None else 0
-        rows.append((t, last, pct, score))
-    rows.sort(key=lambda x: x[3], reverse=True)
-    return rows[:OPPORTUNITY_MAX]
-
-
 def evening_job():
     """
-    20:00 Praha – večerní shrnutí + email 1× denně
+    20:00 Praha – 1× denně:
+    TOP 5 příležitostí se scoringem + odůvodnění + co firma dělá + proč může být úspěšná + "proč se to hýbe".
+    Volitelně i email 1× denně.
     """
     ts = now_local()
     today_str = ts.strftime("%Y-%m-%d")
 
-    if STATE.get("evening_sent_date") == today_str and (not EMAIL_ENABLED or STATE.get("email_sent_date") == today_str):
-        return
     if not after_time(ts, EVENING_TIME):
         return
 
-    # Telegram evening 1× denně
+    opp = build_opportunities_scored()
+
+    # Telegram 1× denně
     if STATE.get("evening_sent_date") != today_str:
-        opp = build_opportunities()
         msg = []
         msg.append(f"🕗 VEČERNÍ SHRNUTÍ ({ts.strftime('%d.%m.%Y %H:%M')})")
-        msg.append("💡 Příležitosti (AI / čipy / kovy) – TOP výběr:")
+        msg.append("💡 TOP příležitosti (AI / čipy / kovy) – SCORING")
+        msg.append("SCORE = pohyb + volume spike + news + blízkost earnings")
+        msg.append("⚠️ Informativní přehled (ne investiční doporučení).")
         msg.append("")
-        for (t, last, pct, _) in opp:
-            nm = name_for(t)
+
+        for r in opp:
+            t = r["ticker"]
+            nm = r["name"]
+            sec = r["sector"]
+            last = r["last"]
+            pct = r["pct"]
+            score = r["score"]
+            arrow = "📈" if (pct is not None and pct >= 0) else "📉"
+
             if pct is None:
-                msg.append(f"• {t} — {nm}: {last:.2f} (n/a)")
+                head = f"{arrow} {t} — {nm} [{sec}] | {last:.2f} | SCORE {score:.2f}"
             else:
                 sign = "+" if pct >= 0 else ""
-                msg.append(f"• {t} — {nm}: {last:.2f} ({sign}{pct:.2f}%) {bar(pct)}")
-            n = combined_news(t, 1)
-            if n:
-                src, title, link = n[0]
-                msg.append(f"  - [{src}] {title}")
-        send_telegram_long("\n".join(msg))
+                head = f"{arrow} {t} — {nm} [{sec}] | {last:.2f} ({sign}{pct:.2f}%) {bar(pct)} | SCORE {score:.2f}"
 
+            msg.append(head)
+            msg.append(f"• Proč je to v TOP: {explain_scoring(r['move_abs'], r['vol_spike'], r['news_count'], r['earn_days'])}")
+            if r["risk_note"]:
+                msg.append(f"• Riziko: {r['risk_note']}")
+            msg.append(f"• Co firma dělá / proč může být úspěšná: {r['thesis']}")
+            msg.append(f"• Proč se to dnes/trhem hýbalo (z headline): {r['why_move']}")
+
+            if r["top_news"]:
+                src, title, link = r["top_news"]
+                msg.append(f"• Top zpráva: [{src}] {title}")
+
+            msg.append("")
+
+        send_telegram_long("\n".join(msg))
         STATE["evening_sent_date"] = today_str
         save_json(STATE_FILE, STATE)
 
-    # Email digest 1× denně
+    # Email 1× denně (pokud zapnuto)
     if EMAIL_ENABLED and STATE.get("email_sent_date") != today_str:
-        send_daily_email_digest(ts)
+        html = []
+        html.append(f"<h2>Večerní shrnutí (SCORING) — {ts.strftime('%d.%m.%Y %H:%M')} ({TIMEZONE})</h2>")
+        html.append("<p><b>Upozornění:</b> Informativní přehled, ne investiční doporučení.</p>")
+        html.append("<ol>")
+        for r in opp:
+            t = r["ticker"]
+            nm = r["name"]
+            sec = r["sector"]
+            pct = r["pct"]
+            pct_txt = "n/a" if pct is None else f"{pct:+.2f}%"
+            html.append(f"<li><b>{t}</b> — {nm} <i>({sec})</i> | SCORE {r['score']:.2f} | změna {pct_txt}<br>")
+            html.append(f"<b>Teze:</b> {r['thesis']}<br>")
+            html.append(f"<b>Proč v TOP:</b> {explain_scoring(r['move_abs'], r['vol_spike'], r['news_count'], r['earn_days'])}<br>")
+            if r["risk_note"]:
+                html.append(f"<b>Riziko:</b> {r['risk_note']}<br>")
+            html.append(f"<b>Proč se to hýbe:</b> {r['why_move']}<br>")
+            if r["top_news"]:
+                src, title, link = r["top_news"]
+                html.append(f"<b>Top zpráva:</b> [{src}] <a href='{link}'>{title}</a>")
+            html.append("</li><br>")
+        html.append("</ol>")
+
+        subject = f"Večerní shrnutí (SCORING) {today_str}"
+        send_email(subject, "\n".join(html))
         STATE["email_sent_date"] = today_str
         save_json(STATE_FILE, STATE)
 
 
-def send_daily_email_digest(ts: datetime):
-    def color(p):
-        if p is None:
-            return "#555"
-        return "#1f8b4c" if p >= 0 else "#c0392b"
-
-    # Portfolio řádky
-    rows = []
-    for t in PORTFOLIO:
-        last, prev, pct = get_yday_change(t)
-        if last is None:
-            continue
-        rows.append((t, last, prev, pct))
-    rows.sort(key=lambda x: abs(x[3]) if x[3] is not None else -1, reverse=True)
-
-    today = date.today()
-    tomorrow = today + timedelta(days=1)
-    e_today, e_tom = [], []
-    for t in PORTFOLIO:
-        ed = fmp_next_earnings_date(t)
-        if ed == today:
-            e_today.append(t)
-        elif ed == tomorrow:
-            e_tom.append(t)
-
-    opp = build_opportunities()
-
-    # Grafy top 12
-    inline = {}
-    for (t, _, _, _) in rows[:12]:
-        path = os.path.join(STATE_DIR, f"chart_{t}.png")
-        p = make_chart_7d(t, path)
-        if p:
-            inline[f"chart_{t}"] = p
-
-    # HTML
-    html = []
-    html.append(f"<h2>Denní report — {ts.strftime('%d.%m.%Y %H:%M')} ({TIMEZONE})</h2>")
-    html.append("<p><b>Ceny:</b> Yahoo (yfinance) | <b>News:</b> Yahoo RSS, SeekingAlpha RSS, GoogleNews RSS | <b>Earnings:</b> FMP calendar</p>")
-
-    if e_today or e_tom:
-        html.append("<h3>Earnings</h3>")
-        if e_today:
-            html.append("<p><b>Dnes:</b> " + ", ".join(e_today) + "</p>")
-        if e_tom:
-            html.append("<p><b>Zítra:</b> " + ", ".join(e_tom) + "</p>")
-
-    html.append("<h3>Portfolio — včerejší změna</h3>")
-    html.append("""
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px;">
-<tr style="background:#f2f2f2;">
-  <th>Ticker</th><th>Firma</th><th>Close</th><th>Předchozí</th><th>Změna</th><th>Graf</th>
-</tr>
-""")
-    for (t, last, prev, pct) in rows:
-        nm = name_for(t)
-        prev_str = f"{prev:.2f}" if prev is not None else "—"
-        if pct is None:
-            change_str = "n/a"
-        else:
-            sign = "+" if pct >= 0 else ""
-            change_str = f"{sign}{pct:.2f}%"
-        cid = f"chart_{t}"
-        img_html = f'<img src="cid:{cid}" width="320" style="display:block;">' if cid in inline else "—"
-
-        html.append(f"""
-<tr>
-  <td><b>{t}</b></td>
-  <td>{nm}</td>
-  <td>{last:.2f}</td>
-  <td>{prev_str}</td>
-  <td style="color:{color(pct)};"><b>{change_str}</b></td>
-  <td>{img_html}</td>
-</tr>
-""")
-    html.append("</table>")
-
-    html.append(f"<h3>Příležitosti (AI / čipy / kovy) — TOP {OPPORTUNITY_MAX}</h3><ul>")
-    for (t, last, pct, _) in opp:
-        nm = name_for(t)
-        if pct is None:
-            html.append(f"<li><b>{t}</b> — {nm}: {last:.2f} (n/a)</li>")
-        else:
-            sign = "+" if pct >= 0 else ""
-            html.append(f"<li><b>{t}</b> — {nm}: {last:.2f} (<span style='color:{color(pct)}'><b>{sign}{pct:.2f}%</b></span>)</li>")
-            n = combined_news(t, 1)
-            if n:
-                src, title, link = n[0]
-                if link:
-                    html.append(f"<ul><li>{src}: <a href='{link}'>{title}</a></li></ul>")
-    html.append("</ul>")
-
-    subject = f"Denní report {ts.strftime('%Y-%m-%d')} — portfolio + news + earnings + příležitosti"
-    send_email_html(subject, "\n".join(html), inline)
-
-
 def main():
-    # 12:00 report
     premarket_job()
-
-    # 12:00–21:00 alert checks (reálné intraday, když Yahoo dá data)
     alerts_job()
-
-    # 20:00 evening summary + email digest 1× denně
     evening_job()
 
 
