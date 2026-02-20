@@ -1,8 +1,15 @@
-name: XTB Bot PRO
+name: XTB Bot (12:00 report, 15min kontrola, 20:00 shrnutí)
 
 on:
   schedule:
-    - cron: "*/15 * * * 1-5"
+    # GitHub cron je v UTC. Chceme pokrýt 12:00–21:00 v Praze:
+    # - léto (CEST = UTC+2): 12–21 = 10–19 UTC
+    # - zima (CET = UTC+1): 12–21 = 11–20 UTC
+    #
+    # Proto jsou 2 okna. Python si hlídá, co má poslat (12:00 report, 20:00 shrnutí, alerty do 21:00).
+    - cron: "*/15 10-19 * * 1-5"  # léto (CEST)
+    - cron: "*/15 11-20 * * 1-5"  # zima (CET)
+
   workflow_dispatch:
 
 jobs:
@@ -36,7 +43,7 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }} # volitelné (může být prázdné)
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }} # volitelné
 
           EMAIL_ENABLED: "true"
           EMAIL_SENDER: "berq1994@gmail.com"
@@ -45,13 +52,17 @@ jobs:
 
           TIMEZONE: "Europe/Prague"
 
-          PREMARKET_TIME: "10:00"
-          EVENING_TIME: "20:00"
-          OPPORTUNITY_MAX: "5"
+          # 12:00 report
+          PREMARKET_TIME: "12:00"
 
+          # Alerty (do 21:00)
           ALERT_START: "15:30"
           ALERT_END: "21:00"
           ALERT_THRESHOLD: "3"
+
+          # Večerní shrnutí + email digest ve 20:00
+          EVENING_TIME: "20:00"
+          OPPORTUNITY_MAX: "5"
 
           NEWS_PER_TICKER: "2"
         run: |
