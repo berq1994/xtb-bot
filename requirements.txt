@@ -1,4 +1,6 @@
 requests
 feedparser
+yfinance
+matplotlib
+deep-translator
 pyyaml
-python-telegram-bot==21.6
