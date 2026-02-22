@@ -1,4 +1,4 @@
-name: XTB Bot (12:00 report + 12-21 alerts + 20:00 summary)
+name: XTB Bot (CZ) – reporty + alerty + tipy
 
 on:
   schedule:
@@ -8,6 +8,7 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,31 +29,35 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance requests feedparser matplotlib
+          pip install requests feedparser yfinance matplotlib deep-translator
 
       - name: Run bot
         env:
+          # Telegram
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
+
+          # FMP
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
 
-          EMAIL_ENABLED: "true"
-          EMAIL_SENDER: "berq1994@gmail.com"
-          EMAIL_RECEIVER: "berq1994@gmail.com"
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
-
+          # Čas / okna
           TIMEZONE: "Europe/Prague"
           PREMARKET_TIME: "12:00"
           EVENING_TIME: "20:00"
-
           ALERT_START: "12:00"
           ALERT_END: "21:00"
           ALERT_THRESHOLD: "3"
 
+          # News + tipy
           NEWS_PER_TICKER: "2"
-
           OPPORTUNITY_MAX: "5"
           OPPORTUNITY_WEEKDAYS_ONLY: "true"
+
+          # Email (1× denně – posílá se v 12:00 reportu)
+          EMAIL_ENABLED: "true"
+          EMAIL_SENDER: "berq1994@gmail.com"
+          EMAIL_RECEIVER: "berq1994@gmail.com"
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
         run: |
           python ahoj.py
 
