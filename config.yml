@@ -6,8 +6,8 @@
 fmp_api_key: ${FMP_API_KEY}
 
 telegram:
-  bot_token: ${TG_BOT_TOKEN}
-  chat_id: ${TG_CHAT_ID}
+  bot_token: ${TELEGRAMTOKEN}
+  chat_id: ${CHATID}
 
 # Cache/rotace
 cache_ttl_sec: 900
@@ -31,11 +31,11 @@ risk_rules:
   earnings_wait_hours: 48
 
 # ============================================================
-# TVÉ PORTFOLIO – FINÁLNÍ ČISTÉ VSTUPY (dle tvých screenů + oprav)
+# PORTFOLIO – FINÁLNÍ ČISTÉ VSTUPY
 # ============================================================
 
 portfolio:
-  # --- Raiffeisenbank (dle tvých screenů)
+  # --- Raiffeisenbank
   - ticker: NVDA
     qty: 6
     entry: 186.51
@@ -73,16 +73,15 @@ portfolio:
     entry: 74.61
     currency: EUR
     broker: Raiffeisen
-    note: "iShares Physical Gold EUR Hedged ETC (ticker může být u brokera jiný; v radaru sledujeme SGLD jako placeholder)"
+    note: "Gold ETC/ETN placeholder – upřesníme podle ISIN z RB"
 
-  # --- XTB (USD část) – dle tvých oprav:
-  # NVO: dvě pozice, ale v botovi evidujeme agregovaně (qty ~ 4.143 + 1.8248)
+  # --- XTB (USD část)
   - ticker: NVO
     qty: 5.9678
     entry: 0
     currency: USD
     broker: XTB
-    note: "Agregace dvou vstupů: 4.143 @ 58.16 a 1.8248 @ 54.76 (entry = 0 => jen tracking score)"
+    note: "Agregace: 4.143 @ 58.16 + 1.8248 @ 54.76 (entry=0 => jen score)"
 
   - ticker: NBIS
     qty: 3
@@ -102,22 +101,15 @@ portfolio:
     currency: USD
     broker: XTB
 
-# Pozn.: u NVO máš dvě různé vstupní ceny – bot to umí držet i jako dvě položky,
-# ale na “radar” to není nutné. Kdybys chtěl přesné loty, řekni a přepíšu to na 2 řádky.
-
-# ============================================================
-# WATCHLIST + NOVÉ NADĚJNÉ
-# ============================================================
-
 watchlist:
   - SPY
   - QQQ
   - SMH
 
-# Kandidáti pro /new (mimo portfolio)
 new_candidates:
   - ASML
   - AMD
   - AVGO
   - CRWD
-  - LLT
+  - NET
+  - DDOG
