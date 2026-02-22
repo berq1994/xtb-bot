@@ -1,63 +1,47 @@
-name: Investicni Radar Bot
+name: xtb-bot
 
 on:
   workflow_dispatch:
-    inputs:
-      job:
-        description: "Co spustit: radar / study / portfolio"
-        required: true
-        default: "radar"
-        type: choice
-        options:
-          - radar
-          - study
-          - portfolio
-
   schedule:
-    # Denně radar v 07:05 CET (GitHub cron je UTC -> 06:05 UTC ~ 07:05 CET v zimě)
-    - cron: "5 6 * * *"
-    # Studie 3× týdně v 18:10 CET (17:10 UTC)
-    - cron: "10 17 * * 1,3,5"
+    # každých 30 minut v pracovní dny (UTC)
+    - cron: "*/30 6-21 * * 1-5"
 
 jobs:
-  run-bot:
+  run:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install deps
         run: |
           python -m pip install --upgrade pip
-          pip install requests feedparser pyyaml python-telegram-bot==21.6
+          pip install -r requirements.txt
 
-      - name: Run (scheduled)
-        if: github.event_name == 'schedule'
+      - name: Run bot
         env:
+          # Secrets
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-        run: |
-          # config.yml používá env jako fallback
-          python ahoj.py --mode cron_radar
 
-      - name: Run (manual)
-        if: github.event_name == 'workflow_dispatch'
-        env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          # optional email (když chceš)
+          EMAIL_ENABLED: ${{ secrets.EMAIL_ENABLED }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+
+          # timezone + okna
+          TIMEZONE: Europe/Prague
+          ALERT_THRESHOLD: "3"
+          ALERT_START: "12:00"
+          ALERT_END: "21:00"
+          PREMARKET_TIME: "12:00"
+          EVENING_TIME: "20:00"
         run: |
-          if [ "${{ inputs.job }}" = "radar" ]; then
-            python ahoj.py --mode cron_radar
-          elif [ "${{ inputs.job }}" = "study" ]; then
-            python ahoj.py --mode cron_study
-          else
-            python ahoj.py --mode print_portfolio
-          fi
+          python ahoj.py
