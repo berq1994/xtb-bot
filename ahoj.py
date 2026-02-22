@@ -1,20 +1,30 @@
 import os
-import re
 import json
 import math
 import time
-import yaml
 import requests
 import feedparser
 import yfinance as yf
+import matplotlib.pyplot as plt
 
-from dataclasses import dataclass
 from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 
+# Email (Gmail SMTP)
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+
+# YAML (config)
+try:
+    import yaml
+except Exception:
+    yaml = None
+
 
 # ============================================================
-# PŘEKLADY (vše do češtiny) – bezpečný fallback
+# PŘEKLADY (vše do češtiny)
 # ============================================================
 def _translator():
     try:
@@ -34,7 +44,28 @@ def cz(text: str) -> str:
     if len(key) < 5:
         return key
     if key in _TRANSLATE_CACHE:
-        return _TRANATE_CACHE[key]  # noqa (typo protection)
+        return _TRANATE_CACHE[key]  # typo guard? (kept safe below)
+    if _TRANSLATOR is None:
+        _TRANSLATE_CACHE[key] = key
+        return key
+    try:
+        out = _TRANSLATOR.translate(key)
+        _TRANSLATE_CACHE[key] = out
+        return out
+    except Exception:
+        _TRANSLATE_CACHE[key] = key
+        return key
+
+
+# Fix for possible typo in cache key access above
+def _cz(text: str) -> str:
+    if not text:
+        return ""
+    key = text.strip()
+    if len(key) < 5:
+        return key
+    if key in _TRANSLATE_CACHE:
+        return _TRANSLATE_CACHE[key]
     if _TRANSLATOR is None:
         _TRANSLATE_CACHE[key] = key
         return key
@@ -48,21 +79,186 @@ def cz(text: str) -> str:
 
 
 # ============================================================
+# ENV / NASTAVENÍ
+# ============================================================
+TZ_NAME = os.getenv("TIMEZONE", "Europe/Prague").strip()
+TZ = ZoneInfo(TZ_NAME)
+
+TELEGRAM_TOKEN = (os.getenv("TELEGRAMTOKEN") or os.getenv("TG_BOT_TOKEN") or "").strip()
+CHAT_ID = str(os.getenv("CHATID") or os.getenv("TG_CHAT_ID") or "").strip()
+FMP_API_KEY = (os.getenv("FMPAPIKEY") or os.getenv("FMP_API_KEY") or "").strip()
+
+EMAIL_ENABLED = (os.getenv("EMAIL_ENABLED", "false").lower().strip() == "true")
+EMAIL_SENDER = (os.getenv("EMAIL_SENDER") or "").strip()
+EMAIL_RECEIVER = (os.getenv("EMAIL_RECEIVER") or "").strip()
+GMAILPASSWORD = (os.getenv("GMAILPASSWORD") or "").strip()
+
+# časy reportů (lokální TZ)
+PREMARKET_TIME = os.getenv("PREMARKET_TIME", "12:00").strip()
+EVENING_TIME = os.getenv("EVENING_TIME", "20:00").strip()
+
+ALERT_START = os.getenv("ALERT_START", "12:00").strip()
+ALERT_END = os.getenv("ALERT_END", "21:00").strip()
+ALERT_THRESHOLD = float(os.getenv("ALERT_THRESHOLD", "3").strip())  # % od dnešního OPEN
+
+NEWS_PER_TICKER = int(os.getenv("NEWS_PER_TICKER", "2").strip())
+OPPORTUNITY_MAX = int(os.getenv("OPPORTUNITY_MAX", "5").strip())
+OPPORTUNITY_WEEKDAYS_ONLY = (os.getenv("OPPORTUNITY_WEEKDAYS_ONLY", "true").lower().strip() == "true")
+
+TELEGRAM_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
+
+
+# ============================================================
+# CONFIG (YAML) – pokud máš config.yml
+# ============================================================
+DEFAULT_CONFIG_PATHS = [
+    "config.yml",
+    "config.yaml",
+    ".github/config.yml",
+    ".github/config.yaml",
+]
+
+def load_cfg():
+    """
+    Načte config.yml pokud existuje.
+    Pokud YAML chybí (knihovna nebo soubor), vrátí {}.
+    """
+    if yaml is None:
+        return {}
+    path = None
+    for p in DEFAULT_CONFIG_PATHS:
+        if os.path.exists(p):
+            path = p
+            break
+    if not path:
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+    except Exception:
+        return {}
+
+CFG = load_cfg()
+
+
+def cfg_get(path, default=None):
+    """
+    Bezpečné čtení z CFG podle path jako:
+    "telegram.bot_token" / "weights.momentum" / "portfolio"
+    """
+    try:
+        cur = CFG
+        for part in path.split("."):
+            if not isinstance(cur, dict):
+                return default
+            cur = cur.get(part)
+        return default if cur is None else cur
+    except Exception:
+        return default
+
+
+# ============================================================
+# PORTFOLIO / WATCHLIST / UNIVERSE
+# ============================================================
+# Pokud je portfolio v configu, použijeme ho. Jinak fallback.
+def portfolio_from_cfg():
+    items = cfg_get("portfolio", [])
+    out = []
+    if isinstance(items, list):
+        for row in items:
+            if isinstance(row, dict) and row.get("ticker"):
+                out.append(row.get("ticker").strip().upper())
+    return out
+
+PORTFOLIO = portfolio_from_cfg()
+if not PORTFOLIO:
+    PORTFOLIO = [
+        "CENX","S","NVO","PYPL","AMZN","MSFT","CVX","NVDA","TSM","CAG","META","AAPL","GOOGL","TSLA",
+        "PLTR","SPY","FCX","IREN"
+    ]
+
+# Watchlist pro best/worst
+WATCHLIST_CFG = cfg_get("watchlist", [])
+WATCHLIST = []
+if isinstance(WATCHLIST_CFG, list) and WATCHLIST_CFG:
+    WATCHLIST = sorted(set([str(x).strip().upper() for x in WATCHLIST_CFG] + PORTFOLIO))
+else:
+    WATCHLIST = sorted(set(PORTFOLIO + [
+        "AMD","ASML","AVGO","MU","ARM","QCOM","SMCI","INTC","TXN","ADI","MRVL","KLAC","LRCX","AMAT",
+        "BHP","RIO","SCCO","AA","TECK","VALE","ALB","LAC","URNM","URA","CCJ"
+    ]))
+
+# Kandidáti pro „nové nadějné“ (mimo watchlist/portfolio)
+# !!! TADY BYLA TVOJE CHYBA: new_candidates může být omylem bool.
+def new_candidates_from_cfg():
+    raw = cfg_get("new_candidates", [])
+    if raw is None:
+        raw = []
+    if not isinstance(raw, list):
+        # když YAML omylem obsahuje true/false apod.
+        raw = []
+    out = []
+    for x in raw:
+        out.append(str(x).strip().upper())
+    return [x for x in out if x]
+
+CANDIDATE_UNIVERSE = new_candidates_from_cfg()
+if not CANDIDATE_UNIVERSE:
+    CANDIDATE_UNIVERSE = [
+        # AI / software / data
+        "SNOW","DDOG","MDB","NET","CRWD","ZS","PANW","NOW","ADBE","ORCL",
+        # Semis / infra
+        "ON","MPWR","ANET","DELL","HPE",
+        # Metals / mining / energy proxy
+        "NUE","STLD","GOLD","AEM","WPM","GLD","SLV",
+        # Uranium / energy
+        "UUUU","UEC","SMR","OKLO"
+    ]
+
+
+# ============================================================
 # STATE (cache přes GitHub Actions)
 # ============================================================
 STATE_DIR = ".state"
 os.makedirs(STATE_DIR, exist_ok=True)
 
-LAST_RUN_FILE = os.path.join(STATE_DIR, "last_run.json")
+LAST_PREMARKET_DATE_FILE = os.path.join(STATE_DIR, "last_premarket_date.txt")
+LAST_EVENING_DATE_FILE = os.path.join(STATE_DIR, "last_evening_date.txt")
+LAST_ALERTS_FILE = os.path.join(STATE_DIR, "last_alerts.json")
 PROFILE_CACHE_FILE = os.path.join(STATE_DIR, "profiles.json")
-SNAPSHOTS_FILE = os.path.join(STATE_DIR, "portfolio_snapshots.json")
-ALERTS_STATE_FILE = os.path.join(STATE_DIR, "alerts_state.json")
-STUDIES_STATE_FILE = os.path.join(STATE_DIR, "studies_state.json")
 
 
 # ============================================================
 # UTIL
 # ============================================================
+def now_local() -> datetime:
+    return datetime.now(TZ)
+
+def today_str() -> str:
+    return now_local().strftime("%Y-%m-%d")
+
+def hm(dt: datetime) -> str:
+    return dt.strftime("%H:%M")
+
+def is_weekday(dt: datetime) -> bool:
+    return dt.weekday() < 5
+
+def in_window(now_hm: str, start_hm: str, end_hm: str) -> bool:
+    return start_hm <= now_hm <= end_hm
+
+def read_text(path: str, default="") -> str:
+    try:
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as f:
+                return f.read().strip()
+    except Exception:
+        pass
+    return default
+
+def write_text(path: str, text: str):
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+
 def read_json(path: str, default):
     try:
         if os.path.exists(path):
@@ -96,7 +292,7 @@ def clamp(x, lo=0.0, hi=10.0):
     return max(lo, min(hi, x))
 
 def bar(pct: float, width: int = 14) -> str:
-    """Textový bar pro +/- 0..10 %."""
+    """Textový bar pro +/- 0..10 % (čím víc, tím víc bloků)."""
     if pct is None:
         return ""
     a = min(abs(pct), 10.0)
@@ -114,74 +310,80 @@ def chunk_text(text: str, limit: int = 3500):
         parts.append(buf)
     return parts
 
-def uniq_keep_order(seq):
-    seen = set()
-    out = []
-    for x in seq:
-        if x in seen:
-            continue
-        seen.add(x)
-        out.append(x)
-    return out
-
-
-# ============================================================
-# CONFIG LOADER (supports ${ENV_VAR})
-# ============================================================
-ENV_PATTERN = re.compile(r"\$\{([A-Z0-9_]+)\}")
-
-def _expand_env_in_obj(obj):
-    if isinstance(obj, dict):
-        return {k: _expand_env_in_obj(v) for k, v in obj.items()}
-    if isinstance(obj, list):
-        return [_expand_env_in_obj(v) for v in obj]
-    if isinstance(obj, str):
-        def repl(m):
-            key = m.group(1)
-            return os.getenv(key, "")
-        return ENV_PATTERN.sub(repl, obj)
-    return obj
-
-def load_config(path="config.yml"):
-    with open(path, "r", encoding="utf-8") as f:
-        raw = yaml.safe_load(f)
-    cfg = _expand_env_in_obj(raw or {})
-    return cfg
-
 
 # ============================================================
 # TELEGRAM
 # ============================================================
-def telegram_send(bot_token: str, chat_id: str, text: str):
-    if not bot_token or not chat_id:
-        print("⚠️ Telegram není nastaven (chybí token/chat_id).")
+def telegram_send(text: str):
+    if not TELEGRAM_TOKEN or not CHAT_ID:
+        print("⚠️ Telegram není nastaven: chybí TELEGRAMTOKEN/CHATID nebo TG_BOT_TOKEN/TG_CHAT_ID.")
         return
-    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
     try:
-        r = requests.post(url, data={
-            "chat_id": chat_id,
-            "text": text,
-            "disable_web_page_preview": True
-        }, timeout=35)
+        r = requests.post(
+            f"{TELEGRAM_URL}/sendMessage",
+            data={"chat_id": CHAT_ID, "text": text, "disable_web_page_preview": True},
+            timeout=35
+        )
+        print("Telegram status:", r.status_code)
         if r.status_code != 200:
-            print("Telegram error:", r.status_code, r.text[:500])
+            print("Telegram odpověď:", r.text[:500])
     except Exception as e:
-        print("Telegram exception:", repr(e))
+        print("Telegram error:", e)
 
-def telegram_send_long(bot_token: str, chat_id: str, text: str):
+def telegram_send_long(text: str):
     for part in chunk_text(text):
-        telegram_send(bot_token, chat_id, part)
+        telegram_send(part)
+
+
+# ============================================================
+# EMAIL (Gmail SMTP) – volitelné
+# ============================================================
+def email_send(subject: str, body_text: str, image_paths=None):
+    if not EMAIL_ENABLED:
+        return
+    if not (EMAIL_SENDER and EMAIL_RECEIVER and GMAILPASSWORD):
+        print("⚠️ Email zapnutý, ale chybí EMAIL_SENDER/EMAIL_RECEIVER/GMAILPASSWORD.")
+        return
+
+    msg = MIMEMultipart()
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = EMAIL_RECEIVER
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body_text, "plain", "utf-8"))
+
+    image_paths = image_paths or []
+    for path in image_paths:
+        try:
+            with open(path, "rb") as f:
+                img = MIMEImage(f.read())
+                img.add_header("Content-Disposition", "attachment", filename=os.path.basename(path))
+                msg.attach(img)
+        except Exception as e:
+            print("⚠️ Příloha obrázku chyba:", path, e)
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587, timeout=40)
+        server.ehlo()
+        server.starttls()
+        server.login(EMAIL_SENDER, GMAILPASSWORD)
+        server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
+        server.quit()
+        print("✅ Email OK: odesláno")
+    except Exception as e:
+        print("❌ Email ERROR:", repr(e))
 
 
 # ============================================================
 # FMP API
 # ============================================================
-def fmp_get(api_key: str, path: str, params=None):
-    if not api_key:
+def fmp_get(path: str, params=None):
+    key = FMP_API_KEY or cfg_get("fmp_api_key", "")
+    key = (key or "").strip()
+    if not key:
         return None
     url = f"https://financialmodelingprep.com/api/{path}"
     p = dict(params or {})
-    p["apikey"] = api_key
+    p["apikey"] = key
     try:
         r = requests.get(url, params=p, timeout=25)
         if r.status_code != 200:
@@ -192,58 +394,7 @@ def fmp_get(api_key: str, path: str, params=None):
 
 
 # ============================================================
-# PORTFOLIO MODEL
-# ============================================================
-@dataclass
-class Lot:
-    qty: float
-    entry: float
-    currency: str
-    broker: str
-    note: str = ""
-
-@dataclass
-class Position:
-    ticker: str
-    lots: list
-
-    def total_qty(self) -> float:
-        return float(sum(l.qty for l in self.lots))
-
-    def avg_entry(self) -> float:
-        # vážený průměr; pokud chybí entry (0/None), ignoruj v průměru
-        num = 0.0
-        den = 0.0
-        for l in self.lots:
-            if l.entry and l.entry > 0:
-                num += l.qty * l.entry
-                den += l.qty
-        return (num / den) if den > 0 else 0.0
-
-    def currencies(self):
-        return uniq_keep_order([l.currency for l in self.lots])
-
-
-def parse_positions(cfg) -> list:
-    positions = []
-    for p in (cfg.get("portfolio") or []):
-        t = (p.get("ticker") or "").strip().upper()
-        lots = []
-        for row in (p.get("lots") or []):
-            lots.append(Lot(
-                qty=float(row.get("qty") or 0),
-                entry=float(row.get("entry") or 0),
-                currency=(row.get("currency") or "").strip().upper(),
-                broker=(row.get("broker") or "").strip(),
-                note=(row.get("note") or "").strip()
-            ))
-        if t and lots:
-            positions.append(Position(ticker=t, lots=lots))
-    return positions
-
-
-# ============================================================
-# PROFILES (FMP primárně, Yahoo fallback) + CACHE
+# PROFIL FIRMY (celé jméno + popis)
 # ============================================================
 def profiles_cache_load():
     return read_json(PROFILE_CACHE_FILE, {})
@@ -251,14 +402,15 @@ def profiles_cache_load():
 def profiles_cache_save(cache):
     write_json(PROFILE_CACHE_FILE, cache)
 
-def get_profile(api_key: str, ticker: str):
+def get_profile(ticker: str):
     cache = profiles_cache_load()
     if ticker in cache:
         return cache[ticker]
 
     prof = {"name": ticker, "sector": "", "industry": "", "description": ""}
 
-    data = fmp_get(api_key, "v3/profile", {"symbol": ticker})
+    # FMP primárně
+    data = fmp_get("v3/profile", {"symbol": ticker})
     if isinstance(data, list) and data:
         row = data[0]
         prof["name"] = (row.get("companyName") or ticker).strip()
@@ -266,6 +418,7 @@ def get_profile(api_key: str, ticker: str):
         prof["industry"] = (row.get("industry") or "").strip()
         prof["description"] = (row.get("description") or "").strip()
 
+    # Yahoo fallback
     if prof["name"] == ticker:
         try:
             info = yf.Ticker(ticker).info or {}
@@ -282,8 +435,21 @@ def get_profile(api_key: str, ticker: str):
 
 
 # ============================================================
-# PRICES (daily close/prev close) + INTRADAY open/last + VOLUME SPIKE
+# CENY: daily (FMP primárně, Yahoo fallback)
 # ============================================================
+def prices_daily_fmp(ticker: str):
+    data = fmp_get("v3/historical-price-full/" + ticker, {"serietype": "line", "timeseries": 5})
+    if not isinstance(data, dict):
+        return None
+    hist = data.get("historical")
+    if not isinstance(hist, list) or len(hist) < 2:
+        return None
+    c0 = safe_float(hist[0].get("close"))
+    c1 = safe_float(hist[1].get("close"))
+    if c0 is None or c1 is None:
+        return None
+    return c0, c1
+
 def prices_daily_yahoo(ticker: str):
     try:
         h = yf.Ticker(ticker).history(period="10d", interval="1d")
@@ -296,6 +462,19 @@ def prices_daily_yahoo(ticker: str):
     except Exception:
         return None
 
+def daily_last_prev(ticker: str):
+    got = prices_daily_fmp(ticker)
+    if got:
+        return got[0], got[1], "FMP"
+    got = prices_daily_yahoo(ticker)
+    if got:
+        return got[0], got[1], "Yahoo"
+    return None, None, "—"
+
+
+# ============================================================
+# INTRADAY pro alerty (Yahoo 5m)
+# ============================================================
 def intraday_open_last_yahoo(ticker: str):
     try:
         h = yf.Ticker(ticker).history(period="1d", interval="5m")
@@ -328,7 +507,7 @@ def volume_spike_yahoo(ticker: str):
 
 
 # ============================================================
-# NEWS (FMP + RSS)
+# NEWS: FMP + RSS (Yahoo + SeekingAlpha + Google)
 # ============================================================
 def rss_entries(url: str, limit: int):
     feed = feedparser.parse(url)
@@ -340,8 +519,8 @@ def rss_entries(url: str, limit: int):
             out.append((title, link))
     return out
 
-def news_fmp(api_key: str, ticker: str, limit: int):
-    data = fmp_get(api_key, "v3/stock_news", {"tickers": ticker, "limit": limit})
+def news_fmp(ticker: str, limit: int):
+    data = fmp_get("v3/stock_news", {"tickers": ticker, "limit": limit})
     if not isinstance(data, list):
         return []
     out = []
@@ -365,9 +544,9 @@ def news_google_rss(ticker: str, limit: int):
     url = f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
     return [("GoogleNews", t, l) for t, l in rss_entries(url, limit)]
 
-def combined_news(api_key: str, ticker: str, limit_each: int):
+def combined_news(ticker: str, limit_each: int):
     items = []
-    items += news_fmp(api_key, ticker, limit_each)
+    items += news_fmp(ticker, limit_each)
     items += news_yahoo_rss(ticker, limit_each)
     items += news_seekingalpha_rss(ticker, limit_each)
     items += news_google_rss(ticker, limit_each)
@@ -409,10 +588,10 @@ def why_from_headlines(news_items):
 
 
 # ============================================================
-# EARNINGS (FMP earning_calendar)
+# EARNINGS: FMP kalendář (kdy je nejbližší)
 # ============================================================
-def fmp_next_earnings_date(api_key: str, ticker: str):
-    data = fmp_get(api_key, "v3/earning_calendar", {"symbol": ticker})
+def fmp_next_earnings_date(ticker: str):
+    data = fmp_get("v3/earning_calendar", {"symbol": ticker})
     if not isinstance(data, list) or not data:
         return None
     today = date.today()
@@ -429,8 +608,8 @@ def fmp_next_earnings_date(api_key: str, ticker: str):
             future.append(d)
     return min(future) if future else None
 
-def days_to_earnings(api_key: str, ticker: str):
-    ed = fmp_next_earnings_date(api_key, ticker)
+def days_to_earnings(ticker: str):
+    ed = fmp_next_earnings_date(ticker)
     if not ed:
         return None
     return (ed - date.today()).days
@@ -448,13 +627,18 @@ def earnings_note(days_away):
 
 
 # ============================================================
-# MARKET REGIME (SPY trend + VIX change)
+# MARKET REŽIM (Risk-On / Risk-Off) + kontext
 # ============================================================
-def market_regime(spy_ticker="SPY", vix_ticker="^VIX"):
+def market_regime():
+    """
+    Heuristika:
+    - SPY 20D trend (+/-)
+    - VIX 5D změna
+    """
     label = "NEUTRÁLNÍ"
     detail = []
     try:
-        spy = yf.Ticker(spy_ticker).history(period="3mo", interval="1d")
+        spy = yf.Ticker("SPY").history(period="3mo", interval="1d")
         if spy is not None and not spy.empty:
             close = spy["Close"].dropna()
             if len(close) >= 25:
@@ -467,7 +651,7 @@ def market_regime(spy_ticker="SPY", vix_ticker="^VIX"):
                 elif trend < -0.7:
                     label = "RISK-OFF"
 
-        vix = yf.Ticker(vix_ticker).history(period="1mo", interval="1d")
+        vix = yf.Ticker("^VIX").history(period="1mo", interval="1d")
         if vix is not None and not vix.empty:
             v = vix["Close"].dropna()
             if len(v) >= 6:
@@ -486,420 +670,318 @@ def market_regime(spy_ticker="SPY", vix_ticker="^VIX"):
 
 
 # ============================================================
-# RETURNS / MOMENTUM / RELATIVE STRENGTH
+# RELATIVNÍ SÍLA vs SPY (5D)
 # ============================================================
-def ret_nd(ticker: str, days: int):
+def ret_5d_yahoo(ticker: str):
     try:
-        h = yf.Ticker(ticker).history(period=f"{max(days+3, 8)}d", interval="1d")
+        h = yf.Ticker(ticker).history(period="8d", interval="1d")
         if h is None or h.empty:
             return None
         c = h["Close"].dropna()
-        if len(c) < (days + 1):
+        if len(c) < 6:
             return None
-        old = float(c.iloc[-(days+1)])
-        new = float(c.iloc[-1])
-        return (new - old) / old * 100.0
+        return (float(c.iloc[-1]) - float(c.iloc[-6])) / float(c.iloc[-6]) * 100.0
     except Exception:
         return None
 
-def rel_strength_5d(ticker: str, spy: str = "SPY"):
-    r_t = ret_nd(ticker, 5)
-    r_s = ret_nd(spy, 5)
+def rel_strength_5d(ticker: str):
+    r_t = ret_5d_yahoo(ticker)
+    r_s = ret_5d_yahoo("SPY")
     if r_t is None or r_s is None:
         return None
-    return r_t - r_s
+    return r_t - r_s  # kladné = outperformuje SPY
 
 
 # ============================================================
-# SCORE ENGINE (tvůj “PRO verze” styl)
+# SCORE (PRO RADAR): momentum + objem + zprávy + earnings + RS + režim
 # ============================================================
-def earnings_score(days_away):
-    if days_away is None:
+WEIGHTS = {
+    "momentum": float(cfg_get("weights.momentum", 0.25)),
+    "rel_strength": float(cfg_get("weights.rel_strength", 0.20)),
+    "volatility_volume": float(cfg_get("weights.volatility_volume", 0.15)),
+    "catalyst": float(cfg_get("weights.catalyst", 0.20)),
+    "market_regime": float(cfg_get("weights.market_regime", 0.20)),
+}
+
+ADVICE_MODE = str(cfg_get("advice_mode", "SOFT")).strip().upper()
+if ADVICE_MODE not in ("SOFT", "HARD"):
+    ADVICE_MODE = "SOFT"
+
+def momentum_score_1d(pct1d):
+    if pct1d is None:
         return 0.0
-    if days_away <= 2:
-        return 3.0
-    if days_away <= 7:
-        return 2.0
-    if days_away <= 14:
-        return 1.0
-    return 0.0
+    a = abs(pct1d)
+    # 0..8% -> 0..10
+    return clamp((a / 8.0) * 10.0, 0.0, 10.0)
+
+def vol_score(vol_ratio):
+    # 1.0 = normál, 2.0 = velký spike
+    if vol_ratio is None:
+        return 0.0
+    return clamp((vol_ratio - 1.0) * 6.0, 0.0, 10.0)
+
+def catalyst_score(news_items, days_earn):
+    s = 0.0
+    # news: max 4
+    if news_items and len(news_items) > 0:
+        s += min(4.0, 1.0 + 0.7 * len(news_items))
+    # earnings: max 6
+    if days_earn is not None:
+        if days_earn <= 2:
+            s += 6.0
+        elif days_earn <= 7:
+            s += 4.0
+        elif days_earn <= 14:
+            s += 2.0
+    return clamp(s, 0.0, 10.0)
 
 def rs_score(rs):
-    # RS diff vs SPY: +0..+5 -> +0..3, -5..0 -> -0..-3
+    # rs +5% -> 10, rs 0 -> 5, rs -5 -> 0
     if rs is None:
         return 0.0
-    return clamp((rs / 5.0) * 3.0, -3.0, 3.0)
+    return clamp((rs + 5.0) * 1.0, 0.0, 10.0)
 
-def momentum_score(r1, r5, r20):
-    # jednoduché škálování: 1D/5D/20D dohromady, limit -5..+5
-    vals = [v for v in [r1, r5, r20] if v is not None]
-    if not vals:
+def regime_score(regime_label):
+    # risk-on = 10, neutral = 5, risk-off = 0
+    if regime_label == "RISK-ON":
+        return 10.0
+    if regime_label == "RISK-OFF":
         return 0.0
-    s = sum(vals) / len(vals)
-    return clamp((s / 10.0) * 5.0, -5.0, 5.0)
+    return 5.0
 
-def volvol_score(vol_spike):
-    # 1.0 normál; 2.0 = výrazný spike
-    if vol_spike is None:
-        return 0.0
-    return clamp((vol_spike - 1.0) * 2.0, 0.0, 3.0)
-
-def catalyst_score(news_items):
-    # jednoduchá heuristika: když je hodně headlineů, lehce +; když nic, 0
-    n = len(news_items or [])
-    if n <= 0:
-        return 0.0
-    if n == 1:
-        return 0.5
-    if n == 2:
-        return 1.0
-    return 1.5
-
-def regime_score(label):
-    if label == "RISK-ON":
-        return 1.0
-    if label == "RISK-OFF":
-        return -1.0
-    return 0.0
-
-def compute_score(cfg, ticker: str, regime_label: str, spy: str):
-    w = cfg.get("weights") or {}
-    r1 = ret_nd(ticker, 1)
-    r5 = ret_nd(ticker, 5)
-    r20 = ret_nd(ticker, 20)
-    rs = rel_strength_5d(ticker, spy)
-    vol_spike = volume_spike_yahoo(ticker)
-    news_items = combined_news(cfg.get("fmp_api_key",""), ticker, int((cfg.get("news") or {}).get("per_ticker", 2)))
-    days_earn = days_to_earnings(cfg.get("fmp_api_key",""), ticker) if cfg.get("fmp_api_key") else None
-
-    s_mom = momentum_score(r1, r5, r20)
-    s_rs = rs_score(rs)
-    s_vv = volvol_score(vol_spike)
-    s_cat = catalyst_score(news_items)
-    s_reg = regime_score(regime_label)
-    s_earn = earnings_score(days_earn)
-
-    # vážený mix (0..100-ish -> znormalizujeme do -10..+10)
-    score = (
-        w.get("momentum", 0.25) * s_mom +
-        w.get("rel_strength", 0.20) * s_rs +
-        w.get("volatility_volume", 0.15) * s_vv +
-        w.get("catalyst", 0.20) * s_cat +
-        w.get("market_regime", 0.20) * s_reg
-    )
-
-    # earnings penalizace pro “WAIT”
-    wait = False
-    risk_rules = cfg.get("risk_rules") or {}
-    wait_hours = int(risk_rules.get("earnings_wait_hours", 48))
-    if days_earn is not None and days_earn <= 2 and wait_hours >= 48:
-        wait = True
-        score -= 1.0  # lehký downweight, protože gap risk
-
-    return {
-        "ticker": ticker,
-        "r1": r1, "r5": r5, "r20": r20,
-        "rs5": rs,
-        "vol_spike": vol_spike,
-        "days_to_earnings": days_earn,
-        "earn_note": earnings_note(days_earn),
-        "news": news_items[:4],
-        "why": why_from_headlines(news_items[:6]),
-        "score": float(score),
-        "wait": wait
-    }
-
-
-# ============================================================
-# STUDIES (lehké “učící se” – stahuje poslední studie přes arXiv RSS)
-# Pozn: ukládá jen metadata + “pravidlo”, ne texty.
-# ============================================================
-def arxiv_rss(query: str, limit: int = 5):
-    q = requests.utils.quote(query)
-    url = f"https://export.arxiv.org/rss/{q}"
-    feed = feedparser.parse(url)
-    out = []
-    for e in (feed.entries or [])[:limit]:
-        title = (getattr(e, "title", "") or "").strip()
-        link = (getattr(e, "link", "") or "").strip()
-        summary = (getattr(e, "summary", "") or "").strip()
-        if title:
-            out.append({"title": title, "link": link, "summary": summary[:500]})
-    return out
-
-def studies_update():
-    state = read_json(STUDIES_STATE_FILE, {"seen": [], "items": []})
-    seen = set(state.get("seen") or [])
-    items = state.get("items") or []
-
-    # dotazy: trading/momentum/risk management
-    queries = [
-        "q-fin.TR",
-        "momentum trading",
-        "volatility forecasting",
-        "portfolio risk management",
-    ]
-
-    new_items = []
-    for q in queries:
-        try:
-            for it in arxiv_rss(q, limit=5):
-                key = it["title"].lower().strip()
-                if key in seen:
-                    continue
-                seen.add(key)
-                new_items.append(it)
-        except Exception:
-            continue
-
-    # udržuj rozumnou velikost
-    items = (new_items + items)[:30]
-    write_json(STUDIES_STATE_FILE, {"seen": list(seen)[-300:], "items": items})
-    return new_items
-
-
-# ============================================================
-# SNAPSHOTS (portfolio value per ticker - close) – pro historii
-# ============================================================
-def snapshot_store(cfg, positions, spy="SPY"):
-    max_snap = int(cfg.get("max_portfolio_snapshots", 200))
-    snaps = read_json(SNAPSHOTS_FILE, [])
-    ts = datetime.utcnow().isoformat() + "Z"
-
-    tickers = uniq_keep_order([p.ticker for p in positions] + [spy])
-    rows = {}
-    for t in tickers:
-        lp = prices_daily_yahoo(t)
-        if lp:
-            last, prev = lp
-            rows[t] = {"last": last, "prev": prev, "ch_pct": pct_change(last, prev)}
-        else:
-            rows[t] = {"last": None, "prev": None, "ch_pct": None}
-
-    snaps.insert(0, {"ts": ts, "rows": rows})
-    snaps = snaps[:max_snap]
-    write_json(SNAPSHOTS_FILE, snaps)
-
-
-# ============================================================
-# REPORT BUILDERS
-# ============================================================
-def fmt_pct(x):
-    return "—" if x is None else f"{x:+.2f}%"
-
-def format_ticker_line(item):
-    ch = item.get("r1")
-    score = item.get("score")
-    rs5 = item.get("rs5")
-    vv = item.get("vol_spike")
-    earn = item.get("earn_note","")
-    wait = "⏳WAIT" if item.get("wait") else ""
+def total_score(mom, rs, vol, cat, reg):
     return (
-        f"{item['ticker']}: 1D {fmt_pct(ch)} | RS5 {fmt_pct(rs5)} | "
-        f"Vol× {vv:.2f} | Score {score:+.2f} {wait} {earn}".strip()
+        WEIGHTS["momentum"] * mom +
+        WEIGHTS["rel_strength"] * rs +
+        WEIGHTS["volatility_volume"] * vol +
+        WEIGHTS["catalyst"] * cat +
+        WEIGHTS["market_regime"] * reg
     )
 
-def trade_plan(cfg, item):
-    # invalidace: default -2 až -4% dle configu
-    rr = cfg.get("risk_rules") or {}
-    inv = rr.get("swing_invalidation_pct", [-2, -4])
-    inv_txt = f"{inv[0]}% až {inv[1]}% (dle volatility)"
+def hard_action_from_score(score, regime_label, days_earn):
+    """
+    HARD mode jednoduchá logika:
+    - earnings do 48h -> WAIT
+    - risk-off -> spíš HOLD/REDUCE
+    - score >= 7.5 -> BUY (pokud ne risk-off)
+    - score <= 3.0 -> SELL/REDUCE (pokud risk-off nebo slabé)
+    """
+    if days_earn is not None and days_earn <= int(cfg_get("risk_rules.earnings_wait_hours", 48)) // 24:
+        return "WAIT"
+    if regime_label == "RISK-OFF":
+        if score >= 7.5:
+            return "HOLD (strong, but risk-off)"
+        if score <= 3.0:
+            return "REDUCE"
+        return "HOLD"
+    # risk-on / neutral
+    if score >= 7.5:
+        return "BUY"
+    if score <= 3.0:
+        return "SELL/REDUCE"
+    return "HOLD"
 
-    mode = (cfg.get("advice_mode") or "SOFT").upper()
-    action = "SETUP"
-    if mode == "HARD":
-        if item["wait"]:
-            action = "WAIT / MENŠÍ POZICE"
-        else:
-            # hrubé práh
-            if item["score"] >= 1.5:
-                action = "BUY"
-            elif item["score"] <= -1.5:
-                action = "SELL/REDUCE"
-            else:
-                action = "HOLD"
+def format_ticker_line(ticker, pct1d, src, score, action, why, earn_note, vol_ratio, rs):
+    pct_txt = "—" if pct1d is None else f"{pct1d:+.2f}% {bar(pct1d)}"
+    vr_txt = f"{vol_ratio:.2f}×" if vol_ratio is not None else "—"
+    rs_txt = f"{rs:+.2f}%" if rs is not None else "—"
+    base = f"{ticker:>6}  {pct_txt}  | score {score:.2f}"
+    if ADVICE_MODE == "HARD":
+        base += f" | {action}"
+    base += f"\n   RS(5D): {rs_txt} | Volume: {vr_txt} | Zdroj: {src}"
+    if earn_note:
+        base += f"\n   {earn_note}"
+    if why:
+        base += f"\n   Proč: {why}"
+    return base
 
-    lines = [
-        f"Akce: {action}",
-        f"Proč: momentum(1D/5D/20D), RS vs SPY, objem, katalyzátory, režim trhu",
-        f"Rizika: earnings, makro, volatilita, gap bez zpráv",
-        f"Plan: vstupní zóna = dle limitu/rozptylu; invalidace = {inv_txt}; cíl = postupné odprodeje / trailing",
-        f"Confidence: {min(5, max(1, int(round(abs(item['score'])+1))))}/5",
-    ]
-    return "\n".join(lines)
+def build_radar_for_list(tickers, limit_news_each=NEWS_PER_TICKER):
+    regime_label, regime_detail = market_regime()
+    reg_s = regime_score(regime_label)
 
-def report_radar(cfg, positions, watchlist, candidates):
-    spy = (cfg.get("benchmarks") or {}).get("spy","SPY")
-    vix = (cfg.get("benchmarks") or {}).get("vix","^VIX")
-
-    regime_label, regime_detail = market_regime(spy, vix)
-
-    # univerzum pro radar
-    tickers = uniq_keep_order([p.ticker for p in positions] + (watchlist or []))
-    results = []
+    rows = []
     for t in tickers:
-        results.append(compute_score(cfg, t, regime_label, spy))
+        last, prev, src = daily_last_prev(t)
+        pct1d = pct_change(last, prev)
+        vr = volume_spike_yahoo(t)
+        rs = rel_strength_5d(t)
+        news_items = combined_news(t, limit_news_each)[:limit_news_each]
+        why = why_from_headlines(news_items)
+        d_earn = days_to_earnings(t)
+        enote = earnings_note(d_earn)
 
-    # top movers (1D)
-    movers = sorted([r for r in results if r["r1"] is not None], key=lambda x: abs(x["r1"]), reverse=True)[:8]
-    top_buy = sorted(results, key=lambda x: x["score"], reverse=True)[:8]
-    top_sell = sorted(results, key=lambda x: x["score"])[:8]
+        mom = momentum_score_1d(pct1d)
+        vol = vol_score(vr)
+        cat = catalyst_score(news_items, d_earn)
+        rss = rs_score(rs)
 
-    # opportunities from candidates
-    opps = []
-    held = set([p.ticker for p in positions])
-    wl = set([x.upper() for x in (watchlist or [])])
-    for t in (candidates or []):
-        t = t.upper()
-        if t in held or t in wl:
-            continue
-        opps.append(compute_score(cfg, t, regime_label, spy))
-    opps = sorted(opps, key=lambda x: x["score"], reverse=True)[:5]
+        score = total_score(mom, rss, vol, cat, reg_s)
+        action = hard_action_from_score(score, regime_label, d_earn)
 
-    lines = []
-    lines.append("📡 MEGA INVESTIČNÍ RADAR (CZ)")
-    lines.append(f"🧭 Režim trhu: {regime_label} | {regime_detail}")
-    lines.append("")
-    lines.append("⚡ TOP pohyby (1D):")
-    for r in movers:
-        lines.append("  • " + format_ticker_line(r))
+        rows.append({
+            "ticker": t,
+            "pct1d": pct1d,
+            "src": src,
+            "score": score,
+            "action": action,
+            "why": why,
+            "earn_note": enote,
+            "vol_ratio": vr,
+            "rs": rs,
+        })
 
-    lines.append("")
-    lines.append("🟢 TOP kandidáti (BUY/SETUP):")
-    for r in top_buy[:6]:
-        lines.append("  • " + format_ticker_line(r))
+    # seřadíme podle score desc
+    rows.sort(key=lambda x: x["score"], reverse=True)
 
-    lines.append("")
-    lines.append("🔴 TOP kandidáti (SELL/REDUCE):")
-    for r in top_sell[:6]:
-        lines.append("  • " + format_ticker_line(r))
-
-    if opps:
+    header = (
+        f"📡 MEGA INVESTIČNÍ RADAR ({today_str()} {hm(now_local())})\n"
+        f"Režim trhu: {regime_label} ({regime_detail})\n"
+        f"Režim rad: {ADVICE_MODE}\n"
+        f"Váhy: momentum {WEIGHTS['momentum']}, RS {WEIGHTS['rel_strength']}, vol/objem {WEIGHTS['volatility_volume']}, catalyst {WEIGHTS['catalyst']}, regime {WEIGHTS['market_regime']}\n"
+        "—\n"
+    )
+    lines = [header]
+    for r in rows:
+        lines.append(format_ticker_line(
+            r["ticker"], r["pct1d"], r["src"], r["score"], r["action"],
+            r["why"], r["earn_note"], r["vol_ratio"], r["rs"]
+        ))
         lines.append("")
-        lines.append("🧪 NOVÉ NADĚJNÉ (mimo portfolio):")
-        for r in opps:
-            lines.append("  • " + format_ticker_line(r))
 
-    lines.append("")
-    lines.append("📌 Pozn.: /plan TICKER = trade plan, /why TICKER = proč se hýbe, /risk TICKER = rizika (v této verzi posíláme přes scheduled reporty).")
-    return "\n".join(lines), results, regime_label
-
-def report_positions(cfg, positions):
-    lines = []
-    lines.append("📦 PORTFOLIO – kontrola vstupů (z config.yml)")
-    for p in positions:
-        avg = p.avg_entry()
-        lots_txt = ", ".join([f"{l.qty:g}@{l.entry:g}{l.currency}({l.broker})" for l in p.lots])
-        lines.append(f"• {p.ticker}: qty {p.total_qty():g} | avg {avg:g} | lots: {lots_txt}")
-    return "\n".join(lines)
+    return "\n".join(lines).strip(), rows
 
 
 # ============================================================
-# ALERTS (intraday % od OPEN) + anti-spam
+# ALERTY (intraday) – jen když se to hýbe o víc než threshold
 # ============================================================
-def alerts_run(cfg, positions):
-    alerts_cfg = cfg.get("alerts") or {}
-    if not bool(alerts_cfg.get("enabled", True)):
-        return None
+def load_last_alerts():
+    return read_json(LAST_ALERTS_FILE, {})
 
-    start = (alerts_cfg.get("window_start") or "12:00").strip()
-    end = (alerts_cfg.get("window_end") or "21:00").strip()
-    thr = float(alerts_cfg.get("threshold_pct_from_open") or 3.0)
+def save_last_alerts(data):
+    write_json(LAST_ALERTS_FILE, data)
 
-    tz = ZoneInfo((cfg.get("timezone") or "Europe/Prague").strip())
-    now = datetime.now(tz)
-    hm = now.strftime("%H:%M")
-    if not (start <= hm <= end):
-        return None
+def check_intraday_alerts():
+    now = now_local()
+    if OPPORTUNITY_WEEKDAYS_ONLY and (not is_weekday(now)):
+        return
 
-    state = read_json(ALERTS_STATE_FILE, {"sent": {}})
-    sent = state.get("sent") or {}
+    nowhm = hm(now)
+    if not in_window(nowhm, ALERT_START, ALERT_END):
+        return
 
-    lines = []
-    for p in positions:
-        got = intraday_open_last_yahoo(p.ticker)
+    last_alerts = load_last_alerts()
+    todays = last_alerts.get(today_str(), {})
+
+    hits = []
+    for t in WATCHLIST:
+        got = intraday_open_last_yahoo(t)
         if not got:
             continue
         o, last = got
-        ch = pct_change(last, o)
-        if ch is None:
+        pct = pct_change(last, o)
+        if pct is None:
             continue
-        if abs(ch) >= thr:
-            key = f"{p.ticker}:{now.strftime('%Y-%m-%d')}"
-            # pošli max 1 alert/den/ticker
-            if sent.get(key):
+        if abs(pct) >= ALERT_THRESHOLD:
+            # ať nespamujeme: 1 ticker max 1× za den pro intraday alert
+            if todays.get(t):
                 continue
-            sent[key] = {"at": now.isoformat(), "ch": ch}
-            lines.append(f"🚨 ALERT {p.ticker}: {ch:+.2f}% od dnešního OPEN (limit {thr:.1f}%)")
+            todays[t] = True
+            why = why_from_headlines(combined_news(t, 2)[:2])
+            hits.append((t, pct, why))
 
-    if lines:
-        write_json(ALERTS_STATE_FILE, {"sent": sent})
-        return "\n".join(lines)
-    return None
+    if hits:
+        hits.sort(key=lambda x: abs(x[1]), reverse=True)
+        msg = f"🚨 ALERT ({today_str()} {nowhm}) – pohyb od OPEN ≥ {ALERT_THRESHOLD:.1f}%\n"
+        for t, pct, why in hits[:10]:
+            msg += f"\n{t}: {pct:+.2f}% {bar(pct)}\nProč: {why}\n"
+        telegram_send_long(msg.strip())
+
+    last_alerts[today_str()] = todays
+    save_last_alerts(last_alerts)
+
+
+# ============================================================
+# REPORTY (12:00 a 20:00)
+# ============================================================
+def should_run_once_per_day(marker_file: str, target_hm: str, tolerance_min: int = 10):
+    """
+    True pokud:
+    - dnes ještě neběžel
+    - a aktuální čas je v okně [target - tol, target + tol]
+    """
+    now = now_local()
+    last = read_text(marker_file, "")
+    if last == today_str():
+        return False
+
+    # okno
+    try:
+        th, tm = target_hm.split(":")
+        target = now.replace(hour=int(th), minute=int(tm), second=0, microsecond=0)
+    except Exception:
+        target = now.replace(hour=12, minute=0, second=0, microsecond=0)
+
+    delta = abs((now - target).total_seconds()) / 60.0
+    return delta <= tolerance_min
+
+def mark_ran(marker_file: str):
+    write_text(marker_file, today_str())
+
+
+def premarket_report():
+    text, rows = build_radar_for_list(PORTFOLIO, limit_news_each=NEWS_PER_TICKER)
+
+    # TOP shrnutí pro rychlost
+    top = rows[:5]
+    worst = sorted(rows, key=lambda x: x["score"])[:3]
+
+    head = f"✅ PORTFOLIO REPORT (12:00) – {today_str()}\n"
+    head += "TOP (score): " + ", ".join([f"{r['ticker']} {r['score']:.2f}" for r in top]) + "\n"
+    head += "WEAK (score): " + ", ".join([f"{r['ticker']} {r['score']:.2f}" for r in worst]) + "\n"
+    head += "—\n"
+
+    telegram_send_long(head + text)
+
+    # Volitelně email 1× denně (stejný report)
+    if EMAIL_ENABLED:
+        email_send(
+            subject=f"Portfolio report {today_str()}",
+            body_text=head + text
+        )
+
+def evening_report():
+    # večer sledujeme WATCHLIST a “new candidates”
+    tickers = sorted(set(WATCHLIST + CANDIDATE_UNIVERSE))
+    text, rows = build_radar_for_list(tickers, limit_news_each=1)
+
+    top = rows[:8]
+    head = f"🌙 VEČERNÍ RADAR (20:00) – {today_str()}\n"
+    head += "TOP: " + ", ".join([f"{r['ticker']} {r['score']:.2f}" for r in top]) + "\n"
+    head += f"Kandidáti /new: {', '.join(CANDIDATE_UNIVERSE) if CANDIDATE_UNIVERSE else '—'}\n"
+    head += "—\n"
+
+    telegram_send_long(head + text)
 
 
 # ============================================================
 # MAIN
 # ============================================================
 def main():
-    cfg = load_config("config.yml")
+    now = now_local()
+    print("Now:", now.isoformat(), "TZ:", TZ_NAME)
 
-    bot_token = (cfg.get("telegram") or {}).get("bot_token","").strip()
-    chat_id = str((cfg.get("telegram") or {}).get("chat_id","")).strip()
+    # Intraday alerty (každý běh workflow je může zkontrolovat)
+    check_intraday_alerts()
 
-    tz = ZoneInfo((cfg.get("timezone") or "Europe/Prague").strip())
+    # 12:00 report 1× denně
+    if should_run_once_per_day(LAST_PREMARKET_DATE_FILE, PREMARKET_TIME, tolerance_min=12):
+        premarket_report()
+        mark_ran(LAST_PREMARKET_DATE_FILE)
 
-    positions = parse_positions(cfg)
-    watchlist = [x.upper() for x in (cfg.get("watchlist") or [])]
-    candidates = [x.upper() for x in (cfg.get("new_candidates") or [])]
-
-    mode = (os.getenv("RUN_MODE") or "radar").strip().lower()
-    # supported: radar | positions | alerts | studies
-    # (GitHub Actions spouští různé RUN_MODE podle schedule)
-
-    if mode == "positions":
-        text = report_positions(cfg, positions)
-        telegram_send_long(bot_token, chat_id, text)
-        return
-
-    if mode == "studies":
-        new_items = studies_update()
-        if not new_items:
-            telegram_send(bot_token, chat_id, "📚 Studie: žádné nové položky od minula.")
-            return
-        lines = ["📚 Nové studie (arXiv/RSS) – rychlý výběr:"]
-        for it in new_items[:6]:
-            lines.append(f"• {cz(it['title'])}\n  {it['link']}")
-        telegram_send_long(bot_token, chat_id, "\n".join(lines))
-        return
-
-    if mode == "alerts":
-        msg = alerts_run(cfg, positions)
-        if msg:
-            telegram_send_long(bot_token, chat_id, msg)
-        else:
-            print("No alerts / outside window / already sent.")
-        return
-
-    # default: radar
-    radar_text, results, regime = report_radar(cfg, positions, watchlist, candidates)
-
-    # store snapshot
-    try:
-        snapshot_store(cfg, positions, spy=(cfg.get("benchmarks") or {}).get("spy","SPY"))
-    except Exception as e:
-        print("Snapshot error:", repr(e))
-
-    # send radar
-    telegram_send_long(bot_token, chat_id, radar_text)
-
-    # append small “trade plan” for TOP 1
-    try:
-        top = sorted(results, key=lambda x: x["score"], reverse=True)[0]
-        plan = trade_plan(cfg, top)
-        telegram_send_long(bot_token, chat_id, f"🧾 TRADE PLAN ({top['ticker']})\n{plan}")
-    except Exception:
-        pass
+    # 20:00 report 1× denně
+    if should_run_once_per_day(LAST_EVENING_DATE_FILE, EVENING_TIME, tolerance_min=12):
+        evening_report()
+        mark_ran(LAST_EVENING_DATE_FILE)
 
 
 if __name__ == "__main__":
