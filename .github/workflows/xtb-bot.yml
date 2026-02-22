@@ -1,4 +1,4 @@
-name: XTB Bot (CZ) – reporty + alerty + tipy
+name: XTB Bot (CZ) – Radar + Reporty + Alerty
 
 on:
   schedule:
@@ -48,7 +48,7 @@ jobs:
           ALERT_END: "21:00"
           ALERT_THRESHOLD: "3"
 
-          # News + tipy
+          # News + radar
           NEWS_PER_TICKER: "2"
           OPPORTUNITY_MAX: "5"
           OPPORTUNITY_WEEKDAYS_ONLY: "true"
