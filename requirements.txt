@@ -1,5 +1,4 @@
-yfinance
 requests
 feedparser
-matplotlib
-pytz
+pyyaml
+python-telegram-bot==21.6
