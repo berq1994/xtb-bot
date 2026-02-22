@@ -1,14 +1,14 @@
 name: xtb-bot
 
 on:
-  workflow_dispatch:
   schedule:
-    # každých 30 minut v pracovní dny (UTC)
-    - cron: "*/30 6-21 * * 1-5"
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
 
 jobs:
-  run:
+  run-bot:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -18,6 +18,14 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-bot-state-${{ github.run_id }}
+          restore-keys: |
+            xtb-bot-state-
+
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
@@ -25,23 +33,39 @@ jobs:
 
       - name: Run bot
         env:
-          # Secrets
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          TIMEZONE: Europe/Prague
 
-          # optional email (když chceš)
-          EMAIL_ENABLED: ${{ secrets.EMAIL_ENABLED }}
+          # Telegram
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+
+          # kompatibilita se starými názvy (kdybys to měl dřív takhle)
+          TELEGRAMTOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          CHATID: ${{ secrets.TG_CHAT_ID }}
+
+          # FMP
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          FMPAPIKEY: ${{ secrets.FMP_API_KEY }}
+
+          # Email (volitelné)
+          EMAIL_ENABLED: "false"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
 
-          # timezone + okna
-          TIMEZONE: Europe/Prague
-          ALERT_THRESHOLD: "3"
-          ALERT_START: "12:00"
-          ALERT_END: "21:00"
+          # Report times + alerts
           PREMARKET_TIME: "12:00"
           EVENING_TIME: "20:00"
+          ALERT_START: "12:00"
+          ALERT_END: "21:00"
+          ALERT_THRESHOLD: "3"
+          NEWS_PER_TICKER: "2"
+
         run: |
           python ahoj.py
+
+      - name: Save state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-bot-state-${{ github.run_id }}
