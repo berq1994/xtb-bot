@@ -1,0 +1,47 @@
+name: xtb-weekly-learn
+
+on:
+  schedule:
+    # Neděle 18:00 Praha (v UTC to bude kolísat podle DST – jednoduché řešení:
+    # spustíme 2×: 16:00 UTC a 17:00 UTC, bot si stejně vezme data a přepíše learned_weights.json
+    - cron: "0 16 * * 0"
+    - cron: "0 17 * * 0"
+  workflow_dispatch:
+
+jobs:
+  learn:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run weekly learn
+        env:
+          TIMEZONE: Europe/Prague
+          RUN_MODE: learn
+
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+
+        run: |
+          python ahoj.py
