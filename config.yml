@@ -2,22 +2,23 @@
 # MEGA INVESTIČNÍ RADAR – CONFIG (CZ)
 # ============================================================
 
-# API klíče (doporučeně přes GitHub Secrets)
 fmp_api_key: ${FMP_API_KEY}
 
 telegram:
-  bot_token: ${TELEGRAMTOKEN}
-  chat_id: ${CHATID}
+  bot_token: ${TG_BOT_TOKEN}
+  chat_id: ${TG_CHAT_ID}
 
-# Cache/rotace
+timezone: Europe/Prague
+
 cache_ttl_sec: 900
 max_portfolio_snapshots: 200
 
-# Režim rad (SOFT = bez explicitního BUY/SELL, HARD = explicitní BUY/SELL/HOLD)
+# SOFT = bez explicitního BUY/SELL, HARD = explicitní BUY/SELL/HOLD
 advice_mode: SOFT
 
 benchmarks:
   spy: SPY
+  vix: "^VIX"
 
 weights:
   momentum: 0.25
@@ -30,86 +31,152 @@ risk_rules:
   swing_invalidation_pct: [-2, -4]
   earnings_wait_hours: 48
 
+alerts:
+  enabled: true
+  window_start: "12:00"
+  window_end: "21:00"
+  threshold_pct_from_open: 3.0
+
+news:
+  per_ticker: 2
+
 # ============================================================
-# PORTFOLIO – FINÁLNÍ ČISTÉ VSTUPY
+# PORTFOLIO – FINÁLNÍ ČISTÉ VSTUPY (dle tvých screenů + oprav)
 # ============================================================
 
 portfolio:
-  # --- Raiffeisenbank
+  # --- Raiffeisenbank (dle screenů)
   - ticker: NVDA
-    qty: 6
-    entry: 186.51
-    currency: USD
-    broker: Raiffeisen
+    lots:
+      - qty: 6
+        entry: 186.51
+        currency: USD
+        broker: Raiffeisen
+        note: "NVIDIA CORP"
 
   - ticker: TSM
-    qty: 4
-    entry: 328.75
-    currency: USD
-    broker: Raiffeisen
-    note: "Taiwan Semiconductor - ADR"
+    lots:
+      - qty: 4
+        entry: 328.75
+        currency: USD
+        broker: Raiffeisen
+        note: "Taiwan Semiconductor - ADR"
 
   - ticker: MSFT
-    qty: 3
-    entry: 412.60
-    currency: EUR
-    broker: Raiffeisen
+    lots:
+      - qty: 3
+        entry: 412.60
+        currency: EUR
+        broker: Raiffeisen
+        note: "Microsoft Corporation"
 
   - ticker: CVX
-    qty: 5
-    entry: 145.68
-    currency: EUR
-    broker: Raiffeisen
+    lots:
+      - qty: 5
+        entry: 145.68
+        currency: EUR
+        broker: Raiffeisen
+        note: "Chevron Corp"
 
   - ticker: CSG
-    qty: 33
-    entry: 802
-    currency: CZK
-    broker: Raiffeisen
-    note: "CSG B.V."
+    lots:
+      - qty: 33
+        entry: 802.00
+        currency: CZK
+        broker: Raiffeisen
+        note: "CSG B.V."
 
-  - ticker: SGLD
-    qty: 11
-    entry: 74.61
-    currency: EUR
-    broker: Raiffeisen
-    note: "Gold ETC/ETN placeholder – upřesníme podle ISIN z RB"
+  - ticker: IGLD
+    lots:
+      - qty: 11
+        entry: 74.61
+        currency: EUR
+        broker: Raiffeisen
+        note: "iShares Physical Gold EUR Hedged ETC (ISIN IE0009JOT9U1)"
 
-  # --- XTB (USD část)
+  # --- XTB (USD část) – dle tvých oprav
   - ticker: NVO
-    qty: 5.9678
-    entry: 0
-    currency: USD
-    broker: XTB
-    note: "Agregace: 4.143 @ 58.16 + 1.8248 @ 54.76 (entry=0 => jen score)"
+    lots:
+      - qty: 4.1430
+        entry: 58.16
+        currency: USD
+        broker: XTB
+      - qty: 1.8200
+        entry: 54.76
+        currency: USD
+        broker: XTB
 
   - ticker: NBIS
-    qty: 3
-    entry: 82.24
-    currency: USD
-    broker: XTB
+    lots:
+      - qty: 3
+        entry: 82.24
+        currency: USD
+        broker: XTB
 
   - ticker: IREN
-    qty: 2
-    entry: 40.30
-    currency: USD
-    broker: XTB
+    lots:
+      - qty: 2
+        entry: 40.30
+        currency: USD
+        broker: XTB
 
   - ticker: LEU
-    qty: 0.2546
-    entry: 235.55
-    currency: USD
-    broker: XTB
+    lots:
+      - qty: 0.25
+        entry: 235.55
+        currency: USD
+        broker: XTB
+        note: "Centrus Energy"
+
+# ============================================================
+# WATCHLIST + CANDIDATE UNIVERSE
+# ============================================================
 
 watchlist:
   - SPY
   - QQQ
   - SMH
+  - AMD
+  - ASML
+  - AVGO
+  - MU
+  - ARM
+  - QCOM
+  - SMCI
+  - INTC
+  - TXN
+  - ADI
+  - MRVL
+  - KLAC
+  - LRCX
+  - AMAT
+  - FCX
+  - CCJ
+  - URA
+  - URNM
 
 new_candidates:
-  - ASML
-  - AMD
-  - AVGO
-  - CRWD
-  - NET
+  - SNOW
   - DDOG
+  - MDB
+  - NET
+  - CRWD
+  - ZS
+  - PANW
+  - NOW
+  - ADBE
+  - ORCL
+  - ON
+  - MPWR
+  - ANET
+  - DELL
+  - HPE
+  - GOLD
+  - AEM
+  - WPM
+  - GLD
+  - SLV
+  - UUUU
+  - UEC
+  - SMR
+  - OKLO
