@@ -2,5 +2,5 @@ requests
 feedparser
 yfinance
 matplotlib
+PyYAML
 deep-translator
-pyyaml
