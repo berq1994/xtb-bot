@@ -1,4 +1,4 @@
-name: XTB Bot (12-21 alerts + daily email)
+name: XTB Bot (12:00 report + 12-21 alerts + 20:00 summary)
 
 on:
   schedule:
@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install yfinance requests feedparser deep-translator matplotlib
+          pip install yfinance requests feedparser matplotlib
 
       - name: Run bot
         env:
@@ -47,10 +47,11 @@ jobs:
 
           ALERT_START: "12:00"
           ALERT_END: "21:00"
-          ALERT_THRESHOLD: "3"          # procenta od dnešního OPEN
+          ALERT_THRESHOLD: "3"
+
           NEWS_PER_TICKER: "2"
 
-          OPPORTUNITY_MAX: "5"          # max 5 tipů
+          OPPORTUNITY_MAX: "5"
           OPPORTUNITY_WEEKDAYS_ONLY: "true"
         run: |
           python ahoj.py
