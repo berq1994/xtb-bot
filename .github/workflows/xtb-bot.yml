@@ -8,9 +8,8 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -22,9 +21,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .state
-          key: xtb-bot-state-${{ github.run_id }}
+          key: xtb-state-${{ github.run_id }}
           restore-keys: |
-            xtb-bot-state-
+            xtb-state-
 
       - name: Install deps
         run: |
@@ -34,38 +33,22 @@ jobs:
       - name: Run bot
         env:
           TIMEZONE: Europe/Prague
+          RUN_MODE: run
 
-          # Telegram
           TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
 
-          # kompatibilita se starými názvy (kdybys to měl dřív takhle)
-          TELEGRAMTOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          CHATID: ${{ secrets.TG_CHAT_ID }}
-
-          # FMP
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-          FMPAPIKEY: ${{ secrets.FMP_API_KEY }}
 
-          # Email (volitelné)
-          EMAIL_ENABLED: "false"
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
-
-          # Report times + alerts
           PREMARKET_TIME: "12:00"
           EVENING_TIME: "20:00"
+
           ALERT_START: "12:00"
           ALERT_END: "21:00"
           ALERT_THRESHOLD: "3"
+
           NEWS_PER_TICKER: "2"
+          TOP_N: "5"
 
         run: |
           python ahoj.py
-
-      - name: Save state cache
-        uses: actions/cache@v4
-        with:
-          path: .state
-          key: xtb-bot-state-${{ github.run_id }}
