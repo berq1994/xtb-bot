@@ -1,0 +1,123 @@
+# ============================================================
+# MEGA INVESTIČNÍ RADAR – CONFIG (CZ)
+# ============================================================
+
+# API klíče (doporučeně přes GitHub Secrets)
+fmp_api_key: ${FMP_API_KEY}
+
+telegram:
+  bot_token: ${TG_BOT_TOKEN}
+  chat_id: ${TG_CHAT_ID}
+
+# Cache/rotace
+cache_ttl_sec: 900
+max_portfolio_snapshots: 200
+
+# Režim rad (SOFT = bez explicitního BUY/SELL, HARD = explicitní BUY/SELL/HOLD)
+advice_mode: SOFT
+
+benchmarks:
+  spy: SPY
+
+weights:
+  momentum: 0.25
+  rel_strength: 0.20
+  volatility_volume: 0.15
+  catalyst: 0.20
+  market_regime: 0.20
+
+risk_rules:
+  swing_invalidation_pct: [-2, -4]
+  earnings_wait_hours: 48
+
+# ============================================================
+# TVÉ PORTFOLIO – FINÁLNÍ ČISTÉ VSTUPY (dle tvých screenů + oprav)
+# ============================================================
+
+portfolio:
+  # --- Raiffeisenbank (dle tvých screenů)
+  - ticker: NVDA
+    qty: 6
+    entry: 186.51
+    currency: USD
+    broker: Raiffeisen
+
+  - ticker: TSM
+    qty: 4
+    entry: 328.75
+    currency: USD
+    broker: Raiffeisen
+    note: "Taiwan Semiconductor - ADR"
+
+  - ticker: MSFT
+    qty: 3
+    entry: 412.60
+    currency: EUR
+    broker: Raiffeisen
+
+  - ticker: CVX
+    qty: 5
+    entry: 145.68
+    currency: EUR
+    broker: Raiffeisen
+
+  - ticker: CSG
+    qty: 33
+    entry: 802
+    currency: CZK
+    broker: Raiffeisen
+    note: "CSG B.V."
+
+  - ticker: SGLD
+    qty: 11
+    entry: 74.61
+    currency: EUR
+    broker: Raiffeisen
+    note: "iShares Physical Gold EUR Hedged ETC (ticker může být u brokera jiný; v radaru sledujeme SGLD jako placeholder)"
+
+  # --- XTB (USD část) – dle tvých oprav:
+  # NVO: dvě pozice, ale v botovi evidujeme agregovaně (qty ~ 4.143 + 1.8248)
+  - ticker: NVO
+    qty: 5.9678
+    entry: 0
+    currency: USD
+    broker: XTB
+    note: "Agregace dvou vstupů: 4.143 @ 58.16 a 1.8248 @ 54.76 (entry = 0 => jen tracking score)"
+
+  - ticker: NBIS
+    qty: 3
+    entry: 82.24
+    currency: USD
+    broker: XTB
+
+  - ticker: IREN
+    qty: 2
+    entry: 40.30
+    currency: USD
+    broker: XTB
+
+  - ticker: LEU
+    qty: 0.2546
+    entry: 235.55
+    currency: USD
+    broker: XTB
+
+# Pozn.: u NVO máš dvě různé vstupní ceny – bot to umí držet i jako dvě položky,
+# ale na “radar” to není nutné. Kdybys chtěl přesné loty, řekni a přepíšu to na 2 řádky.
+
+# ============================================================
+# WATCHLIST + NOVÉ NADĚJNÉ
+# ============================================================
+
+watchlist:
+  - SPY
+  - QQQ
+  - SMH
+
+# Kandidáti pro /new (mimo portfolio)
+new_candidates:
+  - ASML
+  - AMD
+  - AVGO
+  - CRWD
+  - LLT
