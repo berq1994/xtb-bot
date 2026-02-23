@@ -1,13 +1,15 @@
-name: xtb-bot
+name: run-bot
 
 on:
   schedule:
+    # každých 15 minut
     - cron: "*/15 * * * *"
   workflow_dispatch:
 
 jobs:
-  run-bot:
+  run:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,20 +37,25 @@ jobs:
           TIMEZONE: Europe/Prague
           RUN_MODE: run
 
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          # ✅ mapujeme na TVOJE secrets názvy
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
 
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-
+          # Report časy + alert okno
           PREMARKET_TIME: "12:00"
           EVENING_TIME: "20:00"
-
           ALERT_START: "12:00"
           ALERT_END: "21:00"
           ALERT_THRESHOLD: "3"
-
           NEWS_PER_TICKER: "2"
           TOP_N: "5"
+
+          # Email (pokud chceš posílat)
+          EMAIL_ENABLED: "true"
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
 
         run: |
           python ahoj.py
