@@ -2,7 +2,8 @@
 # MEGA INVESTIČNÍ RADAR – CONFIG (CZ)
 # ============================================================
 
-fmp_api_key: ${FMP_API_KEY}
+# FMP klíč necháme prázdný -> bere se z GitHub Secrets (ENV)
+fmp_api_key: ""
 
 benchmarks:
   spy: SPY
@@ -92,9 +93,8 @@ new_candidates:
 
 # ============================================================
 # KRITICKÉ: mapování tickerů na Yahoo symboly (kvůli „no data“)
-# Sem napiš až zjistíš správné tickery:
 # ============================================================
 ticker_map:
-  # CSG: "CSG.PR"     # příklad (NENÍ garantované)
-  # SGLD: "SGLD.L"    # příklad (NENÍ garantované)
-  # LLT:  "..."       # pokud Yahoo ten ticker nezná
+  LLT: "LHX"
+  # CSG: "DOPLN_Z_YAHOO"
+  # SGLD: "DOPLN_Z_YAHOO"
