@@ -2,7 +2,6 @@ name: xtb-weekly-learn
 
 on:
   schedule:
-    # Neděle 18:00 Praha (DST řešíme dvojím spuštěním)
     - cron: "0 16 * * 0"
     - cron: "0 17 * * 0"
   workflow_dispatch:
@@ -32,15 +31,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run weekly learn
+      - name: Run weekly learn (learn + backfill)
         env:
           TIMEZONE: Europe/Prague
           RUN_MODE: learn
 
-          # ✅ mapujeme na tvoje existující secrets
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+
+          BACKFILL_START: "2025-01-01"
+          BACKFILL_END: ""   # empty => today
 
         run: |
           python ahoj.py
