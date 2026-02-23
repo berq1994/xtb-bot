@@ -2,8 +2,7 @@ name: xtb-weekly-learn
 
 on:
   schedule:
-    # Neděle 18:00 Praha (v UTC to bude kolísat podle DST – jednoduché řešení:
-    # spustíme 2×: 16:00 UTC a 17:00 UTC, bot si stejně vezme data a přepíše learned_weights.json
+    # Neděle 18:00 Praha (DST řešíme dvojím spuštěním)
     - cron: "0 16 * * 0"
     - cron: "0 17 * * 0"
   workflow_dispatch:
@@ -38,10 +37,10 @@ jobs:
           TIMEZONE: Europe/Prague
           RUN_MODE: learn
 
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          # ✅ mapujeme na tvoje existující secrets
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
 
         run: |
           python ahoj.py
