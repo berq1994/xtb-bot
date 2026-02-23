@@ -37,7 +37,7 @@ jobs:
           TIMEZONE: Europe/Prague
           RUN_MODE: run
 
-          # ✅ mapujeme na TVOJE secrets názvy
+          # ✅ tvoje secrets názvy (Variant B)
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
@@ -51,7 +51,7 @@ jobs:
           NEWS_PER_TICKER: "2"
           TOP_N: "5"
 
-          # Email (pokud chceš posílat)
+          # ✅ Email (Variant B přes secrets)
           EMAIL_ENABLED: "true"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
