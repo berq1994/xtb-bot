@@ -1,7 +1,12 @@
-from dataclasses import dataclass
-from typing import List, Optional, Tuple
+from .data_sources import (
+    get_price_data,
+    volume_spike_ratio,
+    rel_strength_5d_vs_bench,
+    combined_news,
+    next_earnings_days,
+    market_regime,
+)
 
-from radar.data_sources import combined_news
 
 WHY_KEYWORDS = [
     (["earnings", "results", "quarter", "beat", "miss"], "výsledky (earnings) / překvapení vs očekávání"),
@@ -15,7 +20,7 @@ WHY_KEYWORDS = [
 ]
 
 
-def why_from_headlines(news_items) -> str:
+def why_from_headlines(news_items):
     if not news_items:
         return "bez jasné zprávy – může to být sentiment/technika/trh."
     titles = " ".join([t for (_, t, _) in news_items]).lower()
@@ -28,28 +33,38 @@ def why_from_headlines(news_items) -> str:
     return "; ".join(hits[:2]) + "."
 
 
-def movement_class(pct: Optional[float], vol_ratio: float, thr: float = 3.0) -> str:
-    """
-    Klasifikace pohybu:
-      >= +thr : SILNÝ RŮST
-      +1..+thr : RŮST
-      -1..+1 : NEUTRÁL
-      -thr..-1 : POKLES
-      <= -thr : SILNÝ POKLES
-    + štítek na objemu
-    """
-    if pct is None:
-        return "NEZNÁMÉ"
-    label = "NEUTRÁL"
-    if pct >= thr:
-        label = "SILNÝ RŮST"
-    elif pct >= 1.0:
-        label = "RŮST"
-    elif pct <= -thr:
-        label = "SILNÝ POKLES"
-    elif pct <= -1.0:
-        label = "POKLES"
+def compute_features(ticker: str, cfg: dict) -> dict:
+    bench = ((cfg.get("benchmarks") or {}).get("spy") if isinstance(cfg, dict) else None) or "SPY"
 
-    if vol_ratio >= 2.0 and label != "NEZNÁMÉ":
-        label += " (na objemu)"
-    return label
+    px = get_price_data(ticker, cfg)
+    pct_1d = px.get("pct_1d")
+    vol_ratio = volume_spike_ratio(ticker, cfg)
+    rs_5d = rel_strength_5d_vs_bench(ticker, bench, cfg)
+
+    news = combined_news(ticker, cfg, limit_each=int(cfg.get("news_per_ticker", 2)) if isinstance(cfg, dict) else 2)
+    why = why_from_headlines(news)
+
+    dte = next_earnings_days(ticker, cfg)
+
+    regime_label, regime_detail = market_regime(cfg)
+
+    return {
+        "ticker": ticker,
+        "mapped": px.get("mapped", ticker),
+        "src": px.get("src", "—"),
+
+        "pct_1d": pct_1d,
+        "last": px.get("last"),
+        "prev": px.get("prev"),
+
+        "vol_ratio": vol_ratio,
+        "rs_5d": rs_5d,
+
+        "news": news,
+        "why": why,
+
+        "days_to_earnings": dte,
+
+        "regime_label": regime_label,
+        "regime_detail": regime_detail,
+    }
