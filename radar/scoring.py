@@ -1,65 +1,91 @@
-from typing import Optional, Dict, Any
-from radar.features import movement_class
+# radar/scoring.py
+from __future__ import annotations
+from typing import Dict, Any, Optional
 
 
-def clamp(x: float, lo=0.0, hi=10.0) -> float:
-    return max(lo, min(hi, x))
+def safe(x: Optional[float], default: float = 0.0) -> float:
+    try:
+        if x is None:
+            return default
+        return float(x)
+    except Exception:
+        return default
 
 
-def momentum_score_1d(pct1d: Optional[float]) -> float:
-    if pct1d is None:
-        return 0.0
-    # škála: 0..8% => 0..10
-    return clamp((abs(pct1d) / 8.0) * 10.0, 0.0, 10.0)
+def compute_score(features: Dict[str, Any], cfg: Dict[str, Any]) -> float:
+    """
+    Hlavní scoring model (lehce profesionální, stabilní, deterministic).
+    """
 
+    weights = cfg.get("weights", {})
 
-def rs_score(rs: Optional[float]) -> float:
-    if rs is None:
-        return 0.0
-    # -5..+5 => 0..10
-    return clamp((rs + 5.0) * 1.0, 0.0, 10.0)
+    w_momentum = float(weights.get("momentum", 0.25))
+    w_rs = float(weights.get("rel_strength", 0.20))
+    w_vol = float(weights.get("volatility_volume", 0.15))
+    w_cat = float(weights.get("catalyst", 0.20))
+    w_regime = float(weights.get("market_regime", 0.20))
 
+    pct_1d = safe(features.get("pct_1d"))
+    rs_5d = safe(features.get("rs_5d"))
+    vol_ratio = safe(features.get("vol_ratio"), 1.0)
 
-def vol_score(vol_ratio: float) -> float:
-    # 1.0 = normál, 2.0 = hodně
-    return clamp((vol_ratio - 1.0) * 6.0, 0.0, 10.0)
+    movement = features.get("movement", "FLAT")
 
+    # --------------------------------------------------------
+    # Momentum komponenta
+    # --------------------------------------------------------
+    momentum_score = abs(pct_1d)
 
-def catalyst_score(news_count: int) -> float:
-    # 0..(>=4) => 0..10
-    if news_count <= 0:
-        return 0.0
-    return clamp(2.0 + news_count * 2.0, 0.0, 10.0)
+    # --------------------------------------------------------
+    # Relative strength komponenta
+    # --------------------------------------------------------
+    rs_score = abs(rs_5d)
 
+    # --------------------------------------------------------
+    # Volume / volatility komponenta
+    # --------------------------------------------------------
+    vol_score = max(vol_ratio - 1.0, 0.0)
 
-def regime_score(regime_label: str) -> float:
-    if regime_label == "RISK-ON":
-        return 10.0
-    if regime_label == "RISK-OFF":
-        return 0.0
-    return 5.0
+    # --------------------------------------------------------
+    # Catalyst komponenta (earnings/news)
+    # --------------------------------------------------------
+    catalyst_score = 0.0
+    if features.get("news"):
+        catalyst_score += 1.0
 
+    dte = features.get("days_to_earnings")
+    if dte is not None:
+        if dte <= 3:
+            catalyst_score += 1.5
+        elif dte <= 10:
+            catalyst_score += 0.5
 
-def total_score(weights: Dict[str, float], mom: float, rs: float, vol: float, cat: float, reg: float) -> float:
-    return (
-        weights["momentum"] * mom +
-        weights["rel_strength"] * rs +
-        weights["volatility_volume"] * vol +
-        weights["catalyst"] * cat +
-        weights["market_regime"] * reg
+    # --------------------------------------------------------
+    # Market regime komponenta (zjednodušená stabilní logika)
+    # --------------------------------------------------------
+    regime = cfg.get("market_regime", "NEUTRAL")
+
+    regime_mult = 1.0
+    if regime == "RISK_OFF":
+        if pct_1d < 0:
+            regime_mult = 1.2
+        else:
+            regime_mult = 0.8
+
+    if regime == "RISK_ON":
+        if pct_1d > 0:
+            regime_mult = 1.2
+        else:
+            regime_mult = 0.8
+
+    # --------------------------------------------------------
+    # Celkové score
+    # --------------------------------------------------------
+    score = (
+        momentum_score * w_momentum
+        + rs_score * w_rs
+        + vol_score * w_vol
+        + catalyst_score * w_cat
     )
 
-
-def advice_soft(score: float, regime: str) -> str:
-    if regime == "RISK-OFF":
-        if score >= 7.5:
-            return "Silné, ale trh je RISK-OFF: radši konzervativně / menší pozice / čekat na timing."
-        if score <= 3.0:
-            return "Slabé + RISK-OFF: nedokupovat, zvážit redukci dle plánu."
-        return "RISK-OFF: spíš HOLD a čekat na katalyzátor."
-    else:
-        if score >= 7.5:
-            return "Kandidát na přikoupení / vstup (dle rizika)."
-        if score <= 3.0:
-            return "Kandidát na redukci / prodej (pokud sedí do plánu)."
-        return "Neutrální: HOLD / čekat."
+    return round(score * regime_mult, 4)
