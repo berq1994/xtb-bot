@@ -237,4 +237,174 @@ def format_radar_report(rows: List[Dict[str, Any]], title: str, now: datetime) -
             t = r.get("ticker", "?")
             y = r.get("yahoo") or t
             full = _company_name_from_yahoo(y)
-            p
+            p1d = r.get("pct_1d")
+            sc = float(r.get("score") or 0.0)
+            why = (r.get("why") or "").strip()
+            mv = (r.get("movement") or "").strip()
+
+            out.append(
+                f"{_arrow(p1d)} {t} — {full}\n"
+                f"   1D: {_fmt_pct(p1d)} {_bar(p1d)} | score: {sc:.2f} | {mv}\n"
+                f"   why: {why or '—'}"
+            )
+
+            news = r.get("news") or []
+            # v engine.py je news list of tuples: (src, title, link)
+            for src, nt, link in news[:2]:
+                out.append(f"   • {src}: {nt}\n     {link}")
+
+        return "\n".join(out)
+
+    header = (
+        f"📡 {title} ({now.strftime('%Y-%m-%d %H:%M')})\n"
+        f"Režim trhu: {regime} | {regime_detail}\n"
+    )
+
+    return (
+        header
+        + "\n"
+        + block("🔥 TOP kandidáti (dle score):", top)
+        + "\n\n"
+        + block("🧊 SLABÉ (dle score):", worst)
+    )
+
+
+def format_alert_line(a: Dict[str, Any], now: datetime) -> str:
+    t = a.get("ticker", "?")
+    y = a.get("yahoo") or t
+    full = _company_name_from_yahoo(y)
+    p = float(a.get("pct_from_open") or 0.0)
+    o = a.get("open")
+    last = a.get("last")
+    mv = (a.get("movement") or "").strip()
+    return (
+        f"🚨 ALERT ({now.strftime('%H:%M')})\n"
+        f"{t} — {full}\n"
+        f"od OPEN: {p:+.2f}% {_bar(p)} | {mv}\n"
+        f"open {o:.2f} → now {last:.2f}"
+    )
+
+
+# ============================================================
+# ALERT DEDUPE (compat object for engine)
+# ============================================================
+def alert_key(alert: Dict[str, Any]) -> str:
+    p = float(alert.get("pct_from_open", 0.0))
+    p_round = round(p / 0.25) * 0.25
+    mv = str(alert.get("movement") or "")
+    return f"{p_round:.2f}|{mv}"
+
+class StateCompat:
+    """
+    Engine volá: st.should_alert(ticker, key, day)
+    My to uložíme do .state/alert_dedupe.json
+    """
+    def should_alert(self, ticker: str, key: str, day: str) -> bool:
+        ded = read_json(ALERT_DEDUPE_FILE, {})
+        cur = ded.get(ticker)
+        if cur and cur.get("d") == day and cur.get("k") == key:
+            return False
+        ded[ticker] = {"d": day, "k": key}
+        write_json(ALERT_DEDUPE_FILE, ded)
+        return True
+
+
+# ============================================================
+# Build runtime cfg for engine
+# ============================================================
+def build_cfg_runtime() -> dict:
+    cfg = CFG if isinstance(CFG, dict) else {}
+    cfg = dict(cfg)
+
+    # runtime overrides (engine čte přes cfg_get)
+    cfg["news_per_ticker"] = NEWS_PER_TICKER
+    cfg["alert_threshold_pct"] = ALERT_THRESHOLD
+
+    # fallback benchmark
+    cfg.setdefault("benchmarks", {})
+    cfg["benchmarks"].setdefault("spy", (cfg.get("benchmarks") or {}).get("spy") or "SPY")
+
+    return cfg
+
+
+# ============================================================
+# RUNNERS
+# ============================================================
+def run_premarket(cfg: dict, now: datetime):
+    day = dt_to_date(now).isoformat()
+    last_day = read_text(LAST_PREMARKET_DATE_FILE, "")
+    if last_day == day:
+        return
+
+    rows = run_radar_snapshot(cfg, now, reason="premarket")
+    if not rows:
+        telegram_send("⚠️ Premarket report: žádná data.")
+        return
+
+    msg = format_radar_report(rows, "MEGA INVESTIČNÍ RADAR – RÁNO", now)
+    telegram_send_long(msg)
+
+    # Email 1× denně – pouze z ranního reportu
+    last_email = read_text(LAST_EMAIL_DATE_FILE, "")
+    if last_email != day:
+        email_send(f"MEGA INVESTIČNÍ RADAR – RÁNO ({day})", msg)
+        write_text(LAST_EMAIL_DATE_FILE, day)
+
+    write_text(LAST_PREMARKET_DATE_FILE, day)
+
+def run_evening(cfg: dict, now: datetime):
+    day = dt_to_date(now).isoformat()
+    last_day = read_text(LAST_EVENING_DATE_FILE, "")
+    if last_day == day:
+        return
+
+    rows = run_radar_snapshot(cfg, now, reason="evening")
+    if not rows:
+        telegram_send("⚠️ Večerní report: žádná data.")
+        return
+
+    msg = format_radar_report(rows, "MEGA INVESTIČNÍ RADAR – VEČER", now)
+    telegram_send_long(msg)
+    write_text(LAST_EVENING_DATE_FILE, day)
+
+def run_alerts(cfg: dict, now: datetime):
+    h = hm(now)
+    if not in_window(h, ALERT_START, ALERT_END):
+        return
+
+    st = StateCompat()
+    alerts = run_alerts_snapshot(cfg, now, st)
+    if not alerts:
+        return
+
+    # setřídíme podle absolutní změny
+    alerts_sorted = sorted(alerts, key=lambda x: abs(float(x.get("pct_from_open") or 0.0)), reverse=True)
+
+    for a in alerts_sorted[:15]:
+        telegram_send(format_alert_line(a, now))
+
+
+# ============================================================
+# MAIN
+# ============================================================
+def main():
+    now = now_local()
+    cfg = build_cfg_runtime()
+
+    print(f"✅ Bot běží | RUN_MODE={RUN_MODE} | {now.strftime('%Y-%m-%d %H:%M')} ({TZ_NAME})")
+    print(f"Reporty: {PREMARKET_TIME} & {EVENING_TIME} | Alerty: {ALERT_START}-{ALERT_END} (>= {ALERT_THRESHOLD}%)")
+
+    # reporty – workflow běží každých 15 min, takže time gate stačí
+    if hm(now) == PREMARKET_TIME:
+        run_premarket(cfg, now)
+    if hm(now) == EVENING_TIME:
+        run_evening(cfg, now)
+
+    # alerty v okně
+    run_alerts(cfg, now)
+
+    print("✅ Done.")
+
+
+if __name__ == "__main__":
+    main()
