@@ -1,8 +1,9 @@
 # config.yml
 fmp_api_key: ${FMP_API_KEY}
+
 timezone: Europe/Prague
 
-premarket_time: "12:00"
+premarket_time: "07:30"
 evening_time: "20:00"
 
 alert_start: "12:00"
@@ -11,7 +12,6 @@ alert_threshold_pct: 3
 
 news_per_ticker: 2
 top_n: 5
-earnings_days_ahead: 7
 
 benchmarks:
   spy: SPY
@@ -30,46 +30,55 @@ portfolio:
     entry: 186.51
     currency: USD
     broker: Raiffeisen
+
   - ticker: TSM
     qty: 4
     entry: 328.75
     currency: USD
     broker: Raiffeisen
+
   - ticker: MSFT
     qty: 3
     entry: 412.60
     currency: EUR
     broker: Raiffeisen
+
   - ticker: CVX
     qty: 5
     entry: 145.68
     currency: EUR
     broker: Raiffeisen
+
   - ticker: CSG
     qty: 33
     entry: 802
     currency: CZK
     broker: Raiffeisen
+
   - ticker: SGLD
     qty: 11
     entry: 74.61
     currency: EUR
     broker: Raiffeisen
+
   - ticker: NVO
     qty: 5.9678
     entry: 0
     currency: USD
     broker: XTB
+
   - ticker: NBIS
     qty: 3
     entry: 82.24
     currency: USD
     broker: XTB
+
   - ticker: IREN
     qty: 2
     entry: 40.30
     currency: USD
     broker: XTB
+
   - ticker: LEU
     qty: 0.2546
     entry: 235.55
@@ -89,10 +98,8 @@ new_candidates:
   - LLT
 
 ticker_map:
-  CSG: "CSG.NL"
+  # Pozn.: CSG.NL ti Yahoo nenašlo. Nech to zatím prázdné (nebo mi pošli ISIN / přesný název instrumentu z RB).
+  # CSG: "..."
+
+  # SGLD (často jde přes Londýn)
   SGLD: "SGLD.L"
-  TSM: "TSM"
-  NVO: "NVO"
-  SPY: "SPY"
-  QQQ: "QQQ"
-  SMH: "SMH"
