@@ -1,0 +1,47 @@
+name: weekly-earnings
+
+on:
+  schedule:
+    # Pondělí 8:00 Praha ≈ 07:00 UTC (jednoduchá stabilní varianta)
+    - cron: "0 7 * * 1"
+  workflow_dispatch:
+
+jobs:
+  earnings:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run earnings report
+        env:
+          TIMEZONE: Europe/Prague
+          RUN_MODE: earnings
+
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+
+          EMAIL_ENABLED: "true"
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+
+        run: |
+          python ahoj.py
