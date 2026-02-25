@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import os
-import json
-import smtplib
-from datetime import datetime, date
-from zoneinfo import ZoneInfo
-from typing import Dict, List, Any
-
 import requests
+import smtplib
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+from typing import List, Dict, Any
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -16,134 +15,87 @@ try:
 except Exception:
     yaml = None
 
-from radar.engine import run_radar_snapshot, run_alerts_snapshot
-
-
-# ============================================================
-# TIMEZONE
-# ============================================================
-TZ_NAME = os.getenv("TIMEZONE", "Europe/Prague").strip()
-TZ = ZoneInfo(TZ_NAME)
-
-def now_local() -> datetime:
-    return datetime.now(TZ)
-
-def hm(dt: datetime) -> str:
-    return dt.strftime("%H:%M")
-
-def dt_to_date(dt: datetime) -> date:
-    return dt.date()
-
-
-# ============================================================
-# STATE / FILES
-# ============================================================
-STATE_DIR = ".state"
-os.makedirs(STATE_DIR, exist_ok=True)
-
-LAST_PREMARKET_DATE_FILE = os.path.join(STATE_DIR, "last_premarket_date.txt")
-LAST_EVENING_DATE_FILE = os.path.join(STATE_DIR, "last_evening_date.txt")
-LAST_EMAIL_DATE_FILE = os.path.join(STATE_DIR, "last_email_date.txt")
-ALERT_DEDUPE_FILE = os.path.join(STATE_DIR, "alert_dedupe.json")
-
-
-def read_text(path: str, default="") -> str:
-    try:
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                return f.read().strip()
-    except Exception:
-        pass
-    return default
-
-def write_text(path: str, text: str):
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(text)
-
-def read_json(path: str, default):
-    try:
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception:
-        pass
-    return default
-
-def write_json(path: str, data):
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-
 
 # ============================================================
 # CONFIG
 # ============================================================
-DEFAULT_CONFIG_PATHS = ["config.yml", "config.yaml"]
-
 def load_cfg() -> dict:
     if yaml is None:
         return {}
-    for p in DEFAULT_CONFIG_PATHS:
-        if os.path.exists(p):
-            try:
-                with open(p, "r", encoding="utf-8") as f:
-                    return yaml.safe_load(f) or {}
-            except Exception:
-                return {}
-    return {}
+    try:
+        with open("config.yml", "r", encoding="utf-8") as f:
+            return yaml.safe_load(f) or {}
+    except Exception:
+        return {}
 
 CFG = load_cfg()
 
+def cfg_get(path: str, default=None):
+    cur = CFG
+    try:
+        for p in path.split("."):
+            if not isinstance(cur, dict):
+                return default
+            cur = cur.get(p)
+        return default if cur is None else cur
+    except Exception:
+        return default
+
 
 # ============================================================
-# RUNTIME SETTINGS
+# ENV
 # ============================================================
-PREMARKET_TIME = os.getenv("PREMARKET_TIME", "12:00").strip()
-EVENING_TIME = os.getenv("EVENING_TIME", "20:00").strip()
+TZ_NAME = os.getenv("TIMEZONE", "Europe/Prague")
+TZ = ZoneInfo(TZ_NAME)
 
-ALERT_START = os.getenv("ALERT_START", "12:00").strip()
-ALERT_END = os.getenv("ALERT_END", "21:00").strip()
-ALERT_THRESHOLD = float(os.getenv("ALERT_THRESHOLD", "3").strip())
+RUN_MODE = (os.getenv("RUN_MODE") or "run").lower()
 
+FMP_API_KEY = (os.getenv("FMPAPIKEY") or cfg_get("fmp_api_key") or "").strip()
 
-# ============================================================
-# TELEGRAM
-# ============================================================
 TELEGRAM_TOKEN = (os.getenv("TELEGRAMTOKEN") or "").strip()
-CHAT_ID = str(os.getenv("CHATID") or "").strip()
+CHAT_ID = (os.getenv("CHATID") or "").strip()
+
+EMAIL_ENABLED = (os.getenv("EMAIL_ENABLED", "false").lower() == "true")
+EMAIL_SENDER = (os.getenv("EMAIL_SENDER") or "").strip()
+EMAIL_RECEIVER = (os.getenv("EMAIL_RECEIVER") or "").strip()
+GMAILPASSWORD = (os.getenv("GMAILPASSWORD") or "").strip()
+
 TELEGRAM_URL = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}"
+
+
+# ============================================================
+# HELPERS
+# ============================================================
+def now_local() -> datetime:
+    return datetime.now(TZ)
 
 def telegram_send(text: str):
     if not TELEGRAM_TOKEN or not CHAT_ID:
-        print("⚠️ Telegram není nastavený.")
+        print("Telegram není nastaven.")
         return
     try:
         requests.post(
             f"{TELEGRAM_URL}/sendMessage",
             data={"chat_id": CHAT_ID, "text": text, "disable_web_page_preview": True},
-            timeout=35,
+            timeout=30
         )
     except Exception as e:
         print("Telegram error:", e)
 
-
-# ============================================================
-# EMAIL
-# ============================================================
-EMAIL_ENABLED = (os.getenv("EMAIL_ENABLED", "false").lower().strip() == "true")
-EMAIL_SENDER = (os.getenv("EMAIL_SENDER") or "").strip()
-EMAIL_RECEIVER = (os.getenv("EMAIL_RECEIVER") or "").strip()
-GMAILPASSWORD = (os.getenv("GMAILPASSWORD") or "").strip()
-
-def email_send(subject: str, body_text: str):
+def email_send(subject: str, body: str):
     if not EMAIL_ENABLED:
         return
-    try:
-        msg = MIMEMultipart()
-        msg["From"] = EMAIL_SENDER
-        msg["To"] = EMAIL_RECEIVER
-        msg["Subject"] = subject
-        msg.attach(MIMEText(body_text, "plain", "utf-8"))
+    if not (EMAIL_SENDER and EMAIL_RECEIVER and GMAILPASSWORD):
+        print("Email není správně nastaven.")
+        return
 
+    msg = MIMEMultipart()
+    msg["From"] = EMAIL_SENDER
+    msg["To"] = EMAIL_RECEIVER
+    msg["Subject"] = subject
+    msg.attach(MIMEText(body, "plain", "utf-8"))
+
+    try:
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
         server.login(EMAIL_SENDER, GMAILPASSWORD)
@@ -154,43 +106,78 @@ def email_send(subject: str, body_text: str):
 
 
 # ============================================================
-# MAIN LOGIC
+# FMP Earnings
 # ============================================================
-def run_reports(cfg: dict, now: datetime):
-    today = dt_to_date(now).isoformat()
+def fmp_earnings_week(start: datetime, end: datetime) -> List[Dict[str, Any]]:
+    if not FMP_API_KEY:
+        return []
 
-    if hm(now) == PREMARKET_TIME and read_text(LAST_PREMARKET_DATE_FILE) != today:
-        rows = run_radar_snapshot(cfg, now, reason="premarket")
-        if rows:
-            msg = f"🕛 PREMARKET\nTOP ticker: {rows[0]['ticker']} | score {rows[0]['score']:.2f}"
-            telegram_send(msg)
-            email_send("Premarket report", msg)
-            write_text(LAST_PREMARKET_DATE_FILE, today)
+    url = "https://financialmodelingprep.com/api/v3/earning_calendar"
+    try:
+        r = requests.get(url, params={
+            "from": start.strftime("%Y-%m-%d"),
+            "to": end.strftime("%Y-%m-%d"),
+            "apikey": FMP_API_KEY
+        }, timeout=30)
 
-    if hm(now) == EVENING_TIME and read_text(LAST_EVENING_DATE_FILE) != today:
-        rows = run_radar_snapshot(cfg, now, reason="evening")
-        if rows:
-            msg = f"🌙 VEČER\nTOP ticker: {rows[0]['ticker']} | score {rows[0]['score']:.2f}"
-            telegram_send(msg)
-            write_text(LAST_EVENING_DATE_FILE, today)
+        if r.status_code != 200:
+            return []
+
+        return r.json() if isinstance(r.json(), list) else []
+    except Exception:
+        return []
 
 
-def run_alerts(cfg: dict, now: datetime):
-    if not (ALERT_START <= hm(now) <= ALERT_END):
-        return
+def format_earnings_table(rows: List[Dict[str, Any]], week_start: datetime) -> str:
+    out = []
+    out.append(f"📅 EARNINGS TÝDEN ({week_start.strftime('%d.%m.%Y')})")
+    out.append("")
 
-    alerts = run_alerts_snapshot(cfg, now, st=None)
+    if not rows:
+        out.append("Žádné earnings události.")
+        return "\n".join(out)
 
-    for a in alerts:
-        telegram_send(f"🚨 {a['ticker']} {a['pct_from_open']:+.2f}%")
+    for r in rows[:25]:
+        ticker = r.get("symbol")
+        name = r.get("name")
+        date = r.get("date")
+        eps = r.get("epsEstimated")
+
+        out.append(f"{date} | {ticker}")
+        if name:
+            out.append(f"   {name}")
+        if eps:
+            out.append(f"   Oček. EPS: {eps}")
+        out.append("")
+
+    return "\n".join(out)
+
+
+# ============================================================
+# MAIN
+# ============================================================
+def run_weekly_earnings():
+    now = now_local()
+    week_start = now
+    week_end = now + timedelta(days=7)
+
+    data = fmp_earnings_week(week_start, week_end)
+    msg = format_earnings_table(data, week_start)
+
+    telegram_send(msg)
+    email_send(f"EARNINGS TÝDEN ({week_start.strftime('%d.%m.%Y')})", msg)
+
+    print("✅ Weekly earnings hotovo.")
 
 
 def main():
-    now = now_local()
-    print(f"✅ Bot běží | {now.strftime('%H:%M')}")
+    print(f"RUN_MODE = {RUN_MODE}")
 
-    run_reports(CFG, now)
-    run_alerts(CFG, now)
+    if RUN_MODE == "earnings":
+        run_weekly_earnings()
+        return
+
+    print("Standardní běh – earnings se nespouští.")
 
 
 if __name__ == "__main__":
