@@ -1,24 +1,25 @@
-import os
+# radar/state.py
+from __future__ import annotations
+
 import json
-from typing import Dict, Any
+import os
+from typing import Any, Dict, Optional
 
 
 class State:
-    """
-    Drží .state soubory:
-      - sent.json  (co už dnes odešlo)
-      - alerts.json (poslední alertovaný % pohyb pro ticker, aby se nezahlcovalo)
-    """
-    def __init__(self, state_dir: str):
+    def __init__(self, state_dir: str = ".state") -> None:
         self.state_dir = state_dir
-        os.makedirs(state_dir, exist_ok=True)
-        self.sent_path = os.path.join(state_dir, "sent.json")
-        self.alerts_path = os.path.join(state_dir, "alerts.json")
+        os.makedirs(self.state_dir, exist_ok=True)
 
-        self.sent = self._read_json(self.sent_path, {})
-        self.alerts = self._read_json(self.alerts_path, {})
+        self.sent_path = os.path.join(self.state_dir, "sent.json")
+        self.alert_path = os.path.join(self.state_dir, "alerts.json")
+        self.names_path = os.path.join(self.state_dir, "names.json")
 
-    def _read_json(self, path: str, default):
+        self.sent: Dict[str, Dict[str, bool]] = self._read_json(self.sent_path, {})
+        self.alerts: Dict[str, Dict[str, str]] = self._read_json(self.alert_path, {})
+        self.names: Dict[str, str] = self._read_json(self.names_path, {})
+
+    def _read_json(self, path: str, default: Any):
         try:
             if os.path.exists(path):
                 with open(path, "r", encoding="utf-8") as f:
@@ -27,30 +28,43 @@ class State:
             pass
         return default
 
-    def _write_json(self, path: str, data):
+    def _write_json(self, path: str, data: Any) -> None:
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
+    # --- report dedupe ---
     def already_sent(self, tag: str, day: str) -> bool:
-        return self.sent.get(tag) == day
+        return bool(self.sent.get(tag, {}).get(day))
 
-    def mark_sent(self, tag: str, day: str):
-        self.sent[tag] = day
+    def mark_sent(self, tag: str, day: str) -> None:
+        self.sent.setdefault(tag, {})[day] = True
 
-    def get_last_alert_pct(self, day: str, ticker: str):
-        return self.alerts.get(day, {}).get(ticker)
+    # --- alert dedupe ---
+    def should_alert(self, ticker: str, key: str, day: str) -> bool:
+        cur = self.alerts.get(ticker)
+        if cur and cur.get("day") == day and cur.get("key") == key:
+            return False
+        self.alerts[ticker] = {"day": day, "key": key}
+        return True
 
-    def set_last_alert_pct(self, day: str, ticker: str, pct: float):
-        if day not in self.alerts:
-            self.alerts[day] = {}
-        self.alerts[day][ticker] = pct
+    def cleanup_alert_state(self, day: str) -> None:
+        # smaž staré dny, nech jen dnešní
+        to_del = []
+        for t, v in self.alerts.items():
+            if v.get("day") != day:
+                to_del.append(t)
+        for t in to_del:
+            self.alerts.pop(t, None)
 
-    def cleanup_alert_state(self, today: str):
-        # smaž staré dny, nech jen dnes
-        for d in list(self.alerts.keys()):
-            if d != today:
-                self.alerts.pop(d, None)
+    # --- name cache ---
+    def get_name(self, ticker: str) -> Optional[str]:
+        return self.names.get(ticker)
 
-    def save(self):
+    def set_name(self, ticker: str, name: str) -> None:
+        if name:
+            self.names[ticker] = name
+
+    def save(self) -> None:
         self._write_json(self.sent_path, self.sent)
-        self._write_json(self.alerts_path, self.alerts)
+        self._write_json(self.alert_path, self.alerts)
+        self._write_json(self.names_path, self.names)
