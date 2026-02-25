@@ -1,47 +1,41 @@
-name: weekly-earnings
+# earnings_weekly.py
+from __future__ import annotations
 
-on:
-  schedule:
-    # Pondělí 8:00 Praha ≈ 07:00 UTC (jednoduchá stabilní varianta)
-    - cron: "0 7 * * 1"
-  workflow_dispatch:
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
-jobs:
-  earnings:
-    runs-on: ubuntu-latest
+from radar.config import load_config
+from radar.state import State
+from radar.engine import fetch_earnings_calendar
+from reporting.telegram import telegram_send_long
+from reporting.formatters import format_earnings_weekly
 
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
+def main() -> None:
+    cfg = load_config()
+    st = State(cfg.state_dir)
 
-      - uses: actions/cache@v4
-        with:
-          path: .state
-          key: xtb-state-${{ github.run_id }}
-          restore-keys: |
-            xtb-state-
+    now = datetime.now(ZoneInfo(cfg.timezone))
+    today = now.strftime("%Y-%m-%d")
 
-      - name: Install deps
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    # Dedupe: pošli jen 1× za pondělí
+    tag = "earnings_weekly"
+    if st.already_sent(tag, today):
+        print("ℹ️ earnings_weekly už dnes odesláno.")
+        return
 
-      - name: Run earnings report
-        env:
-          TIMEZONE: Europe/Prague
-          RUN_MODE: earnings
+    days = int(getattr(cfg, "earnings_days_ahead", 7) or 7)
+    start = now.date()
+    end = (now + timedelta(days=days)).date()
 
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+    items = fetch_earnings_calendar(cfg, start.isoformat(), end.isoformat())
+    msg = format_earnings_weekly(items, cfg, now, days=days)
 
-          EMAIL_ENABLED: "true"
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+    telegram_send_long(cfg, msg)
+    st.mark_sent(tag, today)
+    st.save()
+    print("✅ Earnings weekly sent.")
 
-        run: |
-          python ahoj.py
+
+if __name__ == "__main__":
+    main()
