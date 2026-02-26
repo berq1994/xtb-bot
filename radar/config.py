@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import os
-import json
 from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
@@ -53,9 +52,6 @@ class RadarConfig:
     ticker_map: Dict[str, str] = field(default_factory=dict)
 
 
-# ----------------------------
-# YAML + helpers
-# ----------------------------
 def _load_yaml() -> Dict[str, Any]:
     if yaml is None:
         return {}
@@ -80,60 +76,10 @@ def _as_list_str(x) -> List[str]:
     return out
 
 
-def _normalize_weights(w: Dict[str, float]) -> Dict[str, float]:
-    # ohlídáme jen validní čísla
-    clean: Dict[str, float] = {}
-    for k, v in (w or {}).items():
-        try:
-            clean[str(k).strip()] = float(v)
-        except Exception:
-            pass
-
-    s = sum(clean.values())
-    if s > 0:
-        for k in list(clean.keys()):
-            clean[k] = clean[k] / s
-    return clean
-
-
-def _read_json(path: str, default):
-    try:
-        if os.path.exists(path):
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except Exception:
-        pass
-    return default
-
-
-def _load_learned_weights(state_dir: str) -> Dict[str, float]:
-    """
-    Načte learned váhy z .state/learned_weights.json, pokud existují.
-    Vrací normalizované váhy (nebo {}).
-    """
-    if not state_dir:
-        state_dir = ".state"
-    path = os.path.join(state_dir, "learned_weights.json")
-    data = _read_json(path, {})
-    if not isinstance(data, dict):
-        return {}
-    w = _normalize_weights(data)
-    # musí mít alespoň jeden relevantní klíč, jinak ignorujeme
-    wanted = {"momentum", "rel_strength", "volatility_volume", "catalyst", "market_regime"}
-    if not any(k in w for k in wanted):
-        return {}
-    # udrž jen známé klíče (aby se tam nedostalo něco navíc)
-    return {k: w[k] for k in w if k in wanted}
-
-
-# ----------------------------
-# public
-# ----------------------------
 def load_config() -> RadarConfig:
     raw = _load_yaml()
     cfg = RadarConfig()
 
-    # yaml -> cfg
     cfg.timezone = str(raw.get("timezone", cfg.timezone)).strip()
     cfg.state_dir = str(raw.get("state_dir", cfg.state_dir)).strip()
 
@@ -147,26 +93,27 @@ def load_config() -> RadarConfig:
     cfg.news_per_ticker = int(raw.get("news_per_ticker", cfg.news_per_ticker) or cfg.news_per_ticker)
     cfg.top_n = int(raw.get("top_n", cfg.top_n) or cfg.top_n)
 
+    # FMP key: yaml -> env override (podpora obou názvů secretů)
     cfg.fmp_api_key = str(raw.get("fmp_api_key", "") or "").strip()
-    # env override (funguje i s vašimi secret názvy)
     cfg.fmp_api_key = (os.getenv("FMPAPIKEY") or os.getenv("FMP_API_KEY") or cfg.fmp_api_key).strip()
 
-    # benchmarks
     if isinstance(raw.get("benchmarks"), dict):
         cfg.benchmarks.update({str(k).strip(): str(v).strip() for k, v in raw["benchmarks"].items()})
 
-    # weights z YAML
     if isinstance(raw.get("weights"), dict):
-        w_yaml: Dict[str, float] = {}
+        w = {}
         for k, v in raw["weights"].items():
             try:
-                w_yaml[str(k).strip()] = float(v)
+                w[str(k).strip()] = float(v)
             except Exception:
                 pass
-        if w_yaml:
-            cfg.weights.update(_normalize_weights(w_yaml))
+        if w:
+            s = sum(w.values())
+            if s > 0:
+                for k in w:
+                    w[k] = w[k] / s
+            cfg.weights.update(w)
 
-    # portfolio
     pf = raw.get("portfolio", [])
     if isinstance(pf, list):
         out = []
@@ -180,15 +127,8 @@ def load_config() -> RadarConfig:
     cfg.watchlist = [s.strip().upper() for s in _as_list_str(raw.get("watchlist", cfg.watchlist))]
     cfg.new_candidates = [s.strip().upper() for s in _as_list_str(raw.get("new_candidates", []))]
 
-    # ticker_map
     tm = raw.get("ticker_map", {})
     if isinstance(tm, dict):
         cfg.ticker_map = {str(k).strip().upper(): str(v).strip() for k, v in tm.items()}
-
-    # ✅ learned weights override (pokud existují)
-    learned = _load_learned_weights(cfg.state_dir)
-    if learned:
-        cfg.weights.update(learned)
-        cfg.weights = _normalize_weights(cfg.weights)
 
     return cfg
