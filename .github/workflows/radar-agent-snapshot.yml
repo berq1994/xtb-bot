@@ -1,0 +1,54 @@
+name: radar-snapshot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 6 * * 1-5"   # Po–Pá 06:30 UTC (07:30 Prague)
+    - cron: "0 19 * * 1-5"   # Po–Pá 19:00 UTC (20:00 Prague)
+
+concurrency:
+  group: radar-snapshot
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install yfinance feedparser requests PyYAML; fi
+
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: radar-state-${{ github.ref_name }}-${{ github.run_number }}
+          restore-keys: |
+            radar-state-${{ github.ref_name }}-
+
+      - name: Run snapshot
+        env:
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+        run: |
+          python run_agent.py snapshot
+
+      - name: Save state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: radar-state-${{ github.ref_name }}-${{ github.run_number }}
