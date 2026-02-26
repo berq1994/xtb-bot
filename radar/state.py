@@ -7,19 +7,26 @@ from typing import Any, Dict, Optional
 
 
 class State:
-    def __init__(self, state_dir: str = ".state") -> None:
+    """
+    Udržuje:
+    - dedupe odeslaných reportů (premarket/evening/weekly_earnings) po dnech
+    - dedupe alertů (aby to nespamovalo)
+    - cache názvů firem (ticker -> company name)
+    """
+
+    def __init__(self, state_dir: str = ".state"):
         self.state_dir = state_dir
         os.makedirs(self.state_dir, exist_ok=True)
 
-        self.sent_path = os.path.join(self.state_dir, "sent.json")
-        self.alert_path = os.path.join(self.state_dir, "alerts.json")
-        self.names_path = os.path.join(self.state_dir, "names.json")
+        self.sent_file = os.path.join(self.state_dir, "sent.json")
+        self.alert_file = os.path.join(self.state_dir, "alerts.json")
+        self.names_file = os.path.join(self.state_dir, "names.json")
 
-        self.sent: Dict[str, Dict[str, bool]] = self._read_json(self.sent_path, {})
-        self.alerts: Dict[str, Dict[str, str]] = self._read_json(self.alert_path, {})
-        self.names: Dict[str, str] = self._read_json(self.names_path, {})
+        self.sent: Dict[str, Dict[str, bool]] = self._read_json(self.sent_file, {})
+        self.alerts: Dict[str, Dict[str, str]] = self._read_json(self.alert_file, {})
+        self.names: Dict[str, str] = self._read_json(self.names_file, {})
 
-    def _read_json(self, path: str, default: Any):
+    def _read_json(self, path: str, default: Any) -> Any:
         try:
             if os.path.exists(path):
                 with open(path, "r", encoding="utf-8") as f:
@@ -28,43 +35,46 @@ class State:
             pass
         return default
 
-    def _write_json(self, path: str, data: Any) -> None:
+    def _write_json(self, path: str, data: Any):
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
-    # --- report dedupe ---
+    # ---- report dedupe ----
     def already_sent(self, tag: str, day: str) -> bool:
-        return bool(self.sent.get(tag, {}).get(day))
+        return bool(self.sent.get(tag, {}).get(day, False))
 
-    def mark_sent(self, tag: str, day: str) -> None:
+    def mark_sent(self, tag: str, day: str):
         self.sent.setdefault(tag, {})[day] = True
 
-    # --- alert dedupe ---
+    # ---- alerts dedupe ----
     def should_alert(self, ticker: str, key: str, day: str) -> bool:
+        """
+        Nechceš spam:
+        - stejný ticker + stejný "key" v rámci stejného dne pošle jen jednou
+        """
+        ticker = (ticker or "").strip().upper()
         cur = self.alerts.get(ticker)
         if cur and cur.get("day") == day and cur.get("key") == key:
             return False
         self.alerts[ticker] = {"day": day, "key": key}
         return True
 
-    def cleanup_alert_state(self, day: str) -> None:
-        # smaž staré dny, nech jen dnešní
-        to_del = []
-        for t, v in self.alerts.items():
-            if v.get("day") != day:
-                to_del.append(t)
-        for t in to_del:
+    def cleanup_alert_state(self, day: str):
+        # držíme jen dnešní
+        drop = [t for t, v in self.alerts.items() if v.get("day") != day]
+        for t in drop:
             self.alerts.pop(t, None)
 
-    # --- name cache ---
-    def get_name(self, ticker: str) -> Optional[str]:
-        return self.names.get(ticker)
+    # ---- company names cache ----
+    def get_name(self, yahoo_ticker: str) -> Optional[str]:
+        return self.names.get((yahoo_ticker or "").strip())
 
-    def set_name(self, ticker: str, name: str) -> None:
-        if name:
-            self.names[ticker] = name
+    def set_name(self, yahoo_ticker: str, name: str):
+        if yahoo_ticker and name:
+            self.names[(yahoo_ticker or "").strip()] = (name or "").strip()
 
-    def save(self) -> None:
-        self._write_json(self.sent_path, self.sent)
-        self._write_json(self.alert_path, self.alerts)
-        self._write_json(self.names_path, self.names)
+    # ---- persist ----
+    def save(self):
+        self._write_json(self.sent_file, self.sent)
+        self._write_json(self.alert_file, self.alerts)
+        self._write_json(self.names_file, self.names)
