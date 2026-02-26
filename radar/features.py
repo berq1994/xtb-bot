@@ -1,57 +1,54 @@
 # radar/features.py
 from __future__ import annotations
-
 from typing import Dict, Any, Optional
 
 
 def movement_class(pct: Optional[float]) -> str:
+    """
+    Jednoduchá klasifikace pohybu (1D nebo od OPEN).
+    """
     if pct is None:
-        return "NO_DATA"
-    a = abs(pct)
+        return "NO-DATA"
+    a = abs(float(pct))
     if a >= 10:
-        return "EXTRÉM"
+        return "EXTREME"
     if a >= 6:
-        return "VELKÝ"
+        return "STRONG"
     if a >= 3:
-        return "STŘEDNÍ"
+        return "MOVE"
     if a >= 1:
-        return "MALÝ"
-    return "MINI"
+        return "DRIFT"
+    return "FLAT"
 
 
 def compute_features(raw: Dict[str, Any]) -> Dict[str, float]:
     """
-    Převede raw vstupy do normalizovaných (0..10) feature values.
+    Převod raw metrik -> feature space (0..10), kompatibilní se scoringem.
+    raw očekává klíče:
+      pct_1d, momentum, rel_strength, vol_ratio, catalyst_score, regime_score
     """
-    pct_1d = raw.get("pct_1d")
-    momentum = raw.get("momentum", 0.0) or 0.0
-    rel_strength = raw.get("rel_strength", 0.0) or 0.0
-    vol_ratio = raw.get("vol_ratio", 1.0) or 1.0
-    catalyst_score = raw.get("catalyst_score", 0.0) or 0.0
-    regime_score = raw.get("regime_score", 5.0) or 5.0
+    mom = float(raw.get("momentum") or 0.0)
+    rs = float(raw.get("rel_strength") or 0.0)
 
-    # momentum už typicky 0..10
-    mom = float(momentum)
+    vol_ratio = raw.get("vol_ratio")
+    try:
+        vol_ratio = float(vol_ratio)
+    except Exception:
+        vol_ratio = 1.0
 
-    # RS: map -5..+5 => 0..10 (ořez)
-    rs = float(rel_strength)
-    rs_norm = max(0.0, min(10.0, (rs + 5.0)))
+    cat = float(raw.get("catalyst_score") or 0.0)
+    reg = float(raw.get("regime_score") or 5.0)
 
-    # volume ratio: 1.0 normál; 2.0 ~ výrazně; map => 0..10
-    vr = float(vol_ratio)
-    vol_norm = max(0.0, min(10.0, (vr - 1.0) * 6.0))
+    # vol feature: 1.0 = normál, 2.0 ~ vyšší aktivita
+    vol_feat = max(0.0, min(10.0, (vol_ratio - 1.0) * 6.0))
 
-    # catalyst: 0..10
-    cat = max(0.0, min(10.0, float(catalyst_score)))
-
-    # regime: 0..10
-    reg = max(0.0, min(10.0, float(regime_score)))
+    # rs feature: map -5..+5 => 0..10 (clamp)
+    rs_feat = max(0.0, min(10.0, (rs + 5.0) * 1.0))
 
     return {
-        "movement": 0.0 if pct_1d is None else float(abs(pct_1d)),
-        "momentum": mom,
-        "rel_strength": rs_norm,
-        "volatility_volume": vol_norm,
-        "catalyst": cat,
-        "market_regime": reg,
+        "momentum": max(0.0, min(10.0, mom)),
+        "rel_strength": rs_feat,
+        "volatility_volume": vol_feat,
+        "catalyst": max(0.0, min(10.0, cat)),
+        "market_regime": max(0.0, min(10.0, reg)),
     }
