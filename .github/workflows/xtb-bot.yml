@@ -5,14 +5,9 @@ on:
     - cron: "*/15 * * * *"
   workflow_dispatch:
 
-concurrency:
-  group: xtb-bot
-  cancel-in-progress: true
-
 jobs:
   run:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     steps:
       - name: Checkout
@@ -27,7 +22,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .state
-          key: xtb-state
+          key: xtb-state-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-
 
       - name: Install deps
         run: |
@@ -43,13 +40,12 @@ jobs:
           CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
 
-          PREMARKET_TIME: "12:00"
+          PREMARKET_TIME: "07:30"
           EVENING_TIME: "20:00"
+
           ALERT_START: "12:00"
           ALERT_END: "21:00"
           ALERT_THRESHOLD: "3"
-          NEWS_PER_TICKER: "2"
-          TOP_N: "5"
 
           EMAIL_ENABLED: "true"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
