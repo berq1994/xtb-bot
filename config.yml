@@ -2,7 +2,9 @@
 # MEGA INVESTIČNÍ RADAR – CONFIG (CZ)
 # ============================================================
 
-fmp_api_key: ${FMP_API_KEY}
+# Pozn.: v praxi bereme klíč hlavně z ENV (FMPAPIKEY / FMP_API_KEY),
+# takže tady může zůstat prázdné.
+fmp_api_key: ""
 
 timezone: Europe/Prague
 state_dir: .state
@@ -106,8 +108,16 @@ new_candidates:
   - LLT
 
 ticker_map:
-  # SGLD na Yahoo často potřebuje suffix burzy – pokud ti .L funguje, nech:
+  # --- SGLD ---
+  # Pokud ti "SGLD.L" funguje na Yahoo, nech.
+  # Jestli Yahoo hlásí 404/no data, zkus alternativy (podle reálného instrumentu):
+  # - IGLD.DE / IGLD.L / SGLN.L / PHAU.L (lišší se emitent/měna/hedge)
   SGLD: "SGLD.L"
 
-  # CSG: Yahoo symbol musíme potvrdit (CSG.NL nefunguje).
-  # CSG: "CSG.AS"   # příklad – NEGARANTUJU
+  # --- CSG ---
+  # CSG.NL nefunguje. Tady musíš doplnit správný Yahoo symbol.
+  # Zkus typicky Euronext Amsterdam bývá .AS:
+  # CSG: "CSG.AS"
+  #
+  # Pokud ani to, bude potřeba zjistit přesný symbol na Yahoo Finance.
+  # Zatím necháme bez mapování, ať se to nepokouší o špatný ticker.
