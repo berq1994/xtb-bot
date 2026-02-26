@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
 import requests
@@ -14,10 +14,6 @@ from radar.universe import resolved_universe
 from radar.features import compute_features, movement_class
 from radar.scoring import compute_score
 from radar.levels import pick_level
-
-
-def map_ticker(cfg: RadarConfig, t: str) -> str:
-    return (cfg.ticker_map.get(t) or t).strip()
 
 
 def pct(new: float, old: float) -> float:
@@ -122,18 +118,43 @@ def volume_ratio_1d(ticker: str) -> float:
         return 1.0
 
 
-# ---------- Company name (cache přes State) ----------
-def resolve_company_name(yahoo_ticker: str, st=None) -> str:
+# ---------- Company name (prefer FMP, fallback Yahoo, cache přes State) ----------
+def _fmp_get(cfg: RadarConfig, path: str, params: Optional[Dict[str, Any]] = None):
+    if not cfg.fmp_api_key:
+        return None
+    url = f"https://financialmodelingprep.com/api/{path}"
+    p = dict(params or {})
+    p["apikey"] = cfg.fmp_api_key
+    try:
+        r = requests.get(url, params=p, timeout=35)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except Exception:
+        return None
+
+
+def resolve_company_name(cfg: RadarConfig, yahoo_ticker: str, st=None) -> str:
     if st is not None:
         cached = st.get_name(yahoo_ticker)
         if cached:
             return cached
+
     name = ""
-    try:
-        info = yf.Ticker(yahoo_ticker).get_info()
-        name = (info.get("longName") or info.get("shortName") or "").strip()
-    except Exception:
-        name = ""
+    # FMP profile
+    data = _fmp_get(cfg, "v3/profile", {"symbol": yahoo_ticker})
+    if isinstance(data, list) and data:
+        row = data[0]
+        name = (row.get("companyName") or "").strip()
+
+    # Yahoo fallback
+    if not name:
+        try:
+            info = yf.Ticker(yahoo_ticker).get_info()
+            name = (info.get("longName") or info.get("shortName") or "").strip()
+        except Exception:
+            name = ""
+
     if st is not None and name:
         st.set_name(yahoo_ticker, name)
     return name or "—"
@@ -201,7 +222,7 @@ def why_from_headlines(news_items: List[Tuple[str, str, str]]) -> str:
     return "; ".join(hits[:2]) + "." if hits else "bez jasné zprávy – může to být sentiment/technika/trh."
 
 
-# ---------- FMP earnings calendar ----------
+# ---------- Earnings (FMP) ----------
 def fetch_earnings_calendar(cfg: RadarConfig, from_date: str, to_date: str) -> List[Dict[str, Any]]:
     if not cfg.fmp_api_key:
         return []
@@ -212,19 +233,105 @@ def fetch_earnings_calendar(cfg: RadarConfig, from_date: str, to_date: str) -> L
         if r.status_code != 200:
             return []
         data = r.json()
-        if isinstance(data, list):
-            return data
-        return []
+        return data if isinstance(data, list) else []
     except Exception:
         return []
 
 
+def next_earnings_for_ticker(cfg: RadarConfig, symbol: str, from_dt: datetime, days: int = 30) -> Optional[Dict[str, Any]]:
+    """
+    Najde nejbližší earnings do X dnů dopředu pro konkrétní ticker.
+    """
+    f = from_dt.date().isoformat()
+    t = (from_dt.date() + timedelta(days=days)).isoformat()
+    rows = fetch_earnings_calendar(cfg, f, t)
+    symbol_u = symbol.upper()
+
+    best = None
+    for r in rows:
+        s = str(r.get("symbol") or "").upper()
+        if s != symbol_u:
+            continue
+        d = str(r.get("date") or "").strip()
+        if not d:
+            continue
+        if best is None or d < str(best.get("date")):
+            best = r
+    return best
+
+
+def days_to_earnings(cfg: RadarConfig, resolved_t: str, now: datetime) -> Optional[int]:
+    row = next_earnings_for_ticker(cfg, resolved_t, now, days=45)
+    if not row:
+        return None
+    d = str(row.get("date") or "").strip()
+    try:
+        dt = datetime.strptime(d, "%Y-%m-%d").date()
+        return (dt - now.date()).days
+    except Exception:
+        return None
+
+
+# ---------- Weekly earnings table ----------
+def run_weekly_earnings_table(cfg: RadarConfig, now: datetime, st=None) -> Dict[str, Any]:
+    """
+    Pondělí ráno: tabulka earnings na týden (Po–Pá) pro portfolio+watchlist+new_candidates
+    """
+    start = now.date()
+    end = (now + timedelta(days=7)).date()
+
+    rows = fetch_earnings_calendar(cfg, start.isoformat(), end.isoformat())
+
+    # náš universe (raw tickery), ale porovnáváme resolved, protože earnings symboly bývají US tickery
+    raw_universe = set()
+    for r in cfg.portfolio:
+        if isinstance(r, dict) and r.get("ticker"):
+            raw_universe.add(str(r["ticker"]).strip().upper())
+    for x in (cfg.watchlist or []):
+        raw_universe.add(str(x).strip().upper())
+    for x in (cfg.new_candidates or []):
+        raw_universe.add(str(x).strip().upper())
+
+    # map raw -> resolved
+    resolved_map = {t: (cfg.ticker_map.get(t) or t) for t in raw_universe}
+
+    # earnings data filtrujeme na resolved tickery (u US to sedí; u EU často není)
+    keep_symbols = set([str(v).upper() for v in resolved_map.values()])
+
+    out_rows = []
+    for r in rows:
+        sym = str(r.get("symbol") or "").upper()
+        if sym in keep_symbols:
+            company = resolve_company_name(cfg, sym, st=st)
+            out_rows.append({
+                "symbol": sym,
+                "company": company,
+                "date": str(r.get("date") or ""),
+                "time": str(r.get("time") or ""),
+                "eps_estimated": r.get("epsEstimated"),
+                "revenue_estimated": r.get("revenueEstimated"),
+            })
+
+    out_rows.sort(key=lambda x: (x.get("date") or "", x.get("symbol") or ""))
+    return {
+        "meta": {"from": start.isoformat(), "to": end.isoformat()},
+        "rows": out_rows,
+    }
+
+
 # ---------- Public API ----------
-def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str = "snapshot", universe: List[str] | None = None, st=None) -> Dict[str, Any]:
+def run_radar_snapshot(
+    cfg: RadarConfig,
+    now: datetime,
+    reason: str = "snapshot",
+    universe: Optional[List[str]] = None,
+    st=None
+) -> Dict[str, Any]:
     resolved, raw_to_resolved = resolved_universe(cfg, universe=universe)
     regime_label, regime_detail, regime_score = market_regime(cfg)
 
     rows: List[Dict[str, Any]] = []
+
     for resolved_t in resolved:
         # najdi raw ticker (kvůli reportu) – vezmeme první match
         raw = None
@@ -246,6 +353,9 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str = "snapshot"
         why = why_from_headlines(news)
         catalyst = min(10.0, 1.0 + 0.7 * len(news)) if news else 0.0
 
+        # earnings
+        dte = days_to_earnings(cfg, resolved_t, now)
+
         raw_feat = {
             "pct_1d": pct_1d,
             "momentum": momentum,
@@ -266,7 +376,7 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str = "snapshot"
             score=score,
         )
 
-        company = resolve_company_name(resolved_t, st=st)
+        company = resolve_company_name(cfg, resolved_t, st=st)
 
         rows.append({
             "ticker": raw,
@@ -278,14 +388,15 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str = "snapshot"
             "src": "RSS",
             "why": why,
             "news": [{"src": s, "title": t, "url": u} for (s, t, u) in news],
+            "earnings_in_days": dte,
             "market_regime": {"label": regime_label, "detail": regime_detail, "score": regime_score},
             "level_key": lvl_key,
             "level": lvl_info["level_label"],
         })
 
-    # TOP/WORST
     rows_sorted = sorted(rows, key=lambda r: r.get("score", 0.0), reverse=True)
     top_n = int(cfg.top_n or 5)
+
     return {
         "meta": {
             "timestamp": now.strftime("%Y-%m-%d %H:%M"),
@@ -301,7 +412,6 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str = "snapshot"
 def run_alerts_snapshot(cfg: RadarConfig, now: datetime, st) -> List[Dict[str, Any]]:
     threshold = float(cfg.alert_threshold_pct or 3.0)
 
-    # alerty: portfolio + watchlist
     tickers = set()
     for r in (cfg.portfolio or []):
         if isinstance(r, dict) and r.get("ticker"):
@@ -310,10 +420,10 @@ def run_alerts_snapshot(cfg: RadarConfig, now: datetime, st) -> List[Dict[str, A
         tickers.add(str(x).strip().upper())
 
     alerts: List[Dict[str, Any]] = []
-
     day = now.strftime("%Y-%m-%d")
+
     for raw_t in sorted(tickers):
-        resolved_t = map_ticker(cfg, raw_t)
+        resolved_t = (cfg.ticker_map.get(raw_t) or raw_t).strip()
         ol = intraday_open_last(resolved_t)
         if not ol:
             continue
@@ -321,12 +431,12 @@ def run_alerts_snapshot(cfg: RadarConfig, now: datetime, st) -> List[Dict[str, A
         ch = pct(last, o)
 
         if abs(ch) >= threshold:
-            key = f"{raw_t}|{round(ch,2)}"
+            key = f"{raw_t}|{round(ch, 2)}"
             if st is not None and hasattr(st, "should_alert"):
                 if not st.should_alert(raw_t, key, day):
                     continue
 
-            company = resolve_company_name(resolved_t, st=st)
+            company = resolve_company_name(cfg, resolved_t, st=st)
 
             alerts.append({
                 "ticker": raw_t,
