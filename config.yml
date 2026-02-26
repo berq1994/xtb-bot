@@ -2,38 +2,29 @@
 # MEGA INVESTIČNÍ RADAR – CONFIG (CZ)
 # ============================================================
 
-timezone: Europe/Prague
-
-# FMP (přes GitHub Secrets: FMPAPIKEY / FMP_API_KEY)
 fmp_api_key: ${FMP_API_KEY}
 
-# ------------------------------------------------------------
-# ČASY
-# ------------------------------------------------------------
+timezone: Europe/Prague
+state_dir: .state
+
+# Časy
 premarket_time: "07:30"
 evening_time: "20:00"
+weekly_earnings_time: "08:00"   # pondělí
 
+# Alert okno
 alert_start: "12:00"
 alert_end: "21:00"
 alert_threshold_pct: 3
 
+# Limity
 news_per_ticker: 2
 top_n: 5
 
-# Earnings tabulka (pondělí 08:00)
-weekly_earnings_day: "MON"
-weekly_earnings_time: "08:00"
-
-# ------------------------------------------------------------
-# BENCHMARKY
-# ------------------------------------------------------------
 benchmarks:
   spy: SPY
   vix: "^VIX"
 
-# ------------------------------------------------------------
-# VÁHY SCORE
-# ------------------------------------------------------------
 weights:
   momentum: 0.25
   rel_strength: 0.20
@@ -41,9 +32,6 @@ weights:
   catalyst: 0.20
   market_regime: 0.20
 
-# ------------------------------------------------------------
-# PORTFOLIO (dle tvých screenů + oprav)
-# ------------------------------------------------------------
 portfolio:
   - ticker: NVDA
     qty: 6
@@ -105,31 +93,21 @@ portfolio:
     currency: USD
     broker: XTB
 
-# ------------------------------------------------------------
-# WATCHLIST
-# ------------------------------------------------------------
 watchlist:
   - SPY
   - QQQ
   - SMH
-  - AMD
-  - ASML
-  - AVGO
 
-# ------------------------------------------------------------
-# NOVÉ NADĚJNÉ (kandidáti)
-# ------------------------------------------------------------
 new_candidates:
+  - ASML
+  - AMD
+  - AVGO
   - CRWD
-  - PLTR
-  - MU
-  - ARM
-  - SMCI
+  - LLT
 
-# ------------------------------------------------------------
-# Mapování tickerů (jen když Yahoo hlásí "Not Found")
-# ------------------------------------------------------------
 ticker_map:
-  # příklady (doplň až budeš znát správné Yahoo symboly)
-  # CSG: "????"
-  # SGLD: "SGLD.L"
+  # SGLD na Yahoo často potřebuje suffix burzy – pokud ti .L funguje, nech:
+  SGLD: "SGLD.L"
+
+  # CSG: Yahoo symbol musíme potvrdit (CSG.NL nefunguje).
+  # CSG: "CSG.AS"   # příklad – NEGARANTUJU
