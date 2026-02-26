@@ -1,6 +1,6 @@
 # ahoj.py
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 from radar.config import load_config
@@ -31,6 +31,22 @@ def hm(dt: datetime) -> str:
 
 def in_window(now_hm: str, start_hm: str, end_hm: str) -> bool:
     return start_hm <= now_hm <= end_hm
+
+
+def _parse_hm(day_dt: datetime, hm_str: str) -> datetime:
+    """Vrátí datetime pro dnešek s časem HH:MM (v tz už je day_dt)."""
+    hh, mm = hm_str.split(":")
+    return day_dt.replace(hour=int(hh), minute=int(mm), second=0, microsecond=0)
+
+
+def in_time_window(now: datetime, target_hm: str, tolerance_minutes: int = 14) -> bool:
+    """
+    True, pokud now spadá do okna [target, target+tolerance].
+    Tolerance 14 min je ideální pro workflow */15 min, kde může dojít ke zpoždění.
+    """
+    target = _parse_hm(now, target_hm)
+    end = target + timedelta(minutes=tolerance_minutes)
+    return target <= now <= end
 
 
 def _weights_pretty(weights: dict) -> str:
@@ -65,7 +81,6 @@ def main():
 
     weekly_earnings_time = (os.getenv("WEEKLY_EARNINGS_TIME") or cfg.weekly_earnings_time or "08:00").strip()
 
-    # --- Debug: learned weights status (viditelně v logu) ---
     learned_path = os.path.join(cfg.state_dir, "learned_weights.json")
     learned_exists = os.path.exists(learned_path)
 
@@ -81,14 +96,19 @@ def main():
     )
 
     # learn/backfill zatím nic neposílá (bezpečný režim)
-    # (když budeš chtít, doplníme skutečný learn/backfill engine)
     if run_mode in ("learn", "backfill"):
         st.save()
         print("✅ Done (learn/backfill mode – zatím bez akcí).")
         return
 
-    # --- Weekly earnings: pondělí 08:00 ---
-    if now.weekday() == 0 and now_hm == weekly_earnings_time and not st.already_sent("weekly_earnings", today):
+    # ------------------------------------------------------------
+    # 1) Weekly earnings: pondělí 08:00 (okno 08:00–08:14)
+    # ------------------------------------------------------------
+    if (
+        now.weekday() == 0
+        and in_time_window(now, weekly_earnings_time, tolerance_minutes=14)
+        and not st.already_sent("weekly_earnings", today)
+    ):
         table = run_weekly_earnings_table(cfg, now, st=st)
         text = format_weekly_earnings_report(table, cfg, now)
         telegram_send_long(cfg, text)
@@ -103,8 +123,13 @@ def main():
 
         st.mark_sent("weekly_earnings", today)
 
-    # --- 07:30 premarket (Telegram + Email 1× denně) ---
-    if now_hm == premarket_time and not st.already_sent("premarket", today):
+    # ------------------------------------------------------------
+    # 2) Premarket report: 07:30 (okno 07:30–07:44)
+    # ------------------------------------------------------------
+    if (
+        in_time_window(now, premarket_time, tolerance_minutes=14)
+        and not st.already_sent("premarket", today)
+    ):
         snapshot = run_radar_snapshot(cfg, now, reason="premarket", st=st)
         text = format_premarket_report(snapshot, cfg)
         telegram_send_long(cfg, text)
@@ -114,16 +139,23 @@ def main():
 
         st.mark_sent("premarket", today)
 
-    # --- 20:00 evening (Telegram only; email ne – dle pravidla max 1× denně) ---
-    if now_hm == evening_time and not st.already_sent("evening", today):
+    # ------------------------------------------------------------
+    # 3) Evening report: 20:00 (okno 20:00–20:14)
+    # ------------------------------------------------------------
+    if (
+        in_time_window(now, evening_time, tolerance_minutes=14)
+        and not st.already_sent("evening", today)
+    ):
         snapshot = run_radar_snapshot(cfg, now, reason="evening", st=st)
         text = format_evening_report(snapshot, cfg)
         telegram_send_long(cfg, text)
         st.mark_sent("evening", today)
 
-    # --- ALERTY (každých 15 min v okně) ---
+    # ------------------------------------------------------------
+    # Alerty (každých 15 min v okně)
+    # ------------------------------------------------------------
     if in_window(now_hm, alert_start, alert_end):
-        alerts = run_alerts_snapshot(cfg, now, st)  # ✅ přesně 3 poziční argumenty
+        alerts = run_alerts_snapshot(cfg, now, st)
         if alerts:
             telegram_send_long(cfg, format_alerts(alerts, cfg, now))
         st.cleanup_alert_state(today)
