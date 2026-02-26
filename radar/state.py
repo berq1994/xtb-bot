@@ -1,32 +1,31 @@
 # radar/state.py
 from __future__ import annotations
 
-import json
 import os
-from typing import Any, Dict, Optional
+import json
+from typing import Dict, Any, Optional
 
 
 class State:
     """
-    Udržuje:
-    - dedupe odeslaných reportů (premarket/evening/weekly_earnings) po dnech
-    - dedupe alertů (aby to nespamovalo)
-    - cache názvů firem (ticker -> company name)
+    - sent markers (premarket/evening/weekly_earnings)
+    - alert dedupe
+    - company name cache (yfinance info)
     """
 
     def __init__(self, state_dir: str = ".state"):
-        self.state_dir = state_dir
+        self.state_dir = state_dir or ".state"
         os.makedirs(self.state_dir, exist_ok=True)
 
         self.sent_file = os.path.join(self.state_dir, "sent.json")
-        self.alert_file = os.path.join(self.state_dir, "alerts.json")
+        self.alerts_file = os.path.join(self.state_dir, "alerts.json")
         self.names_file = os.path.join(self.state_dir, "names.json")
 
-        self.sent: Dict[str, Dict[str, bool]] = self._read_json(self.sent_file, {})
-        self.alerts: Dict[str, Dict[str, str]] = self._read_json(self.alert_file, {})
+        self.sent: Dict[str, Any] = self._read_json(self.sent_file, {})
+        self.alerts: Dict[str, Any] = self._read_json(self.alerts_file, {})
         self.names: Dict[str, str] = self._read_json(self.names_file, {})
 
-    def _read_json(self, path: str, default: Any) -> Any:
+    def _read_json(self, path: str, default):
         try:
             if os.path.exists(path):
                 with open(path, "r", encoding="utf-8") as f:
@@ -35,46 +34,52 @@ class State:
             pass
         return default
 
-    def _write_json(self, path: str, data: Any):
+    def _write_json(self, path: str, data):
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
-    # ---- report dedupe ----
+    # ---- sent markers ----
     def already_sent(self, tag: str, day: str) -> bool:
-        return bool(self.sent.get(tag, {}).get(day, False))
+        return str(self.sent.get(tag, "")) == str(day)
 
-    def mark_sent(self, tag: str, day: str):
-        self.sent.setdefault(tag, {})[day] = True
+    def mark_sent(self, tag: str, day: str) -> None:
+        self.sent[tag] = str(day)
 
     # ---- alerts dedupe ----
     def should_alert(self, ticker: str, key: str, day: str) -> bool:
         """
-        Nechceš spam:
-        - stejný ticker + stejný "key" v rámci stejného dne pošle jen jednou
+        Vrací True, pokud je to nový alert (neposílali jsme ho dnes se stejným key).
         """
-        ticker = (ticker or "").strip().upper()
+        ticker = str(ticker).upper()
         cur = self.alerts.get(ticker)
-        if cur and cur.get("day") == day and cur.get("key") == key:
+        if isinstance(cur, dict) and cur.get("day") == day and cur.get("key") == key:
             return False
         self.alerts[ticker] = {"day": day, "key": key}
         return True
 
-    def cleanup_alert_state(self, day: str):
-        # držíme jen dnešní
-        drop = [t for t, v in self.alerts.items() if v.get("day") != day]
-        for t in drop:
+    def cleanup_alert_state(self, day: str) -> None:
+        """
+        Udržuje alerts.json malý: smaže záznamy starších dní.
+        """
+        to_del = []
+        for t, v in self.alerts.items():
+            if isinstance(v, dict) and v.get("day") != day:
+                to_del.append(t)
+        for t in to_del:
             self.alerts.pop(t, None)
 
     # ---- company names cache ----
-    def get_name(self, yahoo_ticker: str) -> Optional[str]:
-        return self.names.get((yahoo_ticker or "").strip())
+    def get_name(self, resolved_ticker: str) -> Optional[str]:
+        return self.names.get(str(resolved_ticker), None)
 
-    def set_name(self, yahoo_ticker: str, name: str):
-        if yahoo_ticker and name:
-            self.names[(yahoo_ticker or "").strip()] = (name or "").strip()
+    def set_name(self, resolved_ticker: str, name: str) -> None:
+        rt = str(resolved_ticker)
+        nm = str(name or "").strip()
+        if nm:
+            self.names[rt] = nm
 
     # ---- persist ----
-    def save(self):
+    def save(self) -> None:
         self._write_json(self.sent_file, self.sent)
-        self._write_json(self.alert_file, self.alerts)
+        self._write_json(self.alerts_file, self.alerts)
         self._write_json(self.names_file, self.names)
