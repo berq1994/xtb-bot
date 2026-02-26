@@ -5,21 +5,18 @@ from typing import Dict
 
 def compute_score(features: Dict[str, float], weights: Dict[str, float]) -> float:
     """
-    features: dict s klíči:
-      momentum, rel_strength, volatility_volume, catalyst, market_regime
-    weights: stejné klíče, ideálně normalizované (součet 1)
+    Vážené skóre 0..10 (weights se očekávají normalizované, ale když nejsou, přeškálujeme).
     """
-    w = dict(weights or {})
-    # fallback váhy
-    for k in ("momentum", "rel_strength", "volatility_volume", "catalyst", "market_regime"):
-        w.setdefault(k, 0.2)
+    if not weights:
+        return 0.0
 
-    s = (
-        w["momentum"] * features.get("momentum", 0.0) +
-        w["rel_strength"] * features.get("rel_strength", 0.0) +
-        w["volatility_volume"] * features.get("volatility_volume", 0.0) +
-        w["catalyst"] * features.get("catalyst", 0.0) +
-        w["market_regime"] * features.get("market_regime", 0.0)
-    )
-    # score 0..10
-    return max(0.0, min(10.0, float(s)))
+    # normalizace vah “za běhu”
+    s = sum(float(v) for v in weights.values() if isinstance(v, (int, float)))
+    if s <= 0:
+        return 0.0
+
+    score = 0.0
+    for k, w in weights.items():
+        if k in features:
+            score += (float(w) / s) * float(features[k])
+    return float(score)
