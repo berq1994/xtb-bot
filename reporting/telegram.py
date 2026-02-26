@@ -1,5 +1,7 @@
 # reporting/telegram.py
 import requests
+from typing import Optional
+from radar.config import RadarConfig
 
 
 def _chunk_text(text: str, limit: int = 3500):
@@ -14,21 +16,20 @@ def _chunk_text(text: str, limit: int = 3500):
     return parts
 
 
-def telegram_send_long(cfg, text: str):
-    token = getattr(cfg, "telegram_token", "") if hasattr(cfg, "telegram_token") else ""
-    chat_id = getattr(cfg, "chat_id", "") if hasattr(cfg, "chat_id") else ""
+def telegram_send_long(cfg: RadarConfig, text: str):
+    token = (getattr(cfg, "telegram_token", "") or "").strip()  # fallback if někdy přidáš do cfg
+    chat_id = (getattr(cfg, "telegram_chat_id", "") or "").strip()
 
-    # fallback přes env (vy používáte TELEGRAMTOKEN/CHATID)
+    # ENV má prioritu (jak to máš v Actions)
     import os
-    token = (token or os.getenv("TELEGRAMTOKEN") or os.getenv("TG_BOT_TOKEN") or "").strip()
-    chat_id = (chat_id or os.getenv("CHATID") or os.getenv("TG_CHAT_ID") or "").strip()
+    token = (os.getenv("TELEGRAMTOKEN") or os.getenv("TG_BOT_TOKEN") or token).strip()
+    chat_id = (os.getenv("CHATID") or os.getenv("TG_CHAT_ID") or chat_id).strip()
 
     if not token or not chat_id:
         print("⚠️ Telegram není nastaven: chybí token/chat_id.")
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-
     for part in _chunk_text(text):
         try:
             r = requests.post(
@@ -37,6 +38,6 @@ def telegram_send_long(cfg, text: str):
                 timeout=35,
             )
             if r.status_code != 200:
-                print("Telegram error:", r.status_code, r.text[:300])
+                print("Telegram odpověď:", r.status_code, r.text[:400])
         except Exception as e:
-            print("Telegram exception:", e)
+            print("Telegram error:", e)
