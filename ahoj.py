@@ -1,6 +1,7 @@
 # ahoj.py
 import os
-from datetime import datetime
+import json
+from datetime import datetime, date, timedelta
 from zoneinfo import ZoneInfo
 
 from radar.config import load_config
@@ -10,6 +11,8 @@ from radar.engine import (
     run_alerts_snapshot,
     run_weekly_earnings_table,
 )
+from radar.learn import learn_weekly_weights
+from radar.backfill import backfill_history
 
 from reporting.telegram import telegram_send_long
 from reporting.emailer import maybe_send_email_report
@@ -17,7 +20,7 @@ from reporting.formatters import (
     format_premarket_report,
     format_evening_report,
     format_alerts,
-    format_weekly_earnings_report,   # ✅ správný název
+    format_weekly_earnings_report,
 )
 
 
@@ -31,6 +34,28 @@ def hm(dt: datetime) -> str:
 
 def in_window(now_hm: str, start_hm: str, end_hm: str) -> bool:
     return start_hm <= now_hm <= end_hm
+
+
+def _safe_bool_env(name: str, default: bool = False) -> bool:
+    v = (os.getenv(name) or "").strip().lower()
+    if not v:
+        return default
+    return v in ("1", "true", "yes", "y", "on")
+
+
+def _safe_date_env(name: str, default_iso: str) -> str:
+    v = (os.getenv(name) or "").strip()
+    return v if v else default_iso
+
+
+def _fmt_weights(w: dict) -> str:
+    # stabilní pořadí
+    keys = ["momentum", "rel_strength", "volatility_volume", "catalyst", "market_regime"]
+    out = []
+    for k in keys:
+        if k in w:
+            out.append(f"{k}={w[k]:.3f}")
+    return ", ".join(out)
 
 
 def main():
@@ -59,16 +84,80 @@ def main():
         f"Earnings tabulka: Po {weekly_earnings_time}"
     )
 
-    # learn/backfill zatím nic neposílá (bezpečný režim)
+    # ============================================================
+    # LEARN / BACKFILL MODE (kroky 1–3)
+    # ============================================================
     if run_mode in ("learn", "backfill"):
+        # Guard: nespouštět několikrát v jeden den (Actions může běžet 2× kvůli DST apod.)
+        if st.already_sent(run_mode, today):
+            st.save()
+            print(f"✅ Done ({run_mode} mode – už proběhlo dnes).")
+            return
+
+        # 2) BACKFILL (volitelné – může běžet i v learn)
+        do_backfill = (run_mode == "backfill") or _safe_bool_env("DO_BACKFILL", default=False)
+        backfill_summary = None
+        if do_backfill:
+            # default: od 2025-01-01 do dneška
+            start_iso = _safe_date_env("BACKFILL_START", "2025-01-01")
+            end_iso = _safe_date_env("BACKFILL_END", "")  # "" => today
+            backfill_summary = backfill_history(cfg, now, st=st, start_iso=start_iso, end_iso=end_iso)
+
+        # 1) LEARN WEIGHTS (jen v learn, nebo když je zapnuté env)
+        do_learn = (run_mode == "learn") or _safe_bool_env("DO_LEARN", default=False)
+        learn_summary = None
+        if do_learn:
+            learn_summary = learn_weekly_weights(cfg, now, st=st)
+
+        # 3) TELEGRAM SHRnutí (vždy v learn/backfill)
+        lines = []
+        lines.append(f"🧠 LEARN/BACKFILL SHRnutí ({today} {now_hm})")
+        lines.append(f"Režim: {run_mode}")
+        lines.append("")
+
+        if learn_summary:
+            lines.append("✅ (1) Learned weights uložené")
+            lines.append(f"- Původní: {_fmt_weights(learn_summary['before'])}")
+            lines.append(f"- Nové:    {_fmt_weights(learn_summary['after'])}")
+            lines.append(f"- Metoda:  {learn_summary.get('method','—')}")
+            if learn_summary.get("notes"):
+                lines.append(f"- Pozn.:   {learn_summary['notes']}")
+            lines.append("")
+
+        if backfill_summary:
+            lines.append("✅ (2) Backfill hotový")
+            lines.append(f"- Rozsah: {backfill_summary['start']} → {backfill_summary['end']}")
+            lines.append(f"- Tickerů: {backfill_summary['tickers_total']}")
+            lines.append(f"- OK: {backfill_summary['ok']} | Fail: {backfill_summary['fail']}")
+            lines.append(f"- Složka: {backfill_summary['history_dir']}")
+            if backfill_summary.get("failed"):
+                # max 10 kusů
+                failed = backfill_summary["failed"][:10]
+                lines.append(f"- Fail tickery (top10): {', '.join(failed)}")
+            lines.append("")
+
+        if not learn_summary and not backfill_summary:
+            lines.append("ℹ️ Nic se nedělalo (není zapnuté DO_LEARN/DO_BACKFILL a režim tomu neodpovídá).")
+
+        # poslat na Telegram jen pokud máme token/chat
+        try:
+            telegram_send_long(cfg, "\n".join(lines).strip())
+        except Exception as e:
+            print("⚠️ Telegram send fail:", repr(e))
+
+        st.mark_sent(run_mode, today)
         st.save()
-        print("✅ Done (learn/backfill mode – zatím bez akcí).")
+        print(f"✅ Done ({run_mode} mode – actions hotové).")
         return
+
+    # ============================================================
+    # RUN MODE (normální provoz)
+    # ============================================================
 
     # Weekly earnings: pondělí 08:00
     if now.weekday() == 0 and now_hm == weekly_earnings_time and not st.already_sent("weekly_earnings", today):
         table = run_weekly_earnings_table(cfg, now, st=st)
-        text = format_weekly_earnings_report(table, cfg, now)  # ✅ správné volání
+        text = format_weekly_earnings_report(table, cfg, now)
         telegram_send_long(cfg, text)
 
         # Email: max 1× denně
