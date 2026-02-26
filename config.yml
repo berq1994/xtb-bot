@@ -1,8 +1,15 @@
-# config.yml
-fmp_api_key: ${FMP_API_KEY}
+# ============================================================
+# MEGA INVESTIČNÍ RADAR – CONFIG (CZ)
+# ============================================================
 
 timezone: Europe/Prague
 
+# FMP (přes GitHub Secrets: FMPAPIKEY / FMP_API_KEY)
+fmp_api_key: ${FMP_API_KEY}
+
+# ------------------------------------------------------------
+# ČASY
+# ------------------------------------------------------------
 premarket_time: "07:30"
 evening_time: "20:00"
 
@@ -13,10 +20,20 @@ alert_threshold_pct: 3
 news_per_ticker: 2
 top_n: 5
 
+# Earnings tabulka (pondělí 08:00)
+weekly_earnings_day: "MON"
+weekly_earnings_time: "08:00"
+
+# ------------------------------------------------------------
+# BENCHMARKY
+# ------------------------------------------------------------
 benchmarks:
   spy: SPY
   vix: "^VIX"
 
+# ------------------------------------------------------------
+# VÁHY SCORE
+# ------------------------------------------------------------
 weights:
   momentum: 0.25
   rel_strength: 0.20
@@ -24,6 +41,9 @@ weights:
   catalyst: 0.20
   market_regime: 0.20
 
+# ------------------------------------------------------------
+# PORTFOLIO (dle tvých screenů + oprav)
+# ------------------------------------------------------------
 portfolio:
   - ticker: NVDA
     qty: 6
@@ -85,21 +105,31 @@ portfolio:
     currency: USD
     broker: XTB
 
+# ------------------------------------------------------------
+# WATCHLIST
+# ------------------------------------------------------------
 watchlist:
   - SPY
   - QQQ
   - SMH
-
-new_candidates:
-  - ASML
   - AMD
+  - ASML
   - AVGO
+
+# ------------------------------------------------------------
+# NOVÉ NADĚJNÉ (kandidáti)
+# ------------------------------------------------------------
+new_candidates:
   - CRWD
-  - LLT
+  - PLTR
+  - MU
+  - ARM
+  - SMCI
 
+# ------------------------------------------------------------
+# Mapování tickerů (jen když Yahoo hlásí "Not Found")
+# ------------------------------------------------------------
 ticker_map:
-  # Pozn.: CSG.NL ti Yahoo nenašlo. Nech to zatím prázdné (nebo mi pošli ISIN / přesný název instrumentu z RB).
-  # CSG: "..."
-
-  # SGLD (často jde přes Londýn)
-  SGLD: "SGLD.L"
+  # příklady (doplň až budeš znát správné Yahoo symboly)
+  # CSG: "????"
+  # SGLD: "SGLD.L"
