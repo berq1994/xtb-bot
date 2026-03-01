@@ -1,8 +1,7 @@
-requests
-feedparser
-yfinance
-matplotlib
-pyyaml
-deep-translator
-pandas
-numpy
+requests==2.32.3
+feedparser==6.0.11
+yfinance==0.2.43
+pandas==2.2.2
+numpy==2.0.1
+PyYAML==6.0.2
+matplotlib==3.9.2
