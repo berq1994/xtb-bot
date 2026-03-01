@@ -23,14 +23,19 @@ from radar.engine import (
 
 # tolerant imports (repo může mít reporting/ nebo top-level)
 try:
-    from reporting.telegram import telegram_send_long, telegram_send_menu  # type: ignore
+    from reporting.telegram import telegram_send_long, telegram_send_menu, telegram_send_photo  # type: ignore
 except Exception:  # pragma: no cover
-    from telegram import telegram_send_long, telegram_send_menu  # type: ignore
+    from telegram import telegram_send_long, telegram_send_menu, telegram_send_photo  # type: ignore
 
 try:
     from reporting.emailer import maybe_send_email_report  # type: ignore
 except Exception:  # pragma: no cover
     from emailer import maybe_send_email_report  # type: ignore
+
+try:
+    from reporting.charts import safe_price_chart_png  # type: ignore
+except Exception:  # pragma: no cover
+    safe_price_chart_png = None  # type: ignore
 
 
 @dataclass
@@ -88,11 +93,24 @@ class RadarAgent:
         snap = run_radar_snapshot(cfg=self.cfg, now=now, reason=reason, universe=None, st=self.st)
         md = self._format_snapshot(snap)
 
-        # “denní rada” = scénář + co sledovat (ne přímé buy/sell)
         playbook = self._daily_playbook(now=now, snap=snap)
         out = md + "\n\n" + playbook
 
-        self._report(tag="snapshot", title="Radar snapshot", text=out, payload={"rendered_text": out, "snapshot": snap})
+        # grafy: TOP 3 tickery
+        attachments: List[Dict[str, Any]] = []
+        top = snap.get("top", []) or []
+        for r in top[:3]:
+            t = str(r.get("ticker") or "").strip().upper()
+            rt = map_ticker(self.cfg, t) if t else ""
+            if not rt:
+                continue
+            png = safe_price_chart_png(rt, days=60, title=f"{t} — 60D") if safe_price_chart_png else None
+            if isinstance(png, (bytes, bytearray)):
+                attachments.append({"filename": f"{t}_60d.png", "content_type": "image/png", "data": bytes(png)})
+
+        payload = {"rendered_text": out, "snapshot": snap, "attachments": attachments}
+        self._report(tag="snapshot", title="Radar snapshot", text=out, payload=payload)
+
         self._audit("snapshot", {"reason": reason, "meta": snap.get("meta", {}), "top": snap.get("top", [])})
         self.st.save()
         return AgentResponse("Radar snapshot", out, payload=snap)
@@ -125,7 +143,6 @@ class RadarAgent:
         dg = geopolitics_digest(cfg=self.cfg, now=now, st=self.st)
         md = self._format_geopolitics(dg, learn_meta=learn_meta)
 
-        # přidej “market playbook” podle geo témat
         play = self._geo_playbook(dg)
         out = md + ("\n\n" + play if play else "")
 
@@ -157,7 +174,6 @@ class RadarAgent:
         md: List[str] = []
         md.append(f"## {raw} ({resolved})")
         md.append(f"- **Tržní režim:** **{reg_label}** — {reg_detail}")
-
         if last is not None and prev is not None:
             md.append(f"- **Close:** {last:.4g} (předtím {prev:.4g})")
         md.append(f"- **Změna 1D:** {'n/a' if pct_1d is None else f'{pct_1d:+.2f}%'}")
@@ -178,6 +194,14 @@ class RadarAgent:
             md.append("- Nic jasného v RSS – často je to sentiment/technika/trh.")
 
         out = "\n".join(md)
+
+        # graf pro explain
+        attachments: List[Dict[str, Any]] = []
+        png = safe_price_chart_png(resolved, days=90, title=f"{raw} — 90D") if safe_price_chart_png else None
+        if isinstance(png, (bytes, bytearray)):
+            attachments.append({"filename": f"{raw}_90d.png", "content_type": "image/png", "data": bytes(png)})
+
+        self._report(tag="explain", title=f"Explain {raw}", text=out, payload={"rendered_text": out, "attachments": attachments})
 
         self._audit("explain", {"ticker": raw, "resolved": resolved, "pct_1d": pct_1d, "vol_ratio": vol_ratio, "news_n": len(news)})
         self.st.save()
@@ -289,9 +313,6 @@ class RadarAgent:
 
     # -------------------- PLAYBOOKS --------------------
     def _daily_playbook(self, now: datetime, snap: Dict[str, Any]) -> str:
-        """Denní instrukce = scénář + risk management + co hlídat.
-        (Ne přímé “kup/prodej”.)
-        """
         meta = snap.get("meta", {}) or {}
         regime = (meta.get("market_regime") or {})
         reg_label = str(regime.get("label", "NEUTRÁLNÍ"))
@@ -304,17 +325,14 @@ class RadarAgent:
 
         if reg_label == "RISK-OFF":
             lines.append("- **Režim: RISK-OFF** → priorita je ochrana kapitálu a trpělivost.")
-            lines.append("- Co typicky funguje: menší pozice, čekat na potvrzení, méně honit breaky.")
-            lines.append("- Sledovat: **VIX**, **USD**, **WTI/Brent**, reakci SPY na open a na US data.")
+            lines.append("- Sledovat: **VIX**, **USD**, **WTI/Brent**, reakci SPY na open a close.")
         elif reg_label == "RISK-ON":
-            lines.append("- **Režim: RISK-ON** → momentum má vyšší šanci pokračovat, ale hlídej falešné breaky.")
-            lines.append("- Co typicky funguje: follow-through, kupovat sílu (s riskem), hlídat earnings.")
-            lines.append("- Sledovat: breadth (QQQ/SMH), leader stocks, intraday pullbacky.")
+            lines.append("- **Režim: RISK-ON** → momentum má vyšší šanci pokračovat, hlídej falešné breaky.")
+            lines.append("- Sledovat: breadth (QQQ/SMH), leader stocks, pullbacky na objemu.")
         else:
             lines.append("- **Režim: NEUTRÁLNÍ** → vybírej jen jasné setupy, méně “názoru”, víc dat.")
             lines.append("- Sledovat: jestli se režim překlopí (SPY vs MA20, VIX).")
 
-        # kandidáti ke sledování: top 3 + worst 3
         if top:
             lines.append("\n### Kandidáti k dohledu (síla)")
             for r in top[:3]:
@@ -331,22 +349,19 @@ class RadarAgent:
                 vr = r.get("vol_ratio")
                 lines.append(f"- **{t}** — {('n/a' if p is None else f'{float(p):+.2f}%')}, objem {float(vr):.2f}×")
 
-        lines.append("\n### Co dnes dělat krok za krokem")
-        lines.append("1) Ráno: zkontroluj **SPY premarket**, **VIX**, **ropa**, **USD**.")
-        lines.append("2) Po open: prvních 15–30 min jen pozoruj (směr + objem).")
-        lines.append("3) Pokud se drží risk-off (VIX↑, SPY slabý): sniž agresivitu, vybírej jen nejlepší setupy.")
-        lines.append("4) Pokud se risk-off vyfoukne (ropa↓, VIX↓): trh často mean-revertuje – čekej na potvrzení.")
-        lines.append("5) Večer: zkontroluj earnings kalendář na další dny.")
+        lines.append("\n### Co dnes dělat (rychle)")
+        lines.append("1) Mrkni na **SPY**, **VIX**, **ropa**, **USD**.")
+        lines.append("2) Po open: prvních 15–30 min spíš číst trh než jednat.")
+        lines.append("3) V risk-off: menší sizing + čekat na potvrzení.")
+        lines.append("4) Večer: earnings na další dny + zhodnocení, co fungovalo.")
 
         return "\n".join(lines)
 
     def _geo_playbook(self, dg: Dict[str, Any]) -> str:
-        """Playbook navázaný přímo na geo keywordy (Hormuz/oil/strike/retaliation...)."""
         items = dg.get("items", []) if isinstance(dg, dict) else []
         if not items:
             return ""
 
-        # zkus najít nejčastější keywordy v top zprávách
         counts: Dict[str, int] = {}
         for it in items[:12]:
             for k in (it.get("keywords") or []):
@@ -358,26 +373,20 @@ class RadarAgent:
 
         lines: List[str] = []
         lines.append("## Geo dopad: co sledovat na trhu")
-
-        # obecný rámec
-        lines.append("- Geo headline sám o sobě nestačí — trh potvrzuje dopad přes **ropu**, **VIX**, **USD**.")
+        lines.append("- Dopad potvrzuje trh přes **ropu**, **VIX**, **USD** (ne jen headline).")
 
         if "hormuz" in hot_keys or "oil" in hot_keys or "brent" in hot_keys or "wti" in hot_keys:
-            lines.append("- **Ropa/hormuz téma** → sleduj **WTI/Brent**: když drží zvýšenou cenu 2–3 seance, risk premium přetrvává.")
-            lines.append("- Sekundární dopad: aerolinky/logistika bývají pod tlakem; energie může mít tailwind (záleží na režimu).")
+            lines.append("- **Ropa/hormuz** → když cena drží výš 2–3 seance, risk premium přetrvává.")
+            lines.append("- Často: energie má tailwind; citlivé sektory (aerolinky/logistika) mohou trpět.")
 
         if "strike" in hot_keys or "attack" in hot_keys or "retaliation" in hot_keys or "escalation" in hot_keys:
-            lines.append("- **Eskalace/útoky** → typicky krátkodobý **risk-off**: VIX↑, USD↑, akcie↓ (hlavně růstové).")
-            lines.append("- Prakticky: méně risku, počkat na potvrzení follow-through vs rychlé vyfouknutí šoku.")
+            lines.append("- **Eskalace** → často krátkodobý **risk-off**: VIX↑, USD↑, akcie↓ (hlavně růstové).")
 
-        if "sanction" in hot_keys or "embargo" in hot_keys:
-            lines.append("- **Sankce/embargo** → dopad je často sektorový (energie/komodity/defense), méně plošný.")
-
-        lines.append("\n### Mini-checklist (5 minut)")
-        lines.append("1) **WTI/Brent**: spike vs trend (držení nadčasu).")
-        lines.append("2) **VIX**: potvrzení risk-off (a zda se drží).")
-        lines.append("3) **USD**: risk-off potvrzení.")
-        lines.append("4) **SPY/QQQ**: reakce po open a uzavření dne (close je důležitější než intraday šum).")
+        lines.append("\n### Mini-checklist")
+        lines.append("1) WTI/Brent (spike vs trend)")
+        lines.append("2) VIX (potvrzení risk-off)")
+        lines.append("3) USD (potvrzení risk-off)")
+        lines.append("4) SPY/QQQ (close je důležitější než intraday šum)")
 
         return "\n".join(lines)
 
@@ -393,35 +402,51 @@ class RadarAgent:
             elif abs(pct_1d) >= 3:
                 notes.append("- **Výrazný pohyb**: často katalyzátor + momentum → sleduj další den (follow-through vs mean-reversion).")
             else:
-                notes.append("- **Běžný pohyb**: signál může být spíš o trendu/market režimu než o jedné zprávě.")
+                notes.append("- **Běžný pohyb**: může to být trend/market režim, ne jedna zpráva.")
 
         if vol_ratio >= 1.8:
-            notes.append("- **Objem je nadprůměrný** → pohyb má větší „váhu“ (méně náhodný).")
+            notes.append("- **Objem nadprůměrný** → pohyb má větší váhu.")
         elif vol_ratio <= 0.7:
-            notes.append("- **Objem je slabý** → pohyb může být „thin“ (méně důvěryhodný).")
+            notes.append("- **Objem slabý** → pohyb může být “thin”.")
 
         if has_news:
-            notes.append("- **Jsou zprávy** → validuj hlavně *earnings/guidance/downgrade/regulace/kontrakty*.")
+            notes.append("- **Jsou zprávy** → validuj earnings/guidance/downgrade/regulace/kontrakty.")
         else:
-            notes.append("- **Bez jasných zpráv** → často trh/ETF flow/technika (support/resistance).")
+            notes.append("- **Bez jasných zpráv** → často flow/technika/ETF.")
 
         if regime == "RISK-OFF":
-            notes.append("- **RISK-OFF režim** → vyšší pravděpodobnost výplachů, hlídej korelace a drawdown.")
+            notes.append("- **RISK-OFF** → vyšší pravděpodobnost výplachů, hlídej korelace.")
         elif regime == "RISK-ON":
-            notes.append("- **RISK-ON režim** → momentum má vyšší šanci pokračovat, ale pozor na falešné breaky.")
+            notes.append("- **RISK-ON** → momentum má vyšší šanci pokračovat, pozor na falešné breaky.")
 
         return "\n".join(notes)
 
     # -------------------- REPORTING + AUDIT --------------------
     def _report(self, tag: str, title: str, text: str, payload: Optional[Dict[str, Any]] = None) -> None:
-        """Telegram vždy (pokud je), email volitelně (EMAIL_ENABLED)."""
+        payload = payload or {"rendered_text": text}
+        payload.setdefault("rendered_text", text)
+
+        # Telegram text
         try:
             telegram_send_long(self.cfg, text)
         except Exception:
             pass
 
+        # Telegram images (pokud jsou)
+        atts = payload.get("attachments")
+        if isinstance(atts, list):
+            for a in atts[:6]:  # ochrana před spamem
+                try:
+                    fn = str(a.get("filename") or "chart.png")
+                    data = a.get("data")
+                    if isinstance(data, (bytes, bytearray)):
+                        telegram_send_photo(self.cfg, caption=fn, png_bytes=bytes(data), filename=fn)
+                except Exception:
+                    continue
+
+        # Email
         try:
-            maybe_send_email_report(self.cfg, (payload or {"rendered_text": text}), datetime.now(), tag=tag)
+            maybe_send_email_report(self.cfg, payload, datetime.now(), tag=tag)
         except Exception:
             pass
 
@@ -451,15 +476,4 @@ class RadarAgent:
         return cmd, args
 
     def _help(self) -> AgentResponse:
-        md = """## Radar Agent — příkazy
-
-- `/menu` … pošle ovládací menu s tlačítky
-- `snapshot` … kompletní radar TOP/WORST + denní playbook
-- `alerts` … intradenní alerty (od open)
-- `earnings` … earnings tabulka na týden
-- `geo` … geopolitické zprávy + geo playbook + self-learning vah
-- `explain TICKER` … co se děje + proč + co hlídat
-
-Tip: když napíšeš jen `AAPL`, vezmu to jako `explain AAPL`.
-"""
-        return AgentResponse("Help", md)
+        md = """## Radar Agent —
