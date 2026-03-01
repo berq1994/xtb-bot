@@ -23,32 +23,32 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Restore state cache
         uses: actions/cache@v4
         with:
           path: .state
-          key: xtb-state-${{ github.run_id }}
+          key: xtb-state-${{ github.ref_name }}-${{ github.run_number }}
           restore-keys: |
-            xtb-state-
+            xtb-state-${{ github.ref_name }}-
 
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run backfill
+      - name: Run backfill (placeholder)
         env:
           TIMEZONE: Europe/Prague
-          RUN_MODE: backfill
-
-          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
-          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
-
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
           BACKFILL_START: ${{ inputs.start }}
           BACKFILL_END: ${{ inputs.end }}
-
         run: |
-          python ahoj.py
+          python run_agent.py backfill
+
+      - name: Save state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-${{ github.ref_name }}-${{ github.run_number }}
