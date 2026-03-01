@@ -102,15 +102,13 @@ class RadarConfig:
     fmp_api_key: str = ""
 
     benchmarks: Dict[str, str] = field(default_factory=lambda: {"spy": "SPY", "vix": "^VIX"})
-    weights: Dict[str, float] = field(
-        default_factory=lambda: {
-            "momentum": 0.25,
-            "volume": 0.20,
-            "volatility": 0.15,
-            "catalyst": 0.20,
-            "market_regime": 0.20,
-        }
-    )
+    weights: Dict[str, float] = field(default_factory=lambda: {
+        "momentum": 0.25,
+        "volume": 0.20,
+        "volatility": 0.15,
+        "catalyst": 0.20,
+        "market_regime": 0.20,
+    })
 
     watchlist: List[str] = field(default_factory=lambda: ["SPY", "QQQ", "SMH", "XLE", "GLD"])
     new_candidates: List[str] = field(default_factory=list)
@@ -171,7 +169,6 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
         pass
 
     cfg.fmp_api_key = str(data.get("fmp_api_key", "") or "").strip()
-    # ✅ tvoje secrets: FMPAPIKEY
     cfg.fmp_api_key = _env_first("FMPAPIKEY", "FMP_API_KEY", default=cfg.fmp_api_key)
 
     bm = _as_dict(data.get("benchmarks"))
@@ -196,14 +193,13 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
 
     cfg.geopolitics_rss = _as_list(data.get("geopolitics_rss")) or cfg.geopolitics_rss
 
-    cfg.telegram_token = _env_first("TELEGRAMTOKEN", "TG_BOT_TOKEN", "TELEGRAM_TOKEN", default="")
-    cfg.telegram_chat_id = _env_first("CHATID", "TG_CHAT_ID", "TELEGRAM_CHAT_ID", default="")
+    cfg.telegram_token = _env_first("TELEGRAMTOKEN", "TELEGRAM_TOKEN", default="")
+    cfg.telegram_chat_id = _env_first("CHATID", "TELEGRAM_CHAT_ID", default="")
 
     email_enabled = _env_first("EMAIL_ENABLED", default="false").lower().strip()
     cfg.email_enabled = email_enabled in ("1", "true", "yes", "on")
     cfg.email_sender = _env_first("EMAIL_SENDER", default="")
     cfg.email_receiver = _env_first("EMAIL_RECEIVER", default="")
-    # ✅ tvoje secrets: GMAILPASSWORD
     cfg.gmail_password = _env_first("GMAILPASSWORD", "GMAIL_PASSWORD", default="")
 
     return cfg
