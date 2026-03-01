@@ -2,6 +2,7 @@ name: xtb-weekly-learn
 
 on:
   schedule:
+    # Neděle 17:00 & 18:00 Praha (dvě cron kvůli CET/CEST)
     - cron: "0 16 * * 0"
     - cron: "0 17 * * 0"
   workflow_dispatch:
@@ -17,31 +18,33 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
 
       - name: Restore state cache
         uses: actions/cache@v4
         with:
           path: .state
-          key: xtb-state-${{ github.run_id }}
+          key: xtb-state-${{ github.ref_name }}-${{ github.run_number }}
           restore-keys: |
-            xtb-state-
+            xtb-state-${{ github.ref_name }}-
 
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run weekly learn (learn + backfill)
+      - name: Run weekly learn (weights)
         env:
           TIMEZONE: Europe/Prague
-          RUN_MODE: learn
-
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-
+          # Backfill range reserved for future use (backfill is placeholder in run_agent.py)
           BACKFILL_START: "2025-01-01"
-          BACKFILL_END: ""   # empty => today
-
+          BACKFILL_END: ""
         run: |
-          python ahoj.py
+          python run_agent.py learn
+
+      - name: Save state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-${{ github.ref_name }}-${{ github.run_number }}
