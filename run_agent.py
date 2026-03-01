@@ -23,24 +23,18 @@ def _now_local(tz_name: str) -> datetime:
         return datetime.now()
 
 
-def _print_help() -> None:
+def _help() -> None:
     print(
         "Usage:\n"
-        "  python run_agent.py poll                 # Telegram poll + klikací menu\n"
-        "  python run_agent.py menu                 # vytiskne menu (Markdown)\n"
-        "  python run_agent.py snapshot             # premarket/evening snapshot (Markdown)\n"
-        "  python run_agent.py alerts               # alert scan (Markdown)\n"
-        "  python run_agent.py earnings             # weekly earnings table (Markdown)\n"
-        "  python run_agent.py geo                  # geopolitika (Markdown)\n"
-        "  python run_agent.py explain TICKER       # explain ticker (Markdown)\n"
-        "  python run_agent.py learn                # weekly self-learning (weights)\n"
-        "  python run_agent.py backfill             # placeholder (future)\n"
-        "\n"
-        "ENV:\n"
-        "  CONFIG_PATH=./config.yml\n"
-        "  TELEGRAMTOKEN / TG_BOT_TOKEN\n"
-        "  CHATID / TG_CHAT_ID\n"
-        "  FMPAPIKEY / FMP_API_KEY\n"
+        "  python run_agent.py poll\n"
+        "  python run_agent.py menu\n"
+        "  python run_agent.py snapshot\n"
+        "  python run_agent.py alerts\n"
+        "  python run_agent.py earnings\n"
+        "  python run_agent.py geo\n"
+        "  python run_agent.py explain TICKER\n"
+        "  python run_agent.py learn\n"
+        "  python run_agent.py backfill\n"
     )
 
 
@@ -53,13 +47,26 @@ def main() -> None:
     now = _now_local(cfg.timezone)
 
     if cmd in ("help", "-h", "--help"):
-        _print_help()
+        _help()
         return
 
     if cmd == "poll":
-        # zpracuje klikací menu i textové příkazy z Telegramu
         res = telegram_poll_and_dispatch(cfg, agent, st, max_updates=50)
         print(res)
+        st.save()
+        return
+
+    if cmd == "learn":
+        from radar.learn import learn_weekly_weights
+        result = learn_weekly_weights(cfg, now=now, st=st)
+        st.save()
+        print("OK learn", result)
+        return
+
+    if cmd == "backfill":
+        start = (os.getenv("BACKFILL_START") or "").strip()
+        end = (os.getenv("BACKFILL_END") or "").strip()
+        print(f"OK backfill placeholder start={start or 'N/A'} end={end or 'today'}")
         st.save()
         return
 
@@ -103,45 +110,6 @@ def main() -> None:
         st.save()
         return
 
-    if cmd == "learn":
-        # lightweight weekly learning – updates learned_weights.json
-        try:
-            from radar.learn import learn_weekly_weights
-        except Exception as e:  # pragma: no cover
-            print(f"❌ learn import failed: {e}")
-            st.save()
-            return
-
-        result = learn_weekly_weights(cfg, now=now, st=st)
-        # store state (learn stores learned_weights.json itself)
-        st.save()
-
-        # human-readable output for Actions logs
-        before = result.get("before")
-        after = result.get("after")
-        notes = result.get("notes", "")
-        method = result.get("method", "")
-
-        print("✅ learn done")
-        if method:
-            print(f"method: {method}")
-        if notes:
-            print(f"notes: {notes}")
-        if before and after:
-            print("before:", before)
-            print("after:", after)
-        return
-
-    if cmd == "backfill":
-        # Placeholder: we keep it explicit and harmless.
-        # Future: fetch and cache historical news & prices between BACKFILL_START/BACKFILL_END.
-        start = (os.getenv("BACKFILL_START") or "").strip()
-        end = (os.getenv("BACKFILL_END") or "").strip()
-        print(f"✅ backfill placeholder (start={start or 'N/A'}, end={end or 'today'})")
-        st.save()
-        return
-
-    # fallback: treat args as direct agent command
     resp = agent.handle(" ".join(sys.argv[1:]), now=now)
     print(resp.markdown)
     st.save()
