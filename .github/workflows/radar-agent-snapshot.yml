@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: radar-snapshot
+  group: xtb-radar
   cancel-in-progress: true
 
 jobs:
@@ -39,6 +39,7 @@ jobs:
         env:
           TIMEZONE: Europe/Prague
 
+          # ✅ tvoje secrets
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
           FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
 
