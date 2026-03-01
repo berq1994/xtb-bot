@@ -1,19 +1,16 @@
-name: radar-earnings
+name: radar-agent-alerts
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: "0 7 * * 1"  # Pondělí 07:00 UTC (08:00 Prague)
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
 
 concurrency:
-  group: radar-earnings
+  group: radar-alerts
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
-  run:
+  alerts:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -25,29 +22,30 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          cache: "pip"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install yfinance feedparser requests PyYAML; fi
+          pip install -r requirements.txt
 
       - name: Restore state cache
         uses: actions/cache@v4
         with:
           path: .state
-          key: radar-state-${{ github.ref_name }}-${{ github.run_number }}
-          restore-keys: |
-            radar-state-${{ github.ref_name }}-
+          key: xtb-state
 
-      - name: Run earnings
+      - name: Run alerts
+        run: python run_agent.py alerts
         env:
-          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-        run: |
-          python run_agent.py earnings
+          TIMEZONE: Europe/Prague
 
-      - name: Save state cache
-        uses: actions/cache@v4
-        with:
-          path: .state
-          key: radar-state-${{ github.ref_name }}-${{ github.run_number }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
+
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+
+          EMAIL_ENABLED: "true"
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
