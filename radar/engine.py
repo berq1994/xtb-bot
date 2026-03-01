@@ -17,6 +17,11 @@ from radar.levels import pick_level
 
 
 def map_ticker(cfg: RadarConfig, t: str) -> str:
+    """
+    Safe mapping RAW -> RESOLVED.
+    cfg.ticker_map musí být dict (config loader to normalizuje),
+    ale i kdyby nebyl, ať to nikdy nespadne.
+    """
     raw = (t or "").strip().upper()
     tm = getattr(cfg, "ticker_map", None)
     if isinstance(tm, dict):
@@ -173,7 +178,13 @@ def _rss_entries(url: str, limit: int = 30) -> List[Dict[str, Any]]:
 
 
 def news_combined(resolved_ticker: str, n: int = 2) -> List[Tuple[str, str, str]]:
+    """
+    Vrátí list (source, title, url) z několika RSS zdrojů.
+    Prioritně používá FMP (pokud je key), jinak RSS.
+    """
     items: List[Tuple[str, str, str]] = []
+    # 1) FMP news (pokud je k dispozici)
+    # 2) RSS fallback (Yahoo Finance RSS)
     try:
         rss = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={resolved_ticker}&region=US&lang=en-US"
         for e in _rss_entries(rss, limit=10):
@@ -186,6 +197,7 @@ def news_combined(resolved_ticker: str, n: int = 2) -> List[Tuple[str, str, str]
                 break
     except Exception:
         pass
+
     return items[:n]
 
 
@@ -207,9 +219,248 @@ def why_from_headlines(news: List[Tuple[str, str, str]]) -> str:
     return "Zprávy naznačují katalyzátor – otevři headline a ověř kontext."
 
 
-# ---------- Geopolitics + learning (ponechano jak mas) ----------
-# (tvoje GEO_BASE_KEYWORDS + geopolitics_digest + learn_geopolitics_keywords zustavaji beze zmen)
-# ... tady nech presne to, co mas - je to OK ...
+# ---------- Geopolitics digest + lightweight self-learning ----------
+# Pozn.: cílem není predikce, ale rychlá orientace + konzistentní risk-playbook.
+# Learning je záměrně "pomalý" a ohraničený, aby se model nerozjel.
+
+GEO_BASE_KEYWORDS: Dict[str, float] = {
+    # konflikt / eskalace
+    "iran": 1.20,
+    "israel": 1.10,
+    "gaza": 1.05,
+    "hezbollah": 1.10,
+    "houthi": 1.10,
+    "yemen": 0.90,
+    "syria": 0.80,
+    "iraq": 0.80,
+    "strike": 1.20,
+    "airstrike": 1.20,
+    "missile": 1.10,
+    "drone": 1.00,
+    "retaliation": 1.15,
+    "escalation": 1.20,
+    "attack": 1.10,
+    "war": 1.20,
+    "ceasefire": 0.70,
+    "sanction": 0.95,
+    "embargo": 1.00,
+    # energie / komodity
+    "oil": 1.10,
+    "brent": 1.10,
+    "wti": 1.10,
+    "gas": 0.85,
+    "lng": 0.90,
+    "hormuz": 1.40,
+    "red sea": 1.10,
+    "shipping": 0.95,
+    "tanker": 0.95,
+    # makro bezpečí
+    "terror": 1.10,
+    "nuclear": 1.20,
+    "uranium": 1.00,
+    "inflation": 0.70,
+}
+
+
+def _normalize_title(s: str) -> str:
+    return " ".join((s or "").lower().split())
+
+
+def _keyword_hits(text: str, weights: Dict[str, float]) -> List[str]:
+    t = (text or "").lower()
+    hits = []
+    for k in weights.keys():
+        if k in t:
+            hits.append(k)
+    return hits
+
+
+def _recency_boost(published_parsed, now: datetime) -> float:
+    # velmi hrubé: novější = trochu vyšší váha (max ~1.15)
+    try:
+        if not published_parsed:
+            return 1.0
+        dt = datetime(*published_parsed[:6])
+        hours = max(0.0, (now - dt).total_seconds() / 3600.0)
+        if hours <= 6:
+            return 1.15
+        if hours <= 24:
+            return 1.08
+        if hours <= 72:
+            return 1.03
+        return 1.0
+    except Exception:
+        return 1.0
+
+
+def geopolitics_digest(cfg: RadarConfig, now: datetime, st=None) -> Dict[str, Any]:
+    """Vrátí TOP geo headlines s jednoduchým skóre.
+
+    - RSS zdroje jsou v cfg.geopolitics_rss
+    - cache po dnech do state (přes st.geo dict)
+    """
+    day = now.strftime("%Y-%m-%d")
+
+    # attach geo storage to state (backward compatible)
+    if st is not None and not hasattr(st, "geo"):
+        st.geo = {}
+
+    if st is not None:
+        last_day = (st.geo.get("last_day") if isinstance(st.geo, dict) else None)
+        if last_day == day and isinstance(st.geo.get("items"), list):
+            return {"meta": {"day": day, "cached": True}, "items": st.geo.get("items")}
+
+    base = dict(GEO_BASE_KEYWORDS)
+    # learned weights
+    learned = {}
+    if st is not None and isinstance(getattr(st, "geo", None), dict):
+        learned = st.geo.get("keyword_weights") or {}
+    weights: Dict[str, float] = {}
+    for k, v in base.items():
+        lv = learned.get(k)
+        try:
+            weights[k] = float(lv) if lv is not None else float(v)
+        except Exception:
+            weights[k] = float(v)
+
+    items: List[Dict[str, Any]] = []
+    seen = set()
+
+    feeds = getattr(cfg, "geopolitics_rss", None) or []
+    src_weight = getattr(cfg, "geopolitics_source_weight", None) or {}
+
+    for url in feeds:
+        for e in _rss_entries(url, limit=40):
+            title = (e.get("title") or "").strip()
+            link = (e.get("link") or "").strip()
+            src = (e.get("source") or e.get("publisher") or url).strip()
+            blob = (title + " " + (e.get("summary") or "")).strip()
+            if not title or not link:
+                continue
+
+            norm = _normalize_title(title)
+            if norm in seen:
+                continue
+            seen.add(norm)
+
+            hits = _keyword_hits(blob, weights)
+            if not hits:
+                continue
+
+            s = 0.0
+            for k in hits:
+                s += float(weights.get(k, 0.0))
+
+            sw = 1.0
+            try:
+                sw = float(src_weight.get(src) or 1.0)
+            except Exception:
+                sw = 1.0
+
+            s = s * sw * _recency_boost(e.get("published_parsed"), now)
+
+            items.append(
+                {
+                    "src": src,
+                    "title": title,
+                    "url": link,
+                    "score": round(float(s), 4),
+                    "keywords": hits,
+                }
+            )
+
+    items.sort(key=lambda x: float(x.get("score", 0.0)), reverse=True)
+    items = items[:20]
+
+    if st is not None and isinstance(getattr(st, "geo", None), dict):
+        st.geo["last_day"] = day
+        st.geo["items"] = items
+
+    return {"meta": {"day": day, "cached": False}, "items": items}
+
+
+def learn_geopolitics_keywords(cfg: RadarConfig, now: datetime, st=None) -> Dict[str, Any]:
+    """Velmi jednoduché učení: pokud včerejší geo headlines korelovaly s risk-off,
+    mírně posílíme keywordy, které se objevily.
+
+    Market signal (0..~6):
+      - SPY: záporný den => + body
+      - VIX: kladný den => + body
+
+    Váhy clampujeme do rozumných mezí.
+    """
+    if st is None:
+        return {"ok": False, "reason": "no_state"}
+
+    if not hasattr(st, "geo"):
+        st.geo = {}
+    if not isinstance(st.geo, dict):
+        st.geo = {}
+
+    today = now.strftime("%Y-%m-%d")
+    last_learned = st.geo.get("learned_day")
+    if last_learned == today:
+        return {"ok": False, "reason": "already_learned_today"}
+
+    # potřebujeme včerejší itemy
+    items = st.geo.get("items")
+    last_day = st.geo.get("last_day")
+    if not items or not isinstance(items, list) or not last_day:
+        return {"ok": False, "reason": "no_previous_geo_cache"}
+
+    # market signal
+    bench = cfg.benchmarks.get("spy", "SPY")
+    vix_t = cfg.benchmarks.get("vix", "^VIX")
+
+    spy = last_close_prev_close(bench)
+    vix = last_close_prev_close(vix_t)
+    if not spy or not vix:
+        return {"ok": False, "reason": "no_market_data"}
+
+    spy_last, spy_prev = spy
+    vix_last, vix_prev = vix
+    spy_pct = pct(spy_last, spy_prev) if spy_prev else 0.0
+    vix_pct = pct(vix_last, vix_prev) if vix_prev else 0.0
+
+    market_signal = 0.0
+    if spy_pct < 0:
+        market_signal += min(3.0, abs(spy_pct) / 2.0)  # -6% => +3
+    if vix_pct > 0:
+        market_signal += min(3.0, vix_pct / 5.0)  # +15% => +3
+
+    if market_signal < 0.25:
+        st.geo["learned_day"] = today
+        return {"ok": True, "market_signal": float(market_signal), "boost": 0.0, "note": "signal too small"}
+
+    weights = st.geo.get("keyword_weights") or {}
+    if not isinstance(weights, dict):
+        weights = {}
+
+    alpha = 0.03  # learning rate (malé)
+    boost = alpha * market_signal
+
+    # sběr keywordů z včerejška (top N)
+    seen_k = set()
+    for it in items[:12]:
+        for k in (it.get("keywords") or []):
+            seen_k.add(str(k))
+
+    for k in seen_k:
+        base = GEO_BASE_KEYWORDS.get(k, 1.0)
+        cur = weights.get(k, base)
+        try:
+            cur = float(cur)
+        except Exception:
+            cur = float(base)
+
+        cur = cur * (1.0 + boost)
+        # clamp
+        cur = max(0.50, min(2.50, cur))
+        weights[k] = round(cur, 4)
+
+    st.geo["keyword_weights"] = weights
+    st.geo["learned_day"] = today
+    return {"ok": True, "market_signal": float(market_signal), "boost": float(boost), "keywords_updated": len(seen_k)}
 
 
 # ---------- Earnings ----------
@@ -254,11 +505,13 @@ def run_weekly_earnings_table(cfg: RadarConfig, now: datetime, st=None) -> Dict[
             }
         )
     rows.sort(key=lambda x: (x.get("date", ""), x.get("time", ""), x.get("symbol", "")))
+
     return {"meta": {"from": str(start), "to": str(end)}, "rows": rows}
 
 
 # ---------- Snapshot ----------
 def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str, universe: Optional[List[str]] = None, st=None) -> Dict[str, Any]:
+    # FIX: resolved_universe vrací (list, mapping)
     if universe is None:
         uni, _ = resolved_universe(cfg, universe=None)
     else:
@@ -276,6 +529,7 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str, universe: O
             last, prev = lc
             p1d = pct(last, prev) if prev else None
         else:
+            last = prev = None
             p1d = None
 
         volr = volume_ratio_1d(rt)
@@ -284,6 +538,7 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str, universe: O
 
         feats = compute_features(rt)
         score, parts = compute_score(cfg, feats, p1d, volr, bool(news), reg_label, reg_score)
+
         lvl = pick_level(score, movement_class(p1d or 0.0, volr))
 
         rows.append(
@@ -322,6 +577,7 @@ def run_alerts_snapshot(cfg: RadarConfig, now: datetime, st=None) -> List[Dict[s
     day = now.strftime("%Y-%m-%d")
     out: List[Dict[str, Any]] = []
 
+    # úklid dedupe
     try:
         if st is not None:
             st.cleanup_alert_state(day)
