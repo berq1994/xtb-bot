@@ -1,6 +1,8 @@
 # radar/agent.py
 from __future__ import annotations
 
+__version__ = "agent_full_safe_2026-03-01_1845"
+
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -78,24 +80,24 @@ class RadarAgent:
 
         if cmd == "explain":
             if not args:
-                return AgentResponse("Explain", "Použití: `explain TICKER`")
+                return AgentResponse("Explain", "Pouzití: `explain TICKER`")
             return self.explain(ticker=args[0], now=now)
 
-        # když user napíše jen ticker (např. AAPL), vezmeme jako explain
+        # when user sends only a ticker like "AAPL"
         if cmd and cmd.isalpha() and 1 <= len(cmd) <= 10 and not args:
             return self.explain(ticker=cmd, now=now)
 
-        return AgentResponse("Neznámý příkaz", f"Neznámý příkaz: `{text}`\n\nNapiš `help`.")
+        return AgentResponse("Neznamy prikaz", "Neznamy prikaz: `{}`\n\nNapis `help`.".format(text))
 
     # -------------------- CORE ACTIONS --------------------
     def snapshot(self, now: datetime, reason: str = "snapshot") -> AgentResponse:
         snap = run_radar_snapshot(cfg=self.cfg, now=now, reason=reason, universe=None, st=self.st)
         md = self._format_snapshot(snap)
 
-        playbook = self._daily_playbook(now=now, snap=snap)
+        playbook = self._daily_playbook(snap)
         out = md + "\n\n" + playbook
 
-        # grafy: TOP 3 tickery
+        # charts for top 3
         attachments: List[Dict[str, Any]] = []
         top = snap.get("top", []) or []
         for r in top[:3]:
@@ -109,15 +111,13 @@ class RadarAgent:
 
         payload = {"rendered_text": out, "snapshot": snap, "attachments": attachments}
         self._report(tag="snapshot", text=out, payload=payload)
-
         self._audit("snapshot", {"reason": reason, "meta": snap.get("meta", {}), "top": snap.get("top", [])})
         self.st.save()
         return AgentResponse("Radar snapshot", out, payload=snap)
 
     def alerts(self, now: datetime) -> AgentResponse:
         alerts = run_alerts_snapshot(cfg=self.cfg, now=now, st=self.st)
-        md = self._format_alerts(alerts, now=now)
-
+        md = self._format_alerts(alerts, now)
         self._report(tag="alerts", text=md, payload={"rendered_text": md, "alerts": alerts})
         self._audit("alerts", {"count": len(alerts), "alerts": alerts})
         self.st.save()
@@ -126,22 +126,19 @@ class RadarAgent:
     def earnings(self, now: datetime) -> AgentResponse:
         table = run_weekly_earnings_table(cfg=self.cfg, now=now, st=self.st)
         md = self._format_earnings(table)
-
         self._report(tag="earnings", text=md, payload={"rendered_text": md, "earnings": table})
         self._audit("earnings", {"meta": table.get("meta", {}), "count": len(table.get("rows", []))})
         self.st.save()
-        return AgentResponse("Earnings týden", md, payload=table)
+        return AgentResponse("Earnings tyden", md, payload=table)
 
     def geopolitics(self, now: datetime) -> AgentResponse:
-        learn_meta: Dict[str, Any] = {}
         try:
             learn_meta = learn_geopolitics_keywords(cfg=self.cfg, now=now, st=self.st) or {}
         except Exception:
             learn_meta = {"ok": False, "reason": "learn_failed"}
 
         dg = geopolitics_digest(cfg=self.cfg, now=now, st=self.st)
-        md = self._format_geopolitics(dg, learn_meta=learn_meta)
-
+        md = self._format_geopolitics(dg, learn_meta)
         play = self._geo_playbook(dg)
         out = md + ("\n\n" + play if play else "")
 
@@ -153,14 +150,14 @@ class RadarAgent:
     def explain(self, ticker: str, now: datetime) -> AgentResponse:
         raw = (ticker or "").strip().upper()
         if not raw:
-            return AgentResponse("Explain", "Chybí ticker.")
+            return AgentResponse("Explain", "Chybi ticker.")
 
         resolved = map_ticker(self.cfg, raw)
         reg_label, reg_detail, _ = market_regime(self.cfg)
 
-        lc = last_close_prev_close(resolved)
-        pct_1d = None
         last = prev = None
+        pct_1d = None
+        lc = last_close_prev_close(resolved)
         if lc:
             last, prev = lc
             if prev:
@@ -170,31 +167,27 @@ class RadarAgent:
         news = news_combined(resolved, int(self.cfg.news_per_ticker or 2))
         why = why_from_headlines(news)
 
-        md: List[str] = []
-        md.append(f"## {raw} ({resolved})")
-        md.append(f"- Trzni rezim: **{reg_label}** - {reg_detail}")
+        lines: List[str] = []
+        lines.append(f"## {raw} ({resolved})")
+        lines.append(f"- Trzni rezim: **{reg_label}** - {reg_detail}")
         if last is not None and prev is not None:
-            md.append(f"- Close: {last:.4g} (predtim {prev:.4g})")
-        md.append(f"- Zmena 1D: {'n/a' if pct_1d is None else f'{pct_1d:+.2f}%'}")
-        md.append(f"- Objem vs prumer: **{vol_ratio:.2f}x**")
-
-        md.append("\n### Co to znamena (akcne)")
-        md.append(self._actionable_interpretation(pct_1d=pct_1d, vol_ratio=vol_ratio, has_news=bool(news), regime=reg_label))
-
-        md.append("\n### Proc se to hybe (z headline)")
-        md.append(f"- {why}")
-
+            lines.append(f"- Close: {last:.4g} (predtim {prev:.4g})")
+        lines.append(f"- Zmena 1D: {'n/a' if pct_1d is None else f'{pct_1d:+.2f}%'}")
+        lines.append(f"- Objem vs prumer: **{vol_ratio:.2f}x**")
+        lines.append("")
+        lines.append("### Co to znamena (akcne)")
+        lines.append(self._actionable_interpretation(pct_1d, vol_ratio, bool(news), reg_label))
+        lines.append("")
+        lines.append("### Proc se to hybe")
+        lines.append("- " + str(why))
         if news:
-            md.append("\n### Top zpravy")
+            lines.append("")
+            lines.append("### Top zpravy")
             for src, title, url in news[: min(6, len(news))]:
-                md.append(f"- **{src}**: [{title}]({url})")
-        else:
-            md.append("\n### Zpravy")
-            md.append("- Nic jasneho v RSS - casto je to sentiment/technika/trh.")
+                lines.append(f"- **{src}**: [{title}]({url})")
 
-        out = "\n".join(md)
+        out = "\n".join(lines)
 
-        # graf pro explain
         attachments: List[Dict[str, Any]] = []
         png = safe_price_chart_png(resolved, days=90, title=f"{raw} - 90D") if safe_price_chart_png else None
         if isinstance(png, (bytes, bytearray)):
@@ -205,13 +198,13 @@ class RadarAgent:
         self.st.save()
         return AgentResponse(f"Explain {raw}", out)
 
-    # -------------------- FORMATTING --------------------
+    # -------------------- FORMATTERS --------------------
     def _format_snapshot(self, snap: Dict[str, Any]) -> str:
         meta = snap.get("meta", {}) or {}
-        regime = (meta.get("market_regime") or {})
+        regime = meta.get("market_regime", {}) or {}
         lines: List[str] = []
-        lines.append(f"## Radar snapshot ({meta.get('timestamp','')})")
-        lines.append(f"- Rezim: **{regime.get('label','?')}** - {regime.get('detail','')}")
+        lines.append("## Radar snapshot ({})".format(meta.get("timestamp", "")))
+        lines.append("- Rezim: **{}** - {}".format(regime.get("label", "?"), regime.get("detail", "")))
         lines.append("")
 
         top = snap.get("top", []) or []
@@ -223,7 +216,8 @@ class RadarAgent:
         for r in top:
             lines.append(self._fmt_row(r))
 
-        lines.append("\n### WORST")
+        lines.append("")
+        lines.append("### WORST")
         if not worst:
             lines.append("- (prazdne)")
         for r in worst:
@@ -242,12 +236,15 @@ class RadarAgent:
         return f"- **{t}** ({c}) - **{pct_txt}**, score **{sc:.1f}**, level **{lvl}**\n  - proc: {why}"
 
     def _format_alerts(self, alerts: List[Dict[str, Any]], now: datetime) -> str:
-        lines = [f"## Alerty ({now.strftime('%Y-%m-%d %H:%M')})", ""]
+        lines: List[str] = []
+        lines.append("## Alerty ({})".format(now.strftime("%Y-%m-%d %H:%M")))
+        lines.append("")
         if not alerts:
             lines.append("- Nic neprekrocilo prah.")
             return "\n".join(lines)
 
-        lines.append(f"Prahova zmena od open: **+/-{float(self.cfg.alert_threshold_pct):.1f}%**\n")
+        lines.append("Prahovy pohyb od open: +/-{:.1f}%".format(float(self.cfg.alert_threshold_pct)))
+        lines.append("")
         for a in alerts:
             t = a.get("ticker", "?")
             c = a.get("company", "-")
@@ -258,7 +255,9 @@ class RadarAgent:
     def _format_earnings(self, table: Dict[str, Any]) -> str:
         meta = table.get("meta", {}) or {}
         rows = table.get("rows", []) or []
-        lines = [f"## Earnings ({meta.get('from','')} -> {meta.get('to','')})", ""]
+        lines: List[str] = []
+        lines.append("## Earnings ({} -> {})".format(meta.get("from", ""), meta.get("to", "")))
+        lines.append("")
         if not rows:
             lines.append("- Nic z univerza v kalendari.")
             return "\n".join(lines)
@@ -267,35 +266,45 @@ class RadarAgent:
         lines.append("|---|---|---|---|---:|---:|")
         for r in rows:
             lines.append(
-                f"| {r.get('date','')} | {r.get('time','')} | **{r.get('symbol','')}** | {r.get('company','-')} | {r.get('eps_est','')} | {r.get('rev_est','')} |"
+                "| {} | {} | **{}** | {} | {} | {} |".format(
+                    r.get("date", ""),
+                    r.get("time", ""),
+                    r.get("symbol", ""),
+                    r.get("company", "-"),
+                    r.get("eps_est", ""),
+                    r.get("rev_est", ""),
+                )
             )
         return "\n".join(lines)
 
-    def _format_geopolitics(self, dg: Dict[str, Any], learn_meta: Optional[Dict[str, Any]] = None) -> str:
+    def _format_geopolitics(self, dg: Dict[str, Any], learn_meta: Dict[str, Any]) -> str:
         meta = dg.get("meta", {}) if isinstance(dg, dict) else {}
         items = dg.get("items", []) if isinstance(dg, dict) else []
 
         lines: List[str] = []
-        lines.append(f"## Geopolitika ({meta.get('day','')})")
+        lines.append("## Geopolitika ({})".format(meta.get("day", "")))
         if meta.get("cached"):
             lines.append("- (cache pro dnesni den)")
 
         if learn_meta:
             if learn_meta.get("ok") and learn_meta.get("boost", 0.0):
-                lines.append(f"- Learn: OK market_signal={learn_meta.get('market_signal'):.2f}, boost={learn_meta.get('boost'):.3f}")
+                lines.append("- Learn: OK market_signal={:.2f}, boost={:.3f}".format(
+                    float(learn_meta.get("market_signal", 0.0)),
+                    float(learn_meta.get("boost", 0.0)),
+                ))
             elif learn_meta.get("ok"):
-                lines.append(f"- Learn: OK market_signal={learn_meta.get('market_signal'):.2f} (bez zmeny vah)")
+                lines.append("- Learn: OK market_signal={:.2f}".format(float(learn_meta.get("market_signal", 0.0))))
             else:
                 rsn = learn_meta.get("reason")
                 if rsn:
-                    lines.append(f"- Learn: - {rsn}")
+                    lines.append("- Learn: " + str(rsn))
 
         lines.append("")
         if not items:
-            lines.append("- Nic vyrazneho v geo RSS (nebo bez keyword hitu).")
+            lines.append("- Nic vyrazneho v geo RSS.")
             return "\n".join(lines)
 
-        lines.append("### TOP zpravy (co muze pohnout trhem)")
+        lines.append("### TOP zpravy")
         for it in items[:10]:
             src = it.get("src", "")
             title = it.get("title", "")
@@ -305,12 +314,11 @@ class RadarAgent:
             kw_txt = ", ".join([str(x) for x in kws[:6]])
             lines.append(f"- **{sc:.2f}** **{src}**: [{title}]({url})")
             if kw_txt:
-                lines.append(f"  - klice: `{kw_txt}`")
-
+                lines.append("  - klice: `{}`".format(kw_txt))
         return "\n".join(lines)
 
     # -------------------- PLAYBOOKS --------------------
-    def _daily_playbook(self, now: datetime, snap: Dict[str, Any]) -> str:
+    def _daily_playbook(self, snap: Dict[str, Any]) -> str:
         meta = snap.get("meta", {}) or {}
         regime = (meta.get("market_regime") or {})
         reg_label = str(regime.get("label", "NEUTRALNI"))
@@ -319,40 +327,34 @@ class RadarAgent:
         worst = snap.get("worst", []) or []
 
         lines: List[str] = []
-        lines.append("## Dnesni playbook (prakticky)")
-
+        lines.append("## Dnesni playbook")
         if reg_label == "RISK-OFF":
-            lines.append("- Rezim: RISK-OFF -> ochrana kapitalu, trpelivost.")
-            lines.append("- Sleduj: VIX, USD, WTI/Brent, reakci SPY na open a close.")
+            lines.append("- Rezim: RISK-OFF -> ochrana kapitalu, mensi riziko, trpelivost.")
         elif reg_label == "RISK-ON":
             lines.append("- Rezim: RISK-ON -> momentum ma vyssi sanci pokracovat.")
-            lines.append("- Sleduj: breadth (QQQ/SMH), leader stocks, pullbacky na objemu.")
         else:
             lines.append("- Rezim: NEUTRALNI -> jen jasne setupy, vic dat, min nazoru.")
-            lines.append("- Sleduj: jestli se rezim preklopi (SPY vs MA20, VIX).")
 
         if top:
-            lines.append("\n### Kandidati k dohledu (sila)")
+            lines.append("")
+            lines.append("### Kandidati (sila)")
             for r in top[:3]:
                 t = r.get("ticker")
                 p = r.get("pct_1d")
                 vr = r.get("vol_ratio")
-                lines.append(f"- **{t}** - {('n/a' if p is None else f'{float(p):+.2f}%')}, objem {float(vr):.2f}x")
+                lines.append(f"- {t}: {('n/a' if p is None else f'{float(p):+.2f}%')}, objem {float(vr):.2f}x")
 
         if worst:
-            lines.append("\n### Kandidati k dohledu (slabost / riziko)")
+            lines.append("")
+            lines.append("### Kandidati (slabost)")
             for r in worst[:3]:
                 t = r.get("ticker")
                 p = r.get("pct_1d")
                 vr = r.get("vol_ratio")
-                lines.append(f"- **{t}** - {('n/a' if p is None else f'{float(p):+.2f}%')}, objem {float(vr):.2f}x")
+                lines.append(f"- {t}: {('n/a' if p is None else f'{float(p):+.2f}%')}, objem {float(vr):.2f}x")
 
-        lines.append("\n### Rychly checklist")
-        lines.append("1) SPY, VIX, ropa, USD")
-        lines.append("2) Po open: 15-30 min spis cist trh")
-        lines.append("3) V risk-off: mensi sizing + cekat na potvrzeni")
-        lines.append("4) Vecer: earnings + zhodnoceni dne")
-
+        lines.append("")
+        lines.append("Checklist: SPY, VIX, ropa, USD; po open 15-30 min cist trh; risk-off mensi sizing.")
         return "\n".join(lines)
 
     def _geo_playbook(self, dg: Dict[str, Any]) -> str:
@@ -370,22 +372,16 @@ class RadarAgent:
         hot_keys = [k for k, _ in hot]
 
         lines: List[str] = []
-        lines.append("## Geo dopad: co sledovat na trhu")
+        lines.append("## Geo dopad: co sledovat")
         lines.append("- Dopad potvrzuje trh pres ropu, VIX, USD (ne jen headline).")
 
         if ("hormuz" in hot_keys) or ("oil" in hot_keys) or ("brent" in hot_keys) or ("wti" in hot_keys):
-            lines.append("- Ropa/hormuz: kdyz cena drzi vys 2-3 seance, risk premium pretrvava.")
-            lines.append("- Energie casto ziska, aerolinky/logistika mohou trpet.")
+            lines.append("- Ropa: kdyz drzi vys 2-3 seance, risk premium pretrvava.")
 
         if ("strike" in hot_keys) or ("attack" in hot_keys) or ("retaliation" in hot_keys) or ("escalation" in hot_keys):
-            lines.append("- Eskalace: casto kratkodoby risk-off: VIX nahoru, USD nahoru, akcie dolu.")
+            lines.append("- Eskalace: casto kratkodoby risk-off (VIX nahoru, USD nahoru, akcie dolu).")
 
-        lines.append("\nMini-checklist:")
-        lines.append("1) WTI/Brent (spike vs trend)")
-        lines.append("2) VIX (potvrzeni risk-off)")
-        lines.append("3) USD (potvrzeni risk-off)")
-        lines.append("4) SPY/QQQ (close je dulezitejsi nez intraday sum)")
-
+        lines.append("Mini-checklist: WTI/Brent, VIX, USD, SPY/QQQ (close > intraday sum).")
         return "\n".join(lines)
 
     # -------------------- INTERPRETATION --------------------
@@ -393,14 +389,14 @@ class RadarAgent:
         notes: List[str] = []
 
         if pct_1d is None:
-            notes.append("- Nemam spolehliva 1D data -> ber to informativne.")
+            notes.append("- Nemam 1D data -> ber to informativne.")
         else:
             if abs(pct_1d) >= 6:
-                notes.append("- Velky pohyb: typicky news/earnings/sector move -> over headline a kontext.")
+                notes.append("- Velky pohyb -> typicky news/earnings/sector move.")
             elif abs(pct_1d) >= 3:
-                notes.append("- Vyrazny pohyb: casto katalyzator + momentum -> sleduj follow-through vs mean-reversion.")
+                notes.append("- Vyrazny pohyb -> katalyzator + momentum, hlidej follow-through.")
             else:
-                notes.append("- Bezny pohyb: muze to byt trend/market rezim, ne jedna zprava.")
+                notes.append("- Bezny pohyb -> casto rezim trhu / technika.")
 
         if vol_ratio >= 1.8:
             notes.append("- Objem nadprumerny -> pohyb ma vetsi vahu.")
@@ -408,14 +404,14 @@ class RadarAgent:
             notes.append("- Objem slaby -> pohyb muze byt thin.")
 
         if has_news:
-            notes.append("- Jsou zpravy -> validuj earnings/guidance/downgrade/regulace/kontrakty.")
+            notes.append("- Jsou zpravy -> validuj earnings/guidance/regulace/kontrakty.")
         else:
-            notes.append("- Bez jasnych zprav -> casto flow/technika/ETF.")
+            notes.append("- Bez zprav -> casto flow/technika/ETF.")
 
         if regime == "RISK-OFF":
-            notes.append("- RISK-OFF -> vyssi riziko vyplachu, hlidej korelace.")
+            notes.append("- RISK-OFF -> mensi sizing, vyssi opatrnost.")
         elif regime == "RISK-ON":
-            notes.append("- RISK-ON -> momentum ma vyssi sanci pokracovat, pozor na fake breaky.")
+            notes.append("- RISK-ON -> momentum casteji funguje, pozor na fake breaky.")
 
         return "\n".join(notes)
 
@@ -424,13 +420,11 @@ class RadarAgent:
         payload = payload or {"rendered_text": text}
         payload.setdefault("rendered_text", text)
 
-        # Telegram text
         try:
             telegram_send_long(self.cfg, text)
         except Exception:
             pass
 
-        # Telegram images (pokud jsou)
         atts = payload.get("attachments")
         if isinstance(atts, list):
             for a in atts[:6]:
@@ -442,7 +436,6 @@ class RadarAgent:
                 except Exception:
                     continue
 
-        # Email
         try:
             maybe_send_email_report(self.cfg, payload, datetime.now(), tag=tag)
         except Exception:
@@ -474,13 +467,17 @@ class RadarAgent:
         return cmd, args
 
     def _help(self) -> AgentResponse:
-        md = (
-            "## Radar Agent - prikazy\n\n"
-            "- /menu ... posle ovladaci menu s tlacitky\n"
-            "- snapshot ... radar TOP/WORST + playbook + grafy TOP3\n"
-            "- alerts ... intradenni alerty\n"
-            "- earnings ... earnings tabulka na tyden\n"
-            "- geo ... geopolitika + geo playbook + self-learning\n"
-            "- explain TICKER ... analyza + graf\n\n"
-            "Tip:\n"
-            "- Kdyz napises jen AAPL, vezmu to jako explain A
+        help_lines = [
+            "## Radar Agent - prikazy",
+            "",
+            "- /menu ... posle ovladaci menu s tlacitky",
+            "- snapshot ... radar TOP/WORST + playbook + grafy TOP3",
+            "- alerts ... intradenni alerty",
+            "- earnings ... earnings tabulka na tyden",
+            "- geo ... geopolitika + geo playbook + self-learning",
+            "- explain TICKER ... analyza + graf",
+            "",
+            "Tip:",
+            "- Kdyz napises jen AAPL, vezmu to jako explain AAPL.",
+        ]
+        return AgentResponse("Help", "\n".join(help_lines))
