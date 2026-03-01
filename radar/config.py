@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 import yaml
 
@@ -32,31 +32,8 @@ def _as_dict(v) -> Dict[str, Any]:
 
 
 def _normalize_ticker_map(v: Any) -> Dict[str, str]:
-    """
-    Accepts multiple YAML shapes and converts to dict RAW->RESOLVED:
-
-    1) dict:
-       ticker_map:
-         BRK.B: BRK-B
-
-    2) list of dicts (common in YAML):
-       ticker_map:
-         - from: BRK.B
-           to: BRK-B
-         - raw: VIX
-           resolved: ^VIX
-
-    3) list of strings:
-       ticker_map:
-         - "BRK.B=BRK-B"
-         - "VIX=^VIX"
-
-    4) comma-separated string:
-       ticker_map: "BRK.B=BRK-B, VIX=^VIX"
-    """
     out: Dict[str, str] = {}
 
-    # dict straight
     if isinstance(v, dict):
         for k, val in v.items():
             kk = str(k).strip().upper()
@@ -65,7 +42,6 @@ def _normalize_ticker_map(v: Any) -> Dict[str, str]:
                 out[kk] = vv
         return out
 
-    # string "A=B, C=D"
     if isinstance(v, str):
         s = v.strip()
         if not s:
@@ -80,10 +56,8 @@ def _normalize_ticker_map(v: Any) -> Dict[str, str]:
                     out[kk] = vv
         return out
 
-    # list forms
     if isinstance(v, list):
         for item in v:
-            # "A=B"
             if isinstance(item, str):
                 s = item.strip()
                 if "=" in s:
@@ -94,21 +68,9 @@ def _normalize_ticker_map(v: Any) -> Dict[str, str]:
                         out[kk] = vv
                 continue
 
-            # {from:..., to:...} or {raw:..., resolved:...}
             if isinstance(item, dict):
-                # try multiple keys
-                raw = item.get("from", None)
-                if raw is None:
-                    raw = item.get("raw", None)
-                if raw is None:
-                    raw = item.get("ticker", None)
-
-                res = item.get("to", None)
-                if res is None:
-                    res = item.get("resolved", None)
-                if res is None:
-                    res = item.get("map_to", None)
-
+                raw = item.get("from") or item.get("raw") or item.get("ticker")
+                res = item.get("to") or item.get("resolved") or item.get("map_to")
                 if raw is not None and res is not None:
                     kk = str(raw).strip().upper()
                     vv = str(res).strip()
@@ -153,7 +115,6 @@ class RadarConfig:
     watchlist: List[str] = field(default_factory=lambda: ["SPY", "QQQ", "SMH", "XLE", "GLD"])
     new_candidates: List[str] = field(default_factory=list)
 
-    # IMPORTANT: always dict RAW->RESOLVED after load_config()
     ticker_map: Dict[str, str] = field(default_factory=dict)
 
     geopolitics_rss: List[str] = field(default_factory=lambda: [
@@ -209,16 +170,14 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
     except Exception:
         pass
 
-    # FMP key: accept both env spellings
     cfg.fmp_api_key = str(data.get("fmp_api_key", "") or "").strip()
+    # ✅ tvoje secrets: FMPAPIKEY
     cfg.fmp_api_key = _env_first("FMPAPIKEY", "FMP_API_KEY", default=cfg.fmp_api_key)
 
-    # benchmarks
     bm = _as_dict(data.get("benchmarks"))
     if bm:
         cfg.benchmarks = {str(k).strip(): str(v).strip() for k, v in bm.items() if str(k).strip()}
 
-    # weights
     w = _as_dict(data.get("weights"))
     if w:
         out: Dict[str, float] = {}
@@ -230,17 +189,13 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
         if out:
             cfg.weights = out
 
-    # universe
     cfg.watchlist = _as_list(data.get("watchlist")) or cfg.watchlist
     cfg.new_candidates = _as_list(data.get("new_candidates"))
 
-    # ticker_map normalization (THIS FIXES YOUR CRASH)
     cfg.ticker_map = _normalize_ticker_map(data.get("ticker_map"))
 
-    # rss
     cfg.geopolitics_rss = _as_list(data.get("geopolitics_rss")) or cfg.geopolitics_rss
 
-    # secrets from env (compat)
     cfg.telegram_token = _env_first("TELEGRAMTOKEN", "TG_BOT_TOKEN", "TELEGRAM_TOKEN", default="")
     cfg.telegram_chat_id = _env_first("CHATID", "TG_CHAT_ID", "TELEGRAM_CHAT_ID", default="")
 
@@ -248,6 +203,7 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
     cfg.email_enabled = email_enabled in ("1", "true", "yes", "on")
     cfg.email_sender = _env_first("EMAIL_SENDER", default="")
     cfg.email_receiver = _env_first("EMAIL_RECEIVER", default="")
+    # ✅ tvoje secrets: GMAILPASSWORD
     cfg.gmail_password = _env_first("GMAILPASSWORD", "GMAIL_PASSWORD", default="")
 
     return cfg
