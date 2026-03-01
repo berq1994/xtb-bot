@@ -1,36 +1,27 @@
 # radar/universe.py
-from typing import Dict, List, Tuple, Optional
+from __future__ import annotations
+
+from typing import List
 from radar.config import RadarConfig
 
 
-def resolve_ticker(raw: str, ticker_map: Dict[str, str]) -> str:
-    t = (raw or "").strip().upper()
-    return (ticker_map.get(t) or t).strip()
-
-
-def portfolio_tickers(cfg: RadarConfig) -> List[str]:
-    out: List[str] = []
-    for row in cfg.portfolio:
-        if isinstance(row, dict) and row.get("ticker"):
-            out.append(str(row["ticker"]).strip().upper())
-    return out
-
-
-def all_tickers(cfg: RadarConfig) -> List[str]:
-    port = portfolio_tickers(cfg)
-    wl = cfg.watchlist or []
-    nc = cfg.new_candidates or []
-    base = list(set(port + wl + nc + [cfg.benchmarks.get("spy", "SPY"), cfg.benchmarks.get("vix", "^VIX")]))
-    return sorted([x for x in base if x])
-
-
-def resolved_universe(cfg: RadarConfig, universe: Optional[List[str]] = None) -> Tuple[List[str], Dict[str, str]]:
+def resolved_universe(cfg: RadarConfig) -> List[str]:
     """
-    Vrací:
-      - list tickers pro datasource (po mapování)
-      - map raw->resolved
+    Základní univerzum:
+    - watchlist z configu
+    - + případně new_candidates, pokud existuje v configu
     """
-    raws = [x.strip().upper() for x in (universe or all_tickers(cfg)) if str(x).strip()]
-    mapping = {t: resolve_ticker(t, cfg.ticker_map) for t in raws}
-    resolved = sorted(set(mapping.values()))
-    return resolved, mapping
+    uni: List[str] = []
+    wl = getattr(cfg, "watchlist", None) or []
+    for t in wl:
+        s = str(t).strip().upper()
+        if s and s not in uni:
+            uni.append(s)
+
+    nc = getattr(cfg, "new_candidates", None) or []
+    for t in nc:
+        s = str(t).strip().upper()
+        if s and s not in uni:
+            uni.append(s)
+
+    return uni
