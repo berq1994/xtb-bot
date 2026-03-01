@@ -1,54 +1,63 @@
 # radar/features.py
 from __future__ import annotations
-from typing import Dict, Any, Optional
+
+from typing import Dict, Any
+import math
+import yfinance as yf
 
 
-def movement_class(pct: Optional[float]) -> str:
+def compute_features(ticker: str) -> Dict[str, Any]:
     """
-    Jednoduchá klasifikace pohybu (1D nebo od OPEN).
+    Zjednodušené features pro scoring:
+    - trend (close vs MA20)
+    - volatility (ATR aproximace)
     """
-    if pct is None:
-        return "NO-DATA"
-    a = abs(float(pct))
-    if a >= 10:
-        return "EXTREME"
-    if a >= 6:
-        return "STRONG"
-    if a >= 3:
-        return "MOVE"
-    if a >= 1:
-        return "DRIFT"
-    return "FLAT"
+    out: Dict[str, Any] = {"ok": False}
 
-
-def compute_features(raw: Dict[str, Any]) -> Dict[str, float]:
-    """
-    Převod raw metrik -> feature space (0..10), kompatibilní se scoringem.
-    raw očekává klíče:
-      pct_1d, momentum, rel_strength, vol_ratio, catalyst_score, regime_score
-    """
-    mom = float(raw.get("momentum") or 0.0)
-    rs = float(raw.get("rel_strength") or 0.0)
-
-    vol_ratio = raw.get("vol_ratio")
     try:
-        vol_ratio = float(vol_ratio)
+        h = yf.Ticker(ticker).history(period="3mo", interval="1d")
+        if h is None or len(h) < 30:
+            return out
+
+        close = h["Close"]
+        high = h["High"]
+        low = h["Low"]
+
+        ma20 = float(close.rolling(20).mean().iloc[-1])
+        last = float(close.iloc[-1])
+
+        # ATR-ish: průměr (high-low)/close za 14 dní
+        tr = (high - low) / close
+        atr14 = float(tr.tail(14).mean())
+
+        out.update(
+            {
+                "ok": True,
+                "last": last,
+                "ma20": ma20,
+                "trend_up": last > ma20 if ma20 else False,
+                "atr14": atr14,
+            }
+        )
+        return out
     except Exception:
-        vol_ratio = 1.0
+        return out
 
-    cat = float(raw.get("catalyst_score") or 0.0)
-    reg = float(raw.get("regime_score") or 5.0)
 
-    # vol feature: 1.0 = normál, 2.0 ~ vyšší aktivita
-    vol_feat = max(0.0, min(10.0, (vol_ratio - 1.0) * 6.0))
+def movement_class(pct_1d: float, vol_ratio: float) -> str:
+    """
+    Hrubá klasifikace pohybu (pro levels).
+    """
+    try:
+        p = float(pct_1d)
+        v = float(vol_ratio)
+    except Exception:
+        return "NORMAL"
 
-    # rs feature: map -5..+5 => 0..10 (clamp)
-    rs_feat = max(0.0, min(10.0, (rs + 5.0) * 1.0))
-
-    return {
-        "momentum": max(0.0, min(10.0, mom)),
-        "rel_strength": rs_feat,
-        "volatility_volume": vol_feat,
-        "catalyst": max(0.0, min(10.0, cat)),
-        "market_regime": max(0.0, min(10.0, reg)),
-    }
+    if abs(p) >= 6 and v >= 1.5:
+        return "BIG_MOVE"
+    if abs(p) >= 3 and v >= 1.2:
+        return "MOVE"
+    if v >= 2.0:
+        return "VOLUME_SPIKE"
+    return "NORMAL"
