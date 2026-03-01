@@ -1,16 +1,16 @@
-name: earnings-weekly
+name: xtb-weekly-learn
 
 on:
   schedule:
-    - cron: "0 8 * * 1"
+    - cron: "5 7 * * 1"
   workflow_dispatch:
 
 concurrency:
-  group: earnings-weekly
+  group: xtb-radar
   cancel-in-progress: true
 
 jobs:
-  earnings:
+  learn:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -34,8 +34,8 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run earnings
-        run: python run_agent.py earnings
+      - name: Run learn
+        run: python run_agent.py learn
         env:
           TIMEZONE: Europe/Prague
 
