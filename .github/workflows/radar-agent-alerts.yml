@@ -2,11 +2,11 @@ name: radar-agent-alerts
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "5-59/10 * * * *"
   workflow_dispatch:
 
 concurrency:
-  group: radar-alerts
+  group: xtb-radar
   cancel-in-progress: true
 
 jobs:
