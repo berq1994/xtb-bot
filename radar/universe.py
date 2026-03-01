@@ -1,24 +1,16 @@
 # radar/universe.py
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Tuple, Any
+from typing import Dict, List, Optional, Tuple
 from radar.config import RadarConfig
 
 
-def resolved_universe(
-    cfg: RadarConfig,
-    universe: Optional[List[str]] = None,
-) -> Tuple[List[str], Dict[str, str]]:
+def resolved_universe(cfg: RadarConfig, universe: Optional[List[str]] = None) -> Tuple[List[str], Dict[str, str]]:
     """
     Returns:
-      resolved: list[str] - tickery po mapování (co se používají pro data)
-      mapping: dict[str,str] - původní_ticker -> resolved_ticker
-
-    Param universe:
-      - None: použije cfg.watchlist + cfg.new_candidates
-      - list: použije tuhle listinu (a doplní mapování)
+      resolved: list[str]
+      mapping: dict[str,str] raw -> resolved
     """
-
     base: List[str] = []
     if universe is None:
         base.extend([str(x).strip().upper() for x in (getattr(cfg, "watchlist", None) or [])])
@@ -26,7 +18,6 @@ def resolved_universe(
     else:
         base.extend([str(x).strip().upper() for x in universe])
 
-    # uniq preserve order
     seen = set()
     uniq: List[str] = []
     for t in base:
@@ -37,9 +28,7 @@ def resolved_universe(
         seen.add(t)
         uniq.append(t)
 
-    # mapping via cfg.ticker_map (raw -> resolved)
     tm = getattr(cfg, "ticker_map", None) or {}
-    # ensure normalized keys
     norm_tm: Dict[str, str] = {}
     if isinstance(tm, dict):
         for k, v in tm.items():
