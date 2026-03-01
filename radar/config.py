@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
@@ -31,12 +31,101 @@ def _as_dict(v) -> Dict[str, Any]:
     return dict(v) if isinstance(v, dict) else {}
 
 
+def _normalize_ticker_map(v: Any) -> Dict[str, str]:
+    """
+    Accepts multiple YAML shapes and converts to dict RAW->RESOLVED:
+
+    1) dict:
+       ticker_map:
+         BRK.B: BRK-B
+
+    2) list of dicts (common in YAML):
+       ticker_map:
+         - from: BRK.B
+           to: BRK-B
+         - raw: VIX
+           resolved: ^VIX
+
+    3) list of strings:
+       ticker_map:
+         - "BRK.B=BRK-B"
+         - "VIX=^VIX"
+
+    4) comma-separated string:
+       ticker_map: "BRK.B=BRK-B, VIX=^VIX"
+    """
+    out: Dict[str, str] = {}
+
+    # dict straight
+    if isinstance(v, dict):
+        for k, val in v.items():
+            kk = str(k).strip().upper()
+            vv = str(val).strip()
+            if kk and vv:
+                out[kk] = vv
+        return out
+
+    # string "A=B, C=D"
+    if isinstance(v, str):
+        s = v.strip()
+        if not s:
+            return {}
+        parts = [p.strip() for p in s.split(",") if p.strip()]
+        for p in parts:
+            if "=" in p:
+                a, b = p.split("=", 1)
+                kk = a.strip().upper()
+                vv = b.strip()
+                if kk and vv:
+                    out[kk] = vv
+        return out
+
+    # list forms
+    if isinstance(v, list):
+        for item in v:
+            # "A=B"
+            if isinstance(item, str):
+                s = item.strip()
+                if "=" in s:
+                    a, b = s.split("=", 1)
+                    kk = a.strip().upper()
+                    vv = b.strip()
+                    if kk and vv:
+                        out[kk] = vv
+                continue
+
+            # {from:..., to:...} or {raw:..., resolved:...}
+            if isinstance(item, dict):
+                # try multiple keys
+                raw = item.get("from", None)
+                if raw is None:
+                    raw = item.get("raw", None)
+                if raw is None:
+                    raw = item.get("ticker", None)
+
+                res = item.get("to", None)
+                if res is None:
+                    res = item.get("resolved", None)
+                if res is None:
+                    res = item.get("map_to", None)
+
+                if raw is not None and res is not None:
+                    kk = str(raw).strip().upper()
+                    vv = str(res).strip()
+                    if kk and vv:
+                        out[kk] = vv
+                continue
+
+        return out
+
+    return {}
+
+
 @dataclass
 class RadarConfig:
     timezone: str = "Europe/Prague"
     state_dir: str = ".state"
 
-    # schedules (HH:MM) - optional, but kept for compatibility
     premarket_time: str = "07:30"
     evening_time: str = "20:00"
     weekly_earnings_time: str = "08:00"
@@ -63,6 +152,8 @@ class RadarConfig:
 
     watchlist: List[str] = field(default_factory=lambda: ["SPY", "QQQ", "SMH", "XLE", "GLD"])
     new_candidates: List[str] = field(default_factory=list)
+
+    # IMPORTANT: always dict RAW->RESOLVED after load_config()
     ticker_map: Dict[str, str] = field(default_factory=dict)
 
     geopolitics_rss: List[str] = field(default_factory=lambda: [
@@ -118,7 +209,7 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
     except Exception:
         pass
 
-    # FMP
+    # FMP key: accept both env spellings
     cfg.fmp_api_key = str(data.get("fmp_api_key", "") or "").strip()
     cfg.fmp_api_key = _env_first("FMPAPIKEY", "FMP_API_KEY", default=cfg.fmp_api_key)
 
@@ -143,13 +234,13 @@ def load_config(path: Optional[str] = None) -> RadarConfig:
     cfg.watchlist = _as_list(data.get("watchlist")) or cfg.watchlist
     cfg.new_candidates = _as_list(data.get("new_candidates"))
 
-    tm = _as_dict(data.get("ticker_map"))
-    cfg.ticker_map = {str(k).strip().upper(): str(v).strip() for k, v in tm.items() if str(k).strip()}
+    # ticker_map normalization (THIS FIXES YOUR CRASH)
+    cfg.ticker_map = _normalize_ticker_map(data.get("ticker_map"))
 
     # rss
     cfg.geopolitics_rss = _as_list(data.get("geopolitics_rss")) or cfg.geopolitics_rss
 
-    # secrets from env
+    # secrets from env (compat)
     cfg.telegram_token = _env_first("TELEGRAMTOKEN", "TG_BOT_TOKEN", "TELEGRAM_TOKEN", default="")
     cfg.telegram_chat_id = _env_first("CHATID", "TG_CHAT_ID", "TELEGRAM_CHAT_ID", default="")
 
