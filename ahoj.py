@@ -33,16 +33,11 @@ def in_window(now_hm: str, start_hm: str, end_hm: str) -> bool:
     return start_hm <= now_hm <= end_hm
 
 
-def cfg_val(cfg, name: str, default: str) -> str:
-    """Bezpečné čtení hodnoty z configu."""
-    return str(getattr(cfg, name, default) or default).strip()
-
-
 def main():
     cfg = load_config()
     st = State(cfg.state_dir)
 
-    tz_name = getattr(cfg, "timezone", "Europe/Prague")
+    tz_name = cfg.timezone
     now = now_local(tz_name)
     now_hm = hm(now)
     today = now.strftime("%Y-%m-%d")
@@ -50,47 +45,28 @@ def main():
     run_mode = (os.getenv("RUN_MODE") or "run").strip().lower()
 
     # PRIORITA: ENV -> config.yml -> fallback
-    premarket_time = (
-        os.getenv("PREMARKET_TIME")
-        or cfg_val(cfg, "premarket_time", "07:30")
-    )
+    premarket_time = (os.getenv("PREMARKET_TIME") or cfg.premarket_time or "07:30").strip()
+    evening_time = (os.getenv("EVENING_TIME") or cfg.evening_time or "20:00").strip()
 
-    evening_time = (
-        os.getenv("EVENING_TIME")
-        or cfg_val(cfg, "evening_time", "20:00")
-    )
+    alert_start = (os.getenv("ALERT_START") or cfg.alert_start or "12:00").strip()
+    alert_end = (os.getenv("ALERT_END") or cfg.alert_end or "21:00").strip()
 
-    alert_start = (
-        os.getenv("ALERT_START")
-        or cfg_val(cfg, "alert_start", "12:00")
-    )
-
-    alert_end = (
-        os.getenv("ALERT_END")
-        or cfg_val(cfg, "alert_end", "21:00")
-    )
-
-    weekly_earnings_time = (
-        os.getenv("WEEKLY_EARNINGS_TIME")
-        or cfg_val(cfg, "weekly_earnings_time", "08:00")
-    )
-
-    alert_threshold = float(getattr(cfg, "alert_threshold_pct", 3.0))
+    weekly_earnings_time = (os.getenv("WEEKLY_EARNINGS_TIME") or cfg.weekly_earnings_time or "08:00").strip()
 
     print(f"✅ Bot běží | RUN_MODE={run_mode} | {today} {now_hm} ({tz_name})")
     print(
         f"Reporty: {premarket_time} & {evening_time} | "
-        f"Alerty: {alert_start}-{alert_end} (>= {alert_threshold:.1f}%) | "
+        f"Alerty: {alert_start}-{alert_end} (>= {cfg.alert_threshold_pct:.1f}%) | "
         f"Earnings tabulka: Po {weekly_earnings_time}"
     )
 
-    # --- learn/backfill režim ---
+    # learn/backfill: bezpečný režim – nic neposíláme (jen udržet cache/state)
     if run_mode in ("learn", "backfill"):
         st.save()
-        print("✅ Done (learn/backfill mode – bez akcí).")
+        print("✅ Done (learn/backfill mode – zatím bez akcí).")
         return
 
-    # --- Weekly earnings ---
+    # --- Weekly earnings: pondělí 08:00 ---
     if (
         now.weekday() == 0
         and now_hm == weekly_earnings_time
@@ -100,38 +76,30 @@ def main():
         text = format_weekly_earnings_report(table, cfg, now)
         telegram_send_long(cfg, text)
 
-        maybe_send_email_report(
-            cfg,
-            {"rendered_text": text},
-            now,
-            tag="weekly_earnings",
-        )
+        # Email: max 1× denně (pokud už šel dnes premarket email, weekly earnings email přeskočí)
+        maybe_send_email_report(cfg, {"kind": "weekly_earnings", "text": text, "png_paths": []}, now, tag="weekly_earnings")
 
         st.mark_sent("weekly_earnings", today)
 
-    # --- Premarket ---
+    # --- 07:30 PREMARKET (Telegram + Email 1× denně) ---
     if now_hm == premarket_time and not st.already_sent("premarket", today):
         snapshot = run_radar_snapshot(cfg, now, reason="premarket", st=st)
         text = format_premarket_report(snapshot, cfg)
         telegram_send_long(cfg, text)
 
-        maybe_send_email_report(
-            cfg,
-            {"rendered_text": text},
-            now,
-            tag="premarket",
-        )
+        # Email max 1× denně (primárně z ranního reportu)
+        maybe_send_email_report(cfg, snapshot, now, tag="premarket")
 
         st.mark_sent("premarket", today)
 
-    # --- Evening ---
+    # --- 20:00 EVENING (Telegram only; email ne – dle pravidla max 1× denně) ---
     if now_hm == evening_time and not st.already_sent("evening", today):
         snapshot = run_radar_snapshot(cfg, now, reason="evening", st=st)
         text = format_evening_report(snapshot, cfg)
         telegram_send_long(cfg, text)
         st.mark_sent("evening", today)
 
-    # --- Alerts ---
+    # --- ALERTY (každých 15 min v okně) ---
     if in_window(now_hm, alert_start, alert_end):
         alerts = run_alerts_snapshot(cfg, now, st)
         if alerts:
