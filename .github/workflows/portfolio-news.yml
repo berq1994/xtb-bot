@@ -20,12 +20,10 @@ jobs:
           python - << 'PY'
           from datetime import datetime
           from zoneinfo import ZoneInfo
-
           now = datetime.now(ZoneInfo('Europe/Prague'))
           h = now.hour
-          allowed = (h >= 15 and h <= 21)
           print('NOW_PRAGUE=', now.strftime('%Y-%m-%d %H:%M:%S %Z'))
-          if not allowed:
+          if not (h >= 15 and h <= 21):
               raise SystemExit(0)
           PY
 
@@ -53,9 +51,6 @@ jobs:
         env:
           TIMEZONE: Europe/Prague
           PORTFOLIO_SNAPSHOT_PATH: portfolio_snapshot/portfolio.yml
-
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
 
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
