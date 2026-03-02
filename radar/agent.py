@@ -1,4 +1,3 @@
-# radar/agent.py
 from __future__ import annotations
 
 import hashlib
@@ -24,6 +23,7 @@ from radar.engine import (
 )
 
 from radar.portfolio import load_portfolio, portfolio_snapshot
+from radar.daytrade import DaytradeSettings, daytrade_candidates
 
 try:
     from reporting.telegram import telegram_send_long, telegram_send_menu, telegram_send_photo  # type: ignore
@@ -36,9 +36,9 @@ except Exception:
     from emailer import maybe_send_email_report  # type: ignore
 
 try:
-    from reporting.charts import safe_price_chart_png  # type: ignore
+    from reporting.charts import safe_intraday_chart_png  # type: ignore
 except Exception:
-    safe_price_chart_png = None  # type: ignore
+    safe_intraday_chart_png = None  # type: ignore
 
 
 @dataclass
@@ -53,7 +53,6 @@ class RadarAgent:
         self.cfg = cfg
         self.st = st or State(cfg.state_dir)
 
-    # ---------------- public API ----------------
     def handle(self, text: str, now: Optional[datetime] = None) -> AgentResponse:
         now = now or datetime.now()
         cmd, args = self._parse(text)
@@ -94,48 +93,46 @@ class RadarAgent:
                 return AgentResponse("Explain", "Použití: `explain TICKER`")
             return self.explain(ticker=args[0], now=now)
 
-        # když napíšeš jen ticker
         if cmd and cmd.isalpha() and 1 <= len(cmd) <= 10 and not args:
             return self.explain(ticker=cmd, now=now)
 
         return AgentResponse("Neznámý příkaz", f"Neznámý příkaz: `{text}`\n\nNapiš `help`.")
 
-    # ---------------- core actions ----------------
     def snapshot(self, now: datetime, reason: str = "snapshot") -> AgentResponse:
         snap = run_radar_snapshot(cfg=self.cfg, now=now, reason=reason, universe=None, st=self.st)
 
-        # Portfolio-aware section
         positions = load_portfolio(self.cfg)
         port = portfolio_snapshot(self.cfg, positions) if positions else {"rows": [], "count": 0}
 
         md = self._format_snapshot(snap)
         md_port = self._format_portfolio(port)
+        setups = self._format_daytrade_setups(now, snap, port)
         playbook = self._daily_playbook(snap, port)
 
         out = md
         if md_port:
             out += "\n\n" + md_port
+        if setups:
+            out += "\n\n" + setups
         out += "\n\n" + playbook
 
-        # ✅ jen při změně
-        sig = self._hash_snapshot(snap, port)
-        sent = self._maybe_report(tag="snapshot", text=out, payload={"snapshot": snap, "portfolio": port}, content_hash=sig)
+        sig = self._hash_snapshot(snap, port, setups)
+        sent = self._maybe_report(tag="snapshot", text=out, payload={"snapshot": snap, "portfolio": port}, content_hash=sig, now=now)
 
-        self._audit("snapshot", {"reason": reason, "sent": sent, "sig": sig, "meta": snap.get("meta", {})})
+        self._audit("snapshot", {"reason": reason, "sent": sent, "sig": sig})
         self.st.save()
-        return AgentResponse("Radar snapshot", out, payload={"snapshot": snap, "sent": sent})
+        return AgentResponse("Radar snapshot", out, payload={"sent": sent})
 
     def alerts(self, now: datetime) -> AgentResponse:
         alerts = run_alerts_snapshot(cfg=self.cfg, now=now, st=self.st)
         md = self._format_alerts(alerts, now)
 
-        # ✅ jen při změně
         sig = self._hash_alerts(alerts)
-        sent = self._maybe_report(tag="alerts", text=md, payload={"alerts": alerts}, content_hash=sig)
+        sent = self._maybe_report(tag="alerts", text=md, payload={"alerts": alerts}, content_hash=sig, now=now)
 
         self._audit("alerts", {"count": len(alerts), "sent": sent, "sig": sig})
         self.st.save()
-        return AgentResponse("Alerty", md, payload={"alerts": alerts, "sent": sent})
+        return AgentResponse("Alerty", md, payload={"sent": sent})
 
     def portfolio(self, now: datetime) -> AgentResponse:
         positions = load_portfolio(self.cfg)
@@ -147,7 +144,6 @@ class RadarAgent:
         return AgentResponse("Portfolio", md, payload={"portfolio": port})
 
     def portfolio_news(self, now: datetime) -> AgentResponse:
-        """Pošle novinky jen pro tickery v portfoliu (jen nové headline)."""
         positions = load_portfolio(self.cfg)
         tickers = [str(p.get("ticker") or "").strip().upper() for p in (positions or [])]
         tickers = [t for t in tickers if t]
@@ -191,7 +187,6 @@ class RadarAgent:
         return AgentResponse("Portfolio news", md, payload={"items": new_items})
 
     def afternoon_brief(self, now: datetime) -> AgentResponse:
-        """Krátký odpolední briefing: režim, událost dne, portfolio movers, akční instrukce."""
         snap = run_radar_snapshot(cfg=self.cfg, now=now, reason="brief", universe=None, st=self.st)
         positions = load_portfolio(self.cfg)
         port = portfolio_snapshot(self.cfg, positions) if positions else {"rows": [], "count": 0}
@@ -223,38 +218,28 @@ class RadarAgent:
                 except Exception:
                     continue
 
-        rows = port.get("rows") or []
-        movers = []
-        if isinstance(rows, list):
-            for r in rows:
-                dp = r.get("day_pct")
-                if dp is None:
-                    continue
-                try:
-                    movers.append((str(r.get("ticker") or ""), float(dp), r))
-                except Exception:
-                    continue
-        movers.sort(key=lambda x: abs(x[1]), reverse=True)
-
+        movers = self._portfolio_movers(port)
         if movers:
             lines.append("")
             lines.append("### Tvoje pozice — největší pohyb dnes")
-            for t, dp, r in movers[:6]:
+            for r in movers[:6]:
+                t = str(r.get("ticker") or "")
+                dp = r.get("day_pct")
                 last = r.get("last")
                 last_txt = "" if last is None else f"last {float(last):.2f}"
-                lines.append(f"- **{t}** {dp:+.2f}% {last_txt}")
+                try:
+                    lines.append(f"- **{t}** {float(dp):+,.2f}% {last_txt}".replace(",", ""))
+                except Exception:
+                    pass
+
+        lines.append("")
+        lines.append("### Intraday setupy (portfolio + TOP)")
+        setups = self._format_daytrade_setups(now, snap, port)
+        lines.append(setups if setups else "- Intraday data n/a nebo žádné jasné setupy.")
 
         lines.append("")
         lines.append("### Co dělat od 15:00")
-        if label == "RISK-OFF":
-            lines.append("- Drž se defenzivně: menší sizing, jen A+ setupy, žádné FOMO breaky.")
-            lines.append("- Pokud máš pozice proti trhu: zvaž zmenšení na prvním pullbacku.")
-        elif label == "RISK-ON":
-            lines.append("- Preferuj lídry a sektorové ETF; vstupy hlavně po pullbacku k MA20/VWAP (nechytat vrchol).")
-            lines.append("- Přidávání jen pokud: trend drží a objem není extrémně vyčerpaný.")
-        else:
-            lines.append("- Selektivně: vyber 1–2 setupy, počkej na potvrzení směru (break + retest).")
-            lines.append("- Pokud je volatilita vysoká: zmenši risk na trade.")
+        lines.extend(self._intraday_rules(label))
 
         lines.append("")
         lines.append("_Pozn.: Edukativní info, ne investiční doporučení. Vždy risk management._")
@@ -262,7 +247,7 @@ class RadarAgent:
         md = "\n".join(lines)
 
         sig = hashlib.sha1(md.encode("utf-8")).hexdigest()
-        sent = self._maybe_report(tag="brief", text=md, payload={"snapshot": snap, "portfolio": port}, content_hash=sig)
+        sent = self._maybe_report(tag="brief", text=md, payload={"snapshot": snap, "portfolio": port}, content_hash=sig, now=now)
         self._audit("brief", {"sent": sent})
         self.st.save()
         return AgentResponse("Brief", md, payload={"sent": sent})
@@ -322,82 +307,107 @@ class RadarAgent:
                 lines.append(f"- **{src}**: [{title}]({url})")
 
         out = "\n".join(lines)
-
         self._report(tag="explain", text=out, payload={"rendered_text": out})
         self._audit("explain", {"ticker": raw, "resolved": resolved})
         self.st.save()
         return AgentResponse(f"Explain {raw}", out)
 
-    # ---------------- dedupe helpers ----------------
-    def _hash_snapshot(self, snap: Dict[str, Any], port: Optional[Dict[str, Any]] = None) -> str:
-        meta = snap.get("meta", {}) or {}
-        reg = meta.get("market_regime", {}) or {}
-        top = snap.get("top", []) or []
-        worst = snap.get("worst", []) or []
+    # ---------------- daytrade helpers ----------------
+    def _daytrade_settings(self) -> DaytradeSettings:
+        dt = self.cfg.daytrade or {}
+        return DaytradeSettings(
+            orb_minutes=int(dt.get("orb_minutes") or 15),
+            interval=str(dt.get("intraday_interval") or "5m"),
+            mean_reversion_vwap_dev_pct=float(dt.get("mean_reversion_vwap_dev_pct") or 1.5),
+        )
 
-        def row_sig(r: Dict[str, Any]) -> Dict[str, Any]:
-            return {
-                "t": str(r.get("ticker") or ""),
-                "lvl": str(r.get("level") or ""),
-                "s": round(float(r.get("score", 0.0) or 0.0), 1),
-                "p1d": None if r.get("pct_1d") is None else round(float(r.get("pct_1d") or 0.0), 2),
-            }
+    def _candidate_tickers(self, snap: Dict[str, Any], port: Dict[str, Any]) -> List[str]:
+        tickers = []
+        # portfolio tickers
+        pr = port.get("rows") or []
+        if isinstance(pr, list):
+            tickers += [str(x.get("ticker") or "").strip().upper() for x in pr if str(x.get("ticker") or "").strip()]
+        # top from snapshot
+        top = snap.get("top") or []
+        if isinstance(top, list):
+            tickers += [str(x.get("ticker") or "").strip().upper() for x in top if str(x.get("ticker") or "").strip()]
+        # dedupe preserve order
+        seen = set()
+        out = []
+        for t in tickers:
+            if t in seen:
+                continue
+            seen.add(t)
+            out.append(t)
+        return out
 
-        payload = {
-            "reg": {"label": str(reg.get("label") or ""), "score": round(float(reg.get("score", 0.0) or 0.0), 2)},
-            "top": [row_sig(r) for r in top],
-            "worst": [row_sig(r) for r in worst],
-        }
+    def _format_daytrade_setups(self, now: datetime, snap: Dict[str, Any], port: Dict[str, Any]) -> str:
+        if not (self.cfg.daytrade or {}).get("enabled", True):
+            return ""
 
-        if isinstance(port, dict):
-            pr = port.get("rows") or []
-            if isinstance(pr, list):
-                payload["portfolio"] = [
-                    {
-                        "t": str(x.get("ticker") or ""),
-                        "d": None if x.get("day_pct") is None else round(float(x.get("day_pct") or 0.0), 2),
-                    }
-                    for x in pr
-                ]
-        s = json.dumps(payload, ensure_ascii=False, sort_keys=True)
-        return hashlib.sha1(s.encode("utf-8")).hexdigest()
+        settings = self._daytrade_settings()
+        tickers = self._candidate_tickers(snap, port)
 
-    def _hash_alerts(self, alerts: List[Dict[str, Any]]) -> str:
-        payload = [
-            {"t": str(a.get("ticker") or ""), "p": round(float(a.get("pct_from_open", 0.0) or 0.0), 2)}
-            for a in (alerts or [])
-        ]
-        s = json.dumps(payload, ensure_ascii=False, sort_keys=True)
-        return hashlib.sha1(s.encode("utf-8")).hexdigest()
+        cands = daytrade_candidates(tickers, settings)
+        if not cands:
+            return ""
 
-    def _maybe_report(self, tag: str, text: str, payload: Dict[str, Any], content_hash: str) -> bool:
-        ok = self.st.should_send_report(tag=tag, content_hash=content_hash, min_interval_sec=0)
-        if not ok:
-            return False
+        maxn = int((self.cfg.daytrade or {}).get("candidates_top_n") or 5)
+        cands = cands[:maxn]
 
-        attachments: List[Dict[str, Any]] = []
-        if tag == "snapshot" and safe_price_chart_png:
-            try:
-                snap = payload.get("snapshot") or {}
-                top = (snap.get("top") or [])[:3]
-                for r in top:
-                    t = str(r.get("ticker") or "").strip().upper()
-                    if not t:
-                        continue
-                    rt = map_ticker(self.cfg, t)
-                    png = safe_price_chart_png(rt, days=60, title=f"{t} - 60D")
-                    if isinstance(png, (bytes, bytearray)):
-                        attachments.append({"filename": f"{t}_60d.png", "content_type": "image/png", "data": bytes(png)})
-            except Exception:
-                pass
+        lines = ["## Daytrade setup kandidáti (ORB / VWAP)"]
+        for c in cands:
+            t = c["ticker"]
+            last = c.get("last")
+            vwap = c.get("vwap")
+            orb = c.get("orb_signal")
+            vw_sig = c.get("vwap_signal")
+            dev = c.get("vwap_dev_pct")
+            orh = c.get("or_high")
+            orl = c.get("or_low")
 
-        full_payload = dict(payload)
-        full_payload["rendered_text"] = text
-        if attachments:
-            full_payload["attachments"] = attachments
+            hints = []
+            if orb == "orb_break_high":
+                hints.append("ORB↑ (break ORH)")
+            elif orb == "orb_break_low":
+                hints.append("ORB↓ (break ORL)")
+            if vw_sig == "vwap_reclaim":
+                hints.append("VWAP reclaim")
+            elif vw_sig == "vwap_reject":
+                hints.append("VWAP reject")
 
-        self._report(tag=tag, text=text, payload=full_payload)
-        return True
+            # educational instructions (risk-managed)
+            if "ORB↑" in " ".join(hints):
+                act = "Long jen pokud drží nad ORH a nad VWAP; SL pod ORH."
+            elif "VWAP reclaim" in " ".join(hints):
+                act = "Long po reclaimu VWAP + potvrzení; SL pod VWAP."
+            elif "VWAP reject" in " ".join(hints) or "ORB↓" in " ".join(hints):
+                act = "Pozor (slabost). Short jen zkušeně; nebo vyčkat na stabilizaci."
+            else:
+                act = "Čekej na čistý trigger (ORB/VWAP), nehonit."
+
+            lines.append(
+                f"- **{t}** last {float(last):.2f} | VWAP {float(vwap):.2f} | dev {float(dev):+.2f}% | OR [{float(orl):.2f}–{float(orh):.2f}]"
+            )
+            if hints:
+                lines.append(f"  - signály: {', '.join(hints)}")
+            lines.append(f"  - akce: {act}")
+
+        return "\n".join(lines)
+
+    def _intraday_rules(self, label: str) -> List[str]:
+        dt = self.cfg.daytrade or {}
+        max_tr = int(dt.get("max_trades_per_day") or 4)
+        stop_r = float(dt.get("daily_stop_r") or -2.0)
+
+        out = [f"- Risk: max **{max_tr}** obchody, **{stop_r}R** = stop trading."]
+        if label == "RISK-OFF":
+            out.append("- RISK-OFF: jen A+ setupy, menší sizing, žádné FOMO breaky.")
+        elif label == "RISK-ON":
+            out.append("- RISK-ON: preferuj lídry; vstup po pullbacku k VWAP / OR retest.")
+        else:
+            out.append("- NEUTRÁL: selektivně; potvrzení směru (break + retest).")
+        return out
 
     # ---------------- formatting ----------------
     def _format_snapshot(self, snap: Dict[str, Any]) -> str:
@@ -459,7 +469,7 @@ class RadarAgent:
         lines.append(f"## Geopolitika ({meta.get('day','')})")
         if learn_meta:
             if learn_meta.get("ok"):
-                lines.append(f"- Learn: ok (signal={learn_meta.get('market_signal',0.0)})")
+                lines.append("- Learn: ok")
             else:
                 lines.append(f"- Learn: {learn_meta.get('reason','n/a')}")
         lines.append("")
@@ -470,13 +480,13 @@ class RadarAgent:
             lines.append(f"- **{float(it.get('score',0.0)):.2f}** {it.get('src','')}: [{it.get('title','')}]({it.get('url','')})")
         return "\n".join(lines)
 
-    def _daily_playbook(self, snap: Dict[str, Any], port: Optional[Dict[str, Any]] = None) -> str:
-        meta = snap.get("meta", {}) or {}
-        reg = (meta.get("market_regime") or {})
-        label = str(reg.get("label", "NEUTRÁLNÍ"))
-
+    def _format_portfolio(self, port: Dict[str, Any]) -> str:
+        rows = port.get("rows") or []
+        if not isinstance(rows, list) or not rows:
+            return ""
         lines: List[str] = []
-        lines.append("## Dnešní playbook (Trading asistent)")
-        if label == "RISK-OFF":
-            lines.append("- **RISK-OFF**: menší sizing, pouze A+ setupy, nehonit breaky.")
-       
+        lines.append("## Portfolio snapshot")
+        lines.append("| Ticker | Qty | Entry | Last | 1D | P/L | P/L % | Curr | Broker |")
+        lines.append("|---|---:|---:|---:|---:|---:|---:|---|---|")
+        for r in rows[:12]:
+            t = str(r.get("tick
