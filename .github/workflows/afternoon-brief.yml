@@ -1,0 +1,63 @@
+name: afternoon-brief
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: xtb-afternoon-brief
+  cancel-in-progress: true
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check time window (Europe/Prague around 15:00)
+        run: |
+          python - << 'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+
+          now = datetime.now(ZoneInfo('Europe/Prague'))
+          print('NOW_PRAGUE=', now.strftime('%Y-%m-%d %H:%M:%S %Z'))
+
+          # Povolíme jen 15:00–15:10, aby to byl 1 odpolední brief.
+          if not (now.hour == 15 and now.minute <= 10):
+              raise SystemExit(0)
+          PY
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state
+
+      - name: Run afternoon brief (TG only)
+        run: python run_agent.py brief
+        env:
+          TIMEZONE: Europe/Prague
+          PORTFOLIO_SNAPSHOT_PATH: portfolio_snapshot/portfolio.yml
+
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
+
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+
+          EMAIL_ENABLED: "false"
