@@ -43,7 +43,7 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
 
-          EMAIL_ENABLED: "true"
+          EMAIL_ENABLED: "false"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
