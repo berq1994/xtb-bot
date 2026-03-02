@@ -16,20 +16,15 @@ jobs:
 
     steps:
       - name: Check time window (Europe/Prague 15-21)
-        id: timecheck
         run: |
           python - << 'PY'
           from datetime import datetime
           from zoneinfo import ZoneInfo
-
           now = datetime.now(ZoneInfo("Europe/Prague"))
           h = now.hour
-          allowed = (h >= 15 and h <= 21)
           print("NOW_PRAGUE=", now.strftime("%Y-%m-%d %H:%M:%S %Z"))
-          if not allowed:
-              print("Outside allowed window. Exiting.")
+          if not (h >= 15 and h <= 21):
               raise SystemExit(0)
-          print("Inside allowed window. Continuing.")
           PY
 
       - name: Checkout
@@ -63,6 +58,3 @@ jobs:
           CHATID: ${{ secrets.CHATID }}
 
           EMAIL_ENABLED: "false"
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
