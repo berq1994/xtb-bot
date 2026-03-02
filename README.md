@@ -34,6 +34,12 @@ python -m venv .venv
 .\.venv\Scripts\python.exe run_agent.py menu
 ```
 
+### Windows PowerShell (automaticky setup + test)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\windows_setup_and_test.ps1
+```
+
 ## Konfigurace
 
 Primárně přes `config.yml` + env proměnné.
