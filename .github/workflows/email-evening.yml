@@ -2,12 +2,8 @@ name: email-evening
 
 on:
   schedule:
-    - cron: "5 20 * * *"
+    - cron: "30 21 * * 1-5"
   workflow_dispatch:
-
-concurrency:
-  group: xtb-radar
-  cancel-in-progress: true
 
 jobs:
   evening:
@@ -34,18 +30,13 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Evening report (email + TG)
+      - name: Run snapshot (email enabled)
         run: python run_agent.py snapshot
         env:
           TIMEZONE: Europe/Prague
-
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
-
+          PORTFOLIO_SNAPSHOT_PATH: portfolio_snapshot/portfolio.yml
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
-
-          # ✅ email ON
           EMAIL_ENABLED: "true"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
