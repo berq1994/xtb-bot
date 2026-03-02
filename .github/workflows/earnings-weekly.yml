@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: xtb-radar
+  group: xtb-earnings
   cancel-in-progress: true
 
 jobs:
@@ -34,18 +34,14 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run earnings (email + TG)
+      - name: Run earnings
         run: python run_agent.py earnings
         env:
           TIMEZONE: Europe/Prague
-
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
           FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
-
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
-
-          # ✅ email ON
           EMAIL_ENABLED: "true"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
