@@ -3,15 +3,10 @@ name: xtb-bot
 on:
   workflow_dispatch:
 
-concurrency:
-  group: xtb-radar
-  cancel-in-progress: true
-
 jobs:
-  bot:
+  menu:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,14 +31,6 @@ jobs:
         run: python run_agent.py menu
         env:
           TIMEZONE: Europe/Prague
-
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
-
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
-
           EMAIL_ENABLED: "false"
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
