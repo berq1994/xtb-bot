@@ -53,6 +53,21 @@ def main() -> None:
         print(resp.markdown)
         return
 
+    if cmd in ("portfolio", "pf"):
+        resp = agent.handle("portfolio", now=now)
+        print(resp.markdown)
+        return
+
+    if cmd in ("news", "pnews", "portfolio_news"):
+        resp = agent.handle("news", now=now)
+        print(resp.markdown)
+        return
+
+    if cmd in ("brief", "afternoon", "update"):
+        resp = agent.handle("brief", now=now)
+        print(resp.markdown)
+        return
+
     if cmd == "earnings":
         resp = agent.handle("earnings", now=now)
         print(resp.markdown)
