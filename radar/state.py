@@ -49,6 +49,10 @@ class State:
         # geopolitics store (pokud engine používá st.geo)
         self.geo: Dict[str, Any] = _safe_read_json(os.path.join(self.state_dir, "geo.json"))
 
+        # ✅ portfolio news dedupe (per-ticker last seen urls)
+        self._news_path = os.path.join(self.state_dir, "portfolio_news.json")
+        self._news = _safe_read_json(self._news_path)
+
     # ---------- names cache ----------
     def get_name(self, ticker: str) -> Optional[str]:
         t = (ticker or "").strip().upper()
@@ -126,3 +130,29 @@ class State:
         _safe_write_json(self._alerts_path, self._alerts if isinstance(self._alerts, dict) else {})
         _safe_write_json(self._dedupe_path, self._dedupe if isinstance(self._dedupe, dict) else {})
         _safe_write_json(os.path.join(self.state_dir, "geo.json"), self.geo if isinstance(self.geo, dict) else {})
+        _safe_write_json(self._news_path, self._news if isinstance(self._news, dict) else {})
+
+    # ---------- portfolio news dedupe ----------
+    def should_send_news(self, ticker: str, url: str, day: str, max_keep: int = 60) -> bool:
+        """Vrací True jen pokud je headline URL pro ticker nová (per den)."""
+        t = (ticker or "").strip().upper()
+        u = (url or "").strip()
+        if not t or not u:
+            return False
+
+        if not isinstance(self._news, dict):
+            self._news = {}
+
+        key = f"{str(day)}:{t}"
+        arr = self._news.get(key)
+        if not isinstance(arr, list):
+            arr = []
+
+        if u in arr:
+            return False
+
+        arr.insert(0, u)
+        if len(arr) > int(max_keep):
+            arr = arr[: int(max_keep)]
+        self._news[key] = arr
+        return True
