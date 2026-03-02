@@ -1,7 +1,3 @@
-# =========================
-# radar/agent.py (FIXED)
-# =========================
-
 from __future__ import annotations
 
 import hashlib
@@ -29,11 +25,7 @@ from radar.engine import (
 from radar.portfolio import load_portfolio, portfolio_snapshot
 from radar.daytrade import DaytradeSettings, daytrade_candidates
 
-try:
-    from reporting.telegram import telegram_send_long
-except Exception:
-    from telegram import telegram_send_long
-
+from reporting.telegram import telegram_send_long
 from reporting.emailer import maybe_send_email_report
 from reporting.telegram import telegram_send_photo
 from reporting.charts import safe_intraday_chart_png
