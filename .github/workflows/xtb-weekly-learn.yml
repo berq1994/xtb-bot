@@ -2,7 +2,7 @@ name: xtb-weekly-learn
 
 on:
   schedule:
-    - cron: "5 7 * * 1"
+    - cron: "15 7 * * 1"
   workflow_dispatch:
 
 concurrency:
@@ -34,7 +34,7 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run learn
+      - name: Run learn (no email)
         run: python run_agent.py learn
         env:
           TIMEZONE: Europe/Prague
@@ -45,7 +45,7 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
 
-          EMAIL_ENABLED: "true"
+          EMAIL_ENABLED: "false"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
