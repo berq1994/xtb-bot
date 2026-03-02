@@ -3,137 +3,126 @@ from __future__ import annotations
 
 import json
 import os
+import time
+from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
 
-class State:
-    """
-    Persist state in .state/:
-
-    - sent markers (future-proof)
-    - alert dedupe (future-proof)
-    - company name cache (future-proof)
-    - geopolitics cache + learning weights
-    - telegram offset for getUpdates polling
-    """
-
-    def __init__(self, state_dir: str = ".state"):
-        self.state_dir = state_dir or ".state"
-        os.makedirs(self.state_dir, exist_ok=True)
-
-        self.sent_file = os.path.join(self.state_dir, "sent.json")
-        self.alerts_file = os.path.join(self.state_dir, "alerts.json")
-        self.names_file = os.path.join(self.state_dir, "names.json")
-        self.geo_file = os.path.join(self.state_dir, "geo.json")
-        self.telegram_file = os.path.join(self.state_dir, "telegram.json")
-
-        self.sent: Dict[str, Any] = self._read_json(self.sent_file, {})
-        self.alerts: Dict[str, Any] = self._read_json(self.alerts_file, {})
-        self.names: Dict[str, str] = self._read_json(self.names_file, {})
-        self.geo: Dict[str, Any] = self._read_json(self.geo_file, {})
-        self.telegram: Dict[str, Any] = self._read_json(self.telegram_file, {})
-
-    # ---------------- IO ----------------
-    def _read_json(self, path: str, default):
-        try:
-            if os.path.exists(path):
-                with open(path, "r", encoding="utf-8") as f:
-                    return json.load(f)
-        except Exception:
-            pass
-        return default
-
-    def _write_json(self, path: str, data) -> None:
-        try:
-            with open(path, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-        except Exception:
-            # keep bot alive even if write fails
-            pass
-
-    def save(self) -> None:
-        self._write_json(self.sent_file, self.sent)
-        self._write_json(self.alerts_file, self.alerts)
-        self._write_json(self.names_file, self.names)
-        self._write_json(self.geo_file, self.geo)
-        self._write_json(self.telegram_file, self.telegram)
-
-    # ---------------- Sent markers (optional) ----------------
-    def already_sent(self, tag: str, day: str) -> bool:
-        return str(self.sent.get(tag, "")) == str(day)
-
-    def mark_sent(self, tag: str, day: str) -> None:
-        self.sent[tag] = str(day)
-
-    # ---------------- Alerts dedupe (optional) ----------------
-    def should_alert(self, ticker: str, key: str, day: str) -> bool:
-        """
-        True = new alert (we haven't sent this ticker+key today)
-        """
-        t = str(ticker).upper()
-        cur = self.alerts.get(t)
-        if isinstance(cur, dict) and cur.get("day") == day and cur.get("key") == key:
-            return False
-        self.alerts[t] = {"day": str(day), "key": str(key)}
-        return True
-
-    def cleanup_alert_state(self, day: str) -> None:
-        """
-        Keep alerts.json small: delete entries not from current day.
-        """
-        to_del = []
-        for t, v in self.alerts.items():
-            if isinstance(v, dict) and v.get("day") != str(day):
-                to_del.append(t)
-        for t in to_del:
-            self.alerts.pop(t, None)
-
-    # ---------------- Company names cache ----------------
-    def get_name(self, resolved_ticker: str) -> Optional[str]:
-        return self.names.get(str(resolved_ticker))
-
-    def set_name(self, resolved_ticker: str, name: str) -> None:
-        rt = str(resolved_ticker)
-        nm = str(name or "").strip()
-        if nm:
-            self.names[rt] = nm
-
-    # ---------------- Geopolitics learning state ----------------
-    def get_geo_weights(self) -> Dict[str, float]:
-        w = self.geo.get("keyword_weights")
-        if isinstance(w, dict):
-            out: Dict[str, float] = {}
-            for k, v in w.items():
-                try:
-                    out[str(k)] = float(v)
-                except Exception:
-                    pass
-            return out
+def _safe_read_json(path: str) -> Dict[str, Any]:
+    try:
+        if not os.path.exists(path):
+            return {}
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f) or {}
+        return data if isinstance(data, dict) else {}
+    except Exception:
         return {}
 
-    def set_geo_weights(self, weights: Dict[str, float]) -> None:
-        self.geo["keyword_weights"] = {str(k): float(v) for k, v in (weights or {}).items()}
 
-    def get_geo_last_day(self) -> Optional[str]:
-        v = self.geo.get("last_day")
-        return str(v) if v else None
+def _safe_write_json(path: str, data: Dict[str, Any]) -> None:
+    try:
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        os.replace(tmp, path)
+    except Exception:
+        pass
 
-    def set_geo_cache(self, day: str, items: Any) -> None:
-        self.geo["last_day"] = str(day)
-        self.geo["items"] = items
 
-    def get_geo_items(self) -> Any:
-        return self.geo.get("items")
+@dataclass
+class State:
+    state_dir: str = ".state"
 
-    # ---------------- Telegram offset ----------------
-    def get_tg_offset(self) -> int:
-        try:
-            return int(self.telegram.get("offset") or 0)
-        except Exception:
-            return 0
+    def __post_init__(self) -> None:
+        os.makedirs(self.state_dir, exist_ok=True)
 
-    def set_tg_offset(self, offset: int) -> None:
-        try:
-            self.telegram["offset"] = int(offset)
-        except Exception:
-            self.telegram["offset"] = 0
+        self._names_path = os.path.join(self.state_dir, "names.json")
+        self._names = _safe_read_json(self._names_path)
+
+        self._alerts_path = os.path.join(self.state_dir, "alerts_sent.json")
+        self._alerts = _safe_read_json(self._alerts_path)
+
+        # ✅ nově: dedupe pro reporty (snapshot/alerts/…)
+        self._dedupe_path = os.path.join(self.state_dir, "agent_dedupe.json")
+        self._dedupe = _safe_read_json(self._dedupe_path)
+
+        # geopolitics store (pokud engine používá st.geo)
+        self.geo: Dict[str, Any] = _safe_read_json(os.path.join(self.state_dir, "geo.json"))
+
+    # ---------- names cache ----------
+    def get_name(self, ticker: str) -> Optional[str]:
+        t = (ticker or "").strip().upper()
+        v = self._names.get(t)
+        return str(v).strip() if isinstance(v, str) and v.strip() else None
+
+    def set_name(self, ticker: str, name: str) -> None:
+        t = (ticker or "").strip().upper()
+        n = (name or "").strip()
+        if not t or not n:
+            return
+        self._names[t] = n
+
+    # ---------- alerts dedupe ----------
+    def cleanup_alert_state(self, day: str) -> None:
+        """
+        Udrží jen dnešní klíče, aby soubor nerostl.
+        """
+        if not isinstance(self._alerts, dict):
+            self._alerts = {}
+        keys = list(self._alerts.keys())
+        for k in keys:
+            if not str(k).startswith(str(day)):
+                self._alerts.pop(k, None)
+
+    def should_alert(self, ticker: str, key: str, day: str) -> bool:
+        """
+        Dedupe alertů na stejný den + ticker + zaokrouhlený pohyb (key).
+        """
+        t = (ticker or "").strip().upper()
+        d = str(day)
+        k = f"{d}:{t}:{str(key)}"
+        if self._alerts.get(k):
+            return False
+        self._alerts[k] = True
+        return True
+
+    # ---------- report dedupe (snapshot/alerts/...) ----------
+    def should_send_report(self, tag: str, content_hash: str, min_interval_sec: int = 0) -> bool:
+        """
+        Vrátí True pouze pokud:
+        - je to poprvé, nebo
+        - hash se změnil, nebo
+        - uplynul min_interval_sec (pokud chceš "pošli znovu i bez změny" po čase)
+        """
+        tag = (tag or "").strip().lower()
+        if not tag or not content_hash:
+            return True
+
+        now = int(time.time())
+        rec = self._dedupe.get(tag)
+        if not isinstance(rec, dict):
+            rec = {}
+
+        last_hash = str(rec.get("hash") or "")
+        last_ts = int(rec.get("ts") or 0)
+
+        # stejné = neposílat (pokud není vynucen interval)
+        if last_hash == content_hash:
+            if min_interval_sec > 0 and (now - last_ts) >= int(min_interval_sec):
+                # po intervalu pošli i bez změny
+                rec["ts"] = now
+                self._dedupe[tag] = rec
+                return True
+            return False
+
+        # změna = poslat
+        rec["hash"] = content_hash
+        rec["ts"] = now
+        self._dedupe[tag] = rec
+        return True
+
+    def save(self) -> None:
+        _safe_write_json(self._names_path, self._names if isinstance(self._names, dict) else {})
+        _safe_write_json(self._alerts_path, self._alerts if isinstance(self._alerts, dict) else {})
+        _safe_write_json(self._dedupe_path, self._dedupe if isinstance(self._dedupe, dict) else {})
+        _safe_write_json(os.path.join(self.state_dir, "geo.json"), self.geo if isinstance(self.geo, dict) else {})
