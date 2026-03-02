@@ -34,7 +34,7 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run earnings
+      - name: Run earnings (email + TG)
         run: python run_agent.py earnings
         env:
           TIMEZONE: Europe/Prague
@@ -45,6 +45,7 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
 
+          # ✅ email ON
           EMAIL_ENABLED: "true"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
