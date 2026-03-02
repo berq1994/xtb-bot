@@ -24,7 +24,6 @@ jobs:
           now = datetime.now(ZoneInfo('Europe/Prague'))
           print('NOW_PRAGUE=', now.strftime('%Y-%m-%d %H:%M:%S %Z'))
 
-          # Povolíme jen 15:00–15:10, aby to byl 1 odpolední brief.
           if not (now.hour == 15 and now.minute <= 10):
               raise SystemExit(0)
           PY
@@ -53,9 +52,6 @@ jobs:
         env:
           TIMEZONE: Europe/Prague
           PORTFOLIO_SNAPSHOT_PATH: portfolio_snapshot/portfolio.yml
-
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
 
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
