@@ -35,6 +35,8 @@ except Exception:
     from telegram import telegram_send_long
 
 from reporting.emailer import maybe_send_email_report
+from reporting.telegram import telegram_send_photo
+from reporting.charts import safe_intraday_chart_png
 
 
 @dataclass
@@ -247,7 +249,25 @@ class RadarAgent:
 
     def _deliver(self, tag: str, text: str, now: datetime) -> None:
         telegram_send_long(self.cfg, text)
-        maybe_send_email_report(self.cfg, {"rendered_text": text}, now=now, tag=tag)
+
+        chart_ticker = None
+        if tag in ("snapshot", "alerts", "news"):
+            chart_ticker = str((self.cfg.universe[0] if self.cfg.universe else "SPY") or "SPY").strip().upper()
+        elif tag.startswith("explain-"):
+            chart_ticker = tag.replace("explain-", "").strip().upper()
+
+        png = None
+        if chart_ticker:
+            png = safe_intraday_chart_png(chart_ticker, interval="5m", orb_minutes=15)
+            if png:
+                telegram_send_photo(self.cfg, caption=f"{tag}: {chart_ticker}", png_bytes=png, filename=f"{chart_ticker}.png")
+
+        maybe_send_email_report(
+            self.cfg,
+            {"rendered_text": text, "png_bytes": png, "filename": f"{(chart_ticker or 'chart').upper()}.png"},
+            now=now,
+            tag=tag,
+        )
 
     # =========================
     # FORMATTERS
