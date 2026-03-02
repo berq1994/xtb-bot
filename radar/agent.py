@@ -1,6 +1,8 @@
 # radar/agent.py
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
@@ -23,17 +25,17 @@ from radar.engine import (
 
 try:
     from reporting.telegram import telegram_send_long, telegram_send_menu, telegram_send_photo  # type: ignore
-except Exception:  # pragma: no cover
+except Exception:
     from telegram import telegram_send_long, telegram_send_menu, telegram_send_photo  # type: ignore
 
 try:
     from reporting.emailer import maybe_send_email_report  # type: ignore
-except Exception:  # pragma: no cover
+except Exception:
     from emailer import maybe_send_email_report  # type: ignore
 
 try:
     from reporting.charts import safe_price_chart_png  # type: ignore
-except Exception:  # pragma: no cover
+except Exception:
     safe_price_chart_png = None  # type: ignore
 
 
@@ -49,6 +51,7 @@ class RadarAgent:
         self.cfg = cfg
         self.st = st or State(cfg.state_dir)
 
+    # ---------------- public API ----------------
     def handle(self, text: str, now: Optional[datetime] = None) -> AgentResponse:
         now = now or datetime.now()
         cmd, args = self._parse(text)
@@ -61,7 +64,7 @@ class RadarAgent:
                 telegram_send_menu(self.cfg)
             except Exception:
                 pass
-            return AgentResponse("Menu", "Menu odeslano do Telegramu (pokud je nastaven token/chat_id).")
+            return AgentResponse("Menu", "Menu odesláno do Telegramu (pokud je nastaven token/chat_id).")
 
         if cmd in ("snapshot", "snap"):
             return self.snapshot(now=now, reason="manual")
@@ -77,52 +80,51 @@ class RadarAgent:
 
         if cmd == "explain":
             if not args:
-                return AgentResponse("Explain", "Pouziti: `explain TICKER`")
+                return AgentResponse("Explain", "Použití: `explain TICKER`")
             return self.explain(ticker=args[0], now=now)
 
+        # když napíšeš jen ticker
         if cmd and cmd.isalpha() and 1 <= len(cmd) <= 10 and not args:
             return self.explain(ticker=cmd, now=now)
 
-        return AgentResponse("Neznamy prikaz", f"Neznamy prikaz: `{text}`\n\nNapis `help`.")
+        return AgentResponse("Neznámý příkaz", f"Neznámý příkaz: `{text}`\n\nNapiš `help`.")
 
+    # ---------------- core actions ----------------
     def snapshot(self, now: datetime, reason: str = "snapshot") -> AgentResponse:
         snap = run_radar_snapshot(cfg=self.cfg, now=now, reason=reason, universe=None, st=self.st)
         md = self._format_snapshot(snap)
         playbook = self._daily_playbook(snap)
         out = md + "\n\n" + playbook
 
-        attachments: List[Dict[str, Any]] = []
-        top = snap.get("top", []) or []
-        for r in top[:3]:
-            t = str(r.get("ticker") or "").strip().upper()
-            rt = map_ticker(self.cfg, t) if t else ""
-            if not rt:
-                continue
-            png = safe_price_chart_png(rt, days=60, title=f"{t} - 60D") if safe_price_chart_png else None
-            if isinstance(png, (bytes, bytearray)):
-                attachments.append({"filename": f"{t}_60d.png", "content_type": "image/png", "data": bytes(png)})
+        # ✅ jen při změně
+        sig = self._hash_snapshot(snap)
+        sent = self._maybe_report(tag="snapshot", text=out, payload={"snapshot": snap}, content_hash=sig)
 
-        payload = {"rendered_text": out, "snapshot": snap, "attachments": attachments}
-        self._report(tag="snapshot", text=out, payload=payload)
-        self._audit("snapshot", {"reason": reason, "meta": snap.get("meta", {}), "top": snap.get("top", [])})
+        self._audit("snapshot", {"reason": reason, "sent": sent, "sig": sig, "meta": snap.get("meta", {})})
         self.st.save()
-        return AgentResponse("Radar snapshot", out, payload=snap)
+        return AgentResponse("Radar snapshot", out, payload={"snapshot": snap, "sent": sent})
 
     def alerts(self, now: datetime) -> AgentResponse:
         alerts = run_alerts_snapshot(cfg=self.cfg, now=now, st=self.st)
         md = self._format_alerts(alerts, now)
-        self._report(tag="alerts", text=md, payload={"rendered_text": md, "alerts": alerts})
-        self._audit("alerts", {"count": len(alerts), "alerts": alerts})
+
+        # ✅ jen při změně
+        sig = self._hash_alerts(alerts)
+        sent = self._maybe_report(tag="alerts", text=md, payload={"alerts": alerts}, content_hash=sig)
+
+        self._audit("alerts", {"count": len(alerts), "sent": sent, "sig": sig})
         self.st.save()
-        return AgentResponse("Alerty", md, payload={"alerts": alerts})
+        return AgentResponse("Alerty", md, payload={"alerts": alerts, "sent": sent})
 
     def earnings(self, now: datetime) -> AgentResponse:
         table = run_weekly_earnings_table(cfg=self.cfg, now=now, st=self.st)
         md = self._format_earnings(table)
+
+        # earnings typicky chceš poslat vždy (1x týdně), takže dedupe nedělám
         self._report(tag="earnings", text=md, payload={"rendered_text": md, "earnings": table})
-        self._audit("earnings", {"meta": table.get("meta", {}), "count": len(table.get("rows", []))})
+        self._audit("earnings", {"count": len(table.get("rows", []) or [])})
         self.st.save()
-        return AgentResponse("Earnings tyden", md, payload=table)
+        return AgentResponse("Earnings týden", md, payload=table)
 
     def geopolitics(self, now: datetime) -> AgentResponse:
         try:
@@ -132,12 +134,12 @@ class RadarAgent:
 
         dg = geopolitics_digest(cfg=self.cfg, now=now, st=self.st)
         md = self._format_geopolitics(dg, learn_meta)
-        out = md
 
-        self._report(tag="geo", text=out, payload={"rendered_text": out, "digest": dg, "learn": learn_meta})
-        self._audit("geopolitics", {"day": dg.get("meta", {}).get("day"), "items": len(dg.get("items") or []), "learn": learn_meta})
+        # geo klidně může být jen při změně – ale zatím to nechám posílat vždy, pokud to spouštíš ručně/denně
+        self._report(tag="geo", text=md, payload={"rendered_text": md, "digest": dg, "learn": learn_meta})
+        self._audit("geopolitics", {"items": len(dg.get("items") or [])})
         self.st.save()
-        return AgentResponse("Geopolitika", out, payload={"digest": dg, "learn": learn_meta})
+        return AgentResponse("Geopolitika", md, payload={"digest": dg, "learn": learn_meta})
 
     def explain(self, ticker: str, now: datetime) -> AgentResponse:
         raw = (ticker or "").strip().upper()
@@ -145,7 +147,6 @@ class RadarAgent:
 
         reg_label, reg_detail, _ = market_regime(self.cfg)
 
-        last = prev = None
         pct_1d = None
         lc = last_close_prev_close(resolved)
         if lc:
@@ -159,31 +160,102 @@ class RadarAgent:
 
         lines: List[str] = []
         lines.append(f"## {raw} ({resolved})")
-        lines.append(f"- Trzni rezim: **{reg_label}** - {reg_detail}")
-        lines.append(f"- Zmena 1D: {'n/a' if pct_1d is None else f'{pct_1d:+.2f}%'}")
-        lines.append(f"- Objem vs prumer: **{vol_ratio:.2f}x**")
+        lines.append(f"- Tržní režim: **{reg_label}** - {reg_detail}")
+        lines.append(f"- Změna 1D: {'n/a' if pct_1d is None else f'{pct_1d:+.2f}%'}")
+        lines.append(f"- Objem vs průměr: **{vol_ratio:.2f}x**")
         lines.append("")
-        lines.append("### Proc se to hybe")
+        lines.append("### Proč se to hýbe")
         lines.append("- " + str(why))
         if news:
             lines.append("")
-            lines.append("### Top zpravy")
+            lines.append("### Top zprávy")
             for src, title, url in news[: min(6, len(news))]:
                 lines.append(f"- **{src}**: [{title}]({url})")
 
         out = "\n".join(lines)
 
+        # explain posílej vždy (je to na vyžádání)
         self._report(tag="explain", text=out, payload={"rendered_text": out})
         self._audit("explain", {"ticker": raw, "resolved": resolved})
         self.st.save()
         return AgentResponse(f"Explain {raw}", out)
 
+    # ---------------- dedupe helpers ----------------
+    def _hash_snapshot(self, snap: Dict[str, Any]) -> str:
+        """
+        Podpis snapshotu tak, aby:
+        - stejná TOP/WORST struktura = stejné
+        - drobné rozdíly v textu nevadí
+        """
+        meta = snap.get("meta", {}) or {}
+        reg = meta.get("market_regime", {}) or {}
+        top = snap.get("top", []) or []
+        worst = snap.get("worst", []) or []
+
+        def row_sig(r: Dict[str, Any]) -> Dict[str, Any]:
+            return {
+                "t": str(r.get("ticker") or ""),
+                "lvl": str(r.get("level") or ""),
+                "s": round(float(r.get("score", 0.0) or 0.0), 1),
+                "p1d": None if r.get("pct_1d") is None else round(float(r.get("pct_1d") or 0.0), 2),
+            }
+
+        payload = {
+            "reg": {"label": str(reg.get("label") or ""), "score": round(float(reg.get("score", 0.0) or 0.0), 2)},
+            "top": [row_sig(r) for r in top],
+            "worst": [row_sig(r) for r in worst],
+        }
+        s = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+        return hashlib.sha1(s.encode("utf-8")).hexdigest()
+
+    def _hash_alerts(self, alerts: List[Dict[str, Any]]) -> str:
+        payload = [
+            {"t": str(a.get("ticker") or ""), "p": round(float(a.get("pct_from_open", 0.0) or 0.0), 2)}
+            for a in (alerts or [])
+        ]
+        s = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+        return hashlib.sha1(s.encode("utf-8")).hexdigest()
+
+    def _maybe_report(self, tag: str, text: str, payload: Dict[str, Any], content_hash: str) -> bool:
+        """
+        Pošli report jen pokud se změnil.
+        """
+        ok = self.st.should_send_report(tag=tag, content_hash=content_hash, min_interval_sec=0)
+        if not ok:
+            return False
+
+        # případné grafy jen když posíláme
+        attachments: List[Dict[str, Any]] = []
+        if tag == "snapshot" and safe_price_chart_png:
+            try:
+                snap = payload.get("snapshot") or {}
+                top = (snap.get("top") or [])[:3]
+                for r in top:
+                    t = str(r.get("ticker") or "").strip().upper()
+                    if not t:
+                        continue
+                    rt = map_ticker(self.cfg, t)
+                    png = safe_price_chart_png(rt, days=60, title=f"{t} - 60D")
+                    if isinstance(png, (bytes, bytearray)):
+                        attachments.append({"filename": f"{t}_60d.png", "content_type": "image/png", "data": bytes(png)})
+            except Exception:
+                pass
+
+        full_payload = dict(payload)
+        full_payload["rendered_text"] = text
+        if attachments:
+            full_payload["attachments"] = attachments
+
+        self._report(tag=tag, text=text, payload=full_payload)
+        return True
+
+    # ---------------- formatting ----------------
     def _format_snapshot(self, snap: Dict[str, Any]) -> str:
         meta = snap.get("meta", {}) or {}
         regime = meta.get("market_regime", {}) or {}
         lines: List[str] = []
         lines.append(f"## Radar snapshot ({meta.get('timestamp','')})")
-        lines.append(f"- Rezim: **{regime.get('label','?')}** - {regime.get('detail','')}")
+        lines.append(f"- Režim: **{regime.get('label','?')}** - {regime.get('detail','')}")
         lines.append("")
         top = snap.get("top", []) or []
         worst = snap.get("worst", []) or []
@@ -204,27 +276,27 @@ class RadarAgent:
         sc = float(r.get("score", 0.0) or 0.0)
         lvl = r.get("level", "")
         why = r.get("why", "")
-        return f"- **{t}** ({c}) - **{pct_txt}**, score **{sc:.1f}**, level **{lvl}**\n  - proc: {why}"
+        return f"- **{t}** ({c}) – **{pct_txt}**, score **{sc:.1f}**, level **{lvl}**\n  - proč: {why}"
 
     def _format_alerts(self, alerts: List[Dict[str, Any]], now: datetime) -> str:
         lines = [f"## Alerty ({now.strftime('%Y-%m-%d %H:%M')})", ""]
         if not alerts:
-            lines.append("- Nic neprekrocilo prah.")
+            lines.append("- Nic nepřekročilo práh.")
             return "\n".join(lines)
         lines.append(f"Prah: +/-{float(self.cfg.alert_threshold_pct):.1f}%")
         lines.append("")
         for a in alerts:
-            lines.append(f"- **{a.get('ticker','?')}** ({a.get('company','-')}) - **{float(a.get('pct_from_open',0.0)):+.2f}%**")
+            lines.append(f"- **{a.get('ticker','?')}** ({a.get('company','-')}) – **{float(a.get('pct_from_open',0.0)):+.2f}%**")
         return "\n".join(lines)
 
     def _format_earnings(self, table: Dict[str, Any]) -> str:
         meta = table.get("meta", {}) or {}
         rows = table.get("rows", []) or []
-        lines = [f"## Earnings ({meta.get('from','')} -> {meta.get('to','')})", ""]
+        lines = [f"## Earnings ({meta.get('from','')} → {meta.get('to','')})", ""]
         if not rows:
-            lines.append("- Nic z univerza v kalendari.")
+            lines.append("- Nic z univerza v kalendáři.")
             return "\n".join(lines)
-        lines.append("| Datum | Cas | Symbol | Firma | EPS est | Rev est |")
+        lines.append("| Datum | Čas | Symbol | Firma | EPS est | Rev est |")
         lines.append("|---|---|---|---|---:|---:|")
         for r in rows:
             lines.append(f"| {r.get('date','')} | {r.get('time','')} | **{r.get('symbol','')}** | {r.get('company','-')} | {r.get('eps_est','')} | {r.get('rev_est','')} |")
@@ -242,7 +314,7 @@ class RadarAgent:
                 lines.append(f"- Learn: {learn_meta.get('reason','n/a')}")
         lines.append("")
         if not items:
-            lines.append("- Nic vyrazneho v geo RSS.")
+            lines.append("- Nic výrazného v geo RSS.")
             return "\n".join(lines)
         for it in items[:10]:
             lines.append(f"- **{float(it.get('score',0.0)):.2f}** {it.get('src','')}: [{it.get('title','')}]({it.get('url','')})")
@@ -251,28 +323,33 @@ class RadarAgent:
     def _daily_playbook(self, snap: Dict[str, Any]) -> str:
         meta = snap.get("meta", {}) or {}
         reg = (meta.get("market_regime") or {})
-        label = str(reg.get("label", "NEUTRALNI"))
+        label = str(reg.get("label", "NEUTRÁLNÍ"))
+
         lines: List[str] = []
-        lines.append("## Dnesni playbook")
+        lines.append("## Dnešní playbook")
         if label == "RISK-OFF":
-            lines.append("- RISK-OFF: mensi sizing, opatrnost, potvrzeni na close.")
+            lines.append("- RISK-OFF: menší sizing, opatrnost, potvrzení na close.")
         elif label == "RISK-ON":
-            lines.append("- RISK-ON: momentum casteji funguje, pozor na fake breaky.")
+            lines.append("- RISK-ON: momentum častěji funguje, pozor na fake breaky.")
         else:
-            lines.append("- NEUTRAL: cekej na ciste setupy.")
+            lines.append("- NEUTRÁL: čekej na čisté setupy.")
+
         lines.append("")
-        lines.append("_Pozn.: Informace jsou edukacni, ne investicni doporuceni._")
+        lines.append("_Pozn.: Informace jsou edukativní, ne investiční doporučení._")
         return "\n".join(lines)
 
+    # ---------------- reporting ----------------
     def _report(self, tag: str, text: str, payload: Optional[Dict[str, Any]] = None) -> None:
         payload = payload or {"rendered_text": text}
         payload.setdefault("rendered_text", text)
 
+        # Telegram
         try:
             telegram_send_long(self.cfg, text)
         except Exception:
             pass
 
+        # obrázky do TG
         atts = payload.get("attachments")
         if isinstance(atts, list):
             for a in atts[:6]:
@@ -284,13 +361,14 @@ class RadarAgent:
                 except Exception:
                     continue
 
+        # Email (řízení přes cfg.email_enabled = workflow)
         try:
             maybe_send_email_report(self.cfg, payload, datetime.now(), tag=tag)
         except Exception:
             pass
 
     def _audit(self, event: str, data: Dict[str, Any]) -> None:
-        import os, json
+        import os
         os.makedirs(self.cfg.state_dir, exist_ok=True)
         path = os.path.join(self.cfg.state_dir, "agent_log.jsonl")
         rec = {"ts": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "event": event, "data": data}
@@ -300,6 +378,7 @@ class RadarAgent:
         except Exception:
             pass
 
+    # ---------------- parsing/help ----------------
     def _parse(self, text: str) -> Tuple[str, List[str]]:
         t = (text or "").strip()
         if not t:
@@ -312,13 +391,13 @@ class RadarAgent:
 
     def _help(self) -> AgentResponse:
         help_lines = [
-            "## Radar Agent - prikazy",
+            "## Radar Agent – příkazy",
             "",
-            "- /menu ... tlacitka do Telegramu",
-            "- snapshot ... TOP/WORST + playbook",
-            "- alerts ... intradenni alerty",
-            "- earnings ... earnings tabulka",
-            "- geo ... geopolitika",
-            "- explain TICKER ... detail tickeru",
+            "- /menu … tlačítka do Telegramu",
+            "- snapshot … TOP/WORST + playbook (jen při změně)",
+            "- alerts … intradenní alerty (jen při změně)",
+            "- earnings … earnings tabulka (týdně)",
+            "- geo … geopolitika",
+            "- explain TICKER … detail tickeru",
         ]
         return AgentResponse("Help", "\n".join(help_lines))
