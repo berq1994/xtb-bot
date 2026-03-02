@@ -1,0 +1,62 @@
+portfolio:
+- ticker: NVDA
+  name: NVIDIA
+  qty: 6.0
+  entry: 186.51
+  currency: USD
+  broker: Raiffeisen
+- ticker: TSM
+  name: Taiwan Semiconductor
+  qty: 4.0
+  entry: 328.75
+  currency: USD
+  broker: Raiffeisen
+- ticker: MSFT
+  name: Microsoft
+  qty: 3.0
+  entry: 412.6
+  currency: EUR
+  broker: Raiffeisen
+- ticker: CVX
+  name: Chevron
+  qty: 5.0
+  entry: 145.68
+  currency: EUR
+  broker: Raiffeisen
+- ticker: CSG
+  name: Czechoslovak Group
+  qty: 33.0
+  entry: 802.0
+  currency: CZK
+  broker: Raiffeisen
+- ticker: SGLD
+  name: SGLD ETF (zlato)
+  qty: 11.0
+  entry: 74.61
+  currency: EUR
+  broker: Raiffeisen
+- ticker: NVO
+  name: Novo Nordisk
+  qty: 5.9678
+  entry: null
+  currency: USD
+  broker: XTB
+  note: V původním výpisu je entry 0* (nutno doplnit).
+- ticker: NBIS
+  name: Nebius
+  qty: 3.0
+  entry: 82.24
+  currency: USD
+  broker: XTB
+- ticker: IREN
+  name: IREN Limited
+  qty: 2.0
+  entry: 40.3
+  currency: USD
+  broker: XTB
+- ticker: LEU
+  name: Centrus Energy
+  qty: 0.2546
+  entry: 235.55
+  currency: USD
+  broker: XTB
