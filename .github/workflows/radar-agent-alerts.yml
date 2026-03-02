@@ -15,6 +15,23 @@ jobs:
     timeout-minutes: 10
 
     steps:
+      - name: Check time window (Europe/Prague 15-21)
+        id: timecheck
+        run: |
+          python - << 'PY'
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+
+          now = datetime.now(ZoneInfo("Europe/Prague"))
+          h = now.hour
+          allowed = (h >= 15 and h <= 21)
+          print("NOW_PRAGUE=", now.strftime("%Y-%m-%d %H:%M:%S %Z"))
+          if not allowed:
+              print("Outside allowed window. Exiting.")
+              raise SystemExit(0)
+          print("Inside allowed window. Continuing.")
+          PY
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -34,7 +51,7 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run alerts
+      - name: Run alerts (TG only, dedupe in agent)
         run: python run_agent.py alerts
         env:
           TIMEZONE: Europe/Prague
@@ -45,7 +62,7 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
 
-          EMAIL_ENABLED: "true"
+          EMAIL_ENABLED: "false"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
