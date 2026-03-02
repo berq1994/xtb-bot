@@ -4,6 +4,8 @@ state_dir: .state
 # --- Data ---
 fmp_api_key: ""
 news_per_ticker: 2
+additional_news_rss:
+  - https://seekingalpha.com/feed.xml
 
 benchmarks:
   spy: SPY

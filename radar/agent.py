@@ -187,7 +187,7 @@ class RadarAgent:
         lines = ["## News", ""]
         for t in tickers:
             rt = map_ticker(self.cfg, t)
-            items = news_combined(rt, n=int(self.cfg.news_per_ticker or 2))
+            items = news_combined(self.cfg, rt, n=int(self.cfg.news_per_ticker or 2))
             if not items:
                 lines.append(f"- **{t}**: bez headline")
                 continue
@@ -230,7 +230,7 @@ class RadarAgent:
             return AgentResponse("Explain", "Chybí ticker.")
         rt = map_ticker(self.cfg, t)
         lc = last_close_prev_close(rt)
-        news = news_combined(rt, n=int(self.cfg.news_per_ticker or 2))
+        news = news_combined(self.cfg, rt, n=int(self.cfg.news_per_ticker or 2))
         why = why_from_headlines(news)
         lines = [f"## Explain {t}", ""]
         if lc:

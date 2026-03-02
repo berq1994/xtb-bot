@@ -38,6 +38,7 @@ Primárně přes `config.yml` + env proměnné.
 - `EMAIL_RECEIVER` — cílový email.
 - `GMAILPASSWORD` — Gmail app password (ne běžné heslo).
 - `FMPAPIKEY` — API key pro earnings endpoint (FMP).
+- `additional_news_rss` v `config.yml` — doplňkové RSS feedy (default obsahuje SeekingAlpha).
 
 ## GitHub Actions nasazení (Telegram + Email)
 

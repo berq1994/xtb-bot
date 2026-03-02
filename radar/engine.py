@@ -169,20 +169,42 @@ def _rss_entries(url: str, limit: int = 30) -> List[Dict[str, Any]]:
         return []
 
 
-def news_combined(resolved_ticker: str, n: int = 2) -> List[Tuple[str, str, str]]:
+def news_combined(cfg: RadarConfig, resolved_ticker: str, n: int = 2) -> List[Tuple[str, str, str]]:
     items: List[Tuple[str, str, str]] = []
+    seen = set()
+
+    def _add(src: str, title: str, link: str) -> None:
+        key = (title.strip().lower(), link.strip())
+        if not title or not link or key in seen:
+            return
+        seen.add(key)
+        items.append((src.strip() or "News", title.strip(), link.strip()))
+
+    # 1) Yahoo ticker RSS (nejrelevantnější)
     try:
         rss = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={resolved_ticker}&region=US&lang=en-US"
-        for e in _rss_entries(rss, limit=10):
-            title = (e.get("title") or "").strip()
-            link = (e.get("link") or "").strip()
-            if title and link:
-                src = (e.get("publisher") or "Yahoo").strip()
-                items.append((src, title, link))
+        for e in _rss_entries(rss, limit=15):
+            _add((e.get("publisher") or "Yahoo"), (e.get("title") or ""), (e.get("link") or ""))
             if len(items) >= n:
-                break
+                return items[:n]
     except Exception:
         pass
+
+    # 2) Additional RSS feeds (např. SeekingAlpha) s filtrem na ticker v title/summary
+    ticker = (resolved_ticker or "").strip().upper()
+    feeds = getattr(cfg, "additional_news_rss", None) or []
+    for url in feeds:
+        for e in _rss_entries(str(url), limit=30):
+            title = (e.get("title") or "").strip()
+            link = (e.get("link") or "").strip()
+            blob = f"{title} {(e.get('summary') or '')}".upper()
+            if ticker and ticker not in blob and f"${ticker}" not in blob:
+                continue
+            src = (e.get("publisher") or e.get("source") or "RSS").strip()
+            _add(src, title, link)
+            if len(items) >= n:
+                return items[:n]
+
     return items[:n]
 
 
@@ -370,7 +392,7 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str, universe: O
             p1d = None
 
         volr = volume_ratio_1d(rt)
-        news = news_combined(rt, int(cfg.news_per_ticker or 2))
+        news = news_combined(cfg, rt, int(cfg.news_per_ticker or 2))
         why = why_from_headlines(news)
 
         feats = compute_features(rt)
