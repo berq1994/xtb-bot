@@ -3,23 +3,17 @@ name: xtb-backfill
 on:
   workflow_dispatch:
     inputs:
-      start:
-        description: "BACKFILL_START (YYYY-MM-DD)"
-        required: true
-        default: "2025-01-01"
-      end:
-        description: "BACKFILL_END (YYYY-MM-DD, optional)"
+      backfill_start:
+        description: "YYYY-MM-DD"
         required: false
-        default: ""
-
-concurrency:
-  group: xtb-radar
-  cancel-in-progress: true
+      backfill_end:
+        description: "YYYY-MM-DD"
+        required: false
 
 jobs:
   backfill:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
@@ -45,16 +39,5 @@ jobs:
         run: python run_agent.py backfill
         env:
           TIMEZONE: Europe/Prague
-          BACKFILL_START: ${{ github.event.inputs.start }}
-          BACKFILL_END: ${{ github.event.inputs.end }}
-
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
-          FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
-
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
-
-          EMAIL_ENABLED: "false"
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+          BACKFILL_START: ${{ inputs.backfill_start }}
+          BACKFILL_END: ${{ inputs.backfill_end }}
