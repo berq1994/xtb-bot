@@ -88,6 +88,9 @@ class RadarAgent:
             ticker = raw.split(" ", 1)[1].strip()
             return self.explain(ticker, now)
 
+        if cmd == "explain":
+            return AgentResponse("Explain", "Chybí ticker. Použití: `explain NVDA`")
+
         return AgentResponse("Unknown", "Neznámý příkaz.")
 
     # =========================

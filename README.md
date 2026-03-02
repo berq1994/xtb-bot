@@ -25,6 +25,15 @@ python run_agent.py snapshot
 python run_agent.py explain NVDA
 ```
 
+### Windows PowerShell (bez aktivace venv)
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe run_agent.py menu
+```
+
 ## Konfigurace
 
 Primárně přes `config.yml` + env proměnné.
@@ -84,6 +93,7 @@ Pak zkontroluj logy běhů, že doběhly bez chyb a že chodí zprávy do Telegr
 ## Troubleshooting
 
 - Když vidíš `n/a` hodnoty, typicky je problém s dostupností datových providerů (`yfinance`, síť/proxy).
+- Python 3.13: `requirements.txt` má kompatibilní piny pro `pandas/numpy`; instaluj vždy přes `.venv\Scripts\python.exe -m pip ...` na Windows.
 - Když nechodí Telegram:
   - zkontroluj `TELEGRAMTOKEN` a `CHATID`,
   - zkus ručně `python run_agent.py snapshot` se stejnými env proměnnými.

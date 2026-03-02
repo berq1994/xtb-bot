@@ -16,6 +16,15 @@ def _mark_rate_limited(msg: str) -> None:
         _YF_RATE_LIMITED = True
 
 
+def reset_yf_rate_limit_state() -> None:
+    global _YF_RATE_LIMITED
+    _YF_RATE_LIMITED = False
+
+
+def is_yf_rate_limited() -> bool:
+    return bool(_YF_RATE_LIMITED)
+
+
 def yf_history(ticker: str, period: str, interval: str) -> Optional[pd.DataFrame]:
     global _YF_RATE_LIMITED
     if _YF_RATE_LIMITED:
