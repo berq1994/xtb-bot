@@ -4,7 +4,8 @@ import os
 from typing import Any, Dict, List, Optional
 
 import yaml
-import yfinance as yf
+
+from radar.yf_utils import yf_history
 
 from radar.config import RadarConfig
 
@@ -51,7 +52,7 @@ def load_portfolio(cfg: RadarConfig) -> List[Dict[str, Any]]:
 
 def _last_and_prev(ticker: str) -> Optional[tuple[float, float]]:
     try:
-        h = yf.Ticker(ticker).history(period="5d", interval="1d")
+        h = yf_history(ticker, period="5d", interval="1d")
         if h is None or len(h) < 2:
             return None
         last = float(h["Close"].iloc[-1])

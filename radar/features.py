@@ -2,13 +2,14 @@ from __future__ import annotations
 
 from typing import Dict, Any
 
-import yfinance as yf
+
+from radar.yf_utils import yf_history
 
 
 def compute_features(ticker: str) -> Dict[str, Any]:
     # lightweight placeholder: můžeš rozšířit
     try:
-        h = yf.Ticker(ticker).history(period="3mo", interval="1d")
+        h = yf_history(ticker, period="3mo", interval="1d")
         if h is None or len(h) < 20:
             return {"ok": False}
         close = h["Close"]

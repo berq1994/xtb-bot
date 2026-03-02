@@ -6,7 +6,8 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 import feedparser
-import yfinance as yf
+
+from radar.yf_utils import yf_history
 
 from radar.config import RadarConfig
 from radar.universe import resolved_universe
@@ -51,7 +52,7 @@ def market_regime(cfg: RadarConfig) -> Tuple[str, str, float]:
     score = 5.0
 
     try:
-        spy = yf.Ticker(bench).history(period="3mo", interval="1d")
+        spy = yf_history(bench, period="3mo", interval="1d")
         if spy is not None and len(spy) >= 30:
             close = spy["Close"]
             ma20 = close.rolling(20).mean().iloc[-1]
@@ -66,7 +67,7 @@ def market_regime(cfg: RadarConfig) -> Tuple[str, str, float]:
         detail.append("SPY data n/a")
 
     try:
-        vix = yf.Ticker(vix_t).history(period="1mo", interval="1d")
+        vix = yf_history(vix_t, period="1mo", interval="1d")
         if vix is not None and len(vix) >= 10:
             last = float(vix["Close"].iloc[-1])
             if last >= 22:
@@ -90,7 +91,7 @@ def market_regime(cfg: RadarConfig) -> Tuple[str, str, float]:
 
 def last_close_prev_close(ticker: str) -> Optional[Tuple[float, float]]:
     try:
-        h = yf.Ticker(ticker).history(period="5d", interval="1d")
+        h = yf_history(ticker, period="5d", interval="1d")
         if h is None or len(h) < 2:
             return None
         last = float(h["Close"].iloc[-1])
@@ -102,7 +103,7 @@ def last_close_prev_close(ticker: str) -> Optional[Tuple[float, float]]:
 
 def intraday_open_last(ticker: str) -> Optional[Tuple[float, float]]:
     try:
-        h = yf.Ticker(ticker).history(period="1d", interval="5m")
+        h = yf_history(ticker, period="1d", interval="5m")
         if h is None or len(h) < 3:
             return None
         o = float(h["Open"].iloc[0])
@@ -114,7 +115,7 @@ def intraday_open_last(ticker: str) -> Optional[Tuple[float, float]]:
 
 def volume_ratio_1d(ticker: str) -> float:
     try:
-        h = yf.Ticker(ticker).history(period="1mo", interval="1d")
+        h = yf_history(ticker, period="1mo", interval="1d")
         if h is None or len(h) < 10:
             return 1.0
         vol = h["Volume"]
@@ -136,12 +137,8 @@ def resolve_company_name(resolved_ticker: str, st=None) -> str:
         except Exception:
             pass
 
+    # Avoid quoteSummary calls here (often causes Yahoo 429 throttling).
     name = resolved_ticker
-    try:
-        info = yf.Ticker(resolved_ticker).info or {}
-        name = (info.get("shortName") or info.get("longName") or resolved_ticker).strip()
-    except Exception:
-        name = resolved_ticker
 
     if st is not None:
         try:
