@@ -1,8 +1,8 @@
-name: radar-agent-snapshot
+name: radar-agent-alerts
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "5-59/10 * * * *"
   workflow_dispatch:
 
 concurrency:
@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  snapshot:
+  alerts:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -34,12 +34,11 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run snapshot (TG only)
-        run: python run_agent.py snapshot
+      - name: Run alerts (TG only)
+        run: python run_agent.py alerts
         env:
           TIMEZONE: Europe/Prague
 
-          # ✅ tvoje secrets
           FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
           FMP_API_KEY: ${{ secrets.FMPAPIKEY }}
 
