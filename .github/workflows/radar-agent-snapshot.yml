@@ -34,7 +34,7 @@ jobs:
           path: .state
           key: xtb-state
 
-      - name: Run snapshot
+      - name: Run snapshot (TG only)
         run: python run_agent.py snapshot
         env:
           TIMEZONE: Europe/Prague
@@ -46,7 +46,8 @@ jobs:
           TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
           CHATID: ${{ secrets.CHATID }}
 
-          EMAIL_ENABLED: "true"
+          # ✅ email OFF
+          EMAIL_ENABLED: "false"
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
