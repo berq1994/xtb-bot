@@ -14,7 +14,6 @@ class RadarConfig:
 
     fmp_api_key: str = ""
     news_per_ticker: int = 2
-    additional_news_rss: List[str] = field(default_factory=lambda: ["https://seekingalpha.com/feed.xml"])
 
     benchmarks: Dict[str, str] = field(default_factory=lambda: {"spy": "SPY", "vix": "^VIX"})
     universe: List[str] = field(default_factory=list)
@@ -55,7 +54,6 @@ def load_config(path: str = "config.yml") -> RadarConfig:
 
     cfg.fmp_api_key = str(os.getenv("FMPAPIKEY") or os.getenv("FMP_API_KEY") or data.get("fmp_api_key") or cfg.fmp_api_key)
     cfg.news_per_ticker = int(data.get("news_per_ticker") or cfg.news_per_ticker)
-    cfg.additional_news_rss = data.get("additional_news_rss") or cfg.additional_news_rss
 
     cfg.benchmarks = data.get("benchmarks") or cfg.benchmarks
     cfg.universe = data.get("universe") or cfg.universe

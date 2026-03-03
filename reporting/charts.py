@@ -5,12 +5,11 @@ from typing import Optional
 
 import matplotlib.pyplot as plt
 import pandas as pd
-
-from radar.yf_utils import yf_history
+import yfinance as yf
 
 
 def intraday_chart_png(ticker: str, interval: str = "5m", orb_minutes: int = 15) -> Optional[bytes]:
-    df = yf_history(ticker, period="1d", interval=interval)
+    df = yf.Ticker(ticker).history(period="1d", interval=interval)
     if df is None or len(df) < 10:
         return None
 

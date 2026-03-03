@@ -4,8 +4,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
 import pandas as pd
-
-from radar.yf_utils import yf_history
+import yfinance as yf
 
 
 @dataclass
@@ -17,7 +16,7 @@ class DaytradeSettings:
 
 def intraday_bars(ticker: str, interval: str = "5m") -> Optional[pd.DataFrame]:
     try:
-        df = yf_history(ticker, period="1d", interval=interval)
+        df = yf.Ticker(ticker).history(period="1d", interval=interval)
         if df is None or len(df) < 10:
             return None
         return df

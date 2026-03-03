@@ -1,3 +1,7 @@
+# =========================
+# radar/agent.py (FIXED)
+# =========================
+
 from __future__ import annotations
 
 import hashlib
@@ -25,10 +29,10 @@ from radar.engine import (
 from radar.portfolio import load_portfolio, portfolio_snapshot
 from radar.daytrade import DaytradeSettings, daytrade_candidates
 
-from reporting.telegram import telegram_send_long
-from reporting.emailer import maybe_send_email_report
-from reporting.telegram import telegram_send_photo
-from reporting.charts import safe_intraday_chart_png
+try:
+    from reporting.telegram import telegram_send_long
+except Exception:
+    from telegram import telegram_send_long
 
 
 @dataclass
@@ -49,11 +53,7 @@ class RadarAgent:
 
     def handle(self, text: str, now: Optional[datetime] = None) -> AgentResponse:
         now = now or datetime.now()
-        raw = (text or "").strip()
-        cmd = raw.lower()
-
-        if cmd in ("menu", "help"):
-            return self.menu(now)
+        cmd = (text or "").strip().lower()
 
         if cmd == "brief":
             return self.afternoon_brief(now)
@@ -66,22 +66,6 @@ class RadarAgent:
 
         if cmd == "portfolio":
             return self.portfolio(now)
-
-        if cmd == "news":
-            return self.news(now)
-
-        if cmd == "earnings":
-            return self.earnings(now)
-
-        if cmd in ("geo", "geopolitics"):
-            return self.geo(now)
-
-        if cmd.startswith("explain "):
-            ticker = raw.split(" ", 1)[1].strip()
-            return self.explain(ticker, now)
-
-        if cmd == "explain":
-            return AgentResponse("Explain", "Chybí ticker. Použití: `explain NVDA`")
 
         return AgentResponse("Unknown", "Neznámý příkaz.")
 
@@ -97,7 +81,7 @@ class RadarAgent:
         text = self._format_snapshot(snap)
         text += "\n\n" + self._format_portfolio(port)
 
-        self._deliver("snapshot", text, now)
+        telegram_send_long(self.cfg, text)
         return AgentResponse("Snapshot", text)
 
     # =========================
@@ -117,7 +101,7 @@ class RadarAgent:
                 )
 
         text = "\n".join(lines)
-        self._deliver("alerts", text, now)
+        telegram_send_long(self.cfg, text)
         return AgentResponse("Alerts", text)
 
     # =========================
@@ -129,7 +113,7 @@ class RadarAgent:
         port = portfolio_snapshot(self.cfg, port_positions)
 
         text = self._format_portfolio(port)
-        self._deliver("portfolio", text, now)
+        telegram_send_long(self.cfg, text)
         return AgentResponse("Portfolio", text)
 
     # =========================
@@ -155,114 +139,9 @@ class RadarAgent:
         lines.append(self._intraday_guidance(label))
 
         text = "\n".join(lines)
-        self._deliver("brief", text, now)
-
-        return AgentResponse("Brief", text)
-
-    def menu(self, now: datetime) -> AgentResponse:
-        text = "\n".join(
-            [
-                "## Radar menu",
-                "",
-                "- `snapshot` — trh + portfolio",
-                "- `alerts` — intraday alerty",
-                "- `portfolio` — přehled portfolia",
-                "- `brief` — 15:00 shrnutí",
-                "- `news` — headline přehled pro universe",
-                "- `earnings` — earnings na 7 dní",
-                "- `geo` — geopolitický digest",
-                "- `explain TICKER` — rychlé vysvětlení tickeru",
-            ]
-        )
-        self._deliver("menu", text, now)
-        return AgentResponse("Menu", text)
-
-    def news(self, now: datetime) -> AgentResponse:
-        tickers = self.cfg.universe[: int(self.cfg.top_n or 5)]
-        lines = ["## News", ""]
-        for t in tickers:
-            rt = map_ticker(self.cfg, t)
-            items = news_combined(self.cfg, rt, n=int(self.cfg.news_per_ticker or 2))
-            if not items:
-                lines.append(f"- **{t}**: bez headline")
-                continue
-            lines.append(f"- **{t}**")
-            for src, title, link in items:
-                lines.append(f"  - [{src}] {title} — {link}")
-        text = "\n".join(lines)
-        self._deliver("news", text, now)
-        return AgentResponse("News", text)
-
-    def earnings(self, now: datetime) -> AgentResponse:
-        data = run_weekly_earnings_table(self.cfg, now, st=self.st)
-        rows = data.get("rows", [])
-        lines = ["## Earnings (7 dní)", ""]
-        if not rows:
-            lines.append("Nic z watchlistu v earnings kalendáři.")
-        else:
-            for r in rows[:20]:
-                lines.append(f"- **{r.get('symbol','')}** {r.get('date','')} {r.get('time','')} | EPS est: {r.get('eps_est','n/a')}")
-        text = "\n".join(lines)
-        self._deliver("earnings", text, now)
-        return AgentResponse("Earnings", text)
-
-    def geo(self, now: datetime) -> AgentResponse:
-        dig = geopolitics_digest(self.cfg, now, st=self.st)
-        items = dig.get("items", [])
-        lines = ["## Geopolitics", ""]
-        if not items:
-            lines.append("Bez relevantních geopolitických headline.")
-        else:
-            for i in items[:10]:
-                lines.append(f"- **{i.get('score',0):.2f}** {i.get('title','')} ({i.get('src','')})")
-        text = "\n".join(lines)
-        self._deliver("geo", text, now)
-        return AgentResponse("Geo", text)
-
-    def explain(self, ticker: str, now: datetime) -> AgentResponse:
-        t = (ticker or "").strip().upper()
-        if not t:
-            return AgentResponse("Explain", "Chybí ticker.")
-        rt = map_ticker(self.cfg, t)
-        lc = last_close_prev_close(rt)
-        news = news_combined(self.cfg, rt, n=int(self.cfg.news_per_ticker or 2))
-        why = why_from_headlines(news)
-        lines = [f"## Explain {t}", ""]
-        if lc:
-            last, prev = lc
-            ch = ((last - prev) / prev) * 100.0 if prev else 0.0
-            lines.append(f"- Last close: **{last:.2f}**")
-            lines.append(f"- 1D změna: **{ch:+.2f}%**")
-        else:
-            lines.append("- Last close: n/a")
-        lines.append(f"- Proč: {why}")
-        for src, title, link in news:
-            lines.append(f"- [{src}] {title} — {link}")
-        text = "\n".join(lines)
-        self._deliver(f"explain-{t.lower()}", text, now)
-        return AgentResponse("Explain", text)
-
-    def _deliver(self, tag: str, text: str, now: datetime) -> None:
         telegram_send_long(self.cfg, text)
 
-        chart_ticker = None
-        if tag in ("snapshot", "alerts", "news"):
-            chart_ticker = str((self.cfg.universe[0] if self.cfg.universe else "SPY") or "SPY").strip().upper()
-        elif tag.startswith("explain-"):
-            chart_ticker = tag.replace("explain-", "").strip().upper()
-
-        png = None
-        if chart_ticker:
-            png = safe_intraday_chart_png(chart_ticker, interval="5m", orb_minutes=15)
-            if png:
-                telegram_send_photo(self.cfg, caption=f"{tag}: {chart_ticker}", png_bytes=png, filename=f"{chart_ticker}.png")
-
-        maybe_send_email_report(
-            self.cfg,
-            {"rendered_text": text, "png_bytes": png, "filename": f"{(chart_ticker or 'chart').upper()}.png"},
-            now=now,
-            tag=tag,
-        )
+        return AgentResponse("Brief", text)
 
     # =========================
     # FORMATTERS

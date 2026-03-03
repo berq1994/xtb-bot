@@ -6,8 +6,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import requests
 import feedparser
-
-from radar.yf_utils import yf_history
+import yfinance as yf
 
 from radar.config import RadarConfig
 from radar.universe import resolved_universe
@@ -52,7 +51,7 @@ def market_regime(cfg: RadarConfig) -> Tuple[str, str, float]:
     score = 5.0
 
     try:
-        spy = yf_history(bench, period="3mo", interval="1d")
+        spy = yf.Ticker(bench).history(period="3mo", interval="1d")
         if spy is not None and len(spy) >= 30:
             close = spy["Close"]
             ma20 = close.rolling(20).mean().iloc[-1]
@@ -67,7 +66,7 @@ def market_regime(cfg: RadarConfig) -> Tuple[str, str, float]:
         detail.append("SPY data n/a")
 
     try:
-        vix = yf_history(vix_t, period="1mo", interval="1d")
+        vix = yf.Ticker(vix_t).history(period="1mo", interval="1d")
         if vix is not None and len(vix) >= 10:
             last = float(vix["Close"].iloc[-1])
             if last >= 22:
@@ -91,7 +90,7 @@ def market_regime(cfg: RadarConfig) -> Tuple[str, str, float]:
 
 def last_close_prev_close(ticker: str) -> Optional[Tuple[float, float]]:
     try:
-        h = yf_history(ticker, period="5d", interval="1d")
+        h = yf.Ticker(ticker).history(period="5d", interval="1d")
         if h is None or len(h) < 2:
             return None
         last = float(h["Close"].iloc[-1])
@@ -103,7 +102,7 @@ def last_close_prev_close(ticker: str) -> Optional[Tuple[float, float]]:
 
 def intraday_open_last(ticker: str) -> Optional[Tuple[float, float]]:
     try:
-        h = yf_history(ticker, period="1d", interval="5m")
+        h = yf.Ticker(ticker).history(period="1d", interval="5m")
         if h is None or len(h) < 3:
             return None
         o = float(h["Open"].iloc[0])
@@ -115,7 +114,7 @@ def intraday_open_last(ticker: str) -> Optional[Tuple[float, float]]:
 
 def volume_ratio_1d(ticker: str) -> float:
     try:
-        h = yf_history(ticker, period="1mo", interval="1d")
+        h = yf.Ticker(ticker).history(period="1mo", interval="1d")
         if h is None or len(h) < 10:
             return 1.0
         vol = h["Volume"]
@@ -137,8 +136,12 @@ def resolve_company_name(resolved_ticker: str, st=None) -> str:
         except Exception:
             pass
 
-    # Avoid quoteSummary calls here (often causes Yahoo 429 throttling).
     name = resolved_ticker
+    try:
+        info = yf.Ticker(resolved_ticker).info or {}
+        name = (info.get("shortName") or info.get("longName") or resolved_ticker).strip()
+    except Exception:
+        name = resolved_ticker
 
     if st is not None:
         try:
@@ -169,42 +172,20 @@ def _rss_entries(url: str, limit: int = 30) -> List[Dict[str, Any]]:
         return []
 
 
-def news_combined(cfg: RadarConfig, resolved_ticker: str, n: int = 2) -> List[Tuple[str, str, str]]:
+def news_combined(resolved_ticker: str, n: int = 2) -> List[Tuple[str, str, str]]:
     items: List[Tuple[str, str, str]] = []
-    seen = set()
-
-    def _add(src: str, title: str, link: str) -> None:
-        key = (title.strip().lower(), link.strip())
-        if not title or not link or key in seen:
-            return
-        seen.add(key)
-        items.append((src.strip() or "News", title.strip(), link.strip()))
-
-    # 1) Yahoo ticker RSS (nejrelevantnější)
     try:
         rss = f"https://feeds.finance.yahoo.com/rss/2.0/headline?s={resolved_ticker}&region=US&lang=en-US"
-        for e in _rss_entries(rss, limit=15):
-            _add((e.get("publisher") or "Yahoo"), (e.get("title") or ""), (e.get("link") or ""))
-            if len(items) >= n:
-                return items[:n]
-    except Exception:
-        pass
-
-    # 2) Additional RSS feeds (např. SeekingAlpha) s filtrem na ticker v title/summary
-    ticker = (resolved_ticker or "").strip().upper()
-    feeds = getattr(cfg, "additional_news_rss", None) or []
-    for url in feeds:
-        for e in _rss_entries(str(url), limit=30):
+        for e in _rss_entries(rss, limit=10):
             title = (e.get("title") or "").strip()
             link = (e.get("link") or "").strip()
-            blob = f"{title} {(e.get('summary') or '')}".upper()
-            if ticker and ticker not in blob and f"${ticker}" not in blob:
-                continue
-            src = (e.get("publisher") or e.get("source") or "RSS").strip()
-            _add(src, title, link)
+            if title and link:
+                src = (e.get("publisher") or "Yahoo").strip()
+                items.append((src, title, link))
             if len(items) >= n:
-                return items[:n]
-
+                break
+    except Exception:
+        pass
     return items[:n]
 
 
@@ -392,7 +373,7 @@ def run_radar_snapshot(cfg: RadarConfig, now: datetime, reason: str, universe: O
             p1d = None
 
         volr = volume_ratio_1d(rt)
-        news = news_combined(cfg, rt, int(cfg.news_per_ticker or 2))
+        news = news_combined(rt, int(cfg.news_per_ticker or 2))
         why = why_from_headlines(news)
 
         feats = compute_features(rt)
