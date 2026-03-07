@@ -60,6 +60,10 @@ def run_backtest_for_symbol(symbol: str, capital: float, risk_per_trade: float, 
     df["MA20"] = close.rolling(20).mean()
     df["Signal"] = (close > df["MA20"]).astype(int)
 
+    signal = _series_from_col(df, "Signal")
+    atr_series = _series_from_col(df, "ATR")
+    close_series = _series_from_col(df, "Close")
+
     equity = capital
     equity_points = []
     trades = []
@@ -71,24 +75,24 @@ def run_backtest_for_symbol(symbol: str, capital: float, risk_per_trade: float, 
     shares = 0.0
 
     for i in range(20, len(df)):
-        row = df.iloc[i]
         date = df.index[i]
 
-        if not in_pos and int(row["Signal"]) == 1 and pd.notna(row["ATR"]) and float(row["ATR"]) > 0:
-            entry = float(row["Close"])
-            shares = position_size(equity, risk_per_trade, entry, float(row["ATR"]))
+        current_signal = int(signal.iloc[i])
+        current_atr = float(atr_series.iloc[i]) if pd.notna(atr_series.iloc[i]) else 0.0
+        current_close = float(close_series.iloc[i])
+
+        if not in_pos and current_signal == 1 and current_atr > 0:
+            entry = current_close
+            shares = position_size(equity, risk_per_trade, entry, current_atr)
 
             if shares > 0:
-                stop = entry - 1.5 * float(row["ATR"])
-                trail = entry - 1.0 * float(row["ATR"])
+                stop = entry - 1.5 * current_atr
+                trail = entry - 1.0 * current_atr
                 in_pos = True
 
         elif in_pos:
-            current_close = float(row["Close"])
-            atr = float(row["ATR"]) if pd.notna(row["ATR"]) else 0.0
-
-            if atr > 0:
-                trail = max(trail, current_close - 1.0 * atr)
+            if current_atr > 0:
+                trail = max(trail, current_close - 1.0 * current_atr)
 
             exit_reason = None
             exit_price = None
@@ -99,7 +103,7 @@ def run_backtest_for_symbol(symbol: str, capital: float, risk_per_trade: float, 
             elif current_close <= trail:
                 exit_reason = "trailing"
                 exit_price = current_close
-            elif int(row["Signal"]) == 0:
+            elif current_signal == 0:
                 exit_reason = "signal_off"
                 exit_price = current_close
 
