@@ -1,0 +1,35 @@
+radar_d:
+  enabled: true
+  profil: "agresivni_growth"
+  scan_interval_minutes: 15
+  max_alerts_per_day: 10
+  alert_start: "15:30"
+  alert_end: "22:00"
+  btc_mode: "market_hours_only"
+
+risk:
+  max_risk_per_trade_pct: 1.5
+  max_portfolio_risk_pct: 7.0
+  sector_limit_pct: 40.0
+  no_trade_before_earnings_days: 1
+
+universe:
+  eu:
+    - CEZ.PR
+    - EON.DE
+    - CSG
+  us:
+    - SPY
+    - QQQ
+    - SMH
+    - NVDA
+    - AMD
+    - TSLA
+    - AAPL
+    - MSFT
+    - META
+    - GOOGL
+    - AMZN
+    - IBIT
+  crypto:
+    - BTC-USD

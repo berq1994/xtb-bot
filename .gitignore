@@ -1,0 +1,13 @@
+# python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# venv
+.venv/
+venv/
+
+# runtime state (do not commit)
+.state/
