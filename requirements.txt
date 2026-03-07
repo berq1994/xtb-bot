@@ -6,3 +6,4 @@ requests
 yfinance
 python-dateutil
 pytz
+feedparser
