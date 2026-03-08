@@ -1,0 +1,20 @@
+policy_tuning:
+  default_mode: "paper"
+  semi_live_enabled: false
+  live_enabled: false
+
+thresholds:
+  min_critic_score_for_semi_live: 0.80
+  max_missing_ratio_pct: 5.0
+  max_mc_negative_run_pct: 10.0
+  min_wf_avg_test_return_pct: 0.25
+  max_wf_avg_test_dd_pct: -8.0
+
+capital_limits:
+  semi_live_max_order_usd: 250
+  semi_live_max_daily_risk_usd: 500
+  semi_live_max_positions: 3
+
+activation:
+  require_manual_flag: true
+  manual_flag_env: "SEMI_LIVE_APPROVED"
