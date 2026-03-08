@@ -3,21 +3,21 @@
     "critic_score": 0.65,
     "wf_avg_return": 0.42,
     "mc_negative_run_pct": 3.0,
-    "missing_ratio_pct": 100.0
+    "missing_ratio_pct": 0.0
   },
   "critic_result": {
     "band": "BLOCKED",
     "approved": false
   },
   "performance_result": {
-    "band": "BLOCKED",
-    "approved": false
+    "band": "NORMAL_READY",
+    "approved": true
   },
   "tuned_decision": {
     "critic_band": "BLOCKED",
-    "performance_band": "BLOCKED",
+    "performance_band": "NORMAL_READY",
     "critic_approved": false,
-    "performance_approved": false,
+    "performance_approved": true,
     "transition": {
       "final_mode": "SAFE_MODE",
       "allow_execution": false,
