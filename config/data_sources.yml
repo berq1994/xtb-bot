@@ -1,0 +1,16 @@
+sources:
+  market:
+    primary: fmp
+    fallback:
+      - yahoo
+  news:
+    primary: rss
+    fallback:
+      - newsapi
+  fundamentals:
+    primary: fmp
+    fallback:
+      - yahoo
+thresholds:
+  provider_timeout_sec: 8
+  unhealthy_after_failures: 3
