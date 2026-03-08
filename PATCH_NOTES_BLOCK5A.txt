@@ -1,0 +1,6 @@
+Doporučené další kroky integrace:
+
+1. V `ai/ticker_loader.py` používat `config/ticker_map.yml` jako primární zdroj.
+2. Ve všech Yahoo/FMP fetch funkcích používat `data_ingestion/ticker_normalizer.py`.
+3. V supervisor / critic validaci číst `missing_ratio_pct` z `block5a_entry.py`.
+4. Postupně odstranit hard-coded tickery ze starších modulů.
