@@ -17,6 +17,8 @@ jobs:
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
       CHATID: ${{ secrets.CHATID }}
+      FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+      FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -44,4 +46,5 @@ jobs:
             .state/history/alert_performance_summary.json
             .state/history/alert_autofill_summary.json
             .state/history/block14_metrics.json
+            .state/history/alert_autofill_summary.json
           if-no-files-found: warn

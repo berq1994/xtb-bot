@@ -54,20 +54,23 @@ def _build_record_id(alert: Dict[str, Any], idx: int) -> str:
     return f"{_utc_now_iso()}::{idx}::{category}::{title}"
 
 
+
 def register_alerts(
     alerts: Iterable[Dict[str, Any]],
     path: str | Path = ALERT_REGISTRY_PATH,
 ) -> int:
-    """
-    Zapíše alerty do registru pro pozdější vyhodnocení.
-    """
     target = Path(path)
     written = 0
 
     for idx, alert in enumerate(alerts, start=1):
         payload = dict(alert)
+        tickers = [str(x).upper().strip() for x in payload.get("tickers", []) if str(x).strip()]
+        payload.setdefault("tickers", tickers)
+        payload.setdefault("primary_ticker", tickers[0] if tickers else None)
         payload.setdefault("recorded_at", _utc_now_iso())
         payload.setdefault("record_id", _build_record_id(payload, idx))
+        payload.setdefault("entry_price", payload.get("entry_price"))
+        payload.setdefault("entry_price_source", payload.get("entry_price_source"))
         payload.setdefault("outcome_15m", None)
         payload.setdefault("outcome_60m", None)
         payload.setdefault("outcome_1d", None)
@@ -96,6 +99,7 @@ def summarize_registry(
     by_timeframe: Dict[str, int] = {}
     scored = 0
     pending = 0
+    with_entry = 0
 
     for row in rows:
         category = str(row.get("category", "unknown")).upper()
@@ -110,6 +114,8 @@ def summarize_registry(
         by_bias[bias] = by_bias.get(bias, 0) + 1
         by_timeframe[timeframe] = by_timeframe.get(timeframe, 0) + 1
 
+        if row.get("entry_price") is not None:
+            with_entry += 1
         if row.get("directional_hit") is None:
             pending += 1
         else:
@@ -120,6 +126,7 @@ def summarize_registry(
         "total_alerts": len(rows),
         "scored_alerts": scored,
         "pending_alerts": pending,
+        "alerts_with_entry_price": with_entry,
         "by_category": by_category,
         "by_priority": by_priority,
         "by_status": by_status,

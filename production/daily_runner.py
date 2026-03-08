@@ -6,6 +6,7 @@ from production.critic import review_alerts
 from production.decision_engine import build_decision_overlay
 from production.execution_guard import build_execution_guard
 from production.file_inputs import read_text_or_default
+from production.fmp_market_data import enrich_alerts_with_entry_prices
 from production.governance_bridge import extract_governance_mode, read_governance_snapshot
 from production.history_store import archive_run
 from production.message_enhancer import (
@@ -46,6 +47,7 @@ def run_daily_flow(logger=None):
 
     briefing_items = parse_briefing_items(briefing_text)
     parsed_alerts = parse_alert_lines(alert_lines)
+    entry_price_summary = enrich_alerts_with_entry_prices(parsed_alerts)
     evaluation = evaluate_alerts(parsed_alerts, governance_mode)
     critic = review_alerts(parsed_alerts)
     decision = build_decision_overlay(briefing_items, parsed_alerts, evaluation)
@@ -70,6 +72,7 @@ def run_daily_flow(logger=None):
         "scored_records": performance_summary.get("scored_records", 0),
         "overall_hit_rate": performance_summary.get("overall_hit_rate", 0.0),
         "applied_updates": (performance_summary.get("autofill_summary") or {}).get("applied_updates", 0),
+        "records_with_entry_price": performance_summary.get("records_with_entry_price", 0),
     }
 
     briefing_message = render_briefing_message(
@@ -93,6 +96,7 @@ def run_daily_flow(logger=None):
 
     steps.extend(
         [
+            "entry_prices_enriched",
             "alerts_evaluated",
             "critic_reviewed",
             "decision_overlay_ready",
@@ -126,6 +130,7 @@ def run_daily_flow(logger=None):
         "performance_summary": performance_summary,
         "risk_overlay": risk_overlay,
         "execution_guard": execution_guard,
+        "entry_price_summary": entry_price_summary,
         "briefing_items": briefing_items,
         "parsed_alerts": parsed_alerts,
     }

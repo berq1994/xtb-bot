@@ -37,6 +37,7 @@ def summarize_performance() -> Dict[str, Any]:
     scored_records = 0
     pending_records = 0
     directional_hits = 0
+    with_entry_price = 0
 
     by_category: Dict[str, Dict[str, float]] = {}
     by_status: Dict[str, Dict[str, float]] = {}
@@ -46,6 +47,9 @@ def summarize_performance() -> Dict[str, Any]:
         category = str(row.get("category", "unknown")).upper()
         status = str(row.get("status", "unknown")).upper()
         priority = str(row.get("priority", "unknown")).upper()
+
+        if row.get("entry_price") is not None:
+            with_entry_price += 1
 
         hit = row.get("directional_hit")
         if hit is None:
@@ -80,6 +84,7 @@ def summarize_performance() -> Dict[str, Any]:
         "pending_records": pending_records,
         "scored_records": scored_records,
         "overall_hit_rate": overall_hit_rate,
+        "records_with_entry_price": with_entry_price,
         "autofill_summary": autofill_summary,
         "by_category": by_category,
         "by_status": by_status,
