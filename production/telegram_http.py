@@ -3,18 +3,52 @@ import urllib.request
 import urllib.parse
 import json
 
+
+def _get_telegram_token() -> str:
+    return (
+        os.getenv("TELEGRAM_BOT_TOKEN")
+        or os.getenv("TELEGRAMTOKEN")
+        or os.getenv("TG_BOT_TOKEN")
+        or ""
+    ).strip()
+
+
+
+def _get_telegram_chat_id() -> str:
+    return (
+        os.getenv("TELEGRAM_CHAT_ID")
+        or os.getenv("CHATID")
+        or os.getenv("TG_CHAT_ID")
+        or ""
+    ).strip()
+
+
+
+def _is_send_enabled() -> bool:
+    return str(os.getenv("TELEGRAM_SEND_ENABLED", "false")).lower() in ["1", "true", "yes", "on"]
+
+
+
 def send_telegram_http(text: str, timeout_sec: int = 15):
-    token = os.getenv("TELEGRAM_BOT_TOKEN")
-    chat_id = os.getenv("TELEGRAM_CHAT_ID")
-    send_enabled = str(os.getenv("TELEGRAM_SEND_ENABLED", "false")).lower() in ["1","true","yes","on"]
+    token = _get_telegram_token()
+    chat_id = _get_telegram_chat_id()
+    send_enabled = _is_send_enabled()
 
     ready = bool(token) and bool(chat_id) and send_enabled
     if not ready:
+        missing = []
+        if not token:
+            missing.append("token")
+        if not chat_id:
+            missing.append("chat_id")
+        if not send_enabled:
+            missing.append("send_enabled")
         return {
             "delivered": False,
             "ready": ready,
             "transport": "telegram_http",
             "reason": "MISSING_OR_DISABLED_TELEGRAM_CONFIG",
+            "missing": missing,
             "preview": text[:500],
         }
 
