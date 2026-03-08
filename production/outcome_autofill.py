@@ -164,6 +164,7 @@ def _autofill_from_fmp(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
     updated = 0
     attempted = 0
     touched_ids: List[str] = []
+    skipped_errors = 0
 
     for row in rows:
         if row.get("directional_hit") is not None:
@@ -174,13 +175,18 @@ def _autofill_from_fmp(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
             continue
         attempted += 1
 
-        if ticker not in intraday_cache:
-            intraday_cache[ticker] = fetch_intraday_series(ticker, interval="5min", days_back=3)
-        if ticker not in eod_cache:
-            eod_cache[ticker] = fetch_eod_series(ticker, days_back=10)
+        try:
+            if ticker not in intraday_cache:
+                intraday_cache[ticker] = fetch_intraday_series(ticker, interval="5min", days_back=3)
+            if ticker not in eod_cache:
+                eod_cache[ticker] = fetch_eod_series(ticker, days_back=10)
+        except Exception:
+            intraday_cache[ticker] = intraday_cache.get(ticker, [])
+            eod_cache[ticker] = eod_cache.get(ticker, [])
+            skipped_errors += 1
 
-        intraday = intraday_cache[ticker]
-        eod = eod_cache[ticker]
+        intraday = intraday_cache.get(ticker, [])
+        eod = eod_cache.get(ticker, [])
 
         entry_price = row.get("entry_price")
         if entry_price is None:
@@ -213,6 +219,7 @@ def _autofill_from_fmp(rows: List[Dict[str, Any]]) -> Dict[str, Any]:
         "fmp_applied": updated,
         "fmp_touched_record_ids": touched_ids[:50],
         "symbols_used": sorted([k for k, v in intraday_cache.items() if v or eod_cache.get(k)]),
+        "fmp_skipped_errors": skipped_errors,
     }
 
 
@@ -221,7 +228,16 @@ def apply_outcome_updates(registry_path: str | Path = REGISTRY_PATH, summary_pat
     updates, source_path = _load_update_payload()
 
     manual_applied, unmatched_updates, touched_ids = _apply_manual_updates(rows, updates)
-    fmp_result = _autofill_from_fmp(rows)
+    try:
+        fmp_result = _autofill_from_fmp(rows)
+    except Exception:
+        fmp_result = {
+            "fmp_attempted": 0,
+            "fmp_applied": 0,
+            "fmp_touched_record_ids": [],
+            "symbols_used": [],
+            "fmp_skipped_errors": len(rows),
+        }
     applied = manual_applied + int(fmp_result.get("fmp_applied", 0))
 
     if updates or fmp_result.get("fmp_applied"):
@@ -234,6 +250,7 @@ def apply_outcome_updates(registry_path: str | Path = REGISTRY_PATH, summary_pat
         "manual_applied_updates": manual_applied,
         "fmp_applied_updates": int(fmp_result.get("fmp_applied", 0)),
         "fmp_attempted": int(fmp_result.get("fmp_attempted", 0)),
+        "fmp_skipped_errors": int(fmp_result.get("fmp_skipped_errors", 0)),
         "unmatched_updates": unmatched_updates,
         "touched_record_ids": (touched_ids + fmp_result.get("fmp_touched_record_ids", []))[:50],
         "symbols_used": fmp_result.get("symbols_used", []),

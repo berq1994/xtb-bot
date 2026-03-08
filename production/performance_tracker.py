@@ -30,7 +30,17 @@ def _write_json(path: Path, payload: Dict[str, Any]) -> None:
 
 
 def summarize_performance() -> Dict[str, Any]:
-    autofill_summary = apply_outcome_updates()
+    try:
+        autofill_summary = apply_outcome_updates()
+    except Exception as exc:
+        autofill_summary = {
+            "applied_updates": 0,
+            "manual_applied_updates": 0,
+            "fmp_applied_updates": 0,
+            "fmp_attempted": 0,
+            "fmp_skipped_errors": 0,
+            "error": str(exc),
+        }
     rows = _read_jsonl(REGISTRY_PATH)
 
     total_records = len(rows)

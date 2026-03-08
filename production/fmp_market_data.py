@@ -1,5 +1,6 @@
 import json
 import os
+import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
@@ -24,9 +25,29 @@ def _http_get_json(path: str, params: Dict[str, Any]) -> Any:
     q["apikey"] = api_key
     url = f"{BASE_URL}{path}?{urllib.parse.urlencode(q)}"
     req = urllib.request.Request(url, method="GET")
-    with urllib.request.urlopen(req, timeout=20) as resp:
-        raw = resp.read().decode("utf-8")
-    return json.loads(raw)
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            raw = resp.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        # Safe fallback: never break the whole production run because of FMP.
+        if exc.code in {401, 402, 403, 404, 429}:
+            return {
+                "_error": True,
+                "http_status": exc.code,
+                "reason": getattr(exc, "reason", "HTTPError"),
+                "path": path,
+            }
+        return None
+    except urllib.error.URLError:
+        return None
+    except TimeoutError:
+        return None
+    except Exception:
+        return None
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        return None
 
 
 def _parse_dt(value: str) -> Optional[datetime]:
@@ -144,7 +165,10 @@ def enrich_alerts_with_entry_prices(alerts: List[Dict[str, Any]]) -> Dict[str, A
         tickers = [str(x).upper().strip() for x in alert.get("tickers", []) if str(x).strip()]
         if tickers:
             symbols.append(tickers[0])
-    quote_map = fetch_quotes(symbols)
+    try:
+        quote_map = fetch_quotes(symbols)
+    except Exception:
+        quote_map = {}
     enriched = 0
     for alert in alerts:
         tickers = [str(x).upper().strip() for x in alert.get("tickers", []) if str(x).strip()]
@@ -159,6 +183,7 @@ def enrich_alerts_with_entry_prices(alerts: List[Dict[str, Any]]) -> Dict[str, A
         "entry_prices_enriched": enriched,
         "entry_price_source": "fmp_quote" if enriched else None,
         "api_key_present": bool(_get_api_key()),
+        "fmp_safe_mode": True,
     }
 
 
@@ -176,7 +201,6 @@ def nearest_price(series: List[Dict[str, Any]], target_dt: datetime, mode: str =
             if row["dt"] <= target_dt:
                 return float(row["close"])
         return float(series[0]["close"])
-    # closest
     best = min(series, key=lambda row: abs((row["dt"] - target_dt).total_seconds()))
     return float(best["close"])
 
