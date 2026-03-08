@@ -1,0 +1,37 @@
+{
+  "runtime_mode": "paper",
+  "final_mode": "SAFE_MODE",
+  "live_guard": {
+    "approved": false,
+    "runtime_mode": "paper",
+    "final_mode": "SAFE_MODE",
+    "live_flag_present": false,
+    "reason": "LIVE_BLOCKED"
+  },
+  "internal_order": {
+    "symbol": "NVDA",
+    "side": "BUY",
+    "qty": 5,
+    "type": "MARKET",
+    "tif": "DAY"
+  },
+  "mapped_order": {
+    "symbol": "NVDA",
+    "side": "BUY",
+    "quantity": 5.0,
+    "type": "MARKET",
+    "time_in_force": "DAY"
+  },
+  "submit_result": {
+    "submitted": true,
+    "broker_order_id": "paper-NVDA-001",
+    "mode": "paper"
+  },
+  "status_result": {
+    "broker_order_id": "paper-NVDA-001",
+    "status": "FILLED",
+    "mode": "paper"
+  },
+  "cancel_result": null,
+  "order_book_size": 1
+}
