@@ -1,0 +1,13 @@
+PHASE 4 – outcome scoring + performance tracking
+
+Novinky:
+- opravené Phase 2/3 soubory bez syntax chyb
+- registry tracker summary v briefingu i alerts
+- nový production/performance_tracker.py
+- agregace hit-rate podle category/status/priority
+- performance summary ukládaný do .state/history/alert_performance_summary.json
+- run metrics nově obsahují tracker/performance pole
+
+Poznámka:
+Aktuální hit-rate se počítá pouze z již skórovaných alertů.
+Pokud jsou outcome_15m / outcome_60m / outcome_1d prázdné, zůstávají v pending.
