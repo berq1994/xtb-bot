@@ -1,0 +1,16 @@
+PHASE 5 PATCH - RISK MANAGER + EXECUTION GUARD
+
+Obsah:
+- production/risk_manager.py
+- production/execution_guard.py
+- production/daily_runner.py
+- production/message_enhancer.py
+- production/history_store.py
+- .github/workflows/block14-production-runner.yml
+
+Co přidává:
+- risk posture (NORMAL / REDUCE SIZE / TIGHT / LOCK NEW RISK)
+- limity na risk / pozici a sektorovou koncentraci
+- earnings lock, macro lock, overnight flag
+- execution guard s guard status a blokacemi
+- rozšířené metriky run historie

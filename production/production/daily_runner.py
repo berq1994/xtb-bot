@@ -4,6 +4,7 @@ from pathlib import Path
 from production.alert_evaluator import evaluate_alerts
 from production.critic import review_alerts
 from production.decision_engine import build_decision_overlay
+from production.execution_guard import build_execution_guard
 from production.file_inputs import read_text_or_default
 from production.governance_bridge import extract_governance_mode, read_governance_snapshot
 from production.history_store import archive_run
@@ -16,6 +17,7 @@ from production.message_enhancer import (
 from production.outcome_tracker import register_alerts
 from production.performance_tracker import summarize_performance
 from production.report_builder import build_production_report, render_production_report
+from production.risk_manager import build_risk_overlay
 from production.telegram_http import send_telegram_http
 
 
@@ -49,6 +51,18 @@ def run_daily_flow(logger=None):
     decision = build_decision_overlay(briefing_items, parsed_alerts, evaluation)
     tracker_summary = register_alerts(parsed_alerts)
     performance_summary = summarize_performance()
+    risk_overlay = build_risk_overlay(
+        briefing_items,
+        parsed_alerts,
+        decision=decision,
+        performance_summary=performance_summary,
+    )
+    execution_guard = build_execution_guard(
+        parsed_alerts,
+        decision=decision,
+        risk_overlay=risk_overlay,
+        performance_summary=performance_summary,
+    )
 
     briefing_message = render_briefing_message(
         briefing_text,
@@ -56,11 +70,14 @@ def run_daily_flow(logger=None):
         decision=decision,
         critic_summary=critic,
         tracker_summary=tracker_summary,
+        risk_overlay=risk_overlay,
+        guard=execution_guard,
     )
     alerts_message = render_alerts_message(
         parsed_alerts,
         critic_summary=critic,
         tracker_summary=performance_summary,
+        guard=execution_guard,
     )
 
     brief_delivery = send_telegram_http(briefing_message)
@@ -73,6 +90,8 @@ def run_daily_flow(logger=None):
             "decision_overlay_ready",
             "outcome_registry_updated",
             "performance_summary_updated",
+            "risk_overlay_ready",
+            "execution_guard_ready",
             "telegram_briefing_sent" if brief_delivery.get("delivered") else "telegram_briefing_not_sent",
             "telegram_alerts_sent" if alerts_delivery.get("delivered") else "telegram_alerts_not_sent",
         ]
@@ -96,6 +115,8 @@ def run_daily_flow(logger=None):
         "decision": decision,
         "registry_summary": tracker_summary,
         "performance_summary": performance_summary,
+        "risk_overlay": risk_overlay,
+        "execution_guard": execution_guard,
         "briefing_items": briefing_items,
         "parsed_alerts": parsed_alerts,
     }
@@ -108,6 +129,8 @@ def run_daily_flow(logger=None):
         decision=decision,
         tracker_summary=tracker_summary,
         performance_summary=performance_summary,
+        risk_overlay=risk_overlay,
+        execution_guard=execution_guard,
     )
 
     Path(".state").mkdir(exist_ok=True)

@@ -2,14 +2,11 @@ import json
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List
+from typing import Any, Dict, List
 
 HISTORY_DIR = Path(".state/history")
 RUN_HISTORY_PATH = HISTORY_DIR / "block14_history.jsonl"
 RUN_METRICS_PATH = HISTORY_DIR / "block14_metrics.json"
-ALERT_REGISTRY_PATH = HISTORY_DIR / "alert_registry.jsonl"
-ALERT_REGISTRY_SUMMARY_PATH = HISTORY_DIR / "alert_registry_summary.json"
-PERFORMANCE_SUMMARY_PATH = HISTORY_DIR / "alert_performance_summary.json"
 
 
 def _ensure_parent(path: Path) -> None:
@@ -66,6 +63,8 @@ def archive_run(
     decision: Dict[str, Any] | None = None,
     tracker_summary: Dict[str, Any] | None = None,
     performance_summary: Dict[str, Any] | None = None,
+    risk_overlay: Dict[str, Any] | None = None,
+    execution_guard: Dict[str, Any] | None = None,
 ) -> Dict[str, Any]:
     HISTORY_DIR.mkdir(parents=True, exist_ok=True)
     status_counts = Counter(x.get("status", "UNKNOWN") for x in alerts)
@@ -84,15 +83,30 @@ def archive_run(
         "tracker_records": (tracker_summary or {}).get("records", 0),
         "tracker_pending": (tracker_summary or {}).get("pending_records", 0),
         "performance_hit_rate": (performance_summary or {}).get("overall_hit_rate", 0.0),
+        "risk_posture": (risk_overlay or {}).get("risk_posture", "NORMAL"),
+        "kill_switch_armed": bool((risk_overlay or {}).get("kill_switch_armed", False)),
+        "guard_status": (execution_guard or {}).get("guard_status", "MANUAL_ONLY"),
+        "allow_new_risk": bool((execution_guard or {}).get("allow_new_risk", False)),
     }
     _append_jsonl(RUN_HISTORY_PATH, entry)
 
     entries = _read_jsonl(RUN_HISTORY_PATH)
     aggregate_status = Counter()
     recommended_mode_counts = Counter()
+    risk_posture_counts = Counter()
+    guard_status_counts = Counter()
+    allow_new_risk_runs = 0
+    kill_switch_runs = 0
+
     for item in entries:
         aggregate_status.update(item.get("status_counts", {}))
         recommended_mode_counts[item.get("recommended_mode", "UNKNOWN")] += 1
+        risk_posture_counts[item.get("risk_posture", "UNKNOWN")] += 1
+        guard_status_counts[item.get("guard_status", "UNKNOWN")] += 1
+        if item.get("allow_new_risk"):
+            allow_new_risk_runs += 1
+        if item.get("kill_switch_armed"):
+            kill_switch_runs += 1
 
     metrics = {
         "runs": len(entries),
@@ -107,6 +121,12 @@ def archive_run(
         "latest_tracker_records": entry["tracker_records"],
         "latest_tracker_pending": entry["tracker_pending"],
         "latest_performance_hit_rate": entry["performance_hit_rate"],
+        "risk_posture_counts": dict(risk_posture_counts),
+        "guard_status_counts": dict(guard_status_counts),
+        "allow_new_risk_runs": allow_new_risk_runs,
+        "kill_switch_runs": kill_switch_runs,
+        "latest_risk_posture": entry["risk_posture"],
+        "latest_guard_status": entry["guard_status"],
     }
     _write_json(RUN_METRICS_PATH, metrics)
     return metrics
