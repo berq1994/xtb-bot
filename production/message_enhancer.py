@@ -140,7 +140,12 @@ def parse_alert_lines(alert_lines: List[str]) -> List[Dict]:
     return items
 
 
-def render_briefing_message(briefing_text: str, items: List[Dict], decision: Dict | None = None, critic_summary: Dict | None = None) -> str:
+def render_briefing_message(
+    briefing_text: str,
+    items: List[Dict],
+    decision: Dict | None = None,
+    critic_summary: Dict | None = None,
+) -> str:
     if not items:
         return briefing_text.strip() or "Briefing zatím není."
 
@@ -154,18 +159,24 @@ def render_briefing_message(briefing_text: str, items: List[Dict], decision: Dic
         header_counts,
         "",
     ]
+
     if decision:
-        lines.extend([
-            f"Režim dne: {decision.get('recommended_mode', 'NORMAL')}",
-            f"Max nové pozice: {decision.get('max_new_positions', 0)}",
-            f"Portfolio note: {decision.get('portfolio_note', 'Bez poznámky')}",
-            "",
-        ])
+        lines.extend(
+            [
+                f"Režim dne: {decision.get('recommended_mode', 'NORMAL')}",
+                f"Max nové pozice: {decision.get('max_new_positions', 0)}",
+                f"Portfolio note: {decision.get('portfolio_note', 'Bez poznámky')}",
+                "",
+            ]
+        )
+
     if critic_summary:
-        lines.extend([
-            f"Critic: approved {critic_summary.get('approved_count', 0)} / rejected {critic_summary.get('rejected_count', 0)}",
-            "",
-        ])
+        lines.extend(
+            [
+                f"Critic: approved {critic_summary.get('approved_count', 0)} / rejected {critic_summary.get('rejected_count', 0)}",
+                "",
+            ]
+        )
 
     for idx, item in enumerate(items, start=1):
         tick = "🔴" if item["priority"] == "HIGH" else "🟡" if item["priority"] == "MEDIUM" else "🟢"
@@ -181,8 +192,8 @@ def render_briefing_message(briefing_text: str, items: List[Dict], decision: Dic
                 "",
             ]
         )
-    return "
-".join(lines).strip()[:4096]
+
+    return "\n".join(lines).strip()[:4096]
 
 
 def render_alerts_message(alerts: List[Dict], critic_summary: Dict | None = None) -> str:
@@ -190,11 +201,15 @@ def render_alerts_message(alerts: List[Dict], critic_summary: Dict | None = None
         return "Žádné alerty."
 
     lines = ["🚨 XTB Live Alerts", ""]
+
     if critic_summary:
-        lines.extend([
-            f"Critic summary: approved {critic_summary.get('approved_count', 0)} | rejected {critic_summary.get('rejected_count', 0)}",
-            "",
-        ])
+        lines.extend(
+            [
+                f"Critic summary: approved {critic_summary.get('approved_count', 0)} | rejected {critic_summary.get('rejected_count', 0)}",
+                "",
+            ]
+        )
+
     for idx, item in enumerate(alerts, start=1):
         tick = "🔴" if item["priority"] == "HIGH" else "🟡" if item["priority"] == "MEDIUM" else "🟢"
         tickers = ", ".join(item.get("tickers", [])) or "N/A"
@@ -211,5 +226,5 @@ def render_alerts_message(alerts: List[Dict], critic_summary: Dict | None = None
                 "",
             ]
         )
-    return "
-".join(lines).strip()[:4096]
+
+    return "\n".join(lines).strip()[:4096]
