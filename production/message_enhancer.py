@@ -1,5 +1,5 @@
 import re
-from typing import List, Dict
+from typing import Dict, List
 
 BRIEFING_RE = re.compile(
     r"^- \[(?P<category>[^\]]+)\] (?P<title>.*?) \| impact (?P<impact>\d+(?:\.\d+)?) \| relevance (?P<relevance>\d+(?:\.\d+)?)$",
@@ -145,11 +145,14 @@ def render_briefing_message(
     items: List[Dict],
     decision: Dict | None = None,
     critic_summary: Dict | None = None,
+    tracker_summary: Dict | None = None,
+    risk_overlay: Dict | None = None,
+    guard: Dict | None = None,
 ) -> str:
     if not items:
         return briefing_text.strip() or "Briefing zatím není."
 
-    counts = {}
+    counts: Dict[str, int] = {}
     for item in items:
         counts[item["category"].upper()] = counts.get(item["category"].upper(), 0) + 1
     header_counts = " | ".join(f"{k}: {v}" for k, v in counts.items())
@@ -159,7 +162,6 @@ def render_briefing_message(
         header_counts,
         "",
     ]
-
     if decision:
         lines.extend(
             [
@@ -169,11 +171,34 @@ def render_briefing_message(
                 "",
             ]
         )
-
+    if risk_overlay:
+        lines.extend(
+            [
+                f"Risk posture: {risk_overlay.get('risk_posture', 'NORMAL')}",
+                f"Risk / pozice: {risk_overlay.get('max_single_position_risk_pct', 0):.2f}% | Sektor max: {risk_overlay.get('max_sector_exposure_pct', 0)}%",
+                f"Overnight: {'ANO' if risk_overlay.get('allow_overnight', True) else 'NE'} | Earnings lock: {'ANO' if risk_overlay.get('earnings_lock') else 'NE'} | Macro lock: {'ANO' if risk_overlay.get('macro_lock') else 'NE'}",
+                "",
+            ]
+        )
+    if guard:
+        lines.extend(
+            [
+                f"Guard: {guard.get('guard_status', 'MANUAL_ONLY')} | Povolené nové risk vstupy: {'ANO' if guard.get('allow_new_risk') else 'NE'}",
+                f"Guard slots: {guard.get('max_new_positions', 0)} | Confirm price action: {'ANO' if guard.get('require_price_action_confirmation', True) else 'NE'}",
+                "",
+            ]
+        )
     if critic_summary:
         lines.extend(
             [
                 f"Critic: approved {critic_summary.get('approved_count', 0)} / rejected {critic_summary.get('rejected_count', 0)}",
+                "",
+            ]
+        )
+    if tracker_summary:
+        lines.extend(
+            [
+                f"Tracker: records {tracker_summary.get('records', 0)} | pending {tracker_summary.get('pending_records', 0)} | scored {tracker_summary.get('scored_records', 0)}",
                 "",
             ]
         )
@@ -193,15 +218,24 @@ def render_briefing_message(
             ]
         )
 
+    if risk_overlay and risk_overlay.get("portfolio_actions"):
+        lines.append("Risk notes:")
+        for note in risk_overlay.get("portfolio_actions", [])[:3]:
+            lines.append(f"- {note}")
+
     return "\n".join(lines).strip()[:4096]
 
 
-def render_alerts_message(alerts: List[Dict], critic_summary: Dict | None = None) -> str:
+def render_alerts_message(
+    alerts: List[Dict],
+    critic_summary: Dict | None = None,
+    tracker_summary: Dict | None = None,
+    guard: Dict | None = None,
+) -> str:
     if not alerts:
         return "Žádné alerty."
 
     lines = ["🚨 XTB Live Alerts", ""]
-
     if critic_summary:
         lines.extend(
             [
@@ -209,7 +243,20 @@ def render_alerts_message(alerts: List[Dict], critic_summary: Dict | None = None
                 "",
             ]
         )
-
+    if tracker_summary:
+        lines.extend(
+            [
+                f"Tracker: total {tracker_summary.get('records', 0)} | scored {tracker_summary.get('scored_records', 0)} | hit rate {tracker_summary.get('overall_hit_rate', 0.0):.2f}",
+                "",
+            ]
+        )
+    if guard:
+        lines.extend(
+            [
+                f"Guard: {guard.get('guard_status', 'MANUAL_ONLY')} | approved {guard.get('approved_alert_count', 0)} | blocked {guard.get('blocked_alert_count', 0)}",
+                "",
+            ]
+        )
     for idx, item in enumerate(alerts, start=1):
         tick = "🔴" if item["priority"] == "HIGH" else "🟡" if item["priority"] == "MEDIUM" else "🟢"
         tickers = ", ".join(item.get("tickers", [])) or "N/A"
@@ -226,5 +273,14 @@ def render_alerts_message(alerts: List[Dict], critic_summary: Dict | None = None
                 "",
             ]
         )
+
+    if guard and guard.get("blocked_reasons"):
+        lines.append("Guard blokace:")
+        for reason in guard.get("blocked_reasons", [])[:3]:
+            lines.append(f"- {reason}")
+    elif guard and guard.get("guardrails"):
+        lines.append("Guard pravidla:")
+        for rule in guard.get("guardrails", [])[:3]:
+            lines.append(f"- {rule}")
 
     return "\n".join(lines).strip()[:4096]

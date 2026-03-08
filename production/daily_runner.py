@@ -1,15 +1,24 @@
 import json
 from pathlib import Path
-from production.file_inputs import read_text_or_default
-from production.governance_bridge import read_governance_snapshot, extract_governance_mode
-from production.report_builder import build_production_report, render_production_report
-from production.telegram_http import send_telegram_http
-from production.message_enhancer import parse_briefing_items, parse_alert_lines, render_briefing_message, render_alerts_message
+
 from production.alert_evaluator import evaluate_alerts
-from production.history_store import archive_run
-from production.decision_engine import build_decision_overlay
 from production.critic import review_alerts
+from production.decision_engine import build_decision_overlay
+from production.execution_guard import build_execution_guard
+from production.file_inputs import read_text_or_default
+from production.governance_bridge import extract_governance_mode, read_governance_snapshot
+from production.history_store import archive_run
+from production.message_enhancer import (
+    parse_alert_lines,
+    parse_briefing_items,
+    render_alerts_message,
+    render_briefing_message,
+)
 from production.outcome_tracker import register_alerts
+from production.performance_tracker import summarize_performance
+from production.report_builder import build_production_report, render_production_report
+from production.risk_manager import build_risk_overlay
+from production.telegram_http import send_telegram_http
 
 
 def run_daily_flow(logger=None):
@@ -40,23 +49,60 @@ def run_daily_flow(logger=None):
     evaluation = evaluate_alerts(parsed_alerts, governance_mode)
     critic = review_alerts(parsed_alerts)
     decision = build_decision_overlay(briefing_items, parsed_alerts, evaluation)
+    register_alerts(parsed_alerts)
+    performance_summary = summarize_performance()
+    risk_overlay = build_risk_overlay(
+        briefing_items,
+        parsed_alerts,
+        decision=decision,
+        performance_summary=performance_summary,
+    )
+    execution_guard = build_execution_guard(
+        parsed_alerts,
+        decision=decision,
+        risk_overlay=risk_overlay,
+        performance_summary=performance_summary,
+    )
 
-    briefing_message = render_briefing_message(briefing_text, briefing_items, decision=decision, critic_summary=critic)
-    alerts_message = render_alerts_message(parsed_alerts, critic_summary=critic)
+    tracker_summary = {
+        "records": performance_summary.get("total_records", 0),
+        "pending_records": performance_summary.get("pending_records", 0),
+        "scored_records": performance_summary.get("scored_records", 0),
+        "overall_hit_rate": performance_summary.get("overall_hit_rate", 0.0),
+    }
+
+    briefing_message = render_briefing_message(
+        briefing_text,
+        briefing_items,
+        decision=decision,
+        critic_summary=critic,
+        tracker_summary=tracker_summary,
+        risk_overlay=risk_overlay,
+        guard=execution_guard,
+    )
+    alerts_message = render_alerts_message(
+        parsed_alerts,
+        critic_summary=critic,
+        tracker_summary=tracker_summary,
+        guard=execution_guard,
+    )
 
     brief_delivery = send_telegram_http(briefing_message)
     alerts_delivery = send_telegram_http(alerts_message)
 
-    registry_summary = register_alerts(parsed_alerts)
-
-    steps.extend([
-        "alerts_evaluated",
-        "critic_reviewed",
-        "decision_overlay_ready",
-        "outcome_registry_updated",
-        "telegram_briefing_sent" if brief_delivery.get("delivered") else "telegram_briefing_not_sent",
-        "telegram_alerts_sent" if alerts_delivery.get("delivered") else "telegram_alerts_not_sent",
-    ])
+    steps.extend(
+        [
+            "alerts_evaluated",
+            "critic_reviewed",
+            "decision_overlay_ready",
+            "outcome_registry_updated",
+            "performance_summary_updated",
+            "risk_overlay_ready",
+            "execution_guard_ready",
+            "telegram_briefing_sent" if brief_delivery.get("delivered") else "telegram_briefing_not_sent",
+            "telegram_alerts_sent" if alerts_delivery.get("delivered") else "telegram_alerts_not_sent",
+        ]
+    )
 
     payload = build_production_report(
         steps=steps,
@@ -74,13 +120,19 @@ def run_daily_flow(logger=None):
         "evaluation": evaluation,
         "critic": critic,
         "decision": decision,
-        "registry_summary": registry_summary,
+        "tracker_summary": tracker_summary,
+        "performance_summary": performance_summary,
+        "risk_overlay": risk_overlay,
+        "execution_guard": execution_guard,
         "briefing_items": briefing_items,
         "parsed_alerts": parsed_alerts,
     }
-    out["metrics"] = archive_run(out, parsed_alerts, briefing_items, evaluation, critic=critic, decision=decision)
+
+    archive_run(out)
 
     Path(".state").mkdir(exist_ok=True)
-    Path(".state/block14_production_run.json").write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+    Path(".state/block14_production_run.json").write_text(
+        json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     Path("production_report.txt").write_text(render_production_report(payload), encoding="utf-8")
     return out
