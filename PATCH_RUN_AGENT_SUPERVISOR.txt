@@ -1,0 +1,13 @@
+Do existujícího `run_agent.py` přidej tyto větve do main():
+
+if mode == "supervisor_daily":
+    from supervisor.orchestrator import run_supervisor_daily
+    import json
+    print(json.dumps(run_supervisor_daily(), ensure_ascii=False, indent=2))
+    return
+
+if mode == "supervisor_audit":
+    from supervisor.orchestrator import run_supervisor_audit
+    import json
+    print(json.dumps(run_supervisor_audit(), ensure_ascii=False, indent=2))
+    return
