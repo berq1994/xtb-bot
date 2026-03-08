@@ -1,0 +1,16 @@
+PHASE 6 - outcome autofill
+
+Added:
+- production/outcome_autofill.py
+- outcome_updates.example.json
+
+Changed:
+- production/outcome_tracker.py
+- production/performance_tracker.py
+- production/daily_runner.py
+- production/message_enhancer.py
+- .github/workflows/block14-production-runner.yml
+
+Notes:
+- Autofill reads optional outcome_updates.json / outcome_prices.json files.
+- Without update files, registry remains pending and hit rate stays 0.

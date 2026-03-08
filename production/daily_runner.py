@@ -69,6 +69,7 @@ def run_daily_flow(logger=None):
         "pending_records": performance_summary.get("pending_records", 0),
         "scored_records": performance_summary.get("scored_records", 0),
         "overall_hit_rate": performance_summary.get("overall_hit_rate", 0.0),
+        "applied_updates": (performance_summary.get("autofill_summary") or {}).get("applied_updates", 0),
     }
 
     briefing_message = render_briefing_message(
@@ -97,6 +98,7 @@ def run_daily_flow(logger=None):
             "decision_overlay_ready",
             "outcome_registry_updated",
             "performance_summary_updated",
+            "outcome_autofill_checked",
             "risk_overlay_ready",
             "execution_guard_ready",
             "telegram_briefing_sent" if brief_delivery.get("delivered") else "telegram_briefing_not_sent",

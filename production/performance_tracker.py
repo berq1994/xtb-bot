@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
+from production.outcome_autofill import apply_outcome_updates
 
 REGISTRY_PATH = Path(".state/history/alert_registry.jsonl")
 SUMMARY_PATH = Path(".state/history/alert_performance_summary.json")
@@ -29,6 +30,7 @@ def _write_json(path: Path, payload: Dict[str, Any]) -> None:
 
 
 def summarize_performance() -> Dict[str, Any]:
+    autofill_summary = apply_outcome_updates()
     rows = _read_jsonl(REGISTRY_PATH)
 
     total_records = len(rows)
@@ -78,6 +80,7 @@ def summarize_performance() -> Dict[str, Any]:
         "pending_records": pending_records,
         "scored_records": scored_records,
         "overall_hit_rate": overall_hit_rate,
+        "autofill_summary": autofill_summary,
         "by_category": by_category,
         "by_status": by_status,
         "by_priority": by_priority,

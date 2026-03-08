@@ -198,7 +198,7 @@ def render_briefing_message(
     if tracker_summary:
         lines.extend(
             [
-                f"Tracker: records {tracker_summary.get('records', 0)} | pending {tracker_summary.get('pending_records', 0)} | scored {tracker_summary.get('scored_records', 0)}",
+                f"Tracker: records {tracker_summary.get('records', 0)} | pending {tracker_summary.get('pending_records', 0)} | scored {tracker_summary.get('scored_records', 0)} | autofill {tracker_summary.get('applied_updates', 0)}",
                 "",
             ]
         )
@@ -246,7 +246,7 @@ def render_alerts_message(
     if tracker_summary:
         lines.extend(
             [
-                f"Tracker: total {tracker_summary.get('records', 0)} | scored {tracker_summary.get('scored_records', 0)} | hit rate {tracker_summary.get('overall_hit_rate', 0.0):.2f}",
+                f"Tracker: total {tracker_summary.get('records', 0)} | scored {tracker_summary.get('scored_records', 0)} | hit rate {tracker_summary.get('overall_hit_rate', 0.0):.2f} | autofill {tracker_summary.get('applied_updates', 0)}",
                 "",
             ]
         )

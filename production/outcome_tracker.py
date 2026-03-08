@@ -48,6 +48,12 @@ def _write_json(path: Path, payload: Dict[str, Any]) -> None:
     )
 
 
+def _build_record_id(alert: Dict[str, Any], idx: int) -> str:
+    category = str(alert.get("category", "unknown")).lower()
+    title = str(alert.get("title", "untitled")).lower().replace(" ", "-")[:40]
+    return f"{_utc_now_iso()}::{idx}::{category}::{title}"
+
+
 def register_alerts(
     alerts: Iterable[Dict[str, Any]],
     path: str | Path = ALERT_REGISTRY_PATH,
@@ -58,12 +64,15 @@ def register_alerts(
     target = Path(path)
     written = 0
 
-    for alert in alerts:
+    for idx, alert in enumerate(alerts, start=1):
         payload = dict(alert)
         payload.setdefault("recorded_at", _utc_now_iso())
+        payload.setdefault("record_id", _build_record_id(payload, idx))
         payload.setdefault("outcome_15m", None)
         payload.setdefault("outcome_60m", None)
         payload.setdefault("outcome_1d", None)
+        payload.setdefault("directional_hit", None)
+        payload.setdefault("resolution_note", None)
         _append_jsonl(target, payload)
         written += 1
 
@@ -85,6 +94,8 @@ def summarize_registry(
     by_status: Dict[str, int] = {}
     by_bias: Dict[str, int] = {}
     by_timeframe: Dict[str, int] = {}
+    scored = 0
+    pending = 0
 
     for row in rows:
         category = str(row.get("category", "unknown")).upper()
@@ -99,9 +110,16 @@ def summarize_registry(
         by_bias[bias] = by_bias.get(bias, 0) + 1
         by_timeframe[timeframe] = by_timeframe.get(timeframe, 0) + 1
 
+        if row.get("directional_hit") is None:
+            pending += 1
+        else:
+            scored += 1
+
     payload: Dict[str, Any] = {
         "updated_at": _utc_now_iso(),
         "total_alerts": len(rows),
+        "scored_alerts": scored,
+        "pending_alerts": pending,
         "by_category": by_category,
         "by_priority": by_priority,
         "by_status": by_status,
