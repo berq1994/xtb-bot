@@ -1,0 +1,9 @@
+Po nahrání spusť přesně:
+
+python block7c_entry.py
+python block8a_entry.py
+
+Zkontroluj:
+- `inputs.missing_ratio_pct`
+
+Po opravě už tam nemá být `100.0`, ale správná hodnota ze 7C.

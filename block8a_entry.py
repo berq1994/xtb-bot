@@ -16,20 +16,41 @@ def _read_json(path_str, default):
     except Exception:
         return default
 
+def _safe_float(value, default):
+    try:
+        if value is None:
+            return float(default)
+        return float(value)
+    except Exception:
+        return float(default)
+
+def _resolve_missing_ratio(b7c: dict) -> float:
+    inputs = b7c.get("inputs", {}) if isinstance(b7c, dict) else {}
+    candidates = [
+        inputs.get("missing_ratio_pct"),
+    ]
+    for val in candidates:
+        try:
+            if val is not None:
+                return float(val)
+        except Exception:
+            pass
+    return 100.0
+
 def main():
     cfg = yaml.safe_load(Path("config/threshold_tuning.yml").read_text(encoding="utf-8"))
 
     b6b = _read_json(".state/block6b_final_decision.json", {})
     b7c = _read_json(".state/block7c_semi_live.json", {"inputs": {}})
-    critic_score = float(b6b.get("final_critic", {}).get("score", 0.0) or 0.0)
+    critic_score = _safe_float(b6b.get("final_critic", {}).get("score", 0.0), 0.0)
 
-    wf_return = float(b7c.get("inputs", {}).get("wf_avg_return", 0.0) or 0.0)
-    mc_negative_run_pct = float(b7c.get("inputs", {}).get("mc_negative_run_pct", 100.0) or 100.0)
-    missing_ratio_pct = float(b7c.get("inputs", {}).get("missing_ratio_pct", 100.0) or 100.0)
+    wf_avg_return = _safe_float(b7c.get("inputs", {}).get("wf_avg_return", 0.0), 0.0)
+    mc_negative_run_pct = _safe_float(b7c.get("inputs", {}).get("mc_negative_run_pct", 100.0), 100.0)
+    missing_ratio_pct = _resolve_missing_ratio(b7c)
 
     critic_result = classify_critic(critic_score, cfg)
     performance_result = classify_performance(
-        wf_return=wf_return,
+        wf_return=wf_avg_return,
         mc_negative_run_pct=mc_negative_run_pct,
         missing_ratio_pct=missing_ratio_pct,
         cfg=cfg,
@@ -43,7 +64,7 @@ def main():
     payload = {
         "inputs": {
             "critic_score": critic_score,
-            "wf_avg_return": wf_return,
+            "wf_avg_return": wf_avg_return,
             "mc_negative_run_pct": mc_negative_run_pct,
             "missing_ratio_pct": missing_ratio_pct,
         },
