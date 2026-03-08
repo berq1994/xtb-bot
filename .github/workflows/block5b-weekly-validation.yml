@@ -1,0 +1,23 @@
+name: block5b-weekly-validation
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "45 8 * * 6"
+
+jobs:
+  block5b_validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Block 5B
+        run: |
+          python block5b_entry.py
