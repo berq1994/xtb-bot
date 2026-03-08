@@ -1,0 +1,12 @@
+Po nahrání tohoto balíku spusť:
+
+python block5a_entry.py
+
+A zkontroluj:
+- `missing_ratio_pct`
+- `disabled`
+- `missing`
+
+Cíl:
+- snížit `missing_ratio_pct`
+- nechat problematické tickery explicitně mapované nebo vypnuté

@@ -40,6 +40,15 @@ ticker_map:
     enabled: false
     note: "Původní CSG ticker je potřeba ručně potvrdit."
 
+  CSG.DE:
+    internal: CSG.DE
+    yahoo: CSG.DE
+    fmp: CSG.DE
+    report: CSG.DE / ručně ověřit
+    sector: Unknown
+    enabled: false
+    note: "Ticker je doplněn kvůli mapování, ale je potřeba ruční potvrzení."
+
   SGLD:
     internal: SGLD
     yahoo: SGLD.L
@@ -135,4 +144,52 @@ ticker_map:
     fmp: AMZN
     report: Amazon
     sector: Consumer Tech
+    enabled: true
+
+  LEU:
+    internal: LEU
+    yahoo: LEU
+    fmp: LEU
+    report: Centrus Energy
+    sector: Nuclear
+    enabled: true
+
+  ASML:
+    internal: ASML
+    yahoo: ASML
+    fmp: ASML
+    report: ASML
+    sector: Semiconductors
+    enabled: true
+
+  AVGO:
+    internal: AVGO
+    yahoo: AVGO
+    fmp: AVGO
+    report: Broadcom
+    sector: Semiconductors
+    enabled: true
+
+  CRWD:
+    internal: CRWD
+    yahoo: CRWD
+    fmp: CRWD
+    report: CrowdStrike
+    sector: Cybersecurity
+    enabled: true
+
+  LLY:
+    internal: LLY
+    yahoo: LLY
+    fmp: LLY
+    report: Eli Lilly
+    sector: Healthcare
+    enabled: true
+
+  IREN:
+    internal: IREN
+    yahoo: IREN
+    fmp: IREN
+    report: IREN
+    sector: Infrastructure / Crypto
     enabled: true
