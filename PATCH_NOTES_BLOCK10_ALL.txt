@@ -1,0 +1,14 @@
+Doporučený postup:
+1. python block6c_entry.py
+2. python block8a_entry.py
+3. python block10c_entry.py
+4. python block10b_entry.py
+5. python block10d_entry.py
+
+Výstupy:
+- `.state/block10c_daily_briefing.json`
+- `.state/block10b_manual_ticket.json`
+- `.state/block10d_trade_journal.json`
+- `xtb_daily_briefing.txt`
+- `xtb_manual_ticket.txt`
+- `xtb_trade_journal.txt`

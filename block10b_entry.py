@@ -27,6 +27,8 @@ def main():
             {"symbol": "NVDA", "score": 1.4},
             {"symbol": "TSM", "score": 1.3},
             {"symbol": "MSFT", "score": 1.2},
+            {"symbol": "CVX", "score": 1.1},
+            {"symbol": "LEU", "score": 1.0},
         ]
 
     ranked = rank_watchlist(top_signals)
@@ -65,12 +67,8 @@ def main():
     }
 
     Path(".state").mkdir(exist_ok=True)
-    Path(".state/block10b_manual_ticket.json").write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    Path("block10b_output.json").write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
+    Path(".state/block10b_manual_ticket.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    Path("block10b_output.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     Path("xtb_manual_ticket.txt").write_text(rendered, encoding="utf-8")
     print(json.dumps(payload, ensure_ascii=False, indent=2))
 
