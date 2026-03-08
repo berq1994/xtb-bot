@@ -11,7 +11,7 @@
       "critic_ready": false,
       "wf_ready": true,
       "mc_ready": true,
-      "data_ready": false
+      "data_ready": true
     }
   },
   "activation": {
@@ -29,7 +29,7 @@
     "critic_score": 0.65,
     "wf_avg_return": 0.42,
     "mc_negative_run_pct": 3.0,
-    "missing_ratio_pct": 100.0,
+    "missing_ratio_pct": 0.0,
     "governance_mode": "REVIEW_ONLY",
     "final_decision_mode": "SAFE_MODE"
   }
