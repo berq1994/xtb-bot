@@ -12,8 +12,11 @@ def build_risk_overlay(
 
     combined = list(briefing_items) + list(alerts)
     high_vol = any(str(x.get("status", "")).upper() == "HIGH VOL" for x in combined)
-    has_macro_no_trade = any(
-        str(x.get("category", "")).lower() == "macro" and str(x.get("status", "")).upper() == "NO TRADE"
+    macro_items = [x for x in combined if str(x.get("category", "")).lower() == "macro"]
+    macro_high = any(float(x.get("impact", 0.0) or 0.0) >= 0.80 for x in macro_items)
+    macro_medium = any(float(x.get("impact", 0.0) or 0.0) >= 0.67 for x in macro_items)
+    earnings_high = any(
+        str(x.get("category", "")).lower() == "earnings" and float(x.get("impact", 0.0) or 0.0) >= 0.80
         for x in combined
     )
     has_earnings = any(str(x.get("category", "")).lower() == "earnings" for x in combined)
@@ -36,17 +39,26 @@ def build_risk_overlay(
         portfolio_actions.append("Headline volatilita zvýšená, zmenšit size.")
 
     if has_earnings:
+        portfolio_actions.append("Earnings téma je aktivní, sledovat gap risk a spready.")
+    if earnings_high:
         earnings_lock = True
         allow_overnight = False
-        portfolio_actions.append("Earnings risk: nepreferovat držení přes close bez extra důvodu.")
+        max_single_position_risk_pct = min(max_single_position_risk_pct, 0.30)
+        portfolio_actions.append("Silný earnings event: přes close jen výjimečně.")
+    elif has_earnings:
+        max_single_position_risk_pct = min(max_single_position_risk_pct, 0.40)
 
-    if has_macro_no_trade:
+    if macro_high:
         macro_lock = True
         risk_posture = "TIGHT"
         max_single_position_risk_pct = min(max_single_position_risk_pct, 0.25)
-        portfolio_actions.append("Makro režim dne je citlivý, nové vstupy jen selektivně.")
+        portfolio_actions.append("Makro impact je vysoký, nové vstupy jen velmi selektivně.")
+    elif macro_medium:
+        risk_posture = "REDUCE SIZE" if risk_posture == "NORMAL" else risk_posture
+        max_single_position_risk_pct = min(max_single_position_risk_pct, 0.35)
+        portfolio_actions.append("Makro den je aktivní, preferovat potvrzené setupy.")
 
-    if scored_records >= 5 and hit_rate < 0.40:
+    if scored_records >= 8 and hit_rate < 0.38:
         risk_posture = "LOCK NEW RISK"
         kill_switch_armed = True
         max_single_position_risk_pct = 0.0
@@ -57,6 +69,8 @@ def build_risk_overlay(
         max_new_positions = 0
     elif risk_posture == "TIGHT":
         max_new_positions = min(max_new_positions or 1, 1)
+    elif risk_posture == "REDUCE SIZE":
+        max_new_positions = min(max_new_positions or 2, 2)
 
     return {
         "risk_posture": risk_posture,
