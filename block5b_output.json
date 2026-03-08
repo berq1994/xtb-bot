@@ -30,23 +30,23 @@
   "monte_carlo": {
     "ok": true,
     "simulations": 500,
-    "median_final_pnl": 4029.75,
-    "p05_final_pnl": 609.95,
-    "p95_final_pnl": 7817.24,
-    "avg_final_pnl": 4053.78,
-    "median_max_dd": -1137.09,
-    "p95_max_dd": -683.26,
-    "risk_of_negative_run_pct": 1.6
+    "median_final_pnl": 4076.56,
+    "p05_final_pnl": 417.79,
+    "p95_final_pnl": 7054.08,
+    "avg_final_pnl": 3967.76,
+    "median_max_dd": -1117.83,
+    "p95_max_dd": -685.92,
+    "risk_of_negative_run_pct": 3.0
   },
   "adaptive_weights": {
-    "momentum": 0.275027,
-    "breakout": 0.207829,
-    "mean_reversion": 0.092485,
-    "sentiment": 0.147114,
-    "regime": 0.09581,
-    "volatility": 0.092485,
-    "lstm": 0.044625,
-    "transformer": 0.044625
+    "momentum": 0.281432,
+    "breakout": 0.209659,
+    "mean_reversion": 0.090621,
+    "sentiment": 0.146279,
+    "regime": 0.094711,
+    "volatility": 0.090621,
+    "lstm": 0.043338,
+    "transformer": 0.043338
   },
   "performance_gate": {
     "approved": false,
@@ -54,7 +54,7 @@
     "mc_ok": true,
     "avg_test_return_pct": 0.42,
     "avg_test_max_dd_pct": -1.55,
-    "risk_of_negative_run_pct": 1.6,
+    "risk_of_negative_run_pct": 3.0,
     "reason": "REVIEW_REQUIRED"
   }
 }

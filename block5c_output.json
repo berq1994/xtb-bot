@@ -20,14 +20,14 @@
       "CRITIC_NOT_APPROVED"
     ],
     "adaptive_weights": {
-      "momentum": 0.268678,
-      "breakout": 0.205946,
-      "mean_reversion": 0.094356,
-      "sentiment": 0.147904,
-      "regime": 0.096889,
-      "volatility": 0.094356,
-      "lstm": 0.045935,
-      "transformer": 0.045935
+      "momentum": 0.281432,
+      "breakout": 0.209659,
+      "mean_reversion": 0.090621,
+      "sentiment": 0.146279,
+      "regime": 0.094711,
+      "volatility": 0.090621,
+      "lstm": 0.043338,
+      "transformer": 0.043338
     },
     "top_signals": [
       {
@@ -57,7 +57,7 @@
     "kill_switch": false,
     "avg_test_return_pct": 0.42,
     "avg_test_max_dd_pct": -1.55,
-    "risk_of_negative_run_pct": 2.0
+    "risk_of_negative_run_pct": 3.0
   },
   "health": {
     "healthy": true,

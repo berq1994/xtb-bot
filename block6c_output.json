@@ -1,0 +1,83 @@
+{
+  "system_dashboard": {
+    "system_mode": "SAFE_MODE",
+    "allow_execution": false,
+    "allow_new_positions": false,
+    "allow_recalibration": false,
+    "governance_mode": "REVIEW_ONLY",
+    "kill_switch": false,
+    "kill_reasons": [
+      "CRITIC_NOT_APPROVED"
+    ],
+    "performance_gate": {
+      "approved": false,
+      "wf_ok": false,
+      "mc_ok": true,
+      "avg_test_return_pct": 0.42,
+      "avg_test_max_dd_pct": -1.55,
+      "risk_of_negative_run_pct": 3.0,
+      "reason": "REVIEW_REQUIRED"
+    },
+    "adaptive_weights": {
+      "momentum": 0.281432,
+      "breakout": 0.209659,
+      "mean_reversion": 0.090621,
+      "sentiment": 0.146279,
+      "regime": 0.094711,
+      "volatility": 0.090621,
+      "lstm": 0.043338,
+      "transformer": 0.043338
+    },
+    "top_signals": [
+      {
+        "symbol": "NVDA",
+        "score": 1.4
+      },
+      {
+        "symbol": "TSM",
+        "score": 1.3
+      },
+      {
+        "symbol": "MSFT",
+        "score": 1.2
+      },
+      {
+        "symbol": "CVX",
+        "score": 1.1
+      },
+      {
+        "symbol": "LEU",
+        "score": 1.0
+      }
+    ]
+  },
+  "executive_panel": {
+    "summary": {
+      "final_mode": "SAFE_MODE",
+      "execution_enabled": false,
+      "recalibration_enabled": false,
+      "data_gate_mode": "APPROVED",
+      "wf_avg_test_return_pct": 0.42,
+      "wf_avg_test_max_dd_pct": -1.55,
+      "mc_risk_negative_run_pct": 3.0
+    }
+  },
+  "status_cards": [
+    {
+      "title": "Finální režim",
+      "value": "SAFE_MODE"
+    },
+    {
+      "title": "Exekuce",
+      "value": "BLOKOVÁNA"
+    },
+    {
+      "title": "Data gate",
+      "value": "APPROVED"
+    },
+    {
+      "title": "Performance gate",
+      "value": "REVIEW"
+    }
+  ]
+}

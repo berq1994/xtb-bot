@@ -7,7 +7,7 @@
       "mc_ok": true,
       "avg_test_return_pct": 0.42,
       "avg_test_max_dd_pct": -1.55,
-      "risk_of_negative_run_pct": 1.6,
+      "risk_of_negative_run_pct": 3.0,
       "reason": "REVIEW_REQUIRED"
     },
     "data_gate": {
