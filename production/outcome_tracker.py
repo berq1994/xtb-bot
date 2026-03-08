@@ -1,44 +1,113 @@
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List
-
-REG_DIR = Path('.state/history')
-REG_FILE = REG_DIR / 'alert_registry.jsonl'
-SUMMARY_FILE = REG_DIR / 'alert_registry_summary.json'
+from typing import Any, Dict, Iterable, List
 
 
-def register_alerts(alerts: List[Dict]) -> Dict:
-    REG_DIR.mkdir(parents=True, exist_ok=True)
-    now = datetime.now(timezone.utc).isoformat()
-    entries = []
-    for item in alerts:
-        entries.append({
-            'ts_utc': now,
-            'category': item.get('category'),
-            'title': item.get('title'),
-            'tickers': item.get('tickers', []),
-            'priority': item.get('priority'),
-            'status': item.get('status'),
-            'timeframe': item.get('timeframe'),
-            'bias': item.get('bias'),
-            'outcome_15m': None,
-            'outcome_60m': None,
-            'outcome_1d': None,
-        })
-    with REG_FILE.open('a', encoding='utf-8') as fh:
-        for entry in entries:
-            fh.write(json.dumps(entry, ensure_ascii=False) + '
-')
+OUTCOME_DIR = Path(".state/history")
+ALERT_REGISTRY_PATH = OUTCOME_DIR / "alert_registry.jsonl"
+ALERT_REGISTRY_SUMMARY_PATH = OUTCOME_DIR / "alert_registry_summary.json"
 
-    all_entries = []
-    if REG_FILE.exists():
-        with REG_FILE.open('r', encoding='utf-8') as fh:
-            all_entries = [json.loads(line) for line in fh if line.strip()]
-    summary = {
-        'records': len(all_entries),
-        'latest_batch': len(entries),
-        'latest_ts_utc': now,
+
+def _ensure_parent(path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+
+def _append_jsonl(path: Path, entry: Dict[str, Any]) -> None:
+    _ensure_parent(path)
+    with path.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+
+def _read_jsonl(path: Path) -> List[Dict[str, Any]]:
+    if not path.exists():
+        return []
+
+    rows: List[Dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return rows
+
+
+def _write_json(path: Path, payload: Dict[str, Any]) -> None:
+    _ensure_parent(path)
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+
+def register_alerts(
+    alerts: Iterable[Dict[str, Any]],
+    path: str | Path = ALERT_REGISTRY_PATH,
+) -> int:
+    """
+    Zapíše alerty do registru pro pozdější vyhodnocení.
+    """
+    target = Path(path)
+    written = 0
+
+    for alert in alerts:
+        payload = dict(alert)
+        payload.setdefault("recorded_at", _utc_now_iso())
+        payload.setdefault("outcome_15m", None)
+        payload.setdefault("outcome_60m", None)
+        payload.setdefault("outcome_1d", None)
+        _append_jsonl(target, payload)
+        written += 1
+
+    return written
+
+
+def load_registered_alerts(path: str | Path = ALERT_REGISTRY_PATH) -> List[Dict[str, Any]]:
+    return _read_jsonl(Path(path))
+
+
+def summarize_registry(
+    registry_path: str | Path = ALERT_REGISTRY_PATH,
+    summary_path: str | Path = ALERT_REGISTRY_SUMMARY_PATH,
+) -> Dict[str, Any]:
+    rows = _read_jsonl(Path(registry_path))
+
+    by_category: Dict[str, int] = {}
+    by_priority: Dict[str, int] = {}
+    by_status: Dict[str, int] = {}
+    by_bias: Dict[str, int] = {}
+    by_timeframe: Dict[str, int] = {}
+
+    for row in rows:
+        category = str(row.get("category", "unknown")).upper()
+        priority = str(row.get("priority", "unknown")).upper()
+        status = str(row.get("status", "unknown")).upper()
+        bias = str(row.get("bias", "unknown"))
+        timeframe = str(row.get("timeframe", "unknown"))
+
+        by_category[category] = by_category.get(category, 0) + 1
+        by_priority[priority] = by_priority.get(priority, 0) + 1
+        by_status[status] = by_status.get(status, 0) + 1
+        by_bias[bias] = by_bias.get(bias, 0) + 1
+        by_timeframe[timeframe] = by_timeframe.get(timeframe, 0) + 1
+
+    payload: Dict[str, Any] = {
+        "updated_at": _utc_now_iso(),
+        "total_alerts": len(rows),
+        "by_category": by_category,
+        "by_priority": by_priority,
+        "by_status": by_status,
+        "by_bias": by_bias,
+        "by_timeframe": by_timeframe,
     }
-    SUMMARY_FILE.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
-    return summary
+
+    _write_json(Path(summary_path), payload)
+    return payload
