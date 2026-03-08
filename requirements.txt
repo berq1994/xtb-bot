@@ -7,4 +7,5 @@ yfinance
 python-dateutil
 pytz
 feedparser
-.
+scikit-learn
+pyarrow
