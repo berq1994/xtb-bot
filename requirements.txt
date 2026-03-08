@@ -7,3 +7,4 @@ yfinance
 python-dateutil
 pytz
 feedparser
+.
