@@ -1,195 +1,30 @@
 ticker_map:
-  CEZ.PR:
-    internal: CEZ.PR
-    yahoo: CEZ.PR
-    fmp: CEZ.PR
-    report: ČEZ
-    sector: Utilities
-    enabled: true
-
-  BTC-USD:
-    internal: BTC-USD
-    yahoo: BTC-USD
-    fmp: BTCUSD
-    report: Bitcoin
-    sector: Crypto
-    enabled: true
-
-  IBIT:
-    internal: IBIT
-    yahoo: IBIT
-    fmp: IBIT
-    report: iShares Bitcoin Trust
-    sector: ETF
-    enabled: true
-
-  EON.DE:
-    internal: EON.DE
-    yahoo: EOAN.DE
-    fmp: EOAN.DE
-    report: E.ON
-    sector: Utilities
-    enabled: true
-
-  CSG:
-    internal: CSG
-    yahoo: CSGP
-    fmp: CSGP
-    report: CoStar Group / ověřit původní CSG ticker
-    sector: Real Estate Tech
-    enabled: false
-    note: "Původní CSG ticker je potřeba ručně potvrdit."
-
-  CSG.DE:
-    internal: CSG.DE
-    yahoo: CSG.DE
-    fmp: CSG.DE
-    report: CSG.DE / ručně ověřit
-    sector: Unknown
-    enabled: false
-    note: "Ticker je doplněn kvůli mapování, ale je potřeba ruční potvrzení."
-
-  SGLD:
-    internal: SGLD
-    yahoo: SGLD.L
-    fmp: SGLD.L
-    report: Abrdn Physical Gold Shares / ověřit
-    sector: Commodity ETF
-    enabled: false
-    note: "Původní SGLD ticker je potřeba ručně potvrdit."
-
-  MSFT:
-    internal: MSFT
-    yahoo: MSFT
-    fmp: MSFT
-    report: Microsoft
-    sector: Technology
-    enabled: true
-
-  AMD:
-    internal: AMD
-    yahoo: AMD
-    fmp: AMD
-    report: AMD
-    sector: Technology
-    enabled: true
-
-  NVDA:
-    internal: NVDA
-    yahoo: NVDA
-    fmp: NVDA
-    report: Nvidia
-    sector: Technology
-    enabled: true
-
-  SPY:
-    internal: SPY
-    yahoo: SPY
-    fmp: SPY
-    report: SPY
-    sector: ETF
-    enabled: true
-
-  QQQ:
-    internal: QQQ
-    yahoo: QQQ
-    fmp: QQQ
-    report: Nasdaq QQQ
-    sector: ETF
-    enabled: true
-
-  SMH:
-    internal: SMH
-    yahoo: SMH
-    fmp: SMH
-    report: VanEck Semiconductor ETF
-    sector: ETF
-    enabled: true
-
-  TSLA:
-    internal: TSLA
-    yahoo: TSLA
-    fmp: TSLA
-    report: Tesla
-    sector: Automotive
-    enabled: true
-
-  AAPL:
-    internal: AAPL
-    yahoo: AAPL
-    fmp: AAPL
-    report: Apple
-    sector: Technology
-    enabled: true
-
-  META:
-    internal: META
-    yahoo: META
-    fmp: META
-    report: Meta
-    sector: Technology
-    enabled: true
-
-  GOOGL:
-    internal: GOOGL
-    yahoo: GOOGL
-    fmp: GOOGL
-    report: Alphabet
-    sector: Technology
-    enabled: true
-
-  AMZN:
-    internal: AMZN
-    yahoo: AMZN
-    fmp: AMZN
-    report: Amazon
-    sector: Consumer Tech
-    enabled: true
-
-  LEU:
-    internal: LEU
-    yahoo: LEU
-    fmp: LEU
-    report: Centrus Energy
-    sector: Nuclear
-    enabled: true
-
-  ASML:
-    internal: ASML
-    yahoo: ASML
-    fmp: ASML
-    report: ASML
-    sector: Semiconductors
-    enabled: true
-
-  AVGO:
-    internal: AVGO
-    yahoo: AVGO
-    fmp: AVGO
-    report: Broadcom
-    sector: Semiconductors
-    enabled: true
-
-  CRWD:
-    internal: CRWD
-    yahoo: CRWD
-    fmp: CRWD
-    report: CrowdStrike
-    sector: Cybersecurity
-    enabled: true
-
-  LLY:
-    internal: LLY
-    yahoo: LLY
-    fmp: LLY
-    report: Eli Lilly
-    sector: Healthcare
-    enabled: true
-
-  IREN:
-    internal: IREN
-    yahoo: IREN
-    fmp: IREN
-    report: IREN
-    sector: Infrastructure / Crypto
-    enabled: true
+  CEZ.PR: {internal: CEZ.PR, yahoo: CEZ.PR, fmp: CEZ.PR, report: ČEZ, sector: Utilities, enabled: true}
+  BTC-USD: {internal: BTC-USD, yahoo: BTC-USD, fmp: BTCUSD, report: Bitcoin, sector: Crypto, enabled: true}
+  IBIT: {internal: IBIT, yahoo: IBIT, fmp: IBIT, report: iShares Bitcoin Trust, sector: ETF, enabled: true}
+  EON.DE: {internal: EON.DE, yahoo: EOAN.DE, fmp: EOAN.DE, report: E.ON, sector: Utilities, enabled: true}
+  CSG: {internal: CSG, yahoo: CSGP, fmp: CSGP, report: CoStar Group / ověřit, sector: Real Estate Tech, enabled: false}
+  CSG.DE: {internal: CSG.DE, yahoo: CSG.DE, fmp: CSG.DE, report: CSG.DE / ručně ověřit, sector: Unknown, enabled: false}
+  SGLD: {internal: SGLD, yahoo: SGLD.L, fmp: SGLD.L, report: Abrdn Physical Gold Shares / ověřit, sector: Commodity ETF, enabled: false}
+  MSFT: {internal: MSFT, yahoo: MSFT, fmp: MSFT, report: Microsoft, sector: Technology, enabled: true}
+  AMD: {internal: AMD, yahoo: AMD, fmp: AMD, report: AMD, sector: Technology, enabled: true}
+  NVDA: {internal: NVDA, yahoo: NVDA, fmp: NVDA, report: Nvidia, sector: Technology, enabled: true}
+  SPY: {internal: SPY, yahoo: SPY, fmp: SPY, report: SPY, sector: ETF, enabled: true}
+  QQQ: {internal: QQQ, yahoo: QQQ, fmp: QQQ, report: Nasdaq QQQ, sector: ETF, enabled: true}
+  SMH: {internal: SMH, yahoo: SMH, fmp: SMH, report: VanEck Semiconductor ETF, sector: ETF, enabled: true}
+  TSLA: {internal: TSLA, yahoo: TSLA, fmp: TSLA, report: Tesla, sector: Automotive, enabled: true}
+  AAPL: {internal: AAPL, yahoo: AAPL, fmp: AAPL, report: Apple, sector: Technology, enabled: true}
+  META: {internal: META, yahoo: META, fmp: META, report: Meta, sector: Technology, enabled: true}
+  GOOGL: {internal: GOOGL, yahoo: GOOGL, fmp: GOOGL, report: Alphabet, sector: Technology, enabled: true}
+  AMZN: {internal: AMZN, yahoo: AMZN, fmp: AMZN, report: Amazon, sector: Consumer Tech, enabled: true}
+  LEU: {internal: LEU, yahoo: LEU, fmp: LEU, report: Centrus Energy, sector: Nuclear, enabled: true}
+  ASML: {internal: ASML, yahoo: ASML, fmp: ASML, report: ASML, sector: Semiconductors, enabled: true}
+  AVGO: {internal: AVGO, yahoo: AVGO, fmp: AVGO, report: Broadcom, sector: Semiconductors, enabled: true}
+  CRWD: {internal: CRWD, yahoo: CRWD, fmp: CRWD, report: CrowdStrike, sector: Cybersecurity, enabled: true}
+  LLY: {internal: LLY, yahoo: LLY, fmp: LLY, report: Eli Lilly, sector: Healthcare, enabled: true}
+  IREN: {internal: IREN, yahoo: IREN, fmp: IREN, report: IREN, sector: Infrastructure / Crypto, enabled: true}
+  TSM: {internal: TSM, yahoo: TSM, fmp: TSM, report: TSMC, sector: Semiconductors, enabled: true}
+  CVX: {internal: CVX, yahoo: CVX, fmp: CVX, report: Chevron, sector: Energy, enabled: true}
+  NVO: {internal: NVO, yahoo: NVO, fmp: NVO, report: Novo Nordisk, sector: Healthcare, enabled: true}
+  NBIS: {internal: NBIS, yahoo: NBIS, fmp: NBIS, report: Nebius, sector: AI Infra, enabled: true}
+  LLT: {internal: LLT, yahoo: LHX, fmp: LHX, report: L3Harris / ověřit původní LLT, sector: Defense, enabled: false}
