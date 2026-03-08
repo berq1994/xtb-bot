@@ -1,0 +1,13 @@
+Po nahrání spusť přesně:
+
+python block5b_entry.py
+python block6b_entry.py
+
+Zkontroluj:
+- `.state/performance_gate.json`
+- `performance_integration.performance_gate`
+- `final_decision`
+
+Cíl:
+- aby `performance_gate` už nebyl prázdný
+- aby 6B rozhodoval z plných dat
