@@ -4,7 +4,7 @@
     "[GEO] Napětí v regionu zvyšuje riziko pro energie a dopravu | tickers: OIL, XOM, CVX | impact 0.798",
     "[EARNINGS] Blíží se earnings event s možným gap riskem | tickers: NVDA, TSM, AMD | impact 0.755"
   ],
-  "delivery_queue_size": 2,
+  "delivery_queue_size": 4,
   "telegram_briefing": {
     "delivered": false,
     "transport": "telegram_stub",
