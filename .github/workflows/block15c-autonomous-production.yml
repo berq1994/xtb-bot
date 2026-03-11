@@ -1,0 +1,22 @@
+name: block15c-autonomous-production
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 9-21 * * 1-5"
+
+jobs:
+  block15c_prod:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run Block 15A
+        run: python block15a_entry.py
+      - name: Run Block 15B
+        run: python block15b_entry.py
+      - name: Run Block 15C
+        run: python block15c_entry.py
