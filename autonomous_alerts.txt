@@ -1,0 +1,3 @@
+ALERT | Napětí v regionu zvyšuje riziko pro energie a dopravu | hits CVX | impact 0.798
+ALERT | Blíží se earnings event s možným gap riskem | hits NVDA, TSM | impact 0.755
+ALERT | Firma zveřejnila nový filing s možným dopadem na výhled | hits NVDA, MSFT | impact 0.66

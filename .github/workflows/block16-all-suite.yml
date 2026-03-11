@@ -1,0 +1,38 @@
+name: block16-all-suite
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 9-21 * * 1-5"
+
+jobs:
+  block16_suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TELEGRAM_SEND_ENABLED: ${{ vars.TELEGRAM_SEND_ENABLED }}
+      EMAIL_SMTP_HOST: ${{ secrets.EMAIL_SMTP_HOST }}
+      EMAIL_SMTP_PORT: ${{ vars.EMAIL_SMTP_PORT }}
+      EMAIL_SMTP_USER: ${{ secrets.EMAIL_SMTP_USER }}
+      EMAIL_SMTP_PASS: ${{ secrets.EMAIL_SMTP_PASS }}
+      EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+      EMAIL_TO: ${{ secrets.EMAIL_TO }}
+      EMAIL_SEND_ENABLED: ${{ vars.EMAIL_SEND_ENABLED }}
+      GDELT_ENABLED: ${{ vars.GDELT_ENABLED }}
+      SEC_ENABLED: ${{ vars.SEC_ENABLED }}
+      EARNINGS_ENABLED: ${{ vars.EARNINGS_ENABLED }}
+      MACRO_ENABLED: ${{ vars.MACRO_ENABLED }}
+      FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run Block 16A
+        run: python block16a_entry.py
+      - name: Run Block 16B
+        run: python block16b_entry.py
+      - name: Run Block 16C
+        run: python block16c_entry.py

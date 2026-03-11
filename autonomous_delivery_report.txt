@@ -1,0 +1,12 @@
+AUTONOMOUS DELIVERY REPORT
+Telegram delivered: False
+Telegram ready: False
+Telegram reason: MISSING_OR_DISABLED_TELEGRAM_CONFIG
+
+Email delivered: False
+Email ready: False
+Email reason: MISSING_OR_DISABLED_EMAIL_CONFIG
+
+Briefing length: 487
+Alerts length: 267
+Handoff length: 393
