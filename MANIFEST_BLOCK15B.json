@@ -1,0 +1,15 @@
+{
+  "package": "block15b-autonomous-delivery",
+  "generated_at": "2026-03-11T18:01:21.667122+00:00",
+  "entrypoints": [
+    "block15b_entry.py",
+    "block15b_transport_test.py"
+  ],
+  "outputs": [
+    ".state/block15b_delivery.json",
+    ".state/autonomous_delivery_log.json",
+    "autonomous_delivery_report.txt",
+    "autonomous_email_payload.txt",
+    "autonomous_telegram_payload.txt"
+  ]
+}
