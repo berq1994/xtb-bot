@@ -1,5 +1,6 @@
 import sys
 import json
+from env_loader import load_local_env
 
 
 def _dummy_ai_rows():
@@ -13,6 +14,7 @@ def _dummy_ai_rows():
 
 
 def main():
+    load_local_env()
     mode = sys.argv[1] if len(sys.argv) > 1 else "default"
 
     if mode == "backtest":

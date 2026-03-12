@@ -1,11 +1,11 @@
 XTB MANUAL TICKET
-Symbol: NVDA
+Symbol: BTC-USD
 Direction: long
 Market regime: mixed
-Entry reference: 186.03
-Stop loss: 183.24
-Take profit: 191.61
-News sentiment: positive
+Entry reference: 129.66
+Stop loss: 127.72
+Take profit: 133.55
+News sentiment: negative
 Checklist:
 - Confirm 15m and 1h chart structure
 - Confirm spread before entry

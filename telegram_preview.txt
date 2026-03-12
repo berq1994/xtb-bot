@@ -1,17 +1,17 @@
 TELEGRAM PREVIEW
 📊 Daily market intelligence
 Regime: mixed
-Decision: watch_long
-Lead: NVDA | 0.69% | trend up | news positive
-Weak: TLT | -1.29% | trend down | news negative
+Decision: watch_hedge
+Lead: BTC-USD | 1.3% | trend up | news negative
+Weak: SPY | -1.3% | trend down | news neutral
 
 🎯 Manual XTB ticket
-Symbol: NVDA
+Symbol: BTC-USD
 Direction: long
-Entry: 186.03
-SL: 183.24
-TP: 191.61
-Sentiment: positive
+Entry: 129.66
+SL: 127.72
+TP: 133.55
+Sentiment: negative
 
 Checklist:
 • Confirm chart on XTB

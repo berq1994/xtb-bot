@@ -3,14 +3,14 @@ DAILY BRIEFING
 
 OPENBB SIGNAL BUNDLE
 Market regime: mixed
-Data source: yfinance
+Data source: fallback
 
 Primary long candidate:
-- NVDA | move 0.69% | trend up | price 186.03
+- BTC-USD | move 1.3% | trend up | price 129.66
 - Action: watch breakout / manual XTB confirmation
 
 Primary weak candidate:
-- TLT | move -1.29% | trend down | price 87.14
+- SPY | move -1.3% | trend down | price 98.7
 - Action: watch weakness / hedge / avoid impulsive long
 
 Manual execution checklist:
@@ -22,48 +22,47 @@ Manual execution checklist:
 OPENBB NEWS / SENTIMENT
 Market regime: mixed
 
-NVDA: positive (score 4)
-- AI demand remains strong across data center cycle
-- Semiconductor leadership supports momentum
-
-QQQ: neutral (score 0)
-- QQQ trading activity remains in focus
-- Market participants monitor QQQ for follow-through
+BTC-USD: negative (score -1)
+- Crypto sentiment improves with risk appetite
+- Volatility remains elevated across digital assets
 
 AAPL: positive (score 2)
 - Consumer demand mixed ahead of product cycle
 - Mega-cap quality still supports defensive interest
 
-TLT: negative (score -3)
-- Rates volatility pressures long duration bonds
-- Defensive flow rises when growth slows
+IWM: neutral (score 0)
+- IWM trading activity remains in focus
+- Market participants monitor IWM for follow-through
 
-BTC-USD: negative (score -1)
-- Crypto sentiment improves with risk appetite
-- Volatility remains elevated across digital assets
+SPY: neutral (score 0)
+- SPY trading activity remains in focus
+- Market participants monitor SPY for follow-through
 
-DIA: neutral (score 0)
-- DIA trading activity remains in focus
-- Market participants monitor DIA for follow-through
+GLD: neutral (score 0)
+- GLD trading activity remains in focus
+- Market participants monitor GLD for follow-through
+
+QQQ: neutral (score 0)
+- QQQ trading activity remains in focus
+- Market participants monitor QQQ for follow-through
 
 SUPERVISOR DECISION
 Market regime: mixed
-Decision: watch_long
-Lead setup: NVDA | 0.69% | trend up | news positive
-Weak setup: TLT | -1.29% | trend down | news negative
+Decision: watch_hedge
+Lead setup: BTC-USD | 1.3% | trend up | news negative
+Weak setup: SPY | -1.3% | trend down | news neutral
 Next step:
-- Open XTB chart
-- Wait for breakout confirmation
-- Use manual ticket and max 1% risk
+- Avoid impulsive long entries
+- Consider defensive hedge review
 
 XTB MANUAL TICKET
-Symbol: NVDA
+Symbol: BTC-USD
 Direction: long
 Market regime: mixed
-Entry reference: 186.03
-Stop loss: 183.24
-Take profit: 191.61
-News sentiment: positive
+Entry reference: 129.66
+Stop loss: 127.72
+Take profit: 133.55
+News sentiment: negative
 Checklist:
 - Confirm 15m and 1h chart structure
 - Confirm spread before entry

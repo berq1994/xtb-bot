@@ -13,19 +13,36 @@ except Exception:
 OUTPUT_PATH = Path("telegram_live_result.txt")
 
 
+def _is_enabled() -> bool:
+    value = (
+        os.getenv("TELEGRAM_SEND_ENABLED")
+        or os.getenv("TG_SEND_ENABLED")
+        or "true"
+    ).strip().lower()
+    return value in {"1", "true", "yes", "on"}
+
+
+def _first(*keys: str) -> str:
+    for key in keys:
+        value = os.getenv(key, "").strip()
+        if value:
+            return value
+    return ""
+
+
 def _token_and_chat() -> tuple[str, str]:
-    token = (
-        os.getenv("TELEGRAMTOKEN")
-        or os.getenv("TG_BOT_TOKEN")
-        or os.getenv("TELEGRAM_BOT_TOKEN")
-        or ""
-    ).strip()
-    chat_id = (
-        os.getenv("CHATID")
-        or os.getenv("TG_CHAT_ID")
-        or os.getenv("TELEGRAM_CHAT_ID")
-        or ""
-    ).strip()
+    token = _first(
+        "TELEGRAMTOKEN",
+        "TG_BOT_TOKEN",
+        "TELEGRAM_BOT_TOKEN",
+        "BOT_TOKEN",
+    )
+    chat_id = _first(
+        "CHATID",
+        "TG_CHAT_ID",
+        "TELEGRAM_CHAT_ID",
+        "CHAT_ID",
+    )
     return token, chat_id
 
 
@@ -33,11 +50,20 @@ def run_telegram_live(watchlist=None) -> str:
     message = run_telegram_preview(watchlist)
     token, chat_id = _token_and_chat()
 
+    if not _is_enabled():
+        output = "\n".join([
+            "TELEGRAM LIVE",
+            "Status: disabled",
+            "Reason: TELEGRAM_SEND_ENABLED is false",
+        ])
+        OUTPUT_PATH.write_text(output, encoding="utf-8")
+        return output
+
     if not token or not chat_id:
         output = "\n".join([
             "TELEGRAM LIVE",
             "Status: preview_only",
-            "Reason: missing TELEGRAMTOKEN/TG_BOT_TOKEN or CHATID/TG_CHAT_ID",
+            "Reason: missing TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN or CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID",
             "Preview file: telegram_preview.txt",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
