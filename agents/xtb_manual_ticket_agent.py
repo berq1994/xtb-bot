@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from integrations.openbb_engine import generate_market_overview, build_news_sentiment
 from pathlib import Path
+
+from integrations.openbb_engine import generate_market_overview, build_news_sentiment
 
 
 def _levels(price: float, direction: str) -> tuple[float, float]:
@@ -18,13 +19,21 @@ def run_xtb_manual_ticket(watchlist=None):
     overview = generate_market_overview(watchlist)
     leaders = overview.get("leaders", [])
     laggards = overview.get("laggards", [])
+
     leader = leaders[0] if leaders else None
     laggard = laggards[0] if laggards else None
+
     candidate = leader if overview.get("regime") != "risk_off" and leader else laggard
     direction = "long" if candidate is leader else "short_watch"
+
     symbol = candidate["symbol"] if candidate else "NONE"
     price = float(candidate["price"]) if candidate else 0.0
-    sl, tp = _levels(price, "long" if direction == "long" else "short") if candidate else (0.0, 0.0)
+
+    if candidate:
+        sl, tp = _levels(price, "long" if direction == "long" else "short")
+    else:
+        sl, tp = 0.0, 0.0
+
     news_map = build_news_sentiment([symbol] if candidate else [])
     sentiment = news_map.get(symbol, {}).get("sentiment_label", "neutral") if candidate else "neutral"
 
@@ -43,5 +52,6 @@ def run_xtb_manual_ticket(watchlist=None):
     lines.append("- Max 1% account risk")
     lines.append("- Enter only on chart confirmation")
 
-    Path("xtb_manual_ticket.txt").write_text("\n".join(lines), encoding="utf-8")
-    return "\n".join(lines)
+    output = "\n".join(lines)
+    Path("xtb_manual_ticket.txt").write_text(output, encoding="utf-8")
+    return output

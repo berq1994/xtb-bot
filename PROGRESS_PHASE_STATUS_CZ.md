@@ -1,26 +1,18 @@
-# Stav pokroku projektu
+# Progress phase status
 
-## Aktuální fáze
-**Fáze 2 / 5 – první integrace datového engine a první signal bundle**
+## Fáze 1
+Základní propojení původního projektu s OpenBB vrstvou.
 
-## Hotovo
-- Zachovaný původní projekt jako hlavní základ.
-- Přidaná OpenBB integrační vrstva s fallbackem.
-- Přidaný režim `openbb_scan`.
-- Opravený syntax bug v `agents/openbb_research_agent.py`.
-- Přidaný režim `openbb_signal` pro první ruční XTB handoff.
+## Fáze 2
+Fungující `openbb_scan` a `openbb_signal`.
 
-## Co už systém umí sám
-- Načíst tržní snapshot.
-- Vyhodnotit základní market regime.
-- Najít leadery a laggards.
-- Připravit ruční kandidáty pro XTB.
+## Fáze 3
+Fungující `openbb_news`, `supervisor`, `xtb_ticket`.
 
-## Co ještě není hotové
-- News a sentiment vrstva.
-- Supervisor, který bude automaticky řídit více agentů.
-- Učení ze statistik a journalu.
-- Automatické prioritizování úkolů agentům.
+## Fáze 4
+Přidán `daily_briefing`, `telegram_preview`, `log_signal`.
+Přidána historie a journal.
+Přidán denní textový briefing a Telegram-ready preview.
 
-## Další logický krok
-**Fáze 3 / 5 – News + sentiment + supervisor orchestrace**
+## Odhad pokroku
+Přibližně 80 % směrem k první velmi použitelné poloautomatické verzi.

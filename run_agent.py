@@ -1,6 +1,6 @@
 import sys
-from pathlib import Path
 import json
+
 
 def _dummy_ai_rows():
     return [
@@ -10,6 +10,7 @@ def _dummy_ai_rows():
         {"symbol": "BTC-USD", "final_score": 0.88, "sentiment": {"label": "bullish"}, "volatility": {"state": "HIGH"}},
         {"symbol": "CEZ.PR", "final_score": 0.51, "sentiment": {"label": "neutral"}, "volatility": {"state": "LOW"}},
     ]
+
 
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "default"
@@ -25,6 +26,7 @@ def main():
         from ai.ticker_loader import load_all_tickers
         from risk.portfolio_var import portfolio_var
         from reporting.executive_report import build_executive_report
+
         tickers = load_all_tickers()
         ai_rows = _dummy_ai_rows()
         summary = {
@@ -39,9 +41,13 @@ def main():
     if mode == "ai_recalibrate":
         from ai.model_registry import register_model
         from ai.experiment_tracker import log_experiment
+
         metrics = {"sharpe": 1.11, "sortino": 1.42, "max_dd": -0.09}
         reg = register_model("ensemble_v1", metrics)
-        log_experiment("weekly_recalibration", {"registry_size": len(reg.get("active_models", [])), "metrics": metrics})
+        log_experiment(
+            "weekly_recalibration",
+            {"registry_size": len(reg.get("active_models", [])), "metrics": metrics},
+        )
         print("AI recalibration completed.")
         return
 
@@ -70,13 +76,34 @@ def main():
         print(run_xtb_manual_ticket())
         return
 
+    if mode == "daily_briefing":
+        from agents.daily_briefing_phase4_agent import run_daily_briefing
+        print(run_daily_briefing())
+        return
+
+    if mode == "telegram_preview":
+        from agents.telegram_preview_agent import run_telegram_preview
+        print(run_telegram_preview())
+        return
+
+    if mode == "log_signal":
+        from agents.signal_history_agent import run_log_signal
+        print(run_log_signal())
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
 
-    print("Velký AI upgrade přidán. Použij: python run_agent.py backtest | ai_daily | ai_recalibrate | ai_walkforward | openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket")
+    print(
+        "Velký AI upgrade přidán. Použij: python run_agent.py "
+        "backtest | ai_daily | ai_recalibrate | ai_walkforward | "
+        "openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket | "
+        "daily_briefing | telegram_preview | log_signal"
+    )
+
 
 if __name__ == "__main__":
     main()
