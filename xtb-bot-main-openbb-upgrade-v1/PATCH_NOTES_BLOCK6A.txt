@@ -1,8 +1,0 @@
-Doporučený postup:
-1. python block5a_entry.py > block5a_output.json
-2. python block6a_entry.py
-
-Cíl:
-- zkontrolovat final data gate
-- zkontrolovat enabled universe
-- ověřit routing FMP / Yahoo priority

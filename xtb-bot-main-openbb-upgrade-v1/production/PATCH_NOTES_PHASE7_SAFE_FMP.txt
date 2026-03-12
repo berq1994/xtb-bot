@@ -1,5 +1,0 @@
-PHASE 7 SAFE FMP HOTFIX
-- FMP HTTP 401/402/403/404/429 už nepoloží celý production run.
-- Entry price enrichment je best-effort only.
-- Outcome autofill přes FMP je best-effort only.
-- Telegram zprávy se odešlou i když FMP vrátí Payment Required.

@@ -1,6 +1,0 @@
-# Volitelná vrstva pro další upgrade
-openbb
-openbb-yfinance
-yfinance
-pandas
-numpy

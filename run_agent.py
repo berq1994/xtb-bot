@@ -55,13 +55,28 @@ def main():
         print(run_openbb_signal())
         return
 
+    if mode == "openbb_news":
+        from agents.openbb_news_agent import run_openbb_news
+        print(run_openbb_news())
+        return
+
+    if mode == "supervisor":
+        from agents.supervisor_agent import run_supervisor
+        print(run_supervisor())
+        return
+
+    if mode == "xtb_ticket":
+        from agents.xtb_manual_ticket_agent import run_xtb_manual_ticket
+        print(run_xtb_manual_ticket())
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
 
-    print("Velký AI upgrade přidán. Použij: python run_agent.py backtest | ai_daily | ai_recalibrate | ai_walkforward | openbb_scan | openbb_signal")
+    print("Velký AI upgrade přidán. Použij: python run_agent.py backtest | ai_daily | ai_recalibrate | ai_walkforward | openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket")
 
 if __name__ == "__main__":
     main()
