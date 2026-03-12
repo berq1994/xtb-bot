@@ -1,0 +1,17 @@
+{
+  "package": "block15a-autonomous-research",
+  "generated_at": "2026-03-11T17:43:50.293188+00:00",
+  "mode": "autonomous_research_manual_execution",
+  "entrypoints": [
+    "block15a_entry.py",
+    "block15a_daemon_test.py"
+  ],
+  "outputs": [
+    ".state/block15a_autonomous_run.json",
+    ".state/autonomous_event_store.json",
+    ".state/autonomous_health.json",
+    "autonomous_briefing.txt",
+    "autonomous_alerts.txt",
+    "autonomous_xtb_handoff.txt"
+  ]
+}

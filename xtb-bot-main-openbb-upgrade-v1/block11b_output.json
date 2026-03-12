@@ -1,0 +1,285 @@
+{
+  "briefing": {
+    "title": "Daily Intelligence Briefing",
+    "sections": [
+      {
+        "title": "Nejdůležitější intelligence",
+        "count": 4,
+        "items": [
+          {
+            "kind": "geo",
+            "headline": "Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis",
+            "summary_cz": "Geopolitické napětí může krátkodobě zvýšit riziko v energiích, dopravě a polovodičích.",
+            "tickers": [
+              "OIL",
+              "IRAN",
+              "TAIWAN"
+            ],
+            "relevance": 0.865,
+            "impact": 0.798
+          },
+          {
+            "kind": "earnings",
+            "headline": "Blíží se earnings event s možným vysokým gap riskem",
+            "summary_cz": "Earnings událost může výrazně zvýšit gap risk a ovlivnit vhodnost vstupu před výsledky.",
+            "tickers": [
+              "NVDA",
+              "TSM",
+              "AMD"
+            ],
+            "relevance": 0.915,
+            "impact": 0.755
+          },
+          {
+            "kind": "macro",
+            "headline": "Makro událost může změnit risk-on / risk-off režim dne",
+            "summary_cz": "Makro kalendář a rétorika centrálních bank mohou změnit dnešní režim trhu.",
+            "tickers": [
+              "BTC",
+              "OIL",
+              "FED"
+            ],
+            "relevance": 0.83,
+            "impact": 0.685
+          },
+          {
+            "kind": "corporate",
+            "headline": "Firma zveřejnila významné firemní oznámení a nový výhled",
+            "summary_cz": "Oficiální firemní zpráva může změnit krátkodobý sentiment a intradenní bias.",
+            "tickers": [
+              "NVDA",
+              "MSFT",
+              "AAPL"
+            ],
+            "relevance": 0.815,
+            "impact": 0.66
+          }
+        ]
+      }
+    ]
+  },
+  "alerts": {
+    "alerts": [
+      {
+        "kind": "geo",
+        "headline": "Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis",
+        "summary_cz": "Geopolitické napětí může krátkodobě zvýšit riziko v energiích, dopravě a polovodičích.",
+        "tickers": [
+          "OIL",
+          "IRAN",
+          "TAIWAN"
+        ],
+        "relevance": 0.865,
+        "impact": 0.798
+      },
+      {
+        "kind": "earnings",
+        "headline": "Blíží se earnings event s možným vysokým gap riskem",
+        "summary_cz": "Earnings událost může výrazně zvýšit gap risk a ovlivnit vhodnost vstupu před výsledky.",
+        "tickers": [
+          "NVDA",
+          "TSM",
+          "AMD"
+        ],
+        "relevance": 0.915,
+        "impact": 0.755
+      }
+    ]
+  },
+  "alert_delivery": {
+    "delivered": 2,
+    "status": "OK"
+  },
+  "intelligence_router": {
+    "routed_items": [
+      {
+        "kind": "geo",
+        "headline": "Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis",
+        "summary_cz": "Geopolitické napětí může krátkodobě zvýšit riziko v energiích, dopravě a polovodičích.",
+        "tickers": [
+          "OIL",
+          "IRAN",
+          "TAIWAN"
+        ],
+        "relevance": 0.865,
+        "impact": 0.798
+      },
+      {
+        "kind": "earnings",
+        "headline": "Blíží se earnings event s možným vysokým gap riskem",
+        "summary_cz": "Earnings událost může výrazně zvýšit gap risk a ovlivnit vhodnost vstupu před výsledky.",
+        "tickers": [
+          "NVDA",
+          "TSM",
+          "AMD"
+        ],
+        "relevance": 0.915,
+        "impact": 0.755
+      },
+      {
+        "kind": "macro",
+        "headline": "Makro událost může změnit risk-on / risk-off režim dne",
+        "summary_cz": "Makro kalendář a rétorika centrálních bank mohou změnit dnešní režim trhu.",
+        "tickers": [
+          "BTC",
+          "OIL",
+          "FED"
+        ],
+        "relevance": 0.83,
+        "impact": 0.685
+      },
+      {
+        "kind": "corporate",
+        "headline": "Firma zveřejnila významné firemní oznámení a nový výhled",
+        "summary_cz": "Oficiální firemní zpráva může změnit krátkodobý sentiment a intradenní bias.",
+        "tickers": [
+          "NVDA",
+          "MSFT",
+          "AAPL"
+        ],
+        "relevance": 0.815,
+        "impact": 0.66
+      }
+    ],
+    "route_status": "OK"
+  },
+  "signal_quality": {
+    "symbol": "NVDA",
+    "setup_quality": "A",
+    "score": 1.4,
+    "tradable": true
+  },
+  "ticket": {
+    "symbol": "NVDA",
+    "score": 1.4,
+    "ticket_ready": true,
+    "note": "Předat do manual trade ticket builderu."
+  },
+  "execution_help": {
+    "symbol": "NVDA",
+    "ready_for_manual_xtb": true,
+    "instruction": "Ruční zadání v xStation pouze po kontrole SL/TP a risk sizingu."
+  },
+  "risk": {
+    "symbol": "NVDA",
+    "risk_ok": true,
+    "risk_note": "Zkontrolována základní koncentrace a sizing."
+  },
+  "critic": {
+    "critic_score": 0.95,
+    "approved": true
+  },
+  "governance": {
+    "mode": "REVIEW_ONLY",
+    "allow_trade": true
+  },
+  "kill_switch": {
+    "kill_switch": false,
+    "reason": "OK"
+  },
+  "dashboard": {
+    "governance_mode": "REVIEW_ONLY",
+    "top_intelligence": [
+      {
+        "kind": "geo",
+        "headline": "Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis",
+        "summary_cz": "Geopolitické napětí může krátkodobě zvýšit riziko v energiích, dopravě a polovodičích.",
+        "tickers": [
+          "OIL",
+          "IRAN",
+          "TAIWAN"
+        ],
+        "relevance": 0.865,
+        "impact": 0.798
+      },
+      {
+        "kind": "earnings",
+        "headline": "Blíží se earnings event s možným vysokým gap riskem",
+        "summary_cz": "Earnings událost může výrazně zvýšit gap risk a ovlivnit vhodnost vstupu před výsledky.",
+        "tickers": [
+          "NVDA",
+          "TSM",
+          "AMD"
+        ],
+        "relevance": 0.915,
+        "impact": 0.755
+      },
+      {
+        "kind": "macro",
+        "headline": "Makro událost může změnit risk-on / risk-off režim dne",
+        "summary_cz": "Makro kalendář a rétorika centrálních bank mohou změnit dnešní režim trhu.",
+        "tickers": [
+          "BTC",
+          "OIL",
+          "FED"
+        ],
+        "relevance": 0.83,
+        "impact": 0.685
+      },
+      {
+        "kind": "corporate",
+        "headline": "Firma zveřejnila významné firemní oznámení a nový výhled",
+        "summary_cz": "Oficiální firemní zpráva může změnit krátkodobý sentiment a intradenní bias.",
+        "tickers": [
+          "NVDA",
+          "MSFT",
+          "AAPL"
+        ],
+        "relevance": 0.815,
+        "impact": 0.66
+      }
+    ]
+  },
+  "executive": {
+    "summary_cz": "Režim systému: REVIEW_ONLY. Nejvyšší prioritu mají 3 intelligence položky."
+  },
+  "portfolio": {
+    "selected": [
+      "OIL",
+      "NVDA",
+      "BTC"
+    ],
+    "note": "Future portfolio construction scaffold."
+  },
+  "correlation": {
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "MSFT"
+    ],
+    "correlation_ok": true
+  },
+  "exposure": {
+    "sectors": [
+      "Technology",
+      "Semiconductors"
+    ],
+    "exposure_ok": true
+  },
+  "model_selection": {
+    "selected_model": "ensemble_v1",
+    "reason": "Best current scaffold candidate."
+  },
+  "data_health": {
+    "health": "GOOD",
+    "missing_ratio_pct": 0.0
+  },
+  "workflow_health": {
+    "workflow_health": "GOOD",
+    "failed_jobs": 0
+  },
+  "audit": {
+    "audit_status": "OK",
+    "issues": []
+  },
+  "journal": {
+    "symbol": "NVDA",
+    "journal_note": "Research-driven setup review.",
+    "saved": true
+  },
+  "post_trade_review": {
+    "symbol": "NVDA",
+    "pnl_usd": 0.0,
+    "review": "GOOD"
+  }
+}

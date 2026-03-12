@@ -1,0 +1,12 @@
+Před spuštěním Block 5B by měly existovat:
+- .state/equity_curve.json
+- .state/trade_log.csv
+
+Doporučený postup:
+1. python run_agent.py backtest
+2. python block5b_entry.py
+
+Výstupy:
+- .state/walk_forward_full.json
+- .state/monte_carlo_full.json
+- .state/adaptive_weights.json

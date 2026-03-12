@@ -1,0 +1,4 @@
+- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | impact 0.798 | relevance 0.865
+- [earnings] Blíží se earnings event s možným gap riskem | impact 0.755 | relevance 0.915
+- [macro] Makro událost může změnit risk-on / risk-off režim dne | impact 0.685 | relevance 0.83
+- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | impact 0.66 | relevance 0.833

@@ -1,0 +1,58 @@
+{
+  "runtime_mode": "paper",
+  "final_mode": "SAFE_MODE",
+  "live_session_guard": {
+    "approved": false,
+    "runtime_mode": "paper",
+    "final_mode": "SAFE_MODE",
+    "manual_live_flag_present": false,
+    "reason": "LIVE_SESSION_BLOCKED"
+  },
+  "internal_order": {
+    "symbol": "NVDA",
+    "side": "BUY",
+    "qty": 2,
+    "type": "MARKET",
+    "tif": "DAY"
+  },
+  "mapped_order": {
+    "symbol": "NVDA",
+    "side": "BUY",
+    "quantity": 2.0,
+    "type": "MARKET",
+    "time_in_force": "DAY"
+  },
+  "live_probe": {
+    "config": {
+      "broker": {
+        "name": "generic_live_stub",
+        "base_url": "",
+        "timeout_sec": 10
+      },
+      "auth": {
+        "api_key_env": "BROKER_API_KEY",
+        "api_secret_env": "BROKER_API_SECRET"
+      }
+    },
+    "credentials": {
+      "api_key_present": false,
+      "api_secret_present": false,
+      "api_key_env": "BROKER_API_KEY",
+      "api_secret_env": "BROKER_API_SECRET"
+    },
+    "auth_ready": false,
+    "http_client": {
+      "base_url": "",
+      "timeout_sec": 10,
+      "client_mode": "stub_http_client"
+    },
+    "submit": {
+      "submitted": false,
+      "broker_order_id": null,
+      "status_code": 501,
+      "reason": "LIVE_HTTP_STUB"
+    },
+    "status": null,
+    "cancel": null
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "package": "block16-all-in-one",
+  "generated_at": "2026-03-11T18:22:58.906355+00:00",
+  "entrypoints": [
+    "block16a_entry.py",
+    "block16b_entry.py",
+    "block16c_entry.py"
+  ],
+  "outputs": [
+    ".state/block16a_real_delivery.json",
+    ".state/block16b_real_sources_activation.json",
+    ".state/block16c_activation_suite.json",
+    "block16a_output.json",
+    "block16b_output.json",
+    "block16c_output.json",
+    "real_delivery_report.txt",
+    "real_sources_report.txt",
+    "block16_activation_suite_report.txt"
+  ]
+}

@@ -1,0 +1,50 @@
+block4:
+  enabled: true
+  mode: "enterprise"
+  timezone: "Europe/Prague"
+
+orchestration:
+  max_parallel_tasks: 4
+  safe_mode_on_critic_fail: true
+
+risk:
+  max_risk_per_trade_pct: 1.25
+  max_portfolio_var_pct: 5.0
+  max_portfolio_cvar_pct: 7.5
+  max_drawdown_soft_pct: 10.0
+  max_drawdown_hard_pct: 15.0
+  max_position_pct: 8.0
+  max_sector_pct: 30.0
+  kelly_fraction_cap: 0.25
+
+execution:
+  paper_trading: true
+  broker_adapter: "disabled"
+  max_slippage_bps: 15
+  max_latency_ms: 1200
+
+messaging:
+  broker: "redis"
+  redis_url: "redis://redis:6379/0"
+
+database:
+  postgres_dsn: "postgresql://xtb:xtb@postgres:5432/xtb_bot"
+
+universe:
+  tickers:
+    - CEZ.PR
+    - BTC-USD
+    - IBIT
+    - EON.DE
+    - CSG
+    - MSFT
+    - AMD
+    - NVDA
+    - SPY
+    - QQQ
+    - SMH
+    - TSLA
+    - AAPL
+    - META
+    - GOOGL
+    - AMZN

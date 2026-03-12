@@ -1,0 +1,14 @@
+{
+  "package": "block15c-autonomous-production-flow",
+  "generated_at": "2026-03-11T18:08:56.193125+00:00",
+  "entrypoints": [
+    "block15c_entry.py",
+    "block15c_state_test.py"
+  ],
+  "outputs": [
+    ".state/block15c_autonomous_production.json",
+    ".state/autonomous_prod_state.json",
+    ".state/autonomous_escalation_log.json",
+    "autonomous_production_report.txt"
+  ]
+}

@@ -1,0 +1,50 @@
+name: block14-production-runner
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 9 * * 1-5"
+
+jobs:
+  block14_prod:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      APP_ENV: ${{ vars.APP_ENV }}
+      TELEGRAM_SEND_ENABLED: ${{ vars.TELEGRAM_SEND_ENABLED }}
+      LOG_LEVEL: ${{ vars.LOG_LEVEL }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+      CHATID: ${{ secrets.CHATID }}
+      FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+      FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+      - name: Run production config check
+        run: python block14_config_check.py | tee block14_config_check_output.json
+      - name: Run production main
+        run: python production_main.py
+      - name: Upload production artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: block14-production-artifacts
+          path: |
+            .state
+            logs
+            production_report.txt
+            block14_config_check_output.json
+            .state/history/alert_registry_summary.json
+            .state/history/alert_performance_summary.json
+            .state/history/alert_autofill_summary.json
+            .state/history/block14_metrics.json
+            .state/history/alert_autofill_summary.json
+          if-no-files-found: warn

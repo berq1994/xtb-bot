@@ -1,0 +1,13 @@
+Doporučený postup:
+1. zkopíruj `config/runtime.example.yml` jako `config/runtime.yml` a případně uprav
+2. nastav API klíče přes environment variables
+3. spusť `python block7a_entry.py`
+
+Výstupy:
+- `.state/block7a_live_data.json`
+- `block7a_output.json`
+
+Cíl:
+- zkontrolovat runtime config
+- zkontrolovat dostupnost providerů
+- ověřit failover-ready fetch vrstvu

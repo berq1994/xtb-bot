@@ -1,0 +1,99 @@
+PRODUCTION RUN REPORT
+Governance mode: SAFE_MODE
+
+Steps:
+- inputs_loaded
+- governance_checked
+- briefing_ready
+- alerts_ready
+- ticket_ready
+- journal_ready
+- alerts_evaluated
+- critic_reviewed
+- decision_overlay_ready
+- outcome_registry_updated
+- performance_summary_updated
+- risk_overlay_ready
+- execution_guard_ready
+- telegram_briefing_not_sent
+- telegram_alerts_not_sent
+
+Briefing:
+🧠 Live Intelligence Briefing
+GEO: 1 | EARNINGS: 1 | MACRO: 1 | CORPORATE: 1
+
+Režim dne: SELECTIVE
+Max nové pozice: 2
+Portfolio note: Několik témat je aktivních. Preferovat jen čisté setupy s potvrzením.
+
+Risk posture: TIGHT
+Risk / pozice: 0.25% | Sektor max: 35%
+Overnight: NE | Earnings lock: ANO | Macro lock: ANO
+
+Guard: BLOCK_NEW_RISK | Povolené nové risk vstupy: NE
+Guard slots: 1 | Confirm price action: ANO
+
+Critic: approved 2 / rejected 0
+
+Tracker: records 2 | pending 2 | scored 0
+
+1) 🟡 GEO | MEDIUM
+Napětí v regionu zvyšuje riziko pro energie a dopravu
+Status: HIGH VOL | Timeframe: intraday–1d
+Bias: volatile
+Confidence: 0.82 | Impact: 0.798
+Akce: Sledovat energie a dopravu, čekat vyšší volatilitu.
+Riziko: Riziko headline volatility a rychlých reverzů.
+
+2) 🟡 EARNINGS | MEDIUM
+Blíží se earnings event s možným gap riskem
+Status: WATCHLIST | Timeframe: today–next session
+Bias: event-driven
+Confidence: 0.82 | Impact: 0.755
+Akce: Pozor na gap risk, menší size a opatrnost přes close.
+Riziko: Riziko gapu mimo stop a prudkého rozšíření spreadů.
+
+3) 🟡 MACRO | MEDIUM
+Makro událost může změnit risk-on / risk-off režim dne
+Status: NO TRADE | Timeframe: intraday
+Bias: neutral
+Confidence: 0.74 | Impact: 0.685
+Akce: Sledovat indexy a sentiment, zatím spíš watchlist.
+Riziko: Riziko falešného intradenního směru po datech.
+
+4) 🟢 CORPORATE | LOW
+Firma zveřejnila nový filing s možným dopadem na výhled
+Status: CONFIRM PRICE ACTION | Timeframe: 1–3 days
+Bias: selective
+Confidence: 0.73 | Impact: 0.660
+Akce: Prověřit filing a reakci trhu, zatím potvrdit price action.
+Riziko: Riziko slabé relevance bez follow-through objemu.
+
+Risk notes:
+- Headline volatilita zvýšená, zmenšit size.
+- Earnings risk: nepreferovat držení přes close bez extra důvodu.
+- Makro režim dne je citlivý, nové vstupy jen selektivně.
+
+Alert count: 2
+
+Ticket:
+XTB MANUAL TRADE TICKET
+Ticker: NVDA
+Směr: LONG
+Score: 1.4
+Entry zóna: 868.26 - 871.74
+Stop-loss: 848.4
+TP1: 897.0
+TP2: 915.0
+RR TP1: 1.08
+RR TP2: 1.85
+Počet kusů: 3
+Notional USD: 2615.22
+Risk USD: 70.02
+Zadat ručně do xStation jako MARKET nebo LIMIT dle situace.
+
+Journal:
+XTB TRADE JOURNAL
+1. NVDA | side LONG | entry 871.74 | pnl 0.0
+2. NVDA | side LONG | entry 871.74 | pnl 0.0
+3. NVDA | side LONG | entry 871.74 | pnl 0.0

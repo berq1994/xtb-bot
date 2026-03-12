@@ -1,0 +1,9 @@
+PATCH NOTES — Phase 2 + Phase 3 Decision Upgrade
+
+Změny:
+- přidán status / timeframe / bias do briefingů a alertů
+- přidán decision overlay (režim dne, max nové pozice, portfolio note)
+- přidána critic vrstva pro kontrolu alertů
+- přidán outcome tracker a alert registry
+- rozšířena historie běhů a metriky
+- workflow nově ukládá artifacty z běhu

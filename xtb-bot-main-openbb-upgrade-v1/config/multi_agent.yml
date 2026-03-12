@@ -1,0 +1,20 @@
+multi_agent:
+  enabled: true
+  timezone: "Europe/Prague"
+  max_rework_rounds: 2
+  critic_min_score: 0.75
+  safe_mode_on_validation_fail: true
+
+agents:
+  pm: true
+  research: true
+  signal: true
+  risk: true
+  critic: true
+  reporting: true
+
+policies:
+  max_missing_data_ratio_pct: 25.0
+  hard_drawdown_limit_pct: 18.0
+  soft_drawdown_limit_pct: 12.0
+  minimum_top_signals: 3

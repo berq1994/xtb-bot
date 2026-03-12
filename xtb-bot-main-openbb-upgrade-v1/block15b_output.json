@@ -1,0 +1,21 @@
+{
+  "telegram_result": {
+    "delivered": false,
+    "transport": "telegram_http",
+    "ready": false,
+    "reason": "MISSING_OR_DISABLED_TELEGRAM_CONFIG"
+  },
+  "email_result": {
+    "delivered": false,
+    "transport": "smtp_stub",
+    "ready": false,
+    "reason": "MISSING_OR_DISABLED_EMAIL_CONFIG",
+    "subject_preview": "[XTB Bot] Autonomous Research Delivery"
+  },
+  "telegram_payload_preview": "AUTONOMOUS DELIVERY\n\nBRIEFING:\nAUTONOMOUS RESEARCH BRIEFING\nGovernance mode: REVIEW_ONLY\nDůvod: HIGH_EVENT_DENSITY\nPortfolio relevant events: 3\nHigh priority events: 3\n\nTop události:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | hits: CVX | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | hits: NVDA, TSM | impact 0.755 | relevance 0.915\n- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | hits: NVDA, MSFT | impact 0.66 | relevance 0.833\n\nALERTS:\nALERT | Napětí v regionu zvyšuje riziko pro energie a dopravu | hits CVX | impact 0.798\nALERT | Blíží se earnings event s možným gap riskem | hits NVDA, TSM | impact 0.755\nALERT | Firma zveřejnila nový filing s možným dopadem na výhled | hits NVDA, MSFT | impact 0.66\n\nXTB HANDOFF:\nAUTONOMOUS XTB HANDOFF\nGovernance mode: REVIEW_ONLY\nManual XTB allowed: True\n\nCo ručně zkontrolovat v xStation:\n- CVX: Napětí v regionu zvyšuje riziko pro energie a dopravu\n- NVDA, TSM: Blíž",
+  "email_payload": {
+    "subject": "[XTB Bot] Autonomous Research Delivery",
+    "body": "AUTONOMOUS RESEARCH DELIVERY\n\nBRIEFING\nAUTONOMOUS RESEARCH BRIEFING\nGovernance mode: REVIEW_ONLY\nDůvod: HIGH_EVENT_DENSITY\nPortfolio relevant events: 3\nHigh priority events: 3\n\nTop události:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | hits: CVX | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | hits: NVDA, TSM | impact 0.755 | relevance 0.915\n- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | hits: NVDA, MSFT | impact 0.66 | relevance 0.833\n\nALERTS\nALERT | Napětí v regionu zvyšuje riziko pro energie a dopravu | hits CVX | impact 0.798\nALERT | Blíží se earnings event s možným gap riskem | hits NVDA, TSM | impact 0.755\nALERT | Firma zveřejnila nový filing s možným dopadem na výhled | hits NVDA, MSFT | impact 0.66\n\nXTB HANDOFF\nAUTONOMOUS XTB HANDOFF\nGovernance mode: REVIEW_ONLY\nManual XTB allowed: True\n\nCo ručně zkontrolovat v xStation:\n- CVX: Napětí v regionu zvyšuje riziko pro energie a dopravu\n- NVDA, TSM: Blíží se earnings event s možným gap riskem\n- NVDA, MSFT: Firma zveřejnila nový filing s možným dopadem na výhled\n\nAkce:\n- otevři watchlist\n- porovnej s ticketem a riskem\n- klik dělej jen po potvrzení setupu"
+  },
+  "report": "AUTONOMOUS DELIVERY REPORT\nTelegram delivered: False\nTelegram ready: False\nTelegram reason: MISSING_OR_DISABLED_TELEGRAM_CONFIG\n\nEmail delivered: False\nEmail ready: False\nEmail reason: MISSING_OR_DISABLED_EMAIL_CONFIG\n\nBriefing length: 487\nAlerts length: 267\nHandoff length: 393"
+}

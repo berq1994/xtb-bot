@@ -1,0 +1,17 @@
+{
+  "package": "block10-all-in-one",
+  "generated_at": "2026-03-08T10:45:36.898453+00:00",
+  "contains": [
+    "10B",
+    "10C",
+    "10D"
+  ],
+  "outputs": [
+    ".state/block10b_manual_ticket.json",
+    ".state/block10c_daily_briefing.json",
+    ".state/block10d_trade_journal.json",
+    "xtb_manual_ticket.txt",
+    "xtb_daily_briefing.txt",
+    "xtb_trade_journal.txt"
+  ]
+}

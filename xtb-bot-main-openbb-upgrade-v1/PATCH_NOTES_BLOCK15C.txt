@@ -1,0 +1,16 @@
+Doporučený postup:
+1. python block15a_entry.py
+2. python block15b_entry.py
+3. python block15c_entry.py
+
+Výstupy:
+- .state/block15c_autonomous_production.json
+- .state/autonomous_prod_state.json
+- .state/autonomous_escalation_log.json
+- autonomous_production_report.txt
+
+Cíl:
+- mít jeden sjednocený autonomní production flow
+- zapisovat stav systému
+- logovat escalace
+- připravit systém na delší autonomní běh

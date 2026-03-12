@@ -1,0 +1,56 @@
+name: run-bot
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          TIMEZONE: Europe/Prague
+          RUN_MODE: run
+
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+
+          PREMARKET_TIME: "07:30"
+          EVENING_TIME: "20:00"
+
+          ALERT_START: "12:00"
+          ALERT_END: "21:00"
+          ALERT_THRESHOLD: "3"
+
+          EMAIL_ENABLED: "true"
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+
+        run: |
+          python ahoj.py

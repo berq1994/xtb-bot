@@ -1,0 +1,19 @@
+PHASE 7 - FMP MARKET AUTOFILL
+
+Přidáno:
+- production/fmp_market_data.py
+- automatické obohacení alertů o entry_price přes FMP quote
+- automatický outcome autofill přes FMP intraday/EOD data
+- magnitude-based directional_hit pro event/risk alerty
+
+Upraveno:
+- production/daily_runner.py
+- production/outcome_autofill.py
+- production/outcome_tracker.py
+- production/performance_tracker.py
+- production/message_enhancer.py
+- .github/workflows/block14-production-runner.yml
+
+Poznámka:
+- vyžaduje GitHub secret FMPAPIKEY nebo FMP_API_KEY
+- directional_hit je v této fázi počítán jako magnitude hit, ne jako čistý directional alpha signal

@@ -1,0 +1,8 @@
+Tento balík je první bezpečný merge upgrade.
+
+Hlavní změny:
+- nový OpenBB integrační modul
+- nový openbb_scan mód v run_agent.py
+- fallback přes yfinance / interní data
+
+Tento upgrade je navržen tak, aby nepoškodil stávající projekt a šel nasadit po krocích.

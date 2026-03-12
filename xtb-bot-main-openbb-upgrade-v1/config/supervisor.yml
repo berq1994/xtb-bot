@@ -1,0 +1,21 @@
+supervisor:
+  enabled: true
+  safe_mode: false
+  timezone: "Europe/Prague"
+  max_failures_before_safe_mode: 2
+  max_drawdown_soft_limit_pct: 12.0
+  max_drawdown_hard_limit_pct: 18.0
+  max_missing_data_ratio_pct: 25.0
+  allowed_modules:
+    - ai_daily
+    - backtest
+    - ai_recalibrate
+    - ai_walkforward
+
+routing:
+  morning_tasks:
+    - ai_daily
+  weekly_tasks:
+    - backtest
+    - ai_recalibrate
+    - ai_walkforward

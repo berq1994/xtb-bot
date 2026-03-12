@@ -1,0 +1,16 @@
+{
+  "orchestration": {
+    "steps": [
+      "live intelligence loaded",
+      "briefing prepared",
+      "alerts prepared",
+      "manual ticket prepared",
+      "journal note prepared"
+    ],
+    "briefing_text": "Live Intelligence Briefing\nGEO: 1 | EARNINGS: 1 | CORPORATE: 1 | MACRO: 1\n\nTop položky:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | impact 0.755 | relevance 0.915\n- [macro] Makro událost může změnit risk-on / risk-off režim dne | impact 0.685 | relevance 0.83\n- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | impact 0.66 | relevance 0.833",
+    "alert_count": 2,
+    "ticket_text": "XTB MANUAL TRADE TICKET\nTicker: NVDA\nSměr: LONG\nScore: 1.4\nEntry zóna: 868.26 - 871.74\nStop-loss: 848.4\nTP1: 897.0\nTP2: 915.0\nRR TP1: 1.08\nRR TP2: 1.85\nPočet kusů: 3\nNotional USD: 2615.22\nRisk USD: 70.02\nZadat ručně do xStation jako MARKET nebo LIMIT dle situace.",
+    "journal_note": "XTB TRADE JOURNAL\n1. NVDA | side LONG | entry 871.74 | pnl 0.0\n2. NVDA | side LONG | entry 871.74 | pnl 0.0\n3. NVDA | side LONG | entry 871.74 | pnl 0.0"
+  },
+  "report_text": "DAILY ORCHESTRATION REPORT\n\nKroky:\n- live intelligence loaded\n- briefing prepared\n- alerts prepared\n- manual ticket prepared\n- journal note prepared\n\nBriefing:\nLive Intelligence Briefing\nGEO: 1 | EARNINGS: 1 | CORPORATE: 1 | MACRO: 1\n\nTop položky:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | impact 0.755 | relevance 0.915\n- [macro] Makro událost může změnit risk-on / risk-off režim dne | impact 0.685 | relevance 0.83\n- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | impact 0.66 | relevance 0.833\n\nPočet alertů: 2\n\nTicket:\nXTB MANUAL TRADE TICKET\nTicker: NVDA\nSměr: LONG\nScore: 1.4\nEntry zóna: 868.26 - 871.74\nStop-loss: 848.4\nTP1: 897.0\nTP2: 915.0\nRR TP1: 1.08\nRR TP2: 1.85\nPočet kusů: 3\nNotional USD: 2615.22\nRisk USD: 70.02\nZadat ručně do xStation jako MARKET nebo LIMIT dle situace.\n\nJournal:\nXTB TRADE JOURNAL\n1. NVDA | side LONG | entry 871.74 | pnl 0.0\n2. NVDA | side LONG | entry 871.74 | pnl 0.0\n3. NVDA | side LONG | entry 871.74 | pnl 0.0"
+}

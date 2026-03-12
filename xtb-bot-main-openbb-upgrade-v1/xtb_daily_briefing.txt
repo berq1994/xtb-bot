@@ -1,0 +1,16 @@
+XTB DAILY BRIEFING
+Final mode: SAFE_MODE
+Governance mode: REVIEW_ONLY
+Poznámka k trhu: Režim je konzervativní. Preferuj jen nejsilnější setupy a netlač obchody.
+
+Top watchlist:
+- #1 NVDA | score 1.4
+- #2 TSM | score 1.3
+- #3 MSFT | score 1.2
+- #4 CVX | score 1.1
+- #5 LEU | score 1.0
+
+Dnešní akce:
+- Sledovat první 2 tickery z watchlistu při open.
+- Neotvírat obchod bez potvrzeného SL.
+- Pokud je performance gate slabá, být selektivní a brát jen A setupy.

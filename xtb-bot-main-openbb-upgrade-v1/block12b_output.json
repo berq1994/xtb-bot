@@ -1,0 +1,44 @@
+{
+  "briefing_text": "Live Intelligence Briefing\nGEO: 1 | EARNINGS: 1 | CORPORATE: 1 | MACRO: 1\n\nTop položky:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | impact 0.755 | relevance 0.915\n- [macro] Makro událost může změnit risk-on / risk-off režim dne | impact 0.685 | relevance 0.83\n- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | impact 0.66 | relevance 0.833",
+  "alert_lines": [
+    "[GEO] Napětí v regionu zvyšuje riziko pro energie a dopravu | tickers: OIL, XOM, CVX | impact 0.798",
+    "[EARNINGS] Blíží se earnings event s možným gap riskem | tickers: NVDA, TSM, AMD | impact 0.755"
+  ],
+  "delivery_queue_size": 4,
+  "telegram_briefing": {
+    "delivered": false,
+    "transport": "telegram_stub",
+    "ready": false,
+    "reason": "MISSING_TELEGRAM_CONFIG",
+    "preview": "Live Intelligence Briefing\nGEO: 1 | EARNINGS: 1 | CORPORATE: 1 | MACRO: 1\n\nTop položky:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | impact 0.755 | relevance 0.915\n- [macro] Makro událost může změnit risk-on / risk-off režim dne | impact 0.685 | relevance 0.83\n- [corporate] Firma zveřejnila"
+  },
+  "telegram_alerts": {
+    "delivered": false,
+    "transport": "telegram_stub",
+    "ready": false,
+    "reason": "MISSING_TELEGRAM_CONFIG",
+    "preview": "[GEO] Napětí v regionu zvyšuje riziko pro energie a dopravu | tickers: OIL, XOM, CVX | impact 0.798\n[EARNINGS] Blíží se earnings event s možným gap riskem | tickers: NVDA, TSM, AMD | impact 0.755"
+  },
+  "command_routes": [
+    {
+      "command": "/briefing",
+      "action": "send_latest_briefing"
+    },
+    {
+      "command": "/alerts",
+      "action": "send_latest_alerts"
+    },
+    {
+      "command": "/watchlist",
+      "action": "send_watchlist"
+    },
+    {
+      "command": "/ticket",
+      "action": "send_manual_ticket"
+    },
+    {
+      "command": "/journal",
+      "action": "send_journal"
+    }
+  ]
+}

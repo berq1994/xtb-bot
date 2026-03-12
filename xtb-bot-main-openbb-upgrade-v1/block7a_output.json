@@ -1,0 +1,57 @@
+{
+  "runtime": {
+    "runtime": {
+      "environment": "paper",
+      "timezone": "Europe/Prague",
+      "log_level": "INFO"
+    },
+    "providers": {
+      "market_primary": "fmp",
+      "market_fallback": "yahoo",
+      "news_primary": "rss",
+      "news_fallback": "newsapi",
+      "fundamentals_primary": "fmp"
+    },
+    "paths": {
+      "state_dir": ".state",
+      "output_dir": "."
+    }
+  },
+  "credentials": {
+    "fmp_api_key_present": false,
+    "newsapi_key_present": false,
+    "broker_api_key_present": false
+  },
+  "provider_health": {
+    "fmp": {
+      "ok": true,
+      "failures": 0,
+      "last_success": "2026-03-08T09:30:45.758067"
+    },
+    "yahoo": {
+      "ok": true,
+      "failures": 0
+    },
+    "rss": {
+      "ok": true,
+      "failures": 0,
+      "last_success": "2026-03-08T09:30:45.751531"
+    },
+    "newsapi": {
+      "ok": true,
+      "failures": 0
+    }
+  },
+  "market": {
+    "provider_used": "fmp",
+    "sample_count": 10
+  },
+  "news": {
+    "provider_used": "rss",
+    "sample_count": 10
+  },
+  "fundamentals": {
+    "provider_used": "fmp",
+    "sample_count": 10
+  }
+}

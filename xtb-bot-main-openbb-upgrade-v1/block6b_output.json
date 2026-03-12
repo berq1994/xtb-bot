@@ -1,0 +1,50 @@
+{
+  "performance_integration": {
+    "approved": false,
+    "performance_gate": {
+      "approved": false,
+      "wf_ok": false,
+      "mc_ok": true,
+      "avg_test_return_pct": 0.42,
+      "avg_test_max_dd_pct": -1.55,
+      "risk_of_negative_run_pct": 3.0,
+      "reason": "REVIEW_REQUIRED"
+    },
+    "data_gate": {
+      "approved": true,
+      "mode": "APPROVED",
+      "missing_ratio_pct": 0.0,
+      "disabled_count": 4,
+      "critical_sources_ready": true
+    },
+    "reason": "INTEGRATION_REVIEW_REQUIRED"
+  },
+  "final_critic": {
+    "approved": false,
+    "score": 0.65,
+    "reasons": [
+      "PERFORMANCE_NOT_APPROVED"
+    ]
+  },
+  "prior_governance": {
+    "kill_switch": {
+      "kill_switch": false,
+      "reasons": [
+        "CRITIC_NOT_APPROVED"
+      ]
+    },
+    "policy": {
+      "mode": "REVIEW_ONLY",
+      "allow_new_positions": false,
+      "allow_recalibration": true,
+      "allow_execution": false
+    }
+  },
+  "final_decision": {
+    "final_mode": "SAFE_MODE",
+    "allow_execution": false,
+    "allow_new_positions": false,
+    "allow_recalibration": false,
+    "reason": "CRITIC_AND_PERFORMANCE_BLOCK"
+  }
+}

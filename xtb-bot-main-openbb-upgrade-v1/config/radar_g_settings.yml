@@ -1,0 +1,16 @@
+radar_g:
+  enabled: true
+  start_capital: 100000
+  risk_per_trade: 0.01
+  lookback_period: "2y"
+  interval: "1d"
+
+default_tickers:
+  - CEZ.PR
+  - BTC-USD
+  - IBIT
+  - EON.DE
+  - CSG.DE
+  - MSFT
+  - AMD
+  - NVDA

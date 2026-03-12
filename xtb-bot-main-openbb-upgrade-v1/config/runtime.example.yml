@@ -1,0 +1,15 @@
+runtime:
+  environment: "paper"
+  timezone: "Europe/Prague"
+  log_level: "INFO"
+
+providers:
+  market_primary: "fmp"
+  market_fallback: "yahoo"
+  news_primary: "rss"
+  news_fallback: "newsapi"
+  fundamentals_primary: "fmp"
+
+paths:
+  state_dir: ".state"
+  output_dir: "."

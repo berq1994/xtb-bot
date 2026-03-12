@@ -1,0 +1,23 @@
+name: block4-weekly-mlops
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 8 * * 6"
+
+jobs:
+  mlops:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-block4.txt
+      - name: Run weekly mlops
+        run: |
+          python block4_entry.py weekly
