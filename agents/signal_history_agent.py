@@ -46,12 +46,22 @@ def build_snapshot_payload(watchlist=None) -> dict:
 
     symbol = candidate["symbol"] if candidate else "NONE"
     price = float(candidate["price"]) if candidate else 0.0
-    sl, tp = _levels(price, "long" if direction == "long" else "short") if candidate else (0.0, 0.0)
+
+    if candidate:
+        sl, tp = _levels(price, "long" if direction == "long" else "short")
+    else:
+        sl, tp = 0.0, 0.0
+
     candidate_sentiment = news_map.get(symbol, {}) if candidate else {}
 
     if overview.get("regime") == "risk_off":
         decision = "defensive_only"
-    elif leader and leader.get("trend") == "up" and leader.get("change_pct", 0) > 0.4 and news_map.get(leader["symbol"], {}).get("sentiment_label") != "negative":
+    elif (
+        leader
+        and leader.get("trend") == "up"
+        and leader.get("change_pct", 0) > 0.4
+        and news_map.get(leader["symbol"], {}).get("sentiment_label") != "negative"
+    ):
         decision = "watch_long"
     elif laggard and laggard.get("change_pct", 0) < -1.0:
         decision = "watch_hedge"
@@ -105,4 +115,5 @@ def run_log_signal(watchlist=None):
     lines.append(f"Symbol ticketu: {payload['ticket']['symbol']}")
     lines.append(f"Soubor historie: {HISTORY_PATH}")
     lines.append(f"Soubor journalu: {JOURNAL_PATH}")
-    return "\n".join(lines)\n
+
+    return "\n".join(lines)
