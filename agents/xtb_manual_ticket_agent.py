@@ -55,4 +55,4 @@ def run_xtb_manual_ticket(watchlist=None):
 
     output = "\n".join(lines)
     Path("xtb_manual_ticket.txt").write_text(output, encoding="utf-8")
-    return output\n
+    return output
