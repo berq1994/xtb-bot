@@ -1,0 +1,291 @@
+{
+  "portfolio_state_version": 2,
+  "snapshot_date": "2026-03-12",
+  "base_note": "Manual portfolio snapshot from user screenshots: XTB, Raiffeisenbank, Google Finance watchlist",
+  "accounts": {
+    "xtb": {
+      "account_ccy": "USD",
+      "account_total_usd": 2040.67,
+      "positions": [
+        {
+          "symbol": "GOOGL",
+          "name": "Alphabet",
+          "value": 85.48,
+          "ccy": "USD",
+          "qty": 0.2769,
+          "avg_price": 302.43,
+          "theme": [
+            "ai",
+            "internet",
+            "ads"
+          ]
+        },
+        {
+          "symbol": "AMD",
+          "name": "AMD",
+          "value": 52.45,
+          "ccy": "USD",
+          "qty": 0.256,
+          "avg_price": 195.3,
+          "theme": [
+            "semis",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "MSFT",
+          "name": "Microsoft",
+          "value": 52.58,
+          "ccy": "USD",
+          "qty": 0.1299,
+          "avg_price": 384.62,
+          "theme": [
+            "software",
+            "cloud",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "PLTR",
+          "name": "Palantir",
+          "value": 23.68,
+          "ccy": "USD",
+          "qty": 0.1562,
+          "avg_price": 128.0,
+          "theme": [
+            "software",
+            "data",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "EQT",
+          "name": "EQT",
+          "value": 78.99,
+          "ccy": "USD",
+          "qty": 1.2387,
+          "avg_price": 60.56,
+          "theme": [
+            "energy",
+            "natural_gas"
+          ]
+        },
+        {
+          "symbol": "S",
+          "name": "SentinelOne",
+          "value": 54.88,
+          "ccy": "USD",
+          "qty": 3.8759,
+          "avg_price": 12.89,
+          "theme": [
+            "cybersecurity",
+            "software"
+          ]
+        },
+        {
+          "symbol": "TSM",
+          "name": "TSMC",
+          "value": 155.46,
+          "ccy": "USD",
+          "qty": 0.4389,
+          "avg_price": 341.71,
+          "theme": [
+            "semis",
+            "foundry",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "NBIS",
+          "name": "Nebius Group",
+          "value": 411.38,
+          "ccy": "USD",
+          "qty": 3.6704,
+          "avg_price": 83.41,
+          "theme": [
+            "ai",
+            "cloud",
+            "infra"
+          ]
+        },
+        {
+          "symbol": "NVO",
+          "name": "Novo Nordisk",
+          "value": 70.83,
+          "ccy": "USD",
+          "qty": 1.8248,
+          "avg_price": 54.76,
+          "theme": [
+            "healthcare"
+          ]
+        },
+        {
+          "symbol": "FCX",
+          "name": "Freeport-McMoRan",
+          "value": 165.71,
+          "ccy": "USD",
+          "qty": 2.6944,
+          "avg_price": 66.66,
+          "theme": [
+            "copper",
+            "materials",
+            "commodities"
+          ]
+        },
+        {
+          "symbol": "LEU",
+          "name": "Centrus Energy",
+          "value": 80.75,
+          "ccy": "USD",
+          "qty": 0.4027,
+          "avg_price": 222.75,
+          "theme": [
+            "uranium",
+            "nuclear"
+          ]
+        },
+        {
+          "symbol": "GRMN",
+          "name": "Garmin",
+          "value": 48.95,
+          "ccy": "USD",
+          "qty": 0.2081,
+          "avg_price": 240.33,
+          "theme": [
+            "consumer_tech"
+          ]
+        },
+        {
+          "symbol": "NVDA",
+          "name": "Nvidia",
+          "value": 106.55,
+          "ccy": "USD",
+          "qty": 0.573,
+          "avg_price": 186.44,
+          "theme": [
+            "semis",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "IREN",
+          "name": "Iris Energy",
+          "value": 229.84,
+          "ccy": "USD",
+          "qty": 5.4797,
+          "avg_price": 41.98,
+          "theme": [
+            "bitcoin",
+            "energy",
+            "ai_hpc"
+          ]
+        },
+        {
+          "symbol": "FSLR",
+          "name": "First Solar",
+          "value": 50.33,
+          "ccy": "USD",
+          "qty": 0.2518,
+          "avg_price": 198.56,
+          "theme": [
+            "solar",
+            "energy_transition"
+          ]
+        }
+      ]
+    },
+    "raiffeisenbank": {
+      "positions": [
+        {
+          "symbol": "IGLD_HEDGED",
+          "name": "iShares Physical Gold EUR Hedged ETC",
+          "value": 998.86,
+          "ccy": "EUR",
+          "theme": [
+            "gold",
+            "hedge"
+          ]
+        },
+        {
+          "symbol": "TSM",
+          "name": "Taiwan Semiconductor ADR",
+          "value": 1417.52,
+          "ccy": "USD",
+          "theme": [
+            "semis",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "MSFT",
+          "name": "Microsoft Corporation",
+          "value": 1048.2,
+          "ccy": "EUR",
+          "theme": [
+            "software",
+            "cloud",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "NVDA",
+          "name": "Nvidia Corp",
+          "value": 1115.98,
+          "ccy": "USD",
+          "theme": [
+            "semis",
+            "ai"
+          ]
+        },
+        {
+          "symbol": "CSG",
+          "name": "CSG B.V.",
+          "value": 23166.0,
+          "ccy": "CZK",
+          "theme": [
+            "defense",
+            "industrial"
+          ]
+        },
+        {
+          "symbol": "CVX",
+          "name": "Chevron Corp",
+          "value": 835.8,
+          "ccy": "EUR",
+          "theme": [
+            "energy",
+            "oil"
+          ]
+        }
+      ]
+    }
+  },
+  "currency_exposure_native": {
+    "USD": 4201.36,
+    "EUR": 2882.86,
+    "CZK": 23166.0
+  },
+  "portfolio_bias": {
+    "growth_tech": "high",
+    "ai_semiconductors": "very_high",
+    "energy_commodities": "medium_high",
+    "healthcare": "low",
+    "defense_industrial": "low_medium",
+    "gold_hedge": "present"
+  },
+  "risk_flags": [
+    "high_ai_semiconductor_overlap",
+    "high_usd_exposure",
+    "clustered_growth_risk",
+    "moderate_energy_overlap"
+  ],
+  "agent_overrides": {
+    "new_ai_long_penalty": 0.3,
+    "new_semiconductor_long_penalty": 0.35,
+    "new_energy_long_penalty": 0.15,
+    "gold_hedge_bonus": 0.05,
+    "non_correlated_sector_bonus": 0.2,
+    "usd_concentration_penalty": 0.1,
+    "existing_position_trim_bias": 0.08
+  }
+}

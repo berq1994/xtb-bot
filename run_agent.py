@@ -133,6 +133,17 @@ def main():
         print(run_production_cycle())
         return
 
+
+    if mode == "portfolio_context":
+        from agents.portfolio_context_agent import run_portfolio_context
+        print(run_portfolio_context())
+        return
+
+    if mode == "intraday_levels":
+        from agents.intraday_levels_agent import run_intraday_levels
+        print(run_intraday_levels())
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
@@ -145,7 +156,7 @@ def main():
         "openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket | "
         "daily_briefing | telegram_preview | log_signal | "
         "learning_review | rebalance_weights | performance_review | full_cycle | "
-        "telegram_live | schedule_plan | outcome_update | outcome_review | production_cycle"
+        "telegram_live | schedule_plan | outcome_update | outcome_review | production_cycle | portfolio_context | intraday_levels"
     )
 
 

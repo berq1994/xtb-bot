@@ -1,0 +1,32 @@
+PORTFOLIO CONTEXT
+Počet pozic: 21
+Měnová expozice:
+- CZK: 23166.0
+- EUR: 2882.86
+- USD: 4201.36
+Hlavní témata:
+- defense: 23166.0
+- industrial: 23166.0
+- ai: 4469.28
+- semis: 2847.96
+- cloud: 1512.16
+- software: 1179.34
+- energy: 1144.63
+- gold: 998.86
+- hedge: 998.86
+- oil: 835.8
+Nejdůležitější risk flagy:
+- high_ai_semiconductor_overlap
+- high_usd_exposure
+- clustered_growth_risk
+- moderate_energy_overlap
+Použité override váhy:
+- new_ai_long_penalty: 0.3
+- new_semiconductor_long_penalty: 0.35
+- new_energy_long_penalty: 0.15
+- gold_hedge_bonus: 0.05
+- non_correlated_sector_bonus: 0.2
+- usd_concentration_penalty: 0.1
+- existing_position_trim_bias: 0.08
+Sledované symboly v portfoliu:
+AMD, CSG, CVX, EQT, FCX, FSLR, GOOGL, GRMN, IGLD_HEDGED, IREN, LEU, MSFT, NBIS, NVDA, NVO, PLTR, S, TSM
