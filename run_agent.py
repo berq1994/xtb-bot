@@ -26,7 +26,6 @@ def main():
         from ai.ticker_loader import load_all_tickers
         from risk.portfolio_var import portfolio_var
         from reporting.executive_report import build_executive_report
-
         tickers = load_all_tickers()
         ai_rows = _dummy_ai_rows()
         summary = {
@@ -41,13 +40,9 @@ def main():
     if mode == "ai_recalibrate":
         from ai.model_registry import register_model
         from ai.experiment_tracker import log_experiment
-
         metrics = {"sharpe": 1.11, "sortino": 1.42, "max_dd": -0.09}
         reg = register_model("ensemble_v1", metrics)
-        log_experiment(
-            "weekly_recalibration",
-            {"registry_size": len(reg.get("active_models", [])), "metrics": metrics},
-        )
+        log_experiment("weekly_recalibration", {"registry_size": len(reg.get("active_models", [])), "metrics": metrics})
         print("AI recalibration completed.")
         return
 
@@ -111,6 +106,31 @@ def main():
         print(run_full_cycle())
         return
 
+    if mode == "telegram_live":
+        from agents.telegram_live_agent import run_telegram_live
+        print(run_telegram_live())
+        return
+
+    if mode == "schedule_plan":
+        from agents.scheduler_plan_agent import run_schedule_plan
+        print(run_schedule_plan())
+        return
+
+    if mode == "outcome_update":
+        from agents.outcome_tracking_agent import run_outcome_update
+        print(run_outcome_update())
+        return
+
+    if mode == "outcome_review":
+        from agents.outcome_tracking_agent import run_outcome_review
+        print(run_outcome_review())
+        return
+
+    if mode == "production_cycle":
+        from agents.workflow_runner_agent import run_production_cycle
+        print(run_production_cycle())
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
@@ -118,11 +138,12 @@ def main():
         return
 
     print(
-        "Velký AI upgrade přidán. Použij: python run_agent.py "
+        "Použij: python run_agent.py "
         "backtest | ai_daily | ai_recalibrate | ai_walkforward | "
         "openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket | "
-        "daily_briefing | telegram_preview | log_signal | learning_review | "
-        "rebalance_weights | performance_review | full_cycle"
+        "daily_briefing | telegram_preview | log_signal | "
+        "learning_review | rebalance_weights | performance_review | full_cycle | "
+        "telegram_live | schedule_plan | outcome_update | outcome_review | production_cycle"
     )
 
 

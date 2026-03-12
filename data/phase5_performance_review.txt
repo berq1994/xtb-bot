@@ -1,9 +1,6 @@
 PHASE 5 PERFORMANCE REVIEW
-Samples reviewed: 2
-Most frequent ticket symbol: BTC-USD
+Samples reviewed: 0
+Most frequent ticket symbol: NONE
 Regimes:
-- mixed: 2
 Decisions:
-- watch_hedge: 2
 Symbols:
-- BTC-USD: 2

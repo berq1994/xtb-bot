@@ -69,3 +69,63 @@ Checklist:
 - Confirm spread before entry
 - Max 1% account risk
 - Enter only on chart confirmation
+
+TELEGRAM PREVIEW
+📊 Daily market intelligence
+Regime: mixed
+Decision: watch_long
+Lead: NVDA | 0.69% | trend up | news positive
+Weak: TLT | -1.29% | trend down | news negative
+
+🎯 Manual XTB ticket
+Symbol: NVDA
+Direction: long
+Entry: 186.03
+SL: 183.24
+TP: 191.61
+Sentiment: positive
+
+Checklist:
+• Confirm chart on XTB
+• Confirm spread and volatility
+• Risk max 1%
+• Enter only after confirmation
+
+TELEGRAM LIVE
+Status: preview_only
+Reason: missing TELEGRAMTOKEN/TG_BOT_TOKEN or CHATID/TG_CHAT_ID
+Preview file: telegram_preview.txt
+
+SIGNAL LOGGED
+Timestamp: 2026-03-12T10:19:14
+Regime: mixed
+Decision: watch_long
+Ticket symbol: NVDA
+History file: data\openbb_signal_history.jsonl
+Journal file: data\openbb_trade_journal.txt
+
+PHASE 5 LEARNING REVIEW
+History samples: 4
+Average quality score: 3.1
+Decision mix:
+- watch_hedge: 2
+- watch_long: 2
+Weights:
+- trend: 1.0
+- momentum: 1.0
+- sentiment: 1.0
+- regime_alignment: 1.0
+- risk_penalty: 1.0
+Suggestion: Current signal stack looks healthy. Negative news flow appears too often in lead setups.
+
+OUTCOME UPDATE
+Symbol: NVDA
+Decision: watch_long
+Status: placeholder outcome row added
+File: data/outcome_tracking.jsonl
+
+OUTCOME REVIEW
+Samples: 2
+Average outcome %: 0.0
+Labels:
+- pending: 2
