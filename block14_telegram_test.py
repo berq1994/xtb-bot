@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from production.telegram_http import send_telegram_http
 
@@ -11,4 +11,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

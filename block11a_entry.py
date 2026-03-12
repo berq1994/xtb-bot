@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from agents.geo_research_agent import run_geo_research
 from agents.corporate_research_agent import run_corporate_research
@@ -28,4 +28,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

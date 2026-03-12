@@ -1,11 +1,11 @@
 RUČNÍ XTB TICKET
-Symbol: AAPL
+Symbol: IWM
 Směr: sledovat short
 Režim trhu: risk-off
-Vstupní reference: 256.01
-Stop loss: 259.85
-Take profit: 248.33
-Sentiment zpráv: pozitivní
+Vstupní reference: 247.42
+Stop loss: 251.13
+Take profit: 240.0
+Sentiment zpráv: neutrální
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem

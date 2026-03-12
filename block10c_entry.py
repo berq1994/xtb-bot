@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from manual_trading.watchlist_ranker import rank_watchlist
 from manual_trading.daily_briefing import build_daily_briefing
@@ -47,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

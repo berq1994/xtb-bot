@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from telegram_live.activation_check import activation_check
 from telegram_live.sender import send_live_message
@@ -21,4 +21,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

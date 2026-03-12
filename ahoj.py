@@ -1,4 +1,4 @@
-﻿# ahoj.py
+# ahoj.py
 import os
 from datetime import datetime
 from zoneinfo import ZoneInfo

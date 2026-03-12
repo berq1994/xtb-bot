@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from real_delivery.file_inputs import read_text_or_default
 from real_delivery.telegram_live import send_telegram_live
@@ -10,13 +10,9 @@ def main():
     alerts = read_text_or_default("autonomous_alerts.txt", "Autonomous alerts zatím nejsou.")
     handoff = read_text_or_default("autonomous_xtb_handoff.txt", "Autonomous handoff zatím není.")
 
-    telegram_text = "
-
-".join(["AUTONOMOUS DELIVERY", briefing[:1200], alerts[:1000], handoff[:1000]])[:4096]
+    telegram_text = "\n\n".join(["AUTONOMOUS DELIVERY", briefing[:1200], alerts[:1000], handoff[:1000]])[:4096]
     email_subject = "[XTB Bot] Real Delivery"
-    email_body = "
-
-".join([briefing, alerts, handoff])
+    email_body = "\n\n".join([briefing, alerts, handoff])
 
     telegram = send_telegram_live(telegram_text)
     email = send_email_live(email_subject, email_body)
@@ -39,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

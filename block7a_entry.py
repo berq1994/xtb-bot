@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 
 from live_data.runtime_loader import load_runtime_config
@@ -47,4 +47,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

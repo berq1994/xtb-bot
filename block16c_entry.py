@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from activation_suite.runner import build_activation_suite
 from activation_suite.reporting import render_activation_report
@@ -15,4 +15,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

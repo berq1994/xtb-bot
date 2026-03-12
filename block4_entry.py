@@ -1,4 +1,4 @@
-﻿import sys
+import sys
 import json
 from orchestration.supervisor import run_supervisor
 from orchestration.pm_agent import create_plan
@@ -52,4 +52,3 @@ if __name__ == "__main__":
         run_audit()
     else:
         raise SystemExit(f"Unknown mode: {mode}")
-

@@ -1,20 +1,62 @@
 DENNÍ BRIEFING
 ========================================
 
-OPENBB SIGNĂLOVĂť BALĂŤÄŚEKReĹľim trhu: risk-offZdroj dat: yfinanceHlavnĂ­ kandidĂˇt na long:- BTC-USD | pohyb 0.31% | trend rostoucí | cena 70423.12- Akce: sledovat breakout / ruÄŤnĂ­ potvrzenĂ­ v XTBHlavnĂ­ slabĂ˝ kandidĂˇt:- AAPL | pohyb -1.84% | trend klesající | cena 256.01- Akce: sledovat slabost / hedge / nebrat impulzivnĂ­ longKontrolnĂ­ seznam pro ruÄŤnĂ­ vstup:1. Potvrdit graf v XTB2. Potvrdit spread a volatilitu3. Nastavit stop loss jeĹˇtÄ› pĹ™ed vstupem4. Riziko max. 1 % na obchod
+OPENBB SIGNÁLOVÝ BALÍČEK
+Režim trhu: risk-off
+Zdroj dat: yfinance
 
-OPENBB ZPRĂVY / SENTIMENTReĹľim trhu: risk-offBTC-USD: negativní (skĂłre -1)- Crypto sentiment improves with risk appetite- Volatility remains elevated across digital assetsMSFT: pozitivní (skĂłre 4)- Cloud and AI narrative remains constructive- Large-cap quality bid supports resilienceTLT: negativní (skĂłre -3)- Rates volatility pressures long duration bonds- Defensive flow rises when growth slowsAAPL: pozitivní (skĂłre 2)- Consumer demand mixed ahead of product cycle- Mega-cap quality still supports defensive interestNVDA: pozitivní (skĂłre 4)- AI demand remains strong across data center cycle- Semiconductor leadership supports momentumIWM: neutrální (skĂłre 0)- IWM trading activity remains in focus- Market participants monitor IWM for follow-through
+Hlavní kandidát na long:
+- BTC-USD | pohyb 0.27% | trend rostoucí | cena 70395.06
+- Akce: sledovat breakout / ruční potvrzení v XTB
 
-ROZHODNUTĂŤ SUPERVISORUReĹľim trhu: risk-offRozhodnutĂ­: pouze defenzivněHlavnĂ­ setup: BTC-USD | 0.31% | trend rostoucí | zprĂˇvy negativníSlabĂ˝ setup: AAPL | -1.84% | trend klesající | zprĂˇvy pozitivníDalĹˇĂ­ krok:- Obchodovat menĹˇĂ­ velikostĂ­ nebo zĹŻstat mimo trh- UpĹ™ednostnit ochranu kapitĂˇlu
+Hlavní slabý kandidát:
+- IWM | pohyb -2.15% | trend klesající | cena 247.42
+- Akce: sledovat slabost / hedge / nebrat impulzivní long
+
+Kontrolní seznam pro ruční vstup:
+1. Potvrdit graf v XTB
+2. Potvrdit spread a volatilitu
+3. Nastavit stop loss ještě před vstupem
+4. Riziko max. 1 % na obchod
+
+OPENBB ZPRÁVY / SENTIMENT
+Režim trhu: risk-off
+
+BTC-USD: negativní (skóre -1)
+- Bez doplňujícího komentáře
+
+TLT: negativní (skóre -3)
+- Bez doplňujícího komentáře
+
+MSFT: pozitivní (skóre 4)
+- Bez doplňujícího komentáře
+
+IWM: neutrální (skóre 0)
+- Bez doplňujícího komentáře
+
+GLD: neutrální (skóre 0)
+- Bez doplňujícího komentáře
+
+AAPL: pozitivní (skóre 2)
+- Bez doplňujícího komentáře
+
+ROZHODNUTÍ SUPERVISORU
+Režim trhu: risk-off
+Rozhodnutí: pouze defenzivně
+
+Hlavní setup: BTC-USD | 0.27% | trend rostoucí | zprávy negativní
+Slabý setup: IWM | -2.15% | trend klesající | zprávy neutrální
+
+Důvod: Obchodovat menší velikostí nebo zůstat mimo trh – upřednostnit ochranu kapitálu.
 
 RUČNÍ XTB TICKET
-Symbol: AAPL
+Symbol: IWM
 Směr: sledovat short
 Režim trhu: risk-off
-Vstupní reference: 256.01
-Stop loss: 259.85
-Take profit: 248.33
-Sentiment zpráv: pozitivní
+Vstupní reference: 247.42
+Stop loss: 251.13
+Take profit: 240.0
+Sentiment zpráv: neutrální
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem

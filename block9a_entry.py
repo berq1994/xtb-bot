@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 
 from broker.order_mapper import map_internal_order
@@ -52,4 +52,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

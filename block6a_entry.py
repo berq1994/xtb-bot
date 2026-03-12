@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 from data_ingestion.market_adapter import fetch_market_bundle
 from data_ingestion.news_adapter import fetch_news_bundle_final
@@ -35,4 +35,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

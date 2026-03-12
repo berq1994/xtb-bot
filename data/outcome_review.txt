@@ -1,5 +1,5 @@
-PĹEHLED VĂťSLEDKĹ®
-PoÄŤet vzorkĹŻ: 4
-PrĹŻmÄ›rnĂ˝ vĂ˝sledek %: 0.0
-Ĺ tĂ­tky:
-- čeká: 4
+PŘEHLED VÝSLEDKŮ
+Počet vzorků: 5
+Průměrný výsledek %: 0.0
+Štítky:
+- čeká: 5

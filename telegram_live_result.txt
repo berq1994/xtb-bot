@@ -1,4 +1,4 @@
-TELEGRAM Ĺ˝IVÄš
+TELEGRAM ŽIVĚ
 Stav: jen náhled
-DĹŻvod: chybĂ­ TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID
-Soubor nĂˇhledu: telegram_preview.txt
+Důvod: chybí TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID
+Soubor náhledu: telegram_preview.txt

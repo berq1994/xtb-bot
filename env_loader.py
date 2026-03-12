@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import os
 from pathlib import Path
@@ -26,4 +26,3 @@ def load_local_env() -> dict[str, str]:
                 os.environ[key] = value
                 loaded[key] = value
     return loaded
-

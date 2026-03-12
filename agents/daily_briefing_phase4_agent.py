@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -25,7 +25,6 @@ def run_daily_briefing(watchlist=None):
         "",
         run_xtb_manual_ticket(watchlist),
     ]
-
     output = "\n".join(sections).strip()
     Path("daily_briefing.txt").write_text(output, encoding="utf-8")
     return output

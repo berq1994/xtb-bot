@@ -2,46 +2,59 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from agents.signal_history_agent import build_snapshot_payload
-from cz_utils import regime_cs, decision_cs, trend_cs, sentiment_cs, direction_cs
+
+def _safe_dict(value):
+    return value if isinstance(value, dict) else {}
 
 
-def run_telegram_preview(watchlist=None):
-    payload = build_snapshot_payload(watchlist)
-    supervisor = payload["supervisor"]
-    ticket = payload["ticket"]
-    leader = payload.get("leader")
-    laggard = payload.get("laggard")
+def run_telegram_preview(payload=None) -> str:
+    if not isinstance(payload, dict):
+        payload = {}
+
+    supervisor = _safe_dict(payload.get("supervisor"))
+    ticket = _safe_dict(payload.get("ticket"))
+    snapshot = _safe_dict(payload.get("snapshot"))
+
+    regime = payload.get("regime", supervisor.get("regime", "mixed"))
+    decision = payload.get("decision", supervisor.get("decision", "watch"))
+
+    lead = _safe_dict(supervisor.get("leader")) or _safe_dict(snapshot.get("leader"))
+    weak = _safe_dict(supervisor.get("laggard")) or _safe_dict(snapshot.get("laggard"))
 
     lines = []
     lines.append("Denní přehled trhu")
-    lines.append(f"Režim: {regime_cs(payload['regime'])}")
-    lines.append(f"Rozhodnutí: {decision_cs(supervisor['decision'])}")
+    lines.append(f"Režim: {regime}")
+    lines.append(f"Rozhodnutí: {decision}")
 
-    if leader:
+    if lead:
         lines.append(
-            f"Lead: {leader['symbol']} | {leader['change_pct']}% | trend {trend_cs(leader['trend'])} | zprávy {sentiment_cs(leader['sentiment_label'])}"
+            f"Lead: {lead.get('symbol', '-')} | {lead.get('change_pct', 0)}% | trend {lead.get('trend', '-')} | zprávy {lead.get('sentiment_label', '-')}"
         )
 
-    if laggard:
+    if weak:
         lines.append(
-            f"Slabý: {laggard['symbol']} | {laggard['change_pct']}% | trend {trend_cs(laggard['trend'])} | zprávy {sentiment_cs(laggard['sentiment_label'])}"
+            f"Slabý: {weak.get('symbol', '-')} | {weak.get('change_pct', 0)}% | trend {weak.get('trend', '-')} | zprávy {weak.get('sentiment_label', '-')}"
         )
 
     lines.append("")
     lines.append("Ruční XTB ticket")
-    lines.append(f"Symbol: {ticket['symbol']}")
-    lines.append(f"Směr: {direction_cs(ticket['direction'])}")
-    lines.append(f"Vstup: {ticket['entry_reference']}")
-    lines.append(f"SL: {ticket['stop_loss']}")
-    lines.append(f"TP: {ticket['take_profit']}")
-    lines.append(f"Sentiment: {sentiment_cs(ticket['news_sentiment'])}")
+    lines.append(f"Symbol: {ticket.get('symbol', '-')}")
+    lines.append(f"Směr: {ticket.get('direction', '-')}")
+    lines.append(f"Vstup: {ticket.get('entry', '-')}")
+    lines.append(f"SL: {ticket.get('stop_loss', '-')}")
+    lines.append(f"TP: {ticket.get('take_profit', '-')}")
+    lines.append(f"Sentiment: {ticket.get('news_sentiment', '-')}")
+
     lines.append("")
     lines.append("Kontrolní seznam:")
-    lines.append("- Potvrdit graf v XTB")
-    lines.append("- Potvrdit spread a volatilitu")
-    lines.append("- Riziko max. 1 %")
-    lines.append("- Vstup až po potvrzení")
+    checklist = ticket.get("checklist", [])
+    if isinstance(checklist, list) and checklist:
+        for item in checklist:
+            lines.append(f"- {item}")
+    else:
+        lines.append("- Potvrdit graf v XTB")
+        lines.append("- Potvrdit spread a volatilitu")
+        lines.append("- Vstoupit jen po potvrzení")
 
     output = "\n".join(lines)
     Path("telegram_preview.txt").write_text(output, encoding="utf-8")

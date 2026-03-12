@@ -1,4 +1,4 @@
-﻿import json
+import json
 from pathlib import Path
 
 from broker.paper_client import PaperBrokerClient
@@ -83,4 +83,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -1,13 +1,12 @@
-PĹEHLED UÄŚENĂŤ â€“ FĂZE 5
-PoÄŤet vzorkĹŻ historie: 6
-PrĹŻmÄ›rnĂ© skĂłre kvality: 1.3
-Mix rozhodnutĂ­:
-- sledovat hedge: 2
-- pouze defenzivně: 4
-VĂˇhy:
+PHASE 5 LEARNING REVIEW
+History samples: 2
+Average quality score: 1.9
+Decision mix:
+- watch_hedge: 2
+Weights:
 - trend: 1.0
 - momentum: 1.0
 - sentiment: 1.0
 - regime_alignment: 1.0
 - risk_penalty: 1.0
-DoporuÄŤenĂ­: Kvalita signĂˇlĹŻ je slabĹˇĂ­; zpĹ™Ă­sni vstupy a uber agresivitu. NegativnĂ­ tok zprĂˇv se v lead setupech objevuje pĹ™Ă­liĹˇ ÄŤasto.
+Suggestion: System is stable but should filter mediocre setups harder. Negative news flow appears too often in lead setups.

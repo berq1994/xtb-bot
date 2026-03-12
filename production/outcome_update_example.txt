@@ -1,5 +1,5 @@
-AKTUALIZACE VĂťSLEDKU
-Symbol: IWM
-RozhodnutĂ­: pouze defenzivně
-Stav: pĹ™idĂˇn zĂˇznam placeholderu vĂ˝sledku
+AKTUALIZACE VÝSLEDKU
+Symbol: NONE
+Rozhodnutí: vyčkat
+Stav: přidán záznam placeholderu výsledku
 Soubor: data/outcome_tracking.jsonl

@@ -1,19 +1,16 @@
 Denní přehled trhu
-Režim: risk-off
-Rozhodnutí: pouze defenzivně
-Lead: BTC-USD | 0.31% | trend rostoucí | zprávy negativní
-Slabý: AAPL | -1.84% | trend klesající | zprávy pozitivní
+Režim: mixed
+Rozhodnutí: watch
 
 Ruční XTB ticket
-Symbol: AAPL
-Směr: sledovat short
-Vstup: 256.01
-SL: 259.85
-TP: 248.33
-Sentiment: pozitivní
+Symbol: -
+Směr: -
+Vstup: -
+SL: -
+TP: -
+Sentiment: -
 
 Kontrolní seznam:
 - Potvrdit graf v XTB
 - Potvrdit spread a volatilitu
-- Riziko max. 1 %
-- Vstup až po potvrzení
+- Vstoupit jen po potvrzení
