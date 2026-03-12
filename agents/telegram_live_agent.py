@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 from agents.telegram_preview_agent import run_telegram_preview
+from cz_utils import status_cs
 
 try:
     import requests
@@ -31,18 +32,8 @@ def _first(*keys: str) -> str:
 
 
 def _token_and_chat() -> tuple[str, str]:
-    token = _first(
-        "TELEGRAMTOKEN",
-        "TG_BOT_TOKEN",
-        "TELEGRAM_BOT_TOKEN",
-        "BOT_TOKEN",
-    )
-    chat_id = _first(
-        "CHATID",
-        "TG_CHAT_ID",
-        "TELEGRAM_CHAT_ID",
-        "CHAT_ID",
-    )
+    token = _first("TELEGRAMTOKEN", "TG_BOT_TOKEN", "TELEGRAM_BOT_TOKEN", "BOT_TOKEN")
+    chat_id = _first("CHATID", "TG_CHAT_ID", "TELEGRAM_CHAT_ID", "CHAT_ID")
     return token, chat_id
 
 
@@ -52,28 +43,28 @@ def run_telegram_live(watchlist=None) -> str:
 
     if not _is_enabled():
         output = "\n".join([
-            "TELEGRAM LIVE",
-            "Status: disabled",
-            "Reason: TELEGRAM_SEND_ENABLED is false",
+            "TELEGRAM ŽIVĚ",
+            f"Stav: {status_cs('disabled')}",
+            "Důvod: TELEGRAM_SEND_ENABLED je nastaveno na false",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
         return output
 
     if not token or not chat_id:
         output = "\n".join([
-            "TELEGRAM LIVE",
-            "Status: preview_only",
-            "Reason: missing TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN or CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID",
-            "Preview file: telegram_preview.txt",
+            "TELEGRAM ŽIVĚ",
+            f"Stav: {status_cs('preview_only')}",
+            "Důvod: chybí TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID",
+            "Soubor náhledu: telegram_preview.txt",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
         return output
 
     if requests is None:
         output = "\n".join([
-            "TELEGRAM LIVE",
-            "Status: failed",
-            "Reason: requests package is unavailable",
+            "TELEGRAM ŽIVĚ",
+            f"Stav: {status_cs('failed')}",
+            "Důvod: balíček requests není dostupný",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
         return output
@@ -83,17 +74,17 @@ def run_telegram_live(watchlist=None) -> str:
         resp = requests.post(url, json={"chat_id": chat_id, "text": message}, timeout=20)
         ok = resp.ok
         output = "\n".join([
-            "TELEGRAM LIVE",
-            f"Status: {'sent' if ok else 'failed'}",
+            "TELEGRAM ŽIVĚ",
+            f"Stav: {status_cs('sent' if ok else 'failed')}",
             f"HTTP: {resp.status_code}",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
         return output
     except Exception as exc:
         output = "\n".join([
-            "TELEGRAM LIVE",
-            "Status: failed",
-            f"Reason: {exc}",
+            "TELEGRAM ŽIVĚ",
+            f"Stav: {status_cs('failed')}",
+            f"Důvod: {exc}",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output
+        return output\n

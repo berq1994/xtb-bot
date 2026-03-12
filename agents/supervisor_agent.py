@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from integrations.openbb_engine import generate_market_overview, build_news_sentiment
+from cz_utils import regime_cs, trend_cs, sentiment_cs, decision_cs
 
 
 def _decision_from_signal(regime: str, leader: dict | None, laggard: dict | None, news_map: dict) -> str:
@@ -28,26 +29,30 @@ def run_supervisor(watchlist=None):
     decision = _decision_from_signal(overview.get("regime", "mixed"), leader, laggard, news_map)
 
     lines = []
-    lines.append("SUPERVISOR DECISION")
-    lines.append(f"Market regime: {overview.get('regime', 'mixed')}")
-    lines.append(f"Decision: {decision}")
+    lines.append("ROZHODNUTÍ SUPERVISORU")
+    lines.append(f"Režim trhu: {regime_cs(overview.get('regime', 'mixed'))}")
+    lines.append(f"Rozhodnutí: {decision_cs(decision)}")
     if leader:
         ls = news_map.get(leader['symbol'], {})
-        lines.append(f"Lead setup: {leader['symbol']} | {leader['change_pct']}% | trend {leader['trend']} | news {ls.get('sentiment_label', 'neutral')}")
+        lines.append(
+            f"Hlavní setup: {leader['symbol']} | {leader['change_pct']}% | trend {trend_cs(leader['trend'])} | zprávy {sentiment_cs(ls.get('sentiment_label', 'neutral'))}"
+        )
     if laggard:
         ws = news_map.get(laggard['symbol'], {})
-        lines.append(f"Weak setup: {laggard['symbol']} | {laggard['change_pct']}% | trend {laggard['trend']} | news {ws.get('sentiment_label', 'neutral')}")
-    lines.append("Next step:")
+        lines.append(
+            f"Slabý setup: {laggard['symbol']} | {laggard['change_pct']}% | trend {trend_cs(laggard['trend'])} | zprávy {sentiment_cs(ws.get('sentiment_label', 'neutral'))}"
+        )
+    lines.append("Další krok:")
     if decision == "watch_long":
-        lines.append("- Open XTB chart")
-        lines.append("- Wait for breakout confirmation")
-        lines.append("- Use manual ticket and max 1% risk")
+        lines.append("- Otevřít graf v XTB")
+        lines.append("- Počkat na potvrzení breakoutu")
+        lines.append("- Použít ruční ticket a max. riziko 1 %")
     elif decision == "watch_hedge":
-        lines.append("- Avoid impulsive long entries")
-        lines.append("- Consider defensive hedge review")
+        lines.append("- Neotvírat impulzivní long")
+        lines.append("- Zvážit defenzivní hedge")
     elif decision == "defensive_only":
-        lines.append("- Trade small or stay flat")
-        lines.append("- Prioritize capital protection")
+        lines.append("- Obchodovat menší velikostí nebo zůstat mimo trh")
+        lines.append("- Upřednostnit ochranu kapitálu")
     else:
-        lines.append("- Wait for cleaner confirmation")
-    return "\n".join(lines)
+        lines.append("- Vyčkat na čistší potvrzení")
+    return "\n".join(lines)\n

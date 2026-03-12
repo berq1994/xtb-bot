@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 
 from integrations.openbb_engine import generate_market_overview, build_news_sentiment
+from cz_utils import decision_cs, regime_cs, sentiment_cs
 
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
 JOURNAL_PATH = Path("data/openbb_trade_journal.txt")
@@ -84,8 +85,8 @@ def append_history_entry(payload: dict) -> None:
     leader_symbol = payload.get("leader", {}).get("symbol", "NONE") if payload.get("leader") else "NONE"
     ticket = payload.get("ticket", {})
     journal_lines = [
-        f"[{payload['timestamp']}] regime={payload['regime']} decision={payload['supervisor']['decision']}",
-        f"lead={leader_symbol} ticket={ticket.get('symbol', 'NONE')} direction={ticket.get('direction', 'n/a')} entry={ticket.get('entry_reference', 0)} sl={ticket.get('stop_loss', 0)} tp={ticket.get('take_profit', 0)} sentiment={ticket.get('news_sentiment', 'neutral')}",
+        f"[{payload['timestamp']}] režim={regime_cs(payload['regime'])} rozhodnutí={decision_cs(payload['supervisor']['decision'])}",
+        f"lead={leader_symbol} ticket={ticket.get('symbol', 'NONE')} směr={ticket.get('direction', 'n/a')} vstup={ticket.get('entry_reference', 0)} sl={ticket.get('stop_loss', 0)} tp={ticket.get('take_profit', 0)} sentiment={sentiment_cs(ticket.get('news_sentiment', 'neutral'))}",
         "",
     ]
     with JOURNAL_PATH.open("a", encoding="utf-8") as f:
@@ -97,11 +98,11 @@ def run_log_signal(watchlist=None):
     append_history_entry(payload)
 
     lines = []
-    lines.append("SIGNAL LOGGED")
-    lines.append(f"Timestamp: {payload['timestamp']}")
-    lines.append(f"Regime: {payload['regime']}")
-    lines.append(f"Decision: {payload['supervisor']['decision']}")
-    lines.append(f"Ticket symbol: {payload['ticket']['symbol']}")
-    lines.append(f"History file: {HISTORY_PATH}")
-    lines.append(f"Journal file: {JOURNAL_PATH}")
-    return "\n".join(lines)
+    lines.append("SIGNÁL ULOŽEN")
+    lines.append(f"Čas: {payload['timestamp']}")
+    lines.append(f"Režim: {regime_cs(payload['regime'])}")
+    lines.append(f"Rozhodnutí: {decision_cs(payload['supervisor']['decision'])}")
+    lines.append(f"Symbol ticketu: {payload['ticket']['symbol']}")
+    lines.append(f"Soubor historie: {HISTORY_PATH}")
+    lines.append(f"Soubor journalu: {JOURNAL_PATH}")
+    return "\n".join(lines)\n

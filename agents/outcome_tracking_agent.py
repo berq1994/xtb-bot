@@ -5,6 +5,7 @@ from pathlib import Path
 from statistics import mean
 
 from agents.signal_history_agent import HISTORY_PATH
+from cz_utils import decision_cs, status_cs
 
 OUTCOME_PATH = Path("data/outcome_tracking.jsonl")
 REVIEW_PATH = Path("data/outcome_review.txt")
@@ -32,13 +33,13 @@ def run_outcome_update() -> str:
 
     if not history:
         output = "\n".join([
-            "OUTCOME UPDATE",
-            "Status: no_history",
-            "Reason: log_signal/full_cycle has not created any history yet",
+            "AKTUALIZACE VÝSLEDKU",
+            f"Stav: {status_cs('no_history')}",
+            "Důvod: log_signal/full_cycle zatím nevytvořil žádnou historii",
         ])
         EXAMPLE_PATH.parent.mkdir(parents=True, exist_ok=True)
         EXAMPLE_PATH.write_text(
-            "Add real results later in data/outcome_tracking.jsonl with fields: "
+            "Později doplň reálné výsledky do data/outcome_tracking.jsonl s poli: "
             "timestamp, symbol, decision, outcome_pct, outcome_label",
             encoding="utf-8",
         )
@@ -57,11 +58,11 @@ def run_outcome_update() -> str:
         fh.write(json.dumps(row, ensure_ascii=False) + "\n")
 
     output = "\n".join([
-        "OUTCOME UPDATE",
+        "AKTUALIZACE VÝSLEDKU",
         f"Symbol: {row['symbol']}",
-        f"Decision: {row['decision']}",
-        "Status: placeholder outcome row added",
-        f"File: {OUTCOME_PATH.as_posix()}",
+        f"Rozhodnutí: {decision_cs(row['decision'])}",
+        "Stav: přidán záznam placeholderu výsledku",
+        f"Soubor: {OUTCOME_PATH.as_posix()}",
     ])
     EXAMPLE_PATH.parent.mkdir(parents=True, exist_ok=True)
     EXAMPLE_PATH.write_text(output, encoding="utf-8")
@@ -72,9 +73,9 @@ def run_outcome_review() -> str:
     rows = _load_jsonl(OUTCOME_PATH)
     if not rows:
         output = "\n".join([
-            "OUTCOME REVIEW",
-            "Samples: 0",
-            "Average outcome %: 0.0",
+            "PŘEHLED VÝSLEDKŮ",
+            "Počet vzorků: 0",
+            "Průměrný výsledek %: 0.0",
         ])
         REVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
         REVIEW_PATH.write_text(output, encoding="utf-8")
@@ -87,15 +88,15 @@ def run_outcome_review() -> str:
         labels[lbl] = labels.get(lbl, 0) + 1
 
     lines = [
-        "OUTCOME REVIEW",
-        f"Samples: {len(rows)}",
-        f"Average outcome %: {round(mean(vals), 3)}",
-        "Labels:",
+        "PŘEHLED VÝSLEDKŮ",
+        f"Počet vzorků: {len(rows)}",
+        f"Průměrný výsledek %: {round(mean(vals), 3)}",
+        "Štítky:",
     ]
     for key, value in labels.items():
-        lines.append(f"- {key}: {value}")
+        lines.append(f"- {status_cs(key)}: {value}")
 
     output = "\n".join(lines)
     REVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
     REVIEW_PATH.write_text(output, encoding="utf-8")
-    return output
+    return output\n

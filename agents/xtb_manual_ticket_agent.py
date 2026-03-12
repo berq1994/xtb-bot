@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from integrations.openbb_engine import generate_market_overview, build_news_sentiment
+from cz_utils import regime_cs, sentiment_cs, direction_cs
 
 
 def _levels(price: float, direction: str) -> tuple[float, float]:
@@ -38,20 +39,20 @@ def run_xtb_manual_ticket(watchlist=None):
     sentiment = news_map.get(symbol, {}).get("sentiment_label", "neutral") if candidate else "neutral"
 
     lines = []
-    lines.append("XTB MANUAL TICKET")
+    lines.append("RUČNÍ XTB TICKET")
     lines.append(f"Symbol: {symbol}")
-    lines.append(f"Direction: {direction}")
-    lines.append(f"Market regime: {overview.get('regime', 'mixed')}")
-    lines.append(f"Entry reference: {price}")
+    lines.append(f"Směr: {direction_cs(direction)}")
+    lines.append(f"Režim trhu: {regime_cs(overview.get('regime', 'mixed'))}")
+    lines.append(f"Vstupní reference: {price}")
     lines.append(f"Stop loss: {sl}")
     lines.append(f"Take profit: {tp}")
-    lines.append(f"News sentiment: {sentiment}")
-    lines.append("Checklist:")
-    lines.append("- Confirm 15m and 1h chart structure")
-    lines.append("- Confirm spread before entry")
-    lines.append("- Max 1% account risk")
-    lines.append("- Enter only on chart confirmation")
+    lines.append(f"Sentiment zpráv: {sentiment_cs(sentiment)}")
+    lines.append("Kontrolní seznam:")
+    lines.append("- Potvrdit strukturu na 15m a 1h grafu")
+    lines.append("- Potvrdit spread před vstupem")
+    lines.append("- Max. riziko účtu 1 %")
+    lines.append("- Vstoupit jen po potvrzení v grafu")
 
     output = "\n".join(lines)
     Path("xtb_manual_ticket.txt").write_text(output, encoding="utf-8")
-    return output
+    return output\n

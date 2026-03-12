@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from agents.signal_history_agent import HISTORY_PATH
+from cz_utils import regime_cs, decision_cs
 
 REVIEW_PATH = Path("data/phase5_performance_review.txt")
 
@@ -35,18 +36,18 @@ def run_performance_review(limit: int = 20) -> str:
 
     top_symbol = max(symbols, key=symbols.get) if symbols else "NONE"
     lines = []
-    lines.append("PHASE 5 PERFORMANCE REVIEW")
-    lines.append(f"Samples reviewed: {len(rows)}")
-    lines.append(f"Most frequent ticket symbol: {top_symbol}")
-    lines.append("Regimes:")
+    lines.append("PŘEHLED VÝKONNOSTI – FÁZE 5")
+    lines.append(f"Vyhodnocené vzorky: {len(rows)}")
+    lines.append(f"Nejčastější symbol ticketu: {top_symbol}")
+    lines.append("Režimy:")
     for key, value in regimes.items():
-        lines.append(f"- {key}: {value}")
-    lines.append("Decisions:")
+        lines.append(f"- {regime_cs(key)}: {value}")
+    lines.append("Rozhodnutí:")
     for key, value in decisions.items():
-        lines.append(f"- {key}: {value}")
-    lines.append("Symbols:")
+        lines.append(f"- {decision_cs(key)}: {value}")
+    lines.append("Symboly:")
     for key, value in symbols.items():
         lines.append(f"- {key}: {value}")
     output = "\n".join(lines)
     REVIEW_PATH.write_text(output, encoding="utf-8")
-    return output
+    return output\n
