@@ -99,4 +99,4 @@ def run_outcome_review() -> str:
     output = "\n".join(lines)
     REVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
     REVIEW_PATH.write_text(output, encoding="utf-8")
-    return output\n
+    return output

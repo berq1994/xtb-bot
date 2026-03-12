@@ -14,20 +14,18 @@ def run_telegram_preview(watchlist=None):
     laggard = payload.get("laggard")
 
     lines = []
+    lines.append("TELEGRAM NÁHLED")
     lines.append("📊 Denní přehled trhu")
     lines.append(f"Režim: {regime_cs(payload['regime'])}")
     lines.append(f"Rozhodnutí: {decision_cs(supervisor['decision'])}")
-
     if leader:
         lines.append(
             f"Lead: {leader['symbol']} | {leader['change_pct']}% | trend {trend_cs(leader['trend'])} | zprávy {sentiment_cs(leader['sentiment_label'])}"
         )
-
     if laggard:
         lines.append(
             f"Slabý: {laggard['symbol']} | {laggard['change_pct']}% | trend {trend_cs(laggard['trend'])} | zprávy {sentiment_cs(laggard['sentiment_label'])}"
         )
-
     lines.append("")
     lines.append("🎯 Ruční XTB ticket")
     lines.append(f"Symbol: {ticket['symbol']}")

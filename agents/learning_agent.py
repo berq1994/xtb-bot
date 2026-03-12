@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -109,7 +109,7 @@ def build_learning_summary(limit: int = 25) -> dict:
             "avg_quality": _snapshot_quality(payload),
             "decision_mix": {payload.get("supervisor", {}).get("decision", "wait"): 1},
             "weights": weights,
-            "suggestion": "Nejdřív nasbírej více historie, teprve pak agresivněji upravuj váhy.",
+            "suggestion": "NejdĹ™Ă­v nasbĂ­rej vĂ­ce historie, teprve pak agresivnÄ›ji upravuj vĂˇhy.",
         }
 
     qualities = [_snapshot_quality(row) for row in history]
@@ -130,18 +130,18 @@ def build_learning_summary(limit: int = 25) -> dict:
 
     suggestion_parts = []
     if avg_quality >= 2.4:
-        suggestion_parts.append("Současný signálový stack vypadá zdravě.")
+        suggestion_parts.append("SouÄŤasnĂ˝ signĂˇlovĂ˝ stack vypadĂˇ zdravÄ›.")
     elif avg_quality >= 1.6:
-        suggestion_parts.append("Systém je stabilní, ale měl by přísněji filtrovat průměrné setupy.")
+        suggestion_parts.append("SystĂ©m je stabilnĂ­, ale mÄ›l by pĹ™Ă­snÄ›ji filtrovat prĹŻmÄ›rnĂ© setupy.")
     else:
-        suggestion_parts.append("Kvalita signálů je slabší; zpřísni vstupy a uber agresivitu.")
+        suggestion_parts.append("Kvalita signĂˇlĹŻ je slabĹˇĂ­; zpĹ™Ă­sni vstupy a uber agresivitu.")
 
     if long_share > 0.65:
-        suggestion_parts.append("Long watchů je příliš mnoho vůči celkovému toku signálů.")
+        suggestion_parts.append("Long watchĹŻ je pĹ™Ă­liĹˇ mnoho vĹŻÄŤi celkovĂ©mu toku signĂˇlĹŻ.")
     if negative_sentiment_count > len(history) * 0.25:
-        suggestion_parts.append("Negativní tok zpráv se v lead setupech objevuje příliš často.")
+        suggestion_parts.append("NegativnĂ­ tok zprĂˇv se v lead setupech objevuje pĹ™Ă­liĹˇ ÄŤasto.")
     if long_wins >= max(3, len(history) // 3):
-        suggestion_parts.append("Soulad trendu a momenta funguje dobře.")
+        suggestion_parts.append("Soulad trendu a momenta funguje dobĹ™e.")
 
     return {
         "count": len(history),
@@ -177,16 +177,16 @@ def adapt_signal_weights(limit: int = 25) -> dict:
 def run_learning_review(limit: int = 25) -> str:
     summary = build_learning_summary(limit=limit)
     lines = []
-    lines.append("PŘEHLED UČENÍ – FÁZE 5")
-    lines.append(f"Počet vzorků historie: {summary['count']}")
-    lines.append(f"Průměrné skóre kvality: {summary['avg_quality']}")
-    lines.append("Mix rozhodnutí:")
+    lines.append("PĹEHLED UÄŚENĂŤ â€“ FĂZE 5")
+    lines.append(f"PoÄŤet vzorkĹŻ historie: {summary['count']}")
+    lines.append(f"PrĹŻmÄ›rnĂ© skĂłre kvality: {summary['avg_quality']}")
+    lines.append("Mix rozhodnutĂ­:")
     for key, value in summary["decision_mix"].items():
         lines.append(f"- {decision_cs(key)}: {value}")
-    lines.append("Váhy:")
+    lines.append("VĂˇhy:")
     for key, value in summary["weights"].items():
         lines.append(f"- {key}: {value}")
-    lines.append(f"Doporučení: {summary['suggestion']}")
+    lines.append(f"DoporuÄŤenĂ­: {summary['suggestion']}")
     output = "\n".join(lines)
     REPORT_PATH.write_text(output, encoding="utf-8")
     return output
@@ -196,8 +196,8 @@ def run_rebalance_weights(limit: int = 25) -> str:
     before = _load_weights()
     after = adapt_signal_weights(limit=limit)
     lines = []
-    lines.append("REBALANCE VAH – FÁZE 5")
+    lines.append("REBALANCE VAH â€“ FĂZE 5")
     for key in DEFAULT_WEIGHTS:
         lines.append(f"- {key}: {before.get(key)} -> {after.get(key)}")
     lines.append(f"Soubor vah: {WEIGHTS_PATH}")
-    return "\n".join(lines)\n
+    return "\\n".join(lines)

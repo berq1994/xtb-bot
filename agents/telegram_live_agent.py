@@ -87,4 +87,4 @@ def run_telegram_live(watchlist=None) -> str:
             f"Důvod: {exc}",
         ])
         OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output\n
+        return output

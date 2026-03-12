@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from datetime import datetime
@@ -46,22 +46,12 @@ def build_snapshot_payload(watchlist=None) -> dict:
 
     symbol = candidate["symbol"] if candidate else "NONE"
     price = float(candidate["price"]) if candidate else 0.0
-
-    if candidate:
-        sl, tp = _levels(price, "long" if direction == "long" else "short")
-    else:
-        sl, tp = 0.0, 0.0
-
+    sl, tp = _levels(price, "long" if direction == "long" else "short") if candidate else (0.0, 0.0)
     candidate_sentiment = news_map.get(symbol, {}) if candidate else {}
 
     if overview.get("regime") == "risk_off":
         decision = "defensive_only"
-    elif (
-        leader
-        and leader.get("trend") == "up"
-        and leader.get("change_pct", 0) > 0.4
-        and news_map.get(leader["symbol"], {}).get("sentiment_label") != "negative"
-    ):
+    elif leader and leader.get("trend") == "up" and leader.get("change_pct", 0) > 0.4 and news_map.get(leader["symbol"], {}).get("sentiment_label") != "negative":
         decision = "watch_long"
     elif laggard and laggard.get("change_pct", 0) < -1.0:
         decision = "watch_hedge"
@@ -95,8 +85,8 @@ def append_history_entry(payload: dict) -> None:
     leader_symbol = payload.get("leader", {}).get("symbol", "NONE") if payload.get("leader") else "NONE"
     ticket = payload.get("ticket", {})
     journal_lines = [
-        f"[{payload['timestamp']}] režim={regime_cs(payload['regime'])} rozhodnutí={decision_cs(payload['supervisor']['decision'])}",
-        f"lead={leader_symbol} ticket={ticket.get('symbol', 'NONE')} směr={ticket.get('direction', 'n/a')} vstup={ticket.get('entry_reference', 0)} sl={ticket.get('stop_loss', 0)} tp={ticket.get('take_profit', 0)} sentiment={sentiment_cs(ticket.get('news_sentiment', 'neutral'))}",
+        f"[{payload['timestamp']}] reĹľim={regime_cs(payload['regime'])} rozhodnutĂ­={decision_cs(payload['supervisor']['decision'])}",
+        f"lead={leader_symbol} ticket={ticket.get('symbol', 'NONE')} smÄ›r={ticket.get('direction', 'n/a')} vstup={ticket.get('entry_reference', 0)} sl={ticket.get('stop_loss', 0)} tp={ticket.get('take_profit', 0)} sentiment={sentiment_cs(ticket.get('news_sentiment', 'neutral'))}",
         "",
     ]
     with JOURNAL_PATH.open("a", encoding="utf-8") as f:
@@ -108,12 +98,11 @@ def run_log_signal(watchlist=None):
     append_history_entry(payload)
 
     lines = []
-    lines.append("SIGNÁL ULOŽEN")
-    lines.append(f"Čas: {payload['timestamp']}")
-    lines.append(f"Režim: {regime_cs(payload['regime'])}")
-    lines.append(f"Rozhodnutí: {decision_cs(payload['supervisor']['decision'])}")
+    lines.append("SIGNĂL ULOĹ˝EN")
+    lines.append(f"ÄŚas: {payload['timestamp']}")
+    lines.append(f"ReĹľim: {regime_cs(payload['regime'])}")
+    lines.append(f"RozhodnutĂ­: {decision_cs(payload['supervisor']['decision'])}")
     lines.append(f"Symbol ticketu: {payload['ticket']['symbol']}")
     lines.append(f"Soubor historie: {HISTORY_PATH}")
     lines.append(f"Soubor journalu: {JOURNAL_PATH}")
-
-    return "\n".join(lines)
+    return "\\n".join(lines)
