@@ -1,0 +1,8 @@
+[2026-03-12T08:49:26] regime=mixed decision=watch_hedge
+lead=BTC-USD ticket=BTC-USD direction=long entry=129.66 sl=127.72 tp=133.55 sentiment=negative
+[2026-03-12T08:49:26] regime=mixed decision=watch_hedge
+lead=BTC-USD ticket=BTC-USD direction=long entry=129.66 sl=127.72 tp=133.55 sentiment=negative
+[2026-03-12T09:51:34] regime=mixed decision=watch_long
+lead=NVDA ticket=NVDA direction=long entry=186.03 sl=183.24 tp=191.61 sentiment=positive
+[2026-03-12T09:51:37] regime=mixed decision=watch_long
+lead=NVDA ticket=NVDA direction=long entry=186.03 sl=183.24 tp=191.61 sentiment=positive

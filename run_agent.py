@@ -91,6 +91,26 @@ def main():
         print(run_log_signal())
         return
 
+    if mode == "learning_review":
+        from agents.learning_agent import run_learning_review
+        print(run_learning_review())
+        return
+
+    if mode == "rebalance_weights":
+        from agents.learning_agent import run_rebalance_weights
+        print(run_rebalance_weights())
+        return
+
+    if mode == "performance_review":
+        from agents.performance_review_agent import run_performance_review
+        print(run_performance_review())
+        return
+
+    if mode == "full_cycle":
+        from agents.workflow_runner_agent import run_full_cycle
+        print(run_full_cycle())
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
@@ -101,7 +121,8 @@ def main():
         "Velký AI upgrade přidán. Použij: python run_agent.py "
         "backtest | ai_daily | ai_recalibrate | ai_walkforward | "
         "openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket | "
-        "daily_briefing | telegram_preview | log_signal"
+        "daily_briefing | telegram_preview | log_signal | learning_review | "
+        "rebalance_weights | performance_review | full_cycle"
     )
 
 

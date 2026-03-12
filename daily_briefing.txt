@@ -1,0 +1,71 @@
+DAILY BRIEFING
+========================================
+
+OPENBB SIGNAL BUNDLE
+Market regime: mixed
+Data source: yfinance
+
+Primary long candidate:
+- NVDA | move 0.69% | trend up | price 186.03
+- Action: watch breakout / manual XTB confirmation
+
+Primary weak candidate:
+- TLT | move -1.29% | trend down | price 87.14
+- Action: watch weakness / hedge / avoid impulsive long
+
+Manual execution checklist:
+1. Confirm chart on XTB
+2. Confirm spread and volatility
+3. Set stop loss before entry
+4. Risk max 1% per trade
+
+OPENBB NEWS / SENTIMENT
+Market regime: mixed
+
+NVDA: positive (score 4)
+- AI demand remains strong across data center cycle
+- Semiconductor leadership supports momentum
+
+QQQ: neutral (score 0)
+- QQQ trading activity remains in focus
+- Market participants monitor QQQ for follow-through
+
+AAPL: positive (score 2)
+- Consumer demand mixed ahead of product cycle
+- Mega-cap quality still supports defensive interest
+
+TLT: negative (score -3)
+- Rates volatility pressures long duration bonds
+- Defensive flow rises when growth slows
+
+DIA: neutral (score 0)
+- DIA trading activity remains in focus
+- Market participants monitor DIA for follow-through
+
+BTC-USD: negative (score -1)
+- Crypto sentiment improves with risk appetite
+- Volatility remains elevated across digital assets
+
+SUPERVISOR DECISION
+Market regime: mixed
+Decision: watch_long
+Lead setup: NVDA | 0.69% | trend up | news positive
+Weak setup: TLT | -1.29% | trend down | news negative
+Next step:
+- Open XTB chart
+- Wait for breakout confirmation
+- Use manual ticket and max 1% risk
+
+XTB MANUAL TICKET
+Symbol: NVDA
+Direction: long
+Market regime: mixed
+Entry reference: 186.03
+Stop loss: 183.24
+Take profit: 191.61
+News sentiment: positive
+Checklist:
+- Confirm 15m and 1h chart structure
+- Confirm spread before entry
+- Max 1% account risk
+- Enter only on chart confirmation

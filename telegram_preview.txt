@@ -1,0 +1,20 @@
+TELEGRAM PREVIEW
+📊 Daily market intelligence
+Regime: mixed
+Decision: watch_long
+Lead: NVDA | 0.69% | trend up | news positive
+Weak: TLT | -1.29% | trend down | news negative
+
+🎯 Manual XTB ticket
+Symbol: NVDA
+Direction: long
+Entry: 186.03
+SL: 183.24
+TP: 191.61
+Sentiment: positive
+
+Checklist:
+• Confirm chart on XTB
+• Confirm spread and volatility
+• Risk max 1%
+• Enter only after confirmation

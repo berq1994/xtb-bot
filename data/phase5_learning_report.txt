@@ -1,0 +1,13 @@
+PHASE 5 LEARNING REVIEW
+History samples: 4
+Average quality score: 3.1
+Decision mix:
+- watch_hedge: 2
+- watch_long: 2
+Weights:
+- trend: 1.0
+- momentum: 1.0
+- sentiment: 1.0
+- regime_alignment: 1.0
+- risk_penalty: 1.0
+Suggestion: Current signal stack looks healthy. Negative news flow appears too often in lead setups.

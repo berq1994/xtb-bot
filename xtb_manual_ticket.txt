@@ -1,14 +1,13 @@
-XTB MANUAL TRADE TICKET
-Ticker: NVDA
-Směr: LONG
-Score: 1.4
-Entry zóna: 868.26 - 871.74
-Stop-loss: 848.4
-TP1: 897.0
-TP2: 915.0
-RR TP1: 1.08
-RR TP2: 1.85
-Počet kusů: 3
-Notional USD: 2615.22
-Risk USD: 70.02
-Zadat ručně do xStation jako MARKET nebo LIMIT dle situace.
+XTB MANUAL TICKET
+Symbol: NVDA
+Direction: long
+Market regime: mixed
+Entry reference: 186.03
+Stop loss: 183.24
+Take profit: 191.61
+News sentiment: positive
+Checklist:
+- Confirm 15m and 1h chart structure
+- Confirm spread before entry
+- Max 1% account risk
+- Enter only on chart confirmation

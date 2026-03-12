@@ -1,0 +1,7 @@
+{
+  "trend": 1.0,
+  "momentum": 1.0,
+  "sentiment": 1.0,
+  "regime_alignment": 1.0,
+  "risk_penalty": 1.0
+}
