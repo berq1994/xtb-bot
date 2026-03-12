@@ -1,0 +1,5 @@
+REAL SOURCES REPORT
+GDELT: enabled=False ok=False reason=DISABLED
+SEC: enabled=False ok=False reason=DISABLED
+EARNINGS: enabled=False ok=False reason=DISABLED
+MACRO: enabled=False ok=False reason=DISABLED

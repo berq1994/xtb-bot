@@ -1,0 +1,17 @@
+{
+  "telegram": {
+    "delivered": false,
+    "ready": false,
+    "transport": "telegram_http",
+    "reason": "MISSING_OR_DISABLED_TELEGRAM_CONFIG"
+  },
+  "email": {
+    "delivered": false,
+    "ready": false,
+    "transport": "smtp_live",
+    "reason": "MISSING_OR_DISABLED_EMAIL_CONFIG"
+  },
+  "briefing_length": 145,
+  "alerts_length": 0,
+  "handoff_length": 273
+}

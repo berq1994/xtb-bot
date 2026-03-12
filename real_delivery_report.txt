@@ -1,0 +1,10 @@
+REAL DELIVERY REPORT
+Telegram delivered: False
+Telegram reason: MISSING_OR_DISABLED_TELEGRAM_CONFIG
+
+Email delivered: False
+Email reason: MISSING_OR_DISABLED_EMAIL_CONFIG
+
+Briefing length: 145
+Alerts length: 0
+Handoff length: 273

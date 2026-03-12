@@ -1,0 +1,4 @@
+BLOCK16 ACTIVATION SUITE REPORT
+Telegram ok: False
+Email ok: False
+Sources ok count: 0

@@ -1,0 +1,32 @@
+{
+  "config": {
+    "gdelt_enabled": false,
+    "sec_enabled": false,
+    "earnings_enabled": false,
+    "macro_enabled": false
+  },
+  "gdelt": {
+    "enabled": false,
+    "ok": false,
+    "reason": "DISABLED",
+    "items": []
+  },
+  "sec": {
+    "enabled": false,
+    "ok": false,
+    "reason": "DISABLED",
+    "items": []
+  },
+  "earnings": {
+    "enabled": false,
+    "ok": false,
+    "reason": "DISABLED",
+    "items": []
+  },
+  "macro": {
+    "enabled": false,
+    "ok": false,
+    "reason": "DISABLED",
+    "items": []
+  }
+}

@@ -45,13 +45,18 @@ def main():
         print("AI recalibration completed.")
         return
 
+    if mode == "openbb_scan":
+        from agents.openbb_research_agent import run_openbb_research
+        print(run_openbb_research())
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return
 
-    print("Velký AI upgrade přidán. Použij: python run_agent.py backtest | ai_daily | ai_recalibrate | ai_walkforward")
+    print("Velký AI upgrade přidán. Použij: python run_agent.py backtest | ai_daily | ai_recalibrate | ai_walkforward | openbb_scan")
 
 if __name__ == "__main__":
     main()
