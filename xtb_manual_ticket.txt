@@ -1,11 +1,11 @@
 RUČNÍ XTB TICKET
-Symbol: IWM
-Směr: sledovat short
-Režim trhu: risk-off
-Vstupní reference: 247.42
-Stop loss: 251.13
-Take profit: 240.0
-Sentiment zpráv: neutrální
+Symbol: BTC-USD
+Směr: long
+Režim trhu: smíšený
+Vstupní reference: 129.66
+Stop loss: 127.72
+Take profit: 133.55
+Sentiment zpráv: negativní
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem

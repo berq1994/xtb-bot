@@ -9,4 +9,3 @@ pytz
 feedparser
 scikit-learn
 pyarrow
-yaml

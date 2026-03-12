@@ -3,9 +3,7 @@ Governance mode: REVIEW_ONLY
 Manual XTB allowed: True
 
 Co ručně zkontrolovat v xStation:
-- CVX: Napětí v regionu zvyšuje riziko pro energie a dopravu
-- NVDA, TSM: Blíží se earnings event s možným gap riskem
-- NVDA, MSFT: Firma zveřejnila nový filing s možným dopadem na výhled
+- CVX: Fallback geopolitická událost
 
 Akce:
 - otevři watchlist

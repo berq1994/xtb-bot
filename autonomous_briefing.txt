@@ -1,10 +1,8 @@
 AUTONOMOUS RESEARCH BRIEFING
 Governance mode: REVIEW_ONLY
-Důvod: HIGH_EVENT_DENSITY
-Portfolio relevant events: 3
-High priority events: 3
+Důvod: RELEVANT_EVENTS_FOUND
+Portfolio relevant events: 1
+High priority events: 1
 
 Top události:
-- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | hits: CVX | impact 0.798 | relevance 0.865
-- [earnings] Blíží se earnings event s možným gap riskem | hits: NVDA, TSM | impact 0.755 | relevance 0.915
-- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | hits: NVDA, MSFT | impact 0.66 | relevance 0.833
+- [geo] Fallback geopolitická událost | hits: CVX | impact 0.78 | relevance 0.8

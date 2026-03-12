@@ -2,7 +2,7 @@ AUTONOMOUS PRODUCTION FLOW REPORT
 Status: REVIEW_ONLY
 Governance mode: REVIEW_ONLY
 Delivery ok: False
-New events: 4
+New events: 1
 Escalation: medium | DELIVERY_FAILED
 
 Schedule:

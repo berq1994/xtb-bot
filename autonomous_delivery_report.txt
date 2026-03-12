@@ -7,6 +7,6 @@ Email delivered: False
 Email ready: False
 Email reason: MISSING_OR_DISABLED_EMAIL_CONFIG
 
-Briefing length: 487
-Alerts length: 267
-Handoff length: 393
+Briefing length: 234
+Alerts length: 62
+Handoff length: 242
