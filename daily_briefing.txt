@@ -1,70 +1,22 @@
-DAILY BRIEFING
+DENNĂŤ BRIEFING
 ========================================
 
-OPENBB SIGNAL BUNDLE
-Market regime: mixed
-Data source: fallback
+OPENBB SIGNĂLOVĂť BALĂŤÄŚEK\nReĹľim trhu: risk-off\nZdroj dat: yfinance\n\nHlavnĂ­ kandidĂˇt na long:\n- BTC-USD | pohyb 0.03% | trend rostoucí | cena 70228.68\n- Akce: sledovat breakout / ruÄŤnĂ­ potvrzenĂ­ v XTB\n\nHlavnĂ­ slabĂ˝ kandidĂˇt:\n- IWM | pohyb -1.67% | trend klesající | cena 248.62\n- Akce: sledovat slabost / hedge / nebrat impulzivnĂ­ long\n\nKontrolnĂ­ seznam pro ruÄŤnĂ­ vstup:\n1. Potvrdit graf v XTB\n2. Potvrdit spread a volatilitu\n3. Nastavit stop loss jeĹˇtÄ› pĹ™ed vstupem\n4. Riziko max. 1 % na obchod
 
-Primary long candidate:
-- BTC-USD | move 1.3% | trend up | price 129.66
-- Action: watch breakout / manual XTB confirmation
+OPENBB ZPRĂVY / SENTIMENT\nReĹľim trhu: risk-off\n\nBTC-USD: negativní (skĂłre -1)\n- Crypto sentiment improves with risk appetite\n- Volatility remains elevated across digital assets\n\nMSFT: pozitivní (skĂłre 4)\n- Cloud and AI narrative remains constructive\n- Large-cap quality bid supports resilience\n\nTLT: negativní (skĂłre -3)\n- Rates volatility pressures long duration bonds\n- Defensive flow rises when growth slows\n\nIWM: neutrální (skĂłre 0)\n- IWM trading activity remains in focus\n- Market participants monitor IWM for follow-through\n\nAAPL: pozitivní (skĂłre 2)\n- Consumer demand mixed ahead of product cycle\n- Mega-cap quality still supports defensive interest\n\nNVDA: pozitivní (skĂłre 4)\n- AI demand remains strong across data center cycle\n- Semiconductor leadership supports momentum\n
 
-Primary weak candidate:
-- SPY | move -1.3% | trend down | price 98.7
-- Action: watch weakness / hedge / avoid impulsive long
+ROZHODNUTĂŤ SUPERVISORU\nReĹľim trhu: risk-off\nRozhodnutĂ­: pouze defenzivně\nHlavnĂ­ setup: BTC-USD | 0.03% | trend rostoucí | zprĂˇvy negativní\nSlabĂ˝ setup: IWM | -1.67% | trend klesající | zprĂˇvy neutrální\nDalĹˇĂ­ krok:\n- Obchodovat menĹˇĂ­ velikostĂ­ nebo zĹŻstat mimo trh\n- UpĹ™ednostnit ochranu kapitĂˇlu
 
-Manual execution checklist:
-1. Confirm chart on XTB
-2. Confirm spread and volatility
-3. Set stop loss before entry
-4. Risk max 1% per trade
-
-OPENBB NEWS / SENTIMENT
-Market regime: mixed
-
-BTC-USD: negative (score -1)
-- Crypto sentiment improves with risk appetite
-- Volatility remains elevated across digital assets
-
-AAPL: positive (score 2)
-- Consumer demand mixed ahead of product cycle
-- Mega-cap quality still supports defensive interest
-
-IWM: neutral (score 0)
-- IWM trading activity remains in focus
-- Market participants monitor IWM for follow-through
-
-SPY: neutral (score 0)
-- SPY trading activity remains in focus
-- Market participants monitor SPY for follow-through
-
-GLD: neutral (score 0)
-- GLD trading activity remains in focus
-- Market participants monitor GLD for follow-through
-
-QQQ: neutral (score 0)
-- QQQ trading activity remains in focus
-- Market participants monitor QQQ for follow-through
-
-SUPERVISOR DECISION
-Market regime: mixed
-Decision: watch_hedge
-Lead setup: BTC-USD | 1.3% | trend up | news negative
-Weak setup: SPY | -1.3% | trend down | news neutral
-Next step:
-- Avoid impulsive long entries
-- Consider defensive hedge review
-
-XTB MANUAL TICKET
-Symbol: BTC-USD
-Direction: long
-Market regime: mixed
-Entry reference: 129.66
-Stop loss: 127.72
-Take profit: 133.55
-News sentiment: negative
-Checklist:
-- Confirm 15m and 1h chart structure
-- Confirm spread before entry
-- Max 1% account risk
-- Enter only on chart confirmation
+RUÄŚNĂŤ XTB TICKET
+Symbol: IWM
+SmÄ›r: sledovat short
+ReĹľim trhu: risk-off
+VstupnĂ­ reference: 248.62
+Stop loss: 252.35
+Take profit: 241.16
+Sentiment zprĂˇv: neutrální
+KontrolnĂ­ seznam:
+- Potvrdit strukturu na 15m a 1h grafu
+- Potvrdit spread pĹ™ed vstupem
+- Max. riziko ĂşÄŤtu 1 %
+- Vstoupit jen po potvrzenĂ­ v grafu

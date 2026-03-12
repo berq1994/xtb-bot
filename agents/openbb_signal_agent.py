@@ -38,5 +38,8 @@ def run_openbb_signal(watchlist=None):
     lines.append("2. Potvrdit spread a volatilitu")
     lines.append("3. Nastavit stop loss jeĹˇtÄ› pĹ™ed vstupem")
     lines.append("4. Riziko max. 1 % na obchod")
-    return "\\n".join(lines)
+    return "\
+".join(lines)
+
+
 

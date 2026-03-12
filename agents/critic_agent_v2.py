@@ -1,4 +1,4 @@
-def run_critic_agent_v2(signal_quality: dict, research_relevance: float):
+﻿def run_critic_agent_v2(signal_quality: dict, research_relevance: float):
     score = 0.7
     if signal_quality.get("setup_quality") == "A":
         score += 0.15
@@ -8,3 +8,5 @@ def run_critic_agent_v2(signal_quality: dict, research_relevance: float):
         "critic_score": round(min(1.0, score), 2),
         "approved": score >= 0.8,
     }
+
+

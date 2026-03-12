@@ -1,4 +1,4 @@
-import json
+﻿import json
 from ai.ticker_loader import load_all_tickers
 from data_quality.startup_validator import validate_startup_universe
 from data_ingestion.data_health import health_snapshot
@@ -16,3 +16,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

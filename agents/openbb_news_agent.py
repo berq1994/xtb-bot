@@ -19,5 +19,8 @@ def run_openbb_news(watchlist=None):
         for headline in info["headlines"][:2]:
             lines.append(f"- {headline}")
         lines.append("")
-    return "\\n".join(lines).strip()
+    return "\
+".join(lines).strip()
+
+
 

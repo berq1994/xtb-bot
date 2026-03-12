@@ -1,4 +1,4 @@
-import sys
+﻿import sys
 import json
 from env_loader import load_local_env
 
@@ -162,3 +162,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

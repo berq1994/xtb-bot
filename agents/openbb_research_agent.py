@@ -19,5 +19,8 @@ def run_openbb_research(watchlist=None):
     lines.append("NejslabĹˇĂ­ tituly:")
     for row in overview['laggards']:
         lines.append(f"- {row['symbol']}: {row['change_pct']}% | trend {trend_cs(row['trend'])} | cena {row['price']}")
-    return "\\n".join(lines)
+    return "\
+".join(lines)
+
+
 

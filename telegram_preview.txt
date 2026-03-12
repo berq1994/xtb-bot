@@ -1,20 +1,20 @@
-TELEGRAM PREVIEW
-📊 Daily market intelligence
-Regime: mixed
-Decision: watch_hedge
-Lead: BTC-USD | 1.3% | trend up | news negative
-Weak: SPY | -1.3% | trend down | news neutral
+TELEGRAM NĂHLED
+đź“Š DennĂ­ pĹ™ehled trhu
+ReĹľim: risk-off
+RozhodnutĂ­: pouze defenzivně
+Lead: BTC-USD | 0.03% | trend rostoucí | zprĂˇvy negativní
+SlabĂ˝: IWM | -1.67% | trend klesající | zprĂˇvy neutrální
 
-🎯 Manual XTB ticket
-Symbol: BTC-USD
-Direction: long
-Entry: 129.66
-SL: 127.72
-TP: 133.55
-Sentiment: negative
+đźŽŻ RuÄŤnĂ­ XTB ticket
+Symbol: IWM
+SmÄ›r: sledovat short
+Vstup: 248.62
+SL: 252.35
+TP: 241.16
+Sentiment: neutrální
 
-Checklist:
-• Confirm chart on XTB
-• Confirm spread and volatility
-• Risk max 1%
-• Enter only after confirmation
+KontrolnĂ­ seznam:
+â€˘ Potvrdit graf v XTB
+â€˘ Potvrdit spread a volatilitu
+â€˘ Riziko max. 1 %
+â€˘ Vstup aĹľ po potvrzenĂ­

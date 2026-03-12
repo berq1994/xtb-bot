@@ -1,4 +1,4 @@
-from coordination.priority_queue import rank_items
+﻿from coordination.priority_queue import rank_items
 from intelligence.briefing_bridge import to_briefing_section
 
 def coordinate_research(geo_payload, corporate_payload, earnings_payload, macro_payload):
@@ -11,6 +11,8 @@ def coordinate_research(geo_payload, corporate_payload, earnings_payload, macro_
         "ok": True,
         "ranked_items": ranked,
         "briefing_sections": [
-            to_briefing_section("Nejdůležitější intelligence", ranked),
+            to_briefing_section("NejdĹŻleĹľitÄ›jĹˇĂ­ intelligence", ranked),
         ],
     }
+
+

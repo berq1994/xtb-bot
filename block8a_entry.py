@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 import yaml
 
@@ -86,3 +86,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

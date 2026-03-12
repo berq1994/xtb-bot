@@ -1,5 +1,5 @@
-OUTCOME UPDATE
-Symbol: NVDA
-Decision: watch_long
-Status: placeholder outcome row added
-File: data/outcome_tracking.jsonl
+AKTUALIZACE VĂťSLEDKU
+Symbol: IWM
+RozhodnutĂ­: pouze defenzivně
+Stav: pĹ™idĂˇn zĂˇznam placeholderu vĂ˝sledku
+Soubor: data/outcome_tracking.jsonl

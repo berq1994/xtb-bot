@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from real_sources_live.config import load_sources_config
 from real_sources_live.gdelt_live import poll_gdelt_live
@@ -26,3 +26,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

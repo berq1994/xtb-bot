@@ -80,7 +80,8 @@ def build_snapshot_payload(watchlist=None) -> dict:
 def append_history_entry(payload: dict) -> None:
     HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
     with HISTORY_PATH.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(payload, ensure_ascii=False) + "\n")
+        f.write(json.dumps(payload, ensure_ascii=False) + "
+")
 
     leader_symbol = payload.get("leader", {}).get("symbol", "NONE") if payload.get("leader") else "NONE"
     ticket = payload.get("ticket", {})
@@ -90,7 +91,8 @@ def append_history_entry(payload: dict) -> None:
         "",
     ]
     with JOURNAL_PATH.open("a", encoding="utf-8") as f:
-        f.write("\n".join(journal_lines))
+        f.write("
+".join(journal_lines))
 
 
 def run_log_signal(watchlist=None):
@@ -105,5 +107,8 @@ def run_log_signal(watchlist=None):
     lines.append(f"Symbol ticketu: {payload['ticket']['symbol']}")
     lines.append(f"Soubor historie: {HISTORY_PATH}")
     lines.append(f"Soubor journalu: {JOURNAL_PATH}")
-    return "\\n".join(lines)
+    return "\
+".join(lines)
+
+
 

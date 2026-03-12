@@ -1,4 +1,4 @@
-# cli_agent.py
+﻿# cli_agent.py
 from __future__ import annotations
 
 import sys
@@ -15,19 +15,23 @@ def main(argv: list[str]) -> int:
     agent = RadarAgent(cfg=cfg, st=st)
 
     if len(argv) <= 1:
-        print("Radar Agent (interactive). Napiš 'help' nebo 'snapshot'. Ctrl+C pro konec.\n")
+        print("Radar Agent (interactive). Napiš 'help' nebo 'snapshot'. Ctrl+C pro konec.
+")
         while True:
             try:
                 line = input("> ").strip()
             except (KeyboardInterrupt, EOFError):
-                print("\nBye.")
+                print("
+Bye.")
                 return 0
 
             if not line:
                 continue
 
             resp = agent.handle(line, now=datetime.now())
-            print("\n" + resp.markdown + "\n")
+            print("
+" + resp.markdown + "
+")
         return 0
 
     cmd = " ".join(argv[1:])

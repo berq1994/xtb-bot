@@ -1,13 +1,13 @@
-XTB MANUAL TICKET
-Symbol: BTC-USD
-Direction: long
-Market regime: mixed
-Entry reference: 129.66
-Stop loss: 127.72
-Take profit: 133.55
-News sentiment: negative
-Checklist:
-- Confirm 15m and 1h chart structure
-- Confirm spread before entry
-- Max 1% account risk
-- Enter only on chart confirmation
+RUÄŚNĂŤ XTB TICKET
+Symbol: IWM
+SmÄ›r: sledovat short
+ReĹľim trhu: risk-off
+VstupnĂ­ reference: 248.62
+Stop loss: 252.35
+Take profit: 241.16
+Sentiment zprĂˇv: neutrální
+KontrolnĂ­ seznam:
+- Potvrdit strukturu na 15m a 1h grafu
+- Potvrdit spread pĹ™ed vstupem
+- Max. riziko ĂşÄŤtu 1 %
+- Vstoupit jen po potvrzenĂ­ v grafu

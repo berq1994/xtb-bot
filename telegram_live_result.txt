@@ -1,4 +1,4 @@
-TELEGRAM LIVE
-Status: preview_only
-Reason: missing TELEGRAMTOKEN/TG_BOT_TOKEN or CHATID/TG_CHAT_ID
-Preview file: telegram_preview.txt
+TELEGRAM Ĺ˝IVÄš
+Stav: jen náhled
+DĹŻvod: chybĂ­ TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID
+Soubor nĂˇhledu: telegram_preview.txt

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -36,18 +36,20 @@ def run_performance_review(limit: int = 20) -> str:
 
     top_symbol = max(symbols, key=symbols.get) if symbols else "NONE"
     lines = []
-    lines.append("PŘEHLED VÝKONNOSTI – FÁZE 5")
-    lines.append(f"Vyhodnocené vzorky: {len(rows)}")
-    lines.append(f"Nejčastější symbol ticketu: {top_symbol}")
-    lines.append("Režimy:")
+    lines.append("PĹEHLED VĂťKONNOSTI â€“ FĂZE 5")
+    lines.append(f"VyhodnocenĂ© vzorky: {len(rows)}")
+    lines.append(f"NejÄŤastÄ›jĹˇĂ­ symbol ticketu: {top_symbol}")
+    lines.append("ReĹľimy:")
     for key, value in regimes.items():
         lines.append(f"- {regime_cs(key)}: {value}")
-    lines.append("Rozhodnutí:")
+    lines.append("RozhodnutĂ­:")
     for key, value in decisions.items():
         lines.append(f"- {decision_cs(key)}: {value}")
     lines.append("Symboly:")
     for key, value in symbols.items():
         lines.append(f"- {key}: {value}")
-    output = "\n".join(lines)
+    output = "
+".join(lines)
     REVIEW_PATH.write_text(output, encoding="utf-8")
     return output
+

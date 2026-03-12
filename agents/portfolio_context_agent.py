@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from collections import Counter, defaultdict
@@ -18,7 +18,8 @@ def _load_portfolio() -> dict:
 def run_portfolio_context() -> str:
     data = _load_portfolio()
     if not data:
-        return "PORTFOLIO CONTEXT\nSoubor config/portfolio_state.json nebyl nalezen."
+        return "PORTFOLIO CONTEXT
+Soubor config/portfolio_state.json nebyl nalezen."
 
     positions = []
     for account in data.get("accounts", {}).values():
@@ -35,21 +36,24 @@ def run_portfolio_context() -> str:
 
     lines = []
     lines.append("PORTFOLIO CONTEXT")
-    lines.append(f"Počet pozic: {len(positions)}")
-    lines.append("Měnová expozice:")
+    lines.append(f"PoÄŤet pozic: {len(positions)}")
+    lines.append("MÄ›novĂˇ expozice:")
     for ccy, value in sorted(currency.items()):
         lines.append(f"- {ccy}: {round(value, 2)}")
-    lines.append("Hlavní témata:")
+    lines.append("HlavnĂ­ tĂ©mata:")
     for theme, value in themes.most_common(10):
         lines.append(f"- {theme}: {round(value, 2)}")
-    lines.append("Nejdůležitější risk flagy:")
+    lines.append("NejdĹŻleĹľitÄ›jĹˇĂ­ risk flagy:")
     for flag in data.get("risk_flags", []):
         lines.append(f"- {flag}")
-    lines.append("Použité override váhy:")
+    lines.append("PouĹľitĂ© override vĂˇhy:")
     for key, value in data.get("agent_overrides", {}).items():
         lines.append(f"- {key}: {value}")
-    lines.append("Sledované symboly v portfoliu:")
+    lines.append("SledovanĂ© symboly v portfoliu:")
     lines.append(", ".join(sorted(set(filter(None, symbols)))))
-    output = "\n".join(lines)
+    output = "
+".join(lines)
     OUTPUT_PATH.write_text(output, encoding="utf-8")
     return output
+
+

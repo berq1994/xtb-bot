@@ -1,131 +1,76 @@
-DAILY BRIEFING
+DENNĂŤ BRIEFING
 ========================================
 
-OPENBB SIGNAL BUNDLE
-Market regime: mixed
-Data source: yfinance
+OPENBB SIGNĂLOVĂť BALĂŤÄŚEK\nReĹľim trhu: risk-off\nZdroj dat: yfinance\n\nHlavnĂ­ kandidĂˇt na long:\n- BTC-USD | pohyb 0.03% | trend rostoucí | cena 70228.68\n- Akce: sledovat breakout / ruÄŤnĂ­ potvrzenĂ­ v XTB\n\nHlavnĂ­ slabĂ˝ kandidĂˇt:\n- IWM | pohyb -1.67% | trend klesající | cena 248.62\n- Akce: sledovat slabost / hedge / nebrat impulzivnĂ­ long\n\nKontrolnĂ­ seznam pro ruÄŤnĂ­ vstup:\n1. Potvrdit graf v XTB\n2. Potvrdit spread a volatilitu\n3. Nastavit stop loss jeĹˇtÄ› pĹ™ed vstupem\n4. Riziko max. 1 % na obchod
 
-Primary long candidate:
-- NVDA | move 0.69% | trend up | price 186.03
-- Action: watch breakout / manual XTB confirmation
+OPENBB ZPRĂVY / SENTIMENT\nReĹľim trhu: risk-off\n\nBTC-USD: negativní (skĂłre -1)\n- Crypto sentiment improves with risk appetite\n- Volatility remains elevated across digital assets\n\nMSFT: pozitivní (skĂłre 4)\n- Cloud and AI narrative remains constructive\n- Large-cap quality bid supports resilience\n\nTLT: negativní (skĂłre -3)\n- Rates volatility pressures long duration bonds\n- Defensive flow rises when growth slows\n\nIWM: neutrální (skĂłre 0)\n- IWM trading activity remains in focus\n- Market participants monitor IWM for follow-through\n\nAAPL: pozitivní (skĂłre 2)\n- Consumer demand mixed ahead of product cycle\n- Mega-cap quality still supports defensive interest\n\nNVDA: pozitivní (skĂłre 4)\n- AI demand remains strong across data center cycle\n- Semiconductor leadership supports momentum\n
 
-Primary weak candidate:
-- TLT | move -1.29% | trend down | price 87.14
-- Action: watch weakness / hedge / avoid impulsive long
+ROZHODNUTĂŤ SUPERVISORU\nReĹľim trhu: risk-off\nRozhodnutĂ­: pouze defenzivně\nHlavnĂ­ setup: BTC-USD | 0.03% | trend rostoucí | zprĂˇvy negativní\nSlabĂ˝ setup: IWM | -1.67% | trend klesající | zprĂˇvy neutrální\nDalĹˇĂ­ krok:\n- Obchodovat menĹˇĂ­ velikostĂ­ nebo zĹŻstat mimo trh\n- UpĹ™ednostnit ochranu kapitĂˇlu
 
-Manual execution checklist:
-1. Confirm chart on XTB
-2. Confirm spread and volatility
-3. Set stop loss before entry
-4. Risk max 1% per trade
+RUÄŚNĂŤ XTB TICKET
+Symbol: IWM
+SmÄ›r: sledovat short
+ReĹľim trhu: risk-off
+VstupnĂ­ reference: 248.62
+Stop loss: 252.35
+Take profit: 241.16
+Sentiment zprĂˇv: neutrální
+KontrolnĂ­ seznam:
+- Potvrdit strukturu na 15m a 1h grafu
+- Potvrdit spread pĹ™ed vstupem
+- Max. riziko ĂşÄŤtu 1 %
+- Vstoupit jen po potvrzenĂ­ v grafu
 
-OPENBB NEWS / SENTIMENT
-Market regime: mixed
+TELEGRAM NĂHLED
+đź“Š DennĂ­ pĹ™ehled trhu
+ReĹľim: risk-off
+RozhodnutĂ­: pouze defenzivně
+Lead: BTC-USD | 0.03% | trend rostoucí | zprĂˇvy negativní
+SlabĂ˝: IWM | -1.67% | trend klesající | zprĂˇvy neutrální
 
-NVDA: positive (score 4)
-- AI demand remains strong across data center cycle
-- Semiconductor leadership supports momentum
+đźŽŻ RuÄŤnĂ­ XTB ticket
+Symbol: IWM
+SmÄ›r: sledovat short
+Vstup: 248.62
+SL: 252.35
+TP: 241.16
+Sentiment: neutrální
 
-QQQ: neutral (score 0)
-- QQQ trading activity remains in focus
-- Market participants monitor QQQ for follow-through
+KontrolnĂ­ seznam:
+â€˘ Potvrdit graf v XTB
+â€˘ Potvrdit spread a volatilitu
+â€˘ Riziko max. 1 %
+â€˘ Vstup aĹľ po potvrzenĂ­
 
-AAPL: positive (score 2)
-- Consumer demand mixed ahead of product cycle
-- Mega-cap quality still supports defensive interest
+TELEGRAM Ĺ˝IVÄš
+Stav: jen náhled
+DĹŻvod: chybĂ­ TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID
+Soubor nĂˇhledu: telegram_preview.txt
 
-TLT: negative (score -3)
-- Rates volatility pressures long duration bonds
-- Defensive flow rises when growth slows
+SIGNĂL ULOĹ˝EN\nÄŚas: 2026-03-12T14:45:02\nReĹľim: risk-off\nRozhodnutĂ­: pouze defenzivně\nSymbol ticketu: IWM\nSoubor historie: data\openbb_signal_history.jsonl\nSoubor journalu: data\openbb_trade_journal.txt
 
-BTC-USD: negative (score -1)
-- Crypto sentiment improves with risk appetite
-- Volatility remains elevated across digital assets
-
-DIA: neutral (score 0)
-- DIA trading activity remains in focus
-- Market participants monitor DIA for follow-through
-
-SUPERVISOR DECISION
-Market regime: mixed
-Decision: watch_long
-Lead setup: NVDA | 0.69% | trend up | news positive
-Weak setup: TLT | -1.29% | trend down | news negative
-Next step:
-- Open XTB chart
-- Wait for breakout confirmation
-- Use manual ticket and max 1% risk
-
-XTB MANUAL TICKET
-Symbol: NVDA
-Direction: long
-Market regime: mixed
-Entry reference: 186.03
-Stop loss: 183.24
-Take profit: 191.61
-News sentiment: positive
-Checklist:
-- Confirm 15m and 1h chart structure
-- Confirm spread before entry
-- Max 1% account risk
-- Enter only on chart confirmation
-
-TELEGRAM PREVIEW
-📊 Daily market intelligence
-Regime: mixed
-Decision: watch_long
-Lead: NVDA | 0.69% | trend up | news positive
-Weak: TLT | -1.29% | trend down | news negative
-
-🎯 Manual XTB ticket
-Symbol: NVDA
-Direction: long
-Entry: 186.03
-SL: 183.24
-TP: 191.61
-Sentiment: positive
-
-Checklist:
-• Confirm chart on XTB
-• Confirm spread and volatility
-• Risk max 1%
-• Enter only after confirmation
-
-TELEGRAM LIVE
-Status: preview_only
-Reason: missing TELEGRAMTOKEN/TG_BOT_TOKEN or CHATID/TG_CHAT_ID
-Preview file: telegram_preview.txt
-
-SIGNAL LOGGED
-Timestamp: 2026-03-12T10:19:14
-Regime: mixed
-Decision: watch_long
-Ticket symbol: NVDA
-History file: data\openbb_signal_history.jsonl
-Journal file: data\openbb_trade_journal.txt
-
-PHASE 5 LEARNING REVIEW
-History samples: 4
-Average quality score: 3.1
-Decision mix:
-- watch_hedge: 2
-- watch_long: 2
-Weights:
+PĹEHLED UÄŚENĂŤ â€“ FĂZE 5
+PoÄŤet vzorkĹŻ historie: 6
+PrĹŻmÄ›rnĂ© skĂłre kvality: 1.3
+Mix rozhodnutĂ­:
+- sledovat hedge: 2
+- pouze defenzivně: 4
+VĂˇhy:
 - trend: 1.0
 - momentum: 1.0
 - sentiment: 1.0
 - regime_alignment: 1.0
 - risk_penalty: 1.0
-Suggestion: Current signal stack looks healthy. Negative news flow appears too often in lead setups.
+DoporuÄŤenĂ­: Kvalita signĂˇlĹŻ je slabĹˇĂ­; zpĹ™Ă­sni vstupy a uber agresivitu. NegativnĂ­ tok zprĂˇv se v lead setupech objevuje pĹ™Ă­liĹˇ ÄŤasto.
 
-OUTCOME UPDATE
-Symbol: NVDA
-Decision: watch_long
-Status: placeholder outcome row added
-File: data/outcome_tracking.jsonl
+AKTUALIZACE VĂťSLEDKU
+Symbol: IWM
+RozhodnutĂ­: pouze defenzivně
+Stav: pĹ™idĂˇn zĂˇznam placeholderu vĂ˝sledku
+Soubor: data/outcome_tracking.jsonl
 
-OUTCOME REVIEW
-Samples: 2
-Average outcome %: 0.0
-Labels:
-- pending: 2
+PĹEHLED VĂťSLEDKĹ®
+PoÄŤet vzorkĹŻ: 4
+PrĹŻmÄ›rnĂ˝ vĂ˝sledek %: 0.0
+Ĺ tĂ­tky:
+- čeká: 4

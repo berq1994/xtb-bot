@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 from dashboard.system_dashboard import build_system_dashboard
@@ -74,3 +74,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

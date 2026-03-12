@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from pathlib import Path
 
@@ -21,10 +21,12 @@ def run_schedule_plan() -> str:
         "Arguments: run_agent.py production_cycle",
         "Start in: path to xtb-bot-main",
     ]
-    output = "\n".join(lines)
+    output = "
+".join(lines)
     SCHEDULE_PATH.write_text(output, encoding="utf-8")
 
-    gha = "\n".join([
+    gha = "
+".join([
         "name: production-cycle",
         "on:",
         "  schedule:",
@@ -47,3 +49,5 @@ def run_schedule_plan() -> str:
     ])
     GITHUB_ACTION_PATH.write_text(gha, encoding="utf-8")
     return output
+
+

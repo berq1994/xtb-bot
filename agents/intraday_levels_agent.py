@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -78,16 +78,16 @@ def _thematic_map() -> dict[str, set[str]]:
 
 def _overlap_note(symbol: str, portfolio_symbols: set[str], portfolio_themes: set[str]) -> tuple[float, str]:
     if symbol in portfolio_symbols:
-        return 0.20, "už držená pozice"
+        return 0.20, "uĹľ drĹľenĂˇ pozice"
     sym_themes = _thematic_map().get(symbol, set())
     overlap = sym_themes & portfolio_themes
     if {"ai", "semis"} & overlap:
-        return 0.15, "vysoké překrytí AI/semis"
+        return 0.15, "vysokĂ© pĹ™ekrytĂ­ AI/semis"
     if {"energy", "oil", "natural_gas", "uranium", "solar", "commodities"} & overlap:
-        return 0.08, "střední překrytí energy/komodity"
+        return 0.08, "stĹ™ednĂ­ pĹ™ekrytĂ­ energy/komodity"
     if overlap:
-        return 0.04, "mírné tematické překrytí"
-    return 0.0, "nové téma / diverzifikace"
+        return 0.04, "mĂ­rnĂ© tematickĂ© pĹ™ekrytĂ­"
+    return 0.0, "novĂ© tĂ©ma / diverzifikace"
 
 
 def _levels(price: float, trend: str, penalty: float) -> dict:
@@ -110,7 +110,8 @@ def run_intraday_levels() -> str:
     portfolio = _load_json(PORTFOLIO_PATH)
     watchlist = _load_json(WATCHLIST_PATH).get("symbols", [])
     if not watchlist:
-        return "INTRADAY LEVELS\nChybí config/watchlists/google_finance_watchlist.json"
+        return "INTRADAY LEVELS
+ChybĂ­ config/watchlists/google_finance_watchlist.json"
 
     portfolio_symbols, portfolio_themes = _portfolio_symbols_and_themes(portfolio)
     overview = generate_market_overview(watchlist)
@@ -118,7 +119,7 @@ def run_intraday_levels() -> str:
 
     lines = []
     lines.append("INTRADAY LEVELS")
-    lines.append(f"Režim trhu: {overview.get('regime', 'mixed')}")
+    lines.append(f"ReĹľim trhu: {overview.get('regime', 'mixed')}")
     lines.append("")
 
     for row in rows:
@@ -130,11 +131,14 @@ def run_intraday_levels() -> str:
         lines.append(f"{symbol} | cena {price} | trend {trend}")
         lines.append(f"- koupit na pullbacku pod: {levels['buy_pullback']}")
         lines.append(f"- koupit breakout nad: {levels['buy_breakout']}")
-        lines.append(f"- částečně vybírat nad: {levels['trim_above']}")
-        lines.append(f"- ochranný stop pod: {levels['stop_below']}")
+        lines.append(f"- ÄŤĂˇsteÄŤnÄ› vybĂ­rat nad: {levels['trim_above']}")
+        lines.append(f"- ochrannĂ˝ stop pod: {levels['stop_below']}")
         lines.append(f"- portfolio kontext: {note}")
         lines.append("")
 
-    output = "\n".join(lines).strip()
+    output = "
+".join(lines).strip()
     OUTPUT_PATH.write_text(output, encoding="utf-8")
     return output
+
+

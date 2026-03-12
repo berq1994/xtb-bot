@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from manual_trading.trade_journal import append_trade, load_journal
 from manual_trading.post_trade_review import build_post_trade_review
@@ -55,3 +55,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from manual_trading.trade_ticket_builder import build_trade_ticket
 from manual_trading.ticket_renderer import render_ticket_text
@@ -74,3 +74,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

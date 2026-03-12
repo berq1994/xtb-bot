@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 from governance.governance_engine import run_governance
@@ -75,3 +75,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

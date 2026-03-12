@@ -1,5 +1,5 @@
-OUTCOME REVIEW
-Samples: 2
-Average outcome %: 0.0
-Labels:
-- pending: 2
+PĹEHLED VĂťSLEDKĹ®
+PoÄŤet vzorkĹŻ: 4
+PrĹŻmÄ›rnĂ˝ vĂ˝sledek %: 0.0
+Ĺ tĂ­tky:
+- čeká: 4

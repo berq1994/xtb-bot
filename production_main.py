@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from production.config_loader import load_config
 from production.secrets_validator import validate_secrets
@@ -56,3 +56,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

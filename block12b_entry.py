@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from delivery.alert_formatter import format_alerts
 from delivery.briefing_formatter import format_briefing
@@ -25,7 +25,8 @@ def main():
     alert_lines = format_alerts(rows)
 
     q1 = enqueue("briefing", briefing_text)
-    q2 = enqueue("alerts", "\n".join(alert_lines))
+    q2 = enqueue("alerts", "
+".join(alert_lines))
 
     telegram_briefing = deliver_briefing(briefing_text)
     telegram_alerts = deliver_alerts(alert_lines)
@@ -55,8 +56,10 @@ def main():
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     Path("telegram_briefing.txt").write_text(briefing_text, encoding="utf-8")
-    Path("telegram_alerts.txt").write_text("\n".join(alert_lines), encoding="utf-8")
+    Path("telegram_alerts.txt").write_text("
+".join(alert_lines), encoding="utf-8")
     print(json.dumps(payload, ensure_ascii=False, indent=2))
 
 if __name__ == "__main__":
     main()
+

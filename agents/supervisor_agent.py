@@ -55,5 +55,8 @@ def run_supervisor(watchlist=None):
         lines.append("- UpĹ™ednostnit ochranu kapitĂˇlu")
     else:
         lines.append("- VyÄŤkat na ÄŤistĹˇĂ­ potvrzenĂ­")
-    return "\\n".join(lines)
+    return "\
+".join(lines)
+
+
 

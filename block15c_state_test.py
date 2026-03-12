@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from autonomous_prod.state_machine import load_state
 
@@ -11,3 +11,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 def regime_cs(value: str) -> str:
     return {

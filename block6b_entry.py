@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 
 from governance.performance_integration import integrate_performance_gate
@@ -61,3 +61,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

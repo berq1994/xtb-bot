@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from delivery_autonomous.email_transport import send_email_payload
 from delivery_autonomous.telegram_transport import send_telegram_payload
@@ -17,3 +17,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

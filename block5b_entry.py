@@ -1,4 +1,4 @@
-import json
+﻿import json
 from pathlib import Path
 from backtesting.walk_forward_full import run_walk_forward_full
 from backtesting.monte_carlo_full import run_monte_carlo_full
@@ -49,3 +49,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
