@@ -14,7 +14,7 @@ def run_daily_briefing(watchlist=None):
     append_history_entry(snapshot)
 
     sections = [
-        "DENNĂŤ BRIEFING",
+        "DENNÍ BRIEFING",
         "=" * 40,
         "",
         run_openbb_signal(watchlist),
@@ -25,8 +25,7 @@ def run_daily_briefing(watchlist=None):
         "",
         run_xtb_manual_ticket(watchlist),
     ]
-    output = "
-".join(sections).strip()
+
+    output = "\n".join(sections).strip()
     Path("daily_briefing.txt").write_text(output, encoding="utf-8")
     return output
-

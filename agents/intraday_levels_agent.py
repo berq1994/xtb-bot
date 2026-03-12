@@ -136,9 +136,10 @@ ChybĂ­ config/watchlists/google_finance_watchlist.json"
         lines.append(f"- portfolio kontext: {note}")
         lines.append("")
 
-    output = "
-".join(lines).strip()
+    output = "\n".join(lines)".join(lines).strip()
     OUTPUT_PATH.write_text(output, encoding="utf-8")
     return output
+
+
 
 

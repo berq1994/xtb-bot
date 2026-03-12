@@ -32,8 +32,7 @@ def run_outcome_update() -> str:
     OUTCOME_PATH.parent.mkdir(parents=True, exist_ok=True)
 
     if not history:
-        output = "
-".join([
+        output = "\n".join(sections).strip()".join([
             "AKTUALIZACE VĂťSLEDKU",
             f"Stav: {status_cs('no_history')}",
             "DĹŻvod: log_signal/full_cycle zatĂ­m nevytvoĹ™il ĹľĂˇdnou historii",
@@ -59,8 +58,7 @@ def run_outcome_update() -> str:
         fh.write(json.dumps(row, ensure_ascii=False) + "
 ")
 
-    output = "
-".join([
+    output = "\n".join(sections).strip()".join([
         "AKTUALIZACE VĂťSLEDKU",
         f"Symbol: {row['symbol']}",
         f"RozhodnutĂ­: {decision_cs(row['decision'])}",
@@ -75,8 +73,7 @@ def run_outcome_update() -> str:
 def run_outcome_review() -> str:
     rows = _load_jsonl(OUTCOME_PATH)
     if not rows:
-        output = "
-".join([
+        output = "\n".join(sections).strip()".join([
             "PĹEHLED VĂťSLEDKĹ®",
             "PoÄŤet vzorkĹŻ: 0",
             "PrĹŻmÄ›rnĂ˝ vĂ˝sledek %: 0.0",
@@ -100,9 +97,9 @@ def run_outcome_review() -> str:
     for key, value in labels.items():
         lines.append(f"- {status_cs(key)}: {value}")
 
-    output = "
-".join(lines)
+    output = "\n".join(sections).strip()".join(lines)
     REVIEW_PATH.parent.mkdir(parents=True, exist_ok=True)
     REVIEW_PATH.write_text(output, encoding="utf-8")
     return output
+
 

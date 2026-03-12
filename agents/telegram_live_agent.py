@@ -1,96 +1,51 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import os
 from pathlib import Path
 
+import requests
+
 from agents.telegram_preview_agent import run_telegram_preview
-from cz_utils import status_cs
-
-try:
-    import requests
-except Exception:
-    requests = None
-
-OUTPUT_PATH = Path("telegram_live_result.txt")
 
 
-def _is_enabled() -> bool:
-    value = (
-        os.getenv("TELEGRAM_SEND_ENABLED")
-        or os.getenv("TG_SEND_ENABLED")
-        or "true"
-    ).strip().lower()
-    return value in {"1", "true", "yes", "on"}
+def run_telegram_live(watchlist=None):
+    preview = run_telegram_preview(watchlist)
 
+    token = (
+        os.getenv("TELEGRAMTOKEN")
+        or os.getenv("TG_BOT_TOKEN")
+        or os.getenv("TELEGRAM_BOT_TOKEN")
+    )
+    chat_id = (
+        os.getenv("CHATID")
+        or os.getenv("TG_CHAT_ID")
+        or os.getenv("TELEGRAM_CHAT_ID")
+    )
 
-def _first(*keys: str) -> str:
-    for key in keys:
-        value = os.getenv(key, "").strip()
-        if value:
-            return value
-    return ""
-
-
-def _token_and_chat() -> tuple[str, str]:
-    token = _first("TELEGRAMTOKEN", "TG_BOT_TOKEN", "TELEGRAM_BOT_TOKEN", "BOT_TOKEN")
-    chat_id = _first("CHATID", "TG_CHAT_ID", "TELEGRAM_CHAT_ID", "CHAT_ID")
-    return token, chat_id
-
-
-def run_telegram_live(watchlist=None) -> str:
-    message = run_telegram_preview(watchlist)
-    token, chat_id = _token_and_chat()
-
-    if not _is_enabled():
-        output = "
-".join([
-            "TELEGRAM Ĺ˝IVÄš",
-            f"Stav: {status_cs('disabled')}",
-            "DĹŻvod: TELEGRAM_SEND_ENABLED je nastaveno na false",
-        ])
-        OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output
+    lines = []
+    lines.append("TELEGRAM LIVE")
 
     if not token or not chat_id:
-        output = "
-".join([
-            "TELEGRAM Ĺ˝IVÄš",
-            f"Stav: {status_cs('preview_only')}",
-            "DĹŻvod: chybĂ­ TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID",
-            "Soubor nĂˇhledu: telegram_preview.txt",
-        ])
-        OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output
+        Path("telegram_preview.txt").write_text(preview, encoding="utf-8")
+        lines.append("Stav: jen náhled")
+        lines.append("Důvod: chybí TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID")
+        lines.append("Soubor náhledu: telegram_preview.txt")
+        return "\n".join(lines)
 
-    if requests is None:
-        output = "
-".join([
-            "TELEGRAM Ĺ˝IVÄš",
-            f"Stav: {status_cs('failed')}",
-            "DĹŻvod: balĂ­ÄŤek requests nenĂ­ dostupnĂ˝",
-        ])
-        OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": preview,
+    }
 
     try:
-        url = f"https://api.telegram.org/bot{token}/sendMessage"
-        resp = requests.post(url, json={"chat_id": chat_id, "text": message}, timeout=20)
-        ok = resp.ok
-        output = "
-".join([
-            "TELEGRAM Ĺ˝IVÄš",
-            f"Stav: {status_cs('sent' if ok else 'failed')}",
-            f"HTTP: {resp.status_code}",
-        ])
-        OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output
+        response = requests.post(url, json=payload, timeout=20)
+        lines.append(f"Stav: {'odesláno' if response.ok else 'chyba'}")
+        lines.append(f"HTTP: {response.status_code}")
+        if not response.ok:
+            lines.append(f"Odpověď: {response.text}")
     except Exception as exc:
-        output = "
-".join([
-            "TELEGRAM Ĺ˝IVÄš",
-            f"Stav: {status_cs('failed')}",
-            f"DĹŻvod: {exc}",
-        ])
-        OUTPUT_PATH.write_text(output, encoding="utf-8")
-        return output
+        lines.append("Stav: výjimka")
+        lines.append(f"Chyba: {exc}")
 
+    return "\n".join(lines)

@@ -51,9 +51,10 @@ Soubor config/portfolio_state.json nebyl nalezen."
         lines.append(f"- {key}: {value}")
     lines.append("SledovanĂ© symboly v portfoliu:")
     lines.append(", ".join(sorted(set(filter(None, symbols)))))
-    output = "
-".join(lines)
+    output = "\n".join(lines)".join(lines)
     OUTPUT_PATH.write_text(output, encoding="utf-8")
     return output
+
+
 
 

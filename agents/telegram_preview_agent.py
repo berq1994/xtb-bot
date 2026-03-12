@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 from pathlib import Path
 
@@ -14,35 +14,35 @@ def run_telegram_preview(watchlist=None):
     laggard = payload.get("laggard")
 
     lines = []
-    lines.append("TELEGRAM NĂHLED")
-    lines.append("đź“Š DennĂ­ pĹ™ehled trhu")
-    lines.append(f"ReĹľim: {regime_cs(payload['regime'])}")
-    lines.append(f"RozhodnutĂ­: {decision_cs(supervisor['decision'])}")
+    lines.append("Denní přehled trhu")
+    lines.append(f"Režim: {regime_cs(payload['regime'])}")
+    lines.append(f"Rozhodnutí: {decision_cs(supervisor['decision'])}")
+
     if leader:
         lines.append(
-            f"Lead: {leader['symbol']} | {leader['change_pct']}% | trend {trend_cs(leader['trend'])} | zprĂˇvy {sentiment_cs(leader['sentiment_label'])}"
+            f"Lead: {leader['symbol']} | {leader['change_pct']}% | trend {trend_cs(leader['trend'])} | zprávy {sentiment_cs(leader['sentiment_label'])}"
         )
+
     if laggard:
         lines.append(
-            f"SlabĂ˝: {laggard['symbol']} | {laggard['change_pct']}% | trend {trend_cs(laggard['trend'])} | zprĂˇvy {sentiment_cs(laggard['sentiment_label'])}"
+            f"Slabý: {laggard['symbol']} | {laggard['change_pct']}% | trend {trend_cs(laggard['trend'])} | zprávy {sentiment_cs(laggard['sentiment_label'])}"
         )
+
     lines.append("")
-    lines.append("đźŽŻ RuÄŤnĂ­ XTB ticket")
+    lines.append("Ruční XTB ticket")
     lines.append(f"Symbol: {ticket['symbol']}")
-    lines.append(f"SmÄ›r: {direction_cs(ticket['direction'])}")
+    lines.append(f"Směr: {direction_cs(ticket['direction'])}")
     lines.append(f"Vstup: {ticket['entry_reference']}")
     lines.append(f"SL: {ticket['stop_loss']}")
     lines.append(f"TP: {ticket['take_profit']}")
     lines.append(f"Sentiment: {sentiment_cs(ticket['news_sentiment'])}")
     lines.append("")
-    lines.append("KontrolnĂ­ seznam:")
-    lines.append("â€˘ Potvrdit graf v XTB")
-    lines.append("â€˘ Potvrdit spread a volatilitu")
-    lines.append("â€˘ Riziko max. 1 %")
-    lines.append("â€˘ Vstup aĹľ po potvrzenĂ­")
+    lines.append("Kontrolní seznam:")
+    lines.append("- Potvrdit graf v XTB")
+    lines.append("- Potvrdit spread a volatilitu")
+    lines.append("- Riziko max. 1 %")
+    lines.append("- Vstup až po potvrzení")
 
-    output = "
-".join(lines)
+    output = "\n".join(lines)
     Path("telegram_preview.txt").write_text(output, encoding="utf-8")
     return output
-

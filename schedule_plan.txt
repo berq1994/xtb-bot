@@ -1,0 +1,5 @@
+PRODUCTION SCHEDULE PLAN
+Morning scan: 08:30 local time -> python run_agent.py production_cycle
+Pre-open check: 14:45 local time -> python run_agent.py telegram_live
+Evening review: 21:15 local time -> python run_agent.py outcome_review
+Fallback manual: any time -> python run_agent.py full_cycle

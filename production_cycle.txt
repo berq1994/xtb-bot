@@ -20,3 +20,36 @@ Kontrolní seznam:
 - Potvrdit spread před vstupem
 - Max. riziko účtu 1 %
 - Vstoupit jen po potvrzení v grafu
+
+Denní přehled trhu
+Režim: risk-off
+Rozhodnutí: pouze defenzivně
+Lead: BTC-USD | 0.31% | trend rostoucí | zprávy negativní
+Slabý: AAPL | -1.84% | trend klesající | zprávy pozitivní
+
+Ruční XTB ticket
+Symbol: AAPL
+Směr: sledovat short
+Vstup: 256.01
+SL: 259.85
+TP: 248.33
+Sentiment: pozitivní
+
+Kontrolní seznam:
+- Potvrdit graf v XTB
+- Potvrdit spread a volatilitu
+- Riziko max. 1 %
+- Vstup až po potvrzení
+
+TELEGRAM LIVE
+Stav: jen náhled
+Důvod: chybí TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT_ID/TELEGRAM_CHAT_ID
+Soubor náhledu: telegram_preview.txt
+
+SIGNÁL ULOŽEN
+Čas: 2026-03-12T15:15:33
+Režim: risk-off
+Rozhodnutí: pouze defenzivně
+Symbol ticketu: AAPL
+Soubor historie: data\openbb_signal_history.jsonl
+Soubor journalu: data\openbb_trade_journal.txt

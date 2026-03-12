@@ -187,8 +187,7 @@ def run_learning_review(limit: int = 25) -> str:
     for key, value in summary["weights"].items():
         lines.append(f"- {key}: {value}")
     lines.append(f"DoporuÄŤenĂ­: {summary['suggestion']}")
-    output = "
-".join(lines)
+    output = "\n".join(sections).strip()".join(lines)
     REPORT_PATH.write_text(output, encoding="utf-8")
     return output
 
@@ -203,6 +202,7 @@ def run_rebalance_weights(limit: int = 25) -> str:
     lines.append(f"Soubor vah: {WEIGHTS_PATH}")
     return "\
 ".join(lines)
+
 
 
 

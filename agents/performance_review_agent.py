@@ -48,8 +48,8 @@ def run_performance_review(limit: int = 20) -> str:
     lines.append("Symboly:")
     for key, value in symbols.items():
         lines.append(f"- {key}: {value}")
-    output = "
-".join(lines)
+    output = "\n".join(sections).strip()".join(lines)
     REVIEW_PATH.write_text(output, encoding="utf-8")
     return output
+
 

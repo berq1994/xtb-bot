@@ -1,20 +1,19 @@
-TELEGRAM NĂHLED
-đź“Š DennĂ­ pĹ™ehled trhu
-ReĹľim: risk-off
-RozhodnutĂ­: pouze defenzivně
-Lead: BTC-USD | 0.03% | trend rostoucí | zprĂˇvy negativní
-SlabĂ˝: IWM | -1.67% | trend klesající | zprĂˇvy neutrální
+Denní přehled trhu
+Režim: risk-off
+Rozhodnutí: pouze defenzivně
+Lead: BTC-USD | 0.31% | trend rostoucí | zprávy negativní
+Slabý: AAPL | -1.84% | trend klesající | zprávy pozitivní
 
-đźŽŻ RuÄŤnĂ­ XTB ticket
-Symbol: IWM
-SmÄ›r: sledovat short
-Vstup: 248.62
-SL: 252.35
-TP: 241.16
-Sentiment: neutrální
+Ruční XTB ticket
+Symbol: AAPL
+Směr: sledovat short
+Vstup: 256.01
+SL: 259.85
+TP: 248.33
+Sentiment: pozitivní
 
-KontrolnĂ­ seznam:
-â€˘ Potvrdit graf v XTB
-â€˘ Potvrdit spread a volatilitu
-â€˘ Riziko max. 1 %
-â€˘ Vstup aĹľ po potvrzenĂ­
+Kontrolní seznam:
+- Potvrdit graf v XTB
+- Potvrdit spread a volatilitu
+- Riziko max. 1 %
+- Vstup až po potvrzení

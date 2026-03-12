@@ -39,22 +39,20 @@ def run_xtb_manual_ticket(watchlist=None):
     sentiment = news_map.get(symbol, {}).get("sentiment_label", "neutral") if candidate else "neutral"
 
     lines = []
-    lines.append("RUÄŚNĂŤ XTB TICKET")
+    lines.append("RUČNÍ XTB TICKET")
     lines.append(f"Symbol: {symbol}")
-    lines.append(f"SmÄ›r: {direction_cs(direction)}")
-    lines.append(f"ReĹľim trhu: {regime_cs(overview.get('regime', 'mixed'))}")
-    lines.append(f"VstupnĂ­ reference: {price}")
+    lines.append(f"Směr: {direction_cs(direction)}")
+    lines.append(f"Režim trhu: {regime_cs(overview.get('regime', 'mixed'))}")
+    lines.append(f"Vstupní reference: {price}")
     lines.append(f"Stop loss: {sl}")
     lines.append(f"Take profit: {tp}")
-    lines.append(f"Sentiment zprĂˇv: {sentiment_cs(sentiment)}")
-    lines.append("KontrolnĂ­ seznam:")
+    lines.append(f"Sentiment zpráv: {sentiment_cs(sentiment)}")
+    lines.append("Kontrolní seznam:")
     lines.append("- Potvrdit strukturu na 15m a 1h grafu")
-    lines.append("- Potvrdit spread pĹ™ed vstupem")
-    lines.append("- Max. riziko ĂşÄŤtu 1 %")
-    lines.append("- Vstoupit jen po potvrzenĂ­ v grafu")
+    lines.append("- Potvrdit spread před vstupem")
+    lines.append("- Max. riziko účtu 1 %")
+    lines.append("- Vstoupit jen po potvrzení v grafu")
 
-    output = "
-".join(lines)
+    output = "\n".join(lines)
     Path("xtb_manual_ticket.txt").write_text(output, encoding="utf-8")
     return output
-
