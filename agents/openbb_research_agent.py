@@ -18,5 +18,4 @@ def run_openbb_research(watchlist=None):
     lines.append("Laggards:")
     for row in overview['laggards']:
         lines.append(f"- {row['symbol']}: {row['change_pct']}% | trend {row['trend']} | price {row['price']}")
-    return "
-".join(lines)
+    return "\n".join(lines)
