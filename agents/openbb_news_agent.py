@@ -13,10 +13,12 @@ def run_openbb_news(watchlist=None):
     lines.append("OPENBB ZPRÁVY / SENTIMENT")
     lines.append(f"Režim trhu: {regime_cs(overview.get('regime', 'mixed'))}")
     lines.append("")
+
     for symbol in symbols:
         info = news_map[symbol]
         lines.append(f"{symbol}: {sentiment_cs(info['sentiment_label'])} (skóre {info['sentiment_score']})")
         for headline in info["headlines"][:2]:
             lines.append(f"- {headline}")
         lines.append("")
-    return "\n".join(lines).strip()\n
+
+    return "\n".join(lines).strip()
