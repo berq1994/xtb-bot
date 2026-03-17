@@ -44,8 +44,8 @@ jobs:
       - name: Run snapshot
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHATID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python run_agent.py snapshot --telegram
 

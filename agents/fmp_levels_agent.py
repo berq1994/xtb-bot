@@ -28,7 +28,7 @@ def run_fmp_levels(watchlist=None) -> str:
     overview = generate_market_overview(watchlist)
     rows = overview.get("symbols", [])[:10]
     lines = []
-    lines.append("TRŽNÍ LEVELY")
+    lines.append("FMP LEVELS")
     lines.append(f"Zdroj dat: {overview.get('source', 'unknown')}")
     lines.append(f"Režim trhu: {overview.get('regime', 'mixed')}")
     lines.append("")

@@ -1,19 +1,8 @@
 from __future__ import annotations
 
-import math
 from typing import Iterable, Dict, Any, List
 
 DEFAULT_WATCHLIST = ["SPY", "QQQ", "DIA", "IWM", "BTC-USD", "GLD", "TLT", "NVDA", "MSFT", "AAPL"]
-
-
-def _safe_float(value: Any) -> float | None:
-    try:
-        val = float(value)
-    except (TypeError, ValueError):
-        return None
-    if math.isnan(val) or math.isinf(val):
-        return None
-    return val
 
 
 def _fallback_snapshot(symbol: str, idx: int) -> Dict[str, Any]:
@@ -56,12 +45,8 @@ def _try_fmp(symbols: List[str]) -> List[Dict[str, Any]]:
             series = fetch_eod_series(symbol, days_back=12)
         except Exception:
             series = []
-        closes = []
-        for row in series:
-            close = _safe_float(row.get("close"))
-            if close is not None:
-                closes.append(close)
-        price = _safe_float(quote_map.get(str(symbol).upper(), {}).get("price"))
+        closes = [float(row["close"]) for row in series if row.get("close") is not None]
+        price = quote_map.get(str(symbol).upper(), {}).get("price")
         if price is None and closes:
             price = closes[-1]
         if price is None:
@@ -92,15 +77,9 @@ def _try_openbb(symbols: List[str]) -> List[Dict[str, Any]]:
             df = data.to_df()
             if df is None or len(df) < 2:
                 continue
-            closes = []
-            for x in df["close"].tail(10).tolist():
-                v = _safe_float(x)
-                if v is not None:
-                    closes.append(v)
-            if len(closes) < 2:
-                continue
-            close_now = closes[-1]
-            close_prev = closes[-2]
+            closes = [float(x) for x in df["close"].tail(10).tolist()]
+            close_now = float(df["close"].iloc[-1])
+            close_prev = float(df["close"].iloc[-2])
             change_pct = round(((close_now - close_prev) / close_prev) * 100, 2) if close_prev else 0.0
             rows.append({
                 "symbol": symbol,
@@ -126,13 +105,7 @@ def _try_yfinance(symbols: List[str]) -> List[Dict[str, Any]]:
             hist = yf.Ticker(symbol).history(period="10d", interval="1d")
             if hist is None or hist.empty or len(hist) < 2:
                 continue
-            closes = []
-            for x in hist["Close"].tolist():
-                v = _safe_float(x)
-                if v is not None:
-                    closes.append(v)
-            if len(closes) < 2:
-                continue
+            closes = [float(x) for x in hist["Close"].tolist()]
             close_now = closes[-1]
             close_prev = closes[-2]
             change_pct = round(((close_now - close_prev) / close_prev) * 100, 2) if close_prev else 0.0
@@ -178,7 +151,6 @@ def generate_market_overview(watchlist: Iterable[str] | None = None) -> Dict[str
     if not rows:
         rows = [_fallback_snapshot(symbol, idx) for idx, symbol in enumerate(symbols)]
 
-    rows = [r for r in rows if _safe_float(r.get("price")) is not None]
     leaders = sorted(rows, key=lambda x: x.get("change_pct", 0), reverse=True)[:3]
     laggards = sorted(rows, key=lambda x: x.get("change_pct", 0))[:3]
     avg_change = round(sum(r.get("change_pct", 0) for r in rows) / len(rows), 2) if rows else 0.0

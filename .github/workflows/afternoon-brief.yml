@@ -32,9 +32,9 @@ jobs:
         env:
           TIMEZONE: Europe/Prague
           RUN_MODE: brief
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHATID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FMPAPIKEY: ${{ secrets.FMP_API_KEY }}
           EMAIL_ENABLED: ${{ secrets.EMAIL_ENABLED }}
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}

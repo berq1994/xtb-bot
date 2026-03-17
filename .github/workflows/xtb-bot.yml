@@ -36,9 +36,9 @@ jobs:
           TIMEZONE: Europe/Prague
           RUN_MODE: run
 
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
-          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHATID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FMPAPIKEY: ${{ secrets.FMP_API_KEY }}
 
           PREMARKET_TIME: "07:30"
           EVENING_TIME: "20:00"

@@ -1,5 +1,4 @@
 import json
-import math
 import os
 import urllib.error
 import urllib.parse
@@ -18,20 +17,6 @@ def _get_api_key() -> Optional[str]:
     )
 
 
-def _normalize_symbol(symbol: str) -> str:
-    sym = str(symbol).upper().strip()
-    if not sym:
-        return sym
-    aliases = {
-        "BTC-USD": "BTCUSD",
-        "ETH-USD": "ETHUSD",
-        "SOL-USD": "SOLUSD",
-        "GC=F": "GCUSD",
-        "SI=F": "SIUSD",
-    }
-    return aliases.get(sym, sym)
-
-
 def _http_get_json(path: str, params: Dict[str, Any]) -> Any:
     api_key = _get_api_key()
     if not api_key:
@@ -44,6 +29,7 @@ def _http_get_json(path: str, params: Dict[str, Any]) -> Any:
         with urllib.request.urlopen(req, timeout=20) as resp:
             raw = resp.read().decode("utf-8")
     except urllib.error.HTTPError as exc:
+        # Safe fallback: never break the whole production run because of FMP.
         if exc.code in {401, 402, 403, 404, 429}:
             return {
                 "_error": True,
@@ -84,39 +70,26 @@ def _parse_dt(value: str) -> Optional[datetime]:
     return dt.astimezone(timezone.utc)
 
 
-def _safe_float(value: Any) -> Optional[float]:
-    try:
-        val = float(value)
-    except (TypeError, ValueError):
-        return None
-    if math.isnan(val) or math.isinf(val):
-        return None
-    return val
-
-
 def fetch_quotes(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
-    original = sorted({str(s).upper().strip() for s in symbols if str(s).strip()})
-    cleaned = [_normalize_symbol(s) for s in original]
+    cleaned = sorted({str(s).upper().strip() for s in symbols if str(s).strip()})
     if not cleaned:
         return {}
 
-    if len(cleaned) == 1:
-        payload = _http_get_json("/quote", {"symbol": cleaned[0]})
-    else:
-        payload = _http_get_json("/batch-quote", {"symbols": ",".join(cleaned)})
-        if not isinstance(payload, list):
-            payload = _http_get_json("/batch-quote-short", {"symbols": ",".join(cleaned)})
-
+    payload = _http_get_json("/quote", {"symbol": ",".join(cleaned)})
     if not isinstance(payload, list):
         return {}
 
-    reverse_map = {_normalize_symbol(s): s for s in original}
     out: Dict[str, Dict[str, Any]] = {}
     for row in payload:
-        raw_symbol = str(row.get("symbol", "")).upper().strip()
-        symbol = reverse_map.get(raw_symbol, raw_symbol)
-        price_val = _safe_float(row.get("price") or row.get("previousClose") or row.get("close"))
-        if not symbol or price_val is None:
+        symbol = str(row.get("symbol", "")).upper().strip()
+        if not symbol:
+            continue
+        price = row.get("price") or row.get("previousClose") or row.get("close")
+        if price is None:
+            continue
+        try:
+            price_val = float(price)
+        except (TypeError, ValueError):
             continue
         out[symbol] = {
             "symbol": symbol,
@@ -128,7 +101,7 @@ def fetch_quotes(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
 
 
 def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 3) -> List[Dict[str, Any]]:
-    symbol = _normalize_symbol(symbol)
+    symbol = str(symbol).upper().strip()
     if not symbol:
         return []
     now = datetime.now(timezone.utc)
@@ -143,8 +116,14 @@ def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 
     rows: List[Dict[str, Any]] = []
     for row in payload:
         dt = _parse_dt(str(row.get("date", "")))
-        close = _safe_float(row.get("close"))
-        if not dt or close is None:
+        if not dt:
+            continue
+        close_val = row.get("close")
+        if close_val is None:
+            continue
+        try:
+            close = float(close_val)
+        except (TypeError, ValueError):
             continue
         rows.append({"dt": dt, "close": close})
     rows.sort(key=lambda x: x["dt"])
@@ -152,29 +131,28 @@ def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 
 
 
 def fetch_eod_series(symbol: str, days_back: int = 10) -> List[Dict[str, Any]]:
-    symbol = _normalize_symbol(symbol)
+    symbol = str(symbol).upper().strip()
     if not symbol:
         return []
     end = datetime.now(timezone.utc).date()
-    start = end - timedelta(days=max(days_back, 5))
+    start = end - timedelta(days=max(days_back, 3))
     payload = _http_get_json(
-        "/historical-price-eod/full",
+        "/historical-price-eod/light",
         {"symbol": symbol, "from": start.isoformat(), "to": end.isoformat()},
     )
-    if isinstance(payload, dict) and isinstance(payload.get("historical"), list):
-        payload = payload["historical"]
-    if not isinstance(payload, list):
-        payload = _http_get_json(
-            "/historical-price-eod/light",
-            {"symbol": symbol, "from": start.isoformat(), "to": end.isoformat()},
-        )
     if not isinstance(payload, list):
         return []
     rows: List[Dict[str, Any]] = []
     for row in payload:
         dt = _parse_dt(str(row.get("date", "")))
-        close = _safe_float(row.get("close") or row.get("price") or row.get("adjClose"))
-        if not dt or close is None:
+        if not dt:
+            continue
+        price_val = row.get("close") or row.get("price")
+        if price_val is None:
+            continue
+        try:
+            close = float(price_val)
+        except (TypeError, ValueError):
             continue
         rows.append({"dt": dt, "close": close})
     rows.sort(key=lambda x: x["dt"])

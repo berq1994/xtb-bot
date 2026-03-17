@@ -2,15 +2,15 @@ DENNÍ BRIEFING
 ========================================
 
 OPENBB SIGNÁLOVÝ BALÍČEK
-Režim trhu: risk-on
-Zdroj dat: yfinance
+Režim trhu: smíšený
+Zdroj dat: fallback
 
 Hlavní kandidát na long:
-- DIA | pohyb 0.83% | trend rostoucí | cena 474.2
+- BTC-USD | pohyb 1.3% | trend rostoucí | cena 129.66
 - Akce: sledovat breakout / ruční potvrzení v XTB
 
 Hlavní slabý kandidát:
-- BTC-USD | pohyb -1.56% | trend rostoucí | cena 73692.55
+- SPY | pohyb -1.3% | trend klesající | cena 98.7
 - Akce: sledovat slabost / hedge / nebrat impulzivní long
 
 Kontrolní seznam pro ruční vstup:
@@ -20,9 +20,12 @@ Kontrolní seznam pro ruční vstup:
 4. Riziko max. 1 % na obchod
 
 OPENBB ZPRÁVY / SENTIMENT
-Režim trhu: risk-on
+Režim trhu: smíšený
 
-DIA: neutrální (skóre 0)
+BTC-USD: negativní (skóre -1)
+- Bez doplňujícího komentáře
+
+AAPL: pozitivní (skóre 2)
 - Bez doplňujícího komentáře
 
 IWM: neutrální (skóre 0)
@@ -31,34 +34,31 @@ IWM: neutrální (skóre 0)
 SPY: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-BTC-USD: negativní (skóre -1)
-- Bez doplňujícího komentáře
-
-AAPL: pozitivní (skóre 2)
-- Bez doplňujícího komentáře
-
 GLD: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
+QQQ: neutrální (skóre 0)
+- Bez doplňujícího komentáře
+
 ROZHODNUTÍ SUPERVISORU
-Režim trhu: risk-on
-Rozhodnutí: sledovat long
+Režim trhu: smíšený
+Rozhodnutí: vyčkat
 
-Hlavní setup: DIA | 0.83% | trend rostoucí | zprávy neutrální
-Slabý setup: BTC-USD | -1.56% | trend rostoucí | zprávy negativní
+Hlavní setup: BTC-USD | 1.3% | trend rostoucí | zprávy negativní
+Slabý setup: SPY | -1.3% | trend klesající | zprávy neutrální
 
-Důvod: Lead setup je silný a může nabídnout pokračování trendu.
+Důvod: Trend je sice pozitivní, ale zprávy zhoršují kvalitu setupu.
 
 RUČNÍ XTB TICKET
-Symbol: DIA
+Symbol: BTC-USD
 Směr: long
-Režim trhu: risk-on
-Zdroj dat: yfinance
-Vstupní reference: 474.2
-Stop loss: 469.46
-Take profit: 483.68
-Odhad volatility: 1.0%
-Sentiment zpráv: neutrální
+Režim trhu: smíšený
+Zdroj dat: fallback
+Vstupní reference: 129.66
+Stop loss: 128.26
+Take profit: 132.25
+Odhad volatility: 1.08%
+Sentiment zpráv: negativní
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem
@@ -88,18 +88,18 @@ Důvod: chybí TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT
 Soubor náhledu: telegram_preview.txt
 
 SIGNÁL ULOŽEN
-Čas: 2026-03-17T13:32:23.986900
+Čas: 2026-03-17T13:24:00.465627
 Režim: mixed
 Rozhodnutí: watch
 Ticker: -
-Soubor historie: data\openbb_signal_history.jsonl
+Soubor historie: data/openbb_signal_history.jsonl
 
 PŘEHLED UČENÍ – FÁZE 5
-Počet vzorků historie: 11
+Počet vzorků historie: 9
 Průměrné skóre kvality: 2.0
 Mix rozhodnutí:
 - unknown: 2
-- watch: 9
+- watch: 7
 Váhy:
 - trend: 1.0
 - momentum: 1.0
@@ -115,7 +115,7 @@ Stav: přidán záznam placeholderu výsledku
 Soubor: data/outcome_tracking.jsonl
 
 PŘEHLED VÝSLEDKŮ
-Počet vzorků: 7
+Počet vzorků: 6
 Průměrný výsledek %: 0.0
 Štítky:
-- čeká: 7
+- čeká: 6

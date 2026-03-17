@@ -52,7 +52,7 @@ jobs:
           TIMEZONE: Europe/Prague
           PORTFOLIO_SNAPSHOT_PATH: portfolio_snapshot/portfolio.yml
 
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHATID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
           EMAIL_ENABLED: "false"
