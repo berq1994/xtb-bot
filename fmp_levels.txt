@@ -1,77 +1,77 @@
-FMP LEVELS
-Zdroj dat: fallback
-Režim trhu: mixed
+TRŽNÍ LEVELY
+Zdroj dat: yfinance
+Režim trhu: risk_on
 
-SPY | cena 98.7 | trend down
-- koupit pod: 97.22
-- breakout nad: 99.88
-- trim nad: 100.67
-- stop: 95.74
+SPY | cena 673.32 | trend up
+- koupit pod: 667.93
+- breakout nad: 678.71
+- trim nad: 693.52
+- stop: 658.51
 
-QQQ | cena 106.3 | trend down
-- koupit pod: 104.71
-- breakout nad: 107.58
-- trim nad: 108.43
-- stop: 103.11
+QQQ | cena 604.87 | trend up
+- koupit pod: 600.03
+- breakout nad: 609.71
+- trim nad: 623.02
+- stop: 591.56
 
-DIA | cena 114.0 | trend flat
-- koupit pod: 112.29
-- breakout nad: 115.37
-- trim nad: 116.28
-- stop: 110.58
+DIA | cena 473.64 | trend up
+- koupit pod: 469.85
+- breakout nad: 477.43
+- trim nad: 487.85
+- stop: 463.22
 
-IWM | cena 121.79 | trend up
-- koupit pod: 120.82
-- breakout nad: 122.76
-- trim nad: 125.44
-- stop: 119.11
+IWM | cena 251.22 | trend up
+- koupit pod: 249.21
+- breakout nad: 253.23
+- trim nad: 258.76
+- stop: 245.69
 
-BTC-USD | cena 129.66 | trend up
-- koupit pod: 128.62
-- breakout nad: 130.7
-- trim nad: 133.55
-- stop: 126.81
+BTC-USD | cena 73679.13 | trend up
+- koupit pod: 73089.7
+- breakout nad: 74268.56
+- trim nad: 75889.5
+- stop: 72058.19
 
-GLD | cena 133.25 | trend down
-- koupit pod: 131.25
-- breakout nad: 134.85
-- trim nad: 135.91
-- stop: 129.25
+GLD | cena 461.02 | trend down
+- koupit pod: 454.1
+- breakout nad: 466.55
+- trim nad: 470.24
+- stop: 447.19
 
-TLT | cena 141.08 | trend down
-- koupit pod: 138.96
-- breakout nad: 142.77
-- trim nad: 143.9
-- stop: 136.85
+TLT | cena 87.44 | trend up
+- koupit pod: 86.74
+- breakout nad: 88.14
+- trim nad: 90.06
+- stop: 85.52
 
-NVDA | cena 149.0 | trend flat
-- koupit pod: 146.76
-- breakout nad: 150.79
-- trim nad: 151.98
-- stop: 144.53
+NVDA | cena 182.28 | trend down
+- koupit pod: 179.55
+- breakout nad: 184.47
+- trim nad: 185.93
+- stop: 176.81
 
-MSFT | cena 157.01 | trend up
-- koupit pod: 155.75
-- breakout nad: 158.27
-- trim nad: 161.72
-- stop: 153.56
+MSFT | cena 401.06 | trend flat
+- koupit pod: 395.04
+- breakout nad: 405.87
+- trim nad: 409.08
+- stop: 389.03
 
-AAPL | cena 165.12 | trend up
-- koupit pod: 163.8
-- breakout nad: 166.44
-- trim nad: 170.07
-- stop: 161.49
+AAPL | cena 254.55 | trend flat
+- koupit pod: 250.73
+- breakout nad: 257.6
+- trim nad: 259.64
+- stop: 246.91
 
 RUČNÍ XTB TICKET
-Symbol: BTC-USD
+Symbol: IWM
 Směr: long
-Režim trhu: smíšený
-Zdroj dat: fallback
-Vstupní reference: 129.66
-Stop loss: 128.26
-Take profit: 132.25
-Odhad volatility: 1.08%
-Sentiment zpráv: negativní
+Režim trhu: risk-on
+Zdroj dat: yfinance
+Vstupní reference: 251.2
+Stop loss: 248.69
+Take profit: 256.22
+Odhad volatility: 1.0%
+Sentiment zpráv: neutrální
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem
