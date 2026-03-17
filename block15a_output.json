@@ -1,18 +1,42 @@
 {
   "cycle": 1,
-  "new_events": 1,
+  "new_events": 4,
   "impact_view": {
-    "portfolio_relevant_count": 1,
-    "high_priority_count": 1,
+    "portfolio_relevant_count": 3,
+    "high_priority_count": 3,
     "high_priority": [
       {
-        "event_id": "9862a5ac3249d328d1b119bb7fd2a9ff07326a45",
-        "headline": "Fallback geopolitická událost",
+        "event_id": "a1d2dc66527965f95a661480222567238848fb6f",
+        "headline": "Napětí v regionu zvyšuje riziko pro energie a dopravu",
         "kind": "geo",
-        "impact": 0.78,
-        "relevance": 0.8,
+        "impact": 0.798,
+        "relevance": 0.865,
         "portfolio_hits": [
           "CVX"
+        ],
+        "portfolio_relevant": true
+      },
+      {
+        "event_id": "9c3d5addaf75c86bdd3406801a2348bd73a07ec0",
+        "headline": "Blíží se earnings event s možným gap riskem",
+        "kind": "earnings",
+        "impact": 0.755,
+        "relevance": 0.915,
+        "portfolio_hits": [
+          "NVDA",
+          "TSM"
+        ],
+        "portfolio_relevant": true
+      },
+      {
+        "event_id": "bb6c7e47f27ad689be0c1de573985659abbc56c9",
+        "headline": "Firma zveřejnila nový filing s možným dopadem na výhled",
+        "kind": "corporate",
+        "impact": 0.66,
+        "relevance": 0.833,
+        "portfolio_hits": [
+          "NVDA",
+          "MSFT"
         ],
         "portfolio_relevant": true
       }
@@ -21,19 +45,21 @@
   "governance": {
     "mode": "REVIEW_ONLY",
     "manual_xtb_allowed": true,
-    "reason": "RELEVANT_EVENTS_FOUND"
+    "reason": "HIGH_EVENT_DENSITY"
   },
-  "briefing": "AUTONOMOUS RESEARCH BRIEFING\nGovernance mode: REVIEW_ONLY\nDůvod: RELEVANT_EVENTS_FOUND\nPortfolio relevant events: 1\nHigh priority events: 1\n\nTop události:\n- [geo] Fallback geopolitická událost | hits: CVX | impact 0.78 | relevance 0.8",
+  "briefing": "AUTONOMOUS RESEARCH BRIEFING\nGovernance mode: REVIEW_ONLY\nDůvod: HIGH_EVENT_DENSITY\nPortfolio relevant events: 3\nHigh priority events: 3\n\nTop události:\n- [geo] Napětí v regionu zvyšuje riziko pro energie a dopravu | hits: CVX | impact 0.798 | relevance 0.865\n- [earnings] Blíží se earnings event s možným gap riskem | hits: NVDA, TSM | impact 0.755 | relevance 0.915\n- [corporate] Firma zveřejnila nový filing s možným dopadem na výhled | hits: NVDA, MSFT | impact 0.66 | relevance 0.833",
   "alerts": [
-    "ALERT | Fallback geopolitická událost | hits CVX | impact 0.78"
+    "ALERT | Napětí v regionu zvyšuje riziko pro energie a dopravu | hits CVX | impact 0.798",
+    "ALERT | Blíží se earnings event s možným gap riskem | hits NVDA, TSM | impact 0.755",
+    "ALERT | Firma zveřejnila nový filing s možným dopadem na výhled | hits NVDA, MSFT | impact 0.66"
   ],
-  "handoff": "AUTONOMOUS XTB HANDOFF\nGovernance mode: REVIEW_ONLY\nManual XTB allowed: True\n\nCo ručně zkontrolovat v xStation:\n- CVX: Fallback geopolitická událost\n\nAkce:\n- otevři watchlist\n- porovnej s ticketem a riskem\n- klik dělej jen po potvrzení setupu",
+  "handoff": "AUTONOMOUS XTB HANDOFF\nGovernance mode: REVIEW_ONLY\nManual XTB allowed: True\n\nCo ručně zkontrolovat v xStation:\n- CVX: Napětí v regionu zvyšuje riziko pro energie a dopravu\n- NVDA, TSM: Blíží se earnings event s možným gap riskem\n- NVDA, MSFT: Firma zveřejnila nový filing s možným dopadem na výhled\n\nAkce:\n- otevři watchlist\n- porovnej s ticketem a riskem\n- klik dělej jen po potvrzení setupu",
   "health": {
-    "timestamp": "2026-03-12T20:43:35.008913+00:00",
+    "timestamp": "2026-03-11T18:16:50.878388+00:00",
     "ok": true,
     "cycle": 1,
     "details": {
-      "new_events": 1,
+      "new_events": 4,
       "governance_mode": "REVIEW_ONLY"
     }
   }

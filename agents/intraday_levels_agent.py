@@ -31,48 +31,19 @@ def _portfolio_symbols_and_themes(data: dict) -> tuple[set[str], set[str]]:
 
 def _thematic_map() -> dict[str, set[str]]:
     return {
-        "NVDA": {"semis", "ai"},
-        "AMD": {"semis", "ai"},
-        "TSM": {"semis", "ai", "foundry"},
-        "MSFT": {"software", "cloud", "ai"},
-        "GOOG": {"ai", "internet", "ads"},
-        "GOOGL": {"ai", "internet", "ads"},
-        "META": {"ai", "internet"},
-        "PLTR": {"software", "data", "ai"},
-        "PANW": {"cybersecurity", "software"},
-        "S": {"cybersecurity", "software"},
-        "NBIS": {"ai", "cloud", "infra"},
-        "ORCL": {"software", "cloud"},
-        "AMZN": {"cloud", "ai", "consumer"},
-        "AAPL": {"consumer_tech"},
-        "FCX": {"copper", "materials", "commodities"},
-        "EQT": {"energy", "natural_gas"},
-        "CVX": {"energy", "oil"},
-        "LEU": {"uranium", "nuclear"},
-        "FSLR": {"solar", "energy_transition"},
-        "IREN": {"bitcoin", "energy", "ai_hpc"},
-        "NVO": {"healthcare"},
-        "GRMN": {"consumer_tech"},
-        "CSG": {"defense", "industrial"},
-        "SCCO": {"copper", "materials"},
-        "IBIT": {"bitcoin", "crypto"},
-        "BTC-USD": {"bitcoin", "crypto"},
-        "BRK-B": {"financials", "conglomerate"},
-        "BKNG": {"travel", "consumer"},
-        "DPZ": {"consumer"},
-        "COKE": {"consumer_defensive"},
-        "CAG": {"consumer_defensive"},
-        "INTC": {"semis"},
-        "GEV": {"industrial", "energy_transition"},
-        "TTD": {"ads", "software"},
-        "AAOI": {"networking", "optics", "ai_infra"},
-        "ONDS": {"drones", "industrial"},
-        "CENX": {"materials", "aluminum"},
-        "PYPL": {"fintech"},
-        "NFLX": {"media"},
-        "CVNA": {"consumer_cyclical"},
-        "BDC": {"industrial"},
-        "SNDK": {"storage", "semis"},
+        "NVDA": {"semis", "ai"}, "AMD": {"semis", "ai"}, "TSM": {"semis", "ai", "foundry"},
+        "MSFT": {"software", "cloud", "ai"}, "GOOG": {"ai", "internet", "ads"}, "GOOGL": {"ai", "internet", "ads"},
+        "META": {"ai", "internet"}, "PLTR": {"software", "data", "ai"}, "PANW": {"cybersecurity", "software"},
+        "S": {"cybersecurity", "software"}, "NBIS": {"ai", "cloud", "infra"}, "ORCL": {"software", "cloud"},
+        "AMZN": {"cloud", "ai", "consumer"}, "AAPL": {"consumer_tech"}, "FCX": {"copper", "materials", "commodities"},
+        "EQT": {"energy", "natural_gas"}, "CVX": {"energy", "oil"}, "LEU": {"uranium", "nuclear"},
+        "FSLR": {"solar", "energy_transition"}, "IREN": {"bitcoin", "energy", "ai_hpc"}, "NVO": {"healthcare"},
+        "GRMN": {"consumer_tech"}, "CSG": {"defense", "industrial"}, "SCCO": {"copper", "materials"},
+        "IBIT": {"bitcoin", "crypto"}, "BTC-USD": {"bitcoin", "crypto"}, "BRK-B": {"financials", "conglomerate"},
+        "BKNG": {"travel", "consumer"}, "DPZ": {"consumer"}, "COKE": {"consumer_defensive"}, "CAG": {"consumer_defensive"},
+        "INTC": {"semis"}, "GEV": {"industrial", "energy_transition"}, "TTD": {"ads", "software"},
+        "AAOI": {"networking", "optics", "ai_infra"}, "ONDS": {"drones", "industrial"}, "CENX": {"materials", "aluminum"},
+        "PYPL": {"fintech"}, "NFLX": {"media"}, "CVNA": {"consumer_cyclical"}, "BDC": {"industrial"}, "SNDK": {"storage", "semis"},
     }
 
 
@@ -119,6 +90,7 @@ def run_intraday_levels() -> str:
     lines = []
     lines.append("INTRADAY LEVELS")
     lines.append(f"Režim trhu: {overview.get('regime', 'mixed')}")
+    lines.append(f"Zdroj dat: {overview.get('source', 'unknown')}")
     lines.append("")
 
     for row in rows:

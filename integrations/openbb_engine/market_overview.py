@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from typing import Iterable, Dict, Any, List
-import math
 
 DEFAULT_WATCHLIST = ["SPY", "QQQ", "DIA", "IWM", "BTC-USD", "GLD", "TLT", "NVDA", "MSFT", "AAPL"]
 
@@ -19,6 +18,52 @@ def _fallback_snapshot(symbol: str, idx: int) -> Dict[str, Any]:
     }
 
 
+def _trend_from_series(closes: List[float]) -> str:
+    if not closes:
+        return "flat"
+    if len(closes) < 3:
+        return "up" if closes[-1] >= closes[0] else "down"
+    sma = sum(closes[-5:]) / min(len(closes), 5)
+    last = closes[-1]
+    if last > sma * 1.002:
+        return "up"
+    if last < sma * 0.998:
+        return "down"
+    return "flat"
+
+
+def _try_fmp(symbols: List[str]) -> List[Dict[str, Any]]:
+    try:
+        from production.fmp_market_data import fetch_quotes, fetch_eod_series
+    except Exception:
+        return []
+
+    quote_map = fetch_quotes(symbols)
+    rows: List[Dict[str, Any]] = []
+    for symbol in symbols:
+        try:
+            series = fetch_eod_series(symbol, days_back=12)
+        except Exception:
+            series = []
+        closes = [float(row["close"]) for row in series if row.get("close") is not None]
+        price = quote_map.get(str(symbol).upper(), {}).get("price")
+        if price is None and closes:
+            price = closes[-1]
+        if price is None:
+            continue
+        prev = closes[-2] if len(closes) >= 2 else float(price)
+        change_pct = round(((float(price) - prev) / prev) * 100, 2) if prev else 0.0
+        rows.append({
+            "symbol": symbol,
+            "price": round(float(price), 2),
+            "change_pct": change_pct,
+            "trend": _trend_from_series(closes or [float(price)]),
+            "source": "fmp",
+            "closes": closes[-10:],
+        })
+    return rows
+
+
 def _try_openbb(symbols: List[str]) -> List[Dict[str, Any]]:
     try:
         from openbb import obb  # type: ignore
@@ -32,16 +77,17 @@ def _try_openbb(symbols: List[str]) -> List[Dict[str, Any]]:
             df = data.to_df()
             if df is None or len(df) < 2:
                 continue
+            closes = [float(x) for x in df["close"].tail(10).tolist()]
             close_now = float(df["close"].iloc[-1])
             close_prev = float(df["close"].iloc[-2])
             change_pct = round(((close_now - close_prev) / close_prev) * 100, 2) if close_prev else 0.0
-            trend = "up" if close_now > float(df["close"].tail(5).mean()) else "down"
             rows.append({
                 "symbol": symbol,
                 "price": round(close_now, 2),
                 "change_pct": change_pct,
-                "trend": trend,
+                "trend": _trend_from_series(closes),
                 "source": "openbb",
+                "closes": closes,
             })
         except Exception:
             continue
@@ -56,30 +102,50 @@ def _try_yfinance(symbols: List[str]) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
     for symbol in symbols:
         try:
-            hist = yf.Ticker(symbol).history(period="5d", interval="1d")
+            hist = yf.Ticker(symbol).history(period="10d", interval="1d")
             if hist is None or hist.empty or len(hist) < 2:
                 continue
-            close_now = float(hist["Close"].iloc[-1])
-            close_prev = float(hist["Close"].iloc[-2])
-            sma = float(hist["Close"].mean())
+            closes = [float(x) for x in hist["Close"].tolist()]
+            close_now = closes[-1]
+            close_prev = closes[-2]
             change_pct = round(((close_now - close_prev) / close_prev) * 100, 2) if close_prev else 0.0
-            trend = "up" if close_now > sma else "down"
             rows.append({
                 "symbol": symbol,
                 "price": round(close_now, 2),
                 "change_pct": change_pct,
-                "trend": trend,
+                "trend": _trend_from_series(closes),
                 "source": "yfinance",
+                "closes": closes[-10:],
             })
         except Exception:
             continue
     return rows
 
 
+def _regime_from_rows(rows: List[Dict[str, Any]]) -> str:
+    if not rows:
+        return "mixed"
+    avg_change = sum(float(r.get("change_pct", 0.0)) for r in rows) / len(rows)
+    proxy = {str(r.get("symbol", "")).upper(): r for r in rows}
+    score = 0.0
+    for sym, weight in [("SPY", 1.0), ("QQQ", 1.0), ("IWM", 0.7), ("BTC-USD", 0.5), ("TLT", -0.3)]:
+        row = proxy.get(sym)
+        if row:
+            score += float(row.get("change_pct", 0.0)) * weight
+    composite = (avg_change * 0.6) + (score * 0.4)
+    if composite > 0.35:
+        return "risk_on"
+    if composite < -0.35:
+        return "risk_off"
+    return "mixed"
+
+
 def generate_market_overview(watchlist: Iterable[str] | None = None) -> Dict[str, Any]:
     symbols = list(watchlist or DEFAULT_WATCHLIST)
 
-    rows = _try_openbb(symbols)
+    rows = _try_fmp(symbols)
+    if not rows:
+        rows = _try_openbb(symbols)
     if not rows:
         rows = _try_yfinance(symbols)
     if not rows:
@@ -88,13 +154,7 @@ def generate_market_overview(watchlist: Iterable[str] | None = None) -> Dict[str
     leaders = sorted(rows, key=lambda x: x.get("change_pct", 0), reverse=True)[:3]
     laggards = sorted(rows, key=lambda x: x.get("change_pct", 0))[:3]
     avg_change = round(sum(r.get("change_pct", 0) for r in rows) / len(rows), 2) if rows else 0.0
-
-    if avg_change > 0.35:
-        regime = "risk_on"
-    elif avg_change < -0.35:
-        regime = "risk_off"
-    else:
-        regime = "mixed"
+    regime = _regime_from_rows(rows)
 
     return {
         "source": rows[0].get("source", "fallback") if rows else "fallback",

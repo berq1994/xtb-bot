@@ -2,15 +2,15 @@ DENNÍ BRIEFING
 ========================================
 
 OPENBB SIGNÁLOVÝ BALÍČEK
-Režim trhu: smíšený
-Zdroj dat: fallback
+Režim trhu: risk-on
+Zdroj dat: yfinance
 
 Hlavní kandidát na long:
-- BTC-USD | pohyb 1.3% | trend rostoucí | cena 129.66
+- DIA | pohyb 0.83% | trend rostoucí | cena 474.2
 - Akce: sledovat breakout / ruční potvrzení v XTB
 
 Hlavní slabý kandidát:
-- SPY | pohyb -1.3% | trend klesající | cena 98.7
+- BTC-USD | pohyb -1.56% | trend rostoucí | cena 73692.55
 - Akce: sledovat slabost / hedge / nebrat impulzivní long
 
 Kontrolní seznam pro ruční vstup:
@@ -20,12 +20,9 @@ Kontrolní seznam pro ruční vstup:
 4. Riziko max. 1 % na obchod
 
 OPENBB ZPRÁVY / SENTIMENT
-Režim trhu: smíšený
+Režim trhu: risk-on
 
-BTC-USD: negativní (skóre -1)
-- Bez doplňujícího komentáře
-
-AAPL: pozitivní (skóre 2)
+DIA: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
 IWM: neutrální (skóre 0)
@@ -34,29 +31,34 @@ IWM: neutrální (skóre 0)
 SPY: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
+BTC-USD: negativní (skóre -1)
+- Bez doplňujícího komentáře
+
+AAPL: pozitivní (skóre 2)
+- Bez doplňujícího komentáře
+
 GLD: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-QQQ: neutrální (skóre 0)
-- Bez doplňujícího komentáře
-
 ROZHODNUTÍ SUPERVISORU
-Režim trhu: smíšený
-Rozhodnutí: vyčkat
+Režim trhu: risk-on
+Rozhodnutí: sledovat long
 
-Hlavní setup: BTC-USD | 1.3% | trend rostoucí | zprávy negativní
-Slabý setup: SPY | -1.3% | trend klesající | zprávy neutrální
+Hlavní setup: DIA | 0.83% | trend rostoucí | zprávy neutrální
+Slabý setup: BTC-USD | -1.56% | trend rostoucí | zprávy negativní
 
-Důvod: Trend je sice pozitivní, ale zprávy zhoršují kvalitu setupu.
+Důvod: Lead setup je silný a může nabídnout pokračování trendu.
 
 RUČNÍ XTB TICKET
-Symbol: BTC-USD
+Symbol: DIA
 Směr: long
-Režim trhu: smíšený
-Vstupní reference: 129.66
-Stop loss: 127.72
-Take profit: 133.55
-Sentiment zpráv: negativní
+Režim trhu: risk-on
+Zdroj dat: yfinance
+Vstupní reference: 474.2
+Stop loss: 469.46
+Take profit: 483.68
+Odhad volatility: 1.0%
+Sentiment zpráv: neutrální
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem

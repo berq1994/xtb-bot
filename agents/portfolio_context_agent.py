@@ -4,7 +4,6 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
-
 PORTFOLIO_PATH = Path("config/portfolio_state.json")
 OUTPUT_PATH = Path("portfolio_context_report.txt")
 

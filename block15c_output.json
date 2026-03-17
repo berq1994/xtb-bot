@@ -1,10 +1,10 @@
 {
   "payload": {
     "governance_mode": "REVIEW_ONLY",
-    "new_events": 1,
+    "new_events": 4,
     "delivery_ok": false,
     "state": {
-      "last_run_utc": "2026-03-12T20:43:37.881470+00:00",
+      "last_run_utc": "2026-03-11T18:16:57.275748+00:00",
       "status": "REVIEW_ONLY",
       "last_governance_mode": "REVIEW_ONLY",
       "last_delivery_ok": false,
@@ -21,5 +21,5 @@
     },
     "summary": "Autonomous production flow sjednotil research, delivery a governance do jednoho běhu."
   },
-  "report": "AUTONOMOUS PRODUCTION FLOW REPORT\nStatus: REVIEW_ONLY\nGovernance mode: REVIEW_ONLY\nDelivery ok: False\nNew events: 1\nEscalation: medium | DELIVERY_FAILED\n\nSchedule:\n- Poll interval: 300\n- Cycle count: 1\n\nSummary:\nAutonomous production flow sjednotil research, delivery a governance do jednoho běhu."
+  "report": "AUTONOMOUS PRODUCTION FLOW REPORT\nStatus: REVIEW_ONLY\nGovernance mode: REVIEW_ONLY\nDelivery ok: False\nNew events: 4\nEscalation: medium | DELIVERY_FAILED\n\nSchedule:\n- Poll interval: 300\n- Cycle count: 1\n\nSummary:\nAutonomous production flow sjednotil research, delivery a governance do jednoho běhu."
 }

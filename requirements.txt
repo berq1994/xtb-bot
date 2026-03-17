@@ -1,7 +1,7 @@
 pandas
 numpy
 matplotlib
-pyyaml
+PyYAML
 requests
 yfinance
 python-dateutil

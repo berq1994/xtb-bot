@@ -128,6 +128,11 @@ def main():
         print(run_outcome_review())
         return
 
+    if mode == "fmp_levels":
+        from agents.fmp_levels_agent import run_fmp_levels
+        print(run_fmp_levels())
+        return
+
     if mode == "production_cycle":
         from agents.workflow_runner_agent import run_production_cycle
         print(run_production_cycle())
@@ -145,7 +150,7 @@ def main():
         "openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket | "
         "daily_briefing | telegram_preview | log_signal | "
         "learning_review | rebalance_weights | performance_review | full_cycle | "
-        "telegram_live | schedule_plan | outcome_update | outcome_review | production_cycle"
+        "telegram_live | schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle"
     )
 
 

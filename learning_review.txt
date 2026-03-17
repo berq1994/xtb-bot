@@ -1,9 +1,9 @@
 PŘEHLED UČENÍ – FÁZE 5
-Počet vzorků historie: 9
+Počet vzorků historie: 11
 Průměrné skóre kvality: 2.0
 Mix rozhodnutí:
 - unknown: 2
-- watch: 7
+- watch: 9
 Váhy:
 - trend: 1.0
 - momentum: 1.0

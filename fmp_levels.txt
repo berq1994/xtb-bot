@@ -1,0 +1,79 @@
+FMP LEVELS
+Zdroj dat: yfinance
+Režim trhu: mixed
+
+SPY | cena 673.04 | trend up
+- koupit pod: 667.66
+- breakout nad: 678.42
+- trim nad: 693.23
+- stop: 658.23
+
+QQQ | cena 603.9 | trend up
+- koupit pod: 599.07
+- breakout nad: 608.73
+- trim nad: 622.02
+- stop: 590.61
+
+DIA | cena 474.23 | trend up
+- koupit pod: 470.44
+- breakout nad: 478.02
+- trim nad: 488.46
+- stop: 463.8
+
+IWM | cena 250.52 | trend up
+- koupit pod: 248.52
+- breakout nad: 252.52
+- trim nad: 258.04
+- stop: 245.01
+
+BTC-USD | cena 73692.55 | trend up
+- koupit pod: 73103.01
+- breakout nad: 74282.09
+- trim nad: 75903.33
+- stop: 72071.31
+
+GLD | cena 461.18 | trend down
+- koupit pod: 454.26
+- breakout nad: 466.71
+- trim nad: 470.4
+- stop: 447.34
+
+TLT | cena 87.41 | trend up
+- koupit pod: 86.71
+- breakout nad: 88.11
+- trim nad: 90.03
+- stop: 85.49
+
+NVDA | cena 183.96 | trend up
+- koupit pod: 182.49
+- breakout nad: 185.43
+- trim nad: 189.48
+- stop: 179.91
+
+MSFT | cena nan | trend flat
+- koupit pod: nan
+- breakout nad: nan
+- trim nad: nan
+- stop: nan
+
+AAPL | cena 252.91 | trend down
+- koupit pod: 249.12
+- breakout nad: 255.94
+- trim nad: 257.97
+- stop: 245.32
+
+RUČNÍ XTB TICKET
+Symbol: DIA
+Směr: long
+Režim trhu: risk-on
+Zdroj dat: yfinance
+Vstupní reference: 474.23
+Stop loss: 469.49
+Take profit: 483.71
+Odhad volatility: 1.0%
+Sentiment zpráv: neutrální
+Kontrolní seznam:
+- Potvrdit strukturu na 15m a 1h grafu
+- Potvrdit spread před vstupem
+- Max. riziko účtu 1 %
+- Vstoupit jen po potvrzení v grafu
