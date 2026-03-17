@@ -7,9 +7,51 @@ def _safe_dict(value):
     return value if isinstance(value, dict) else {}
 
 
+def _parse_key_values(path: str) -> dict:
+    file_path = Path(path)
+    if not file_path.exists():
+        return {}
+    data: dict[str, str] = {}
+    for raw in file_path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        data[key.strip()] = value.strip()
+    return data
+
+
+def _build_from_generated_files() -> dict:
+    ticket_map = _parse_key_values("xtb_manual_ticket.txt")
+    supervisor_map = _parse_key_values("daily_briefing.txt")
+
+    regime = ticket_map.get("Režim trhu") or supervisor_map.get("Režim trhu") or "mixed"
+    decision = supervisor_map.get("Rozhodnutí") or "watch"
+
+    ticket = {
+        "symbol": ticket_map.get("Symbol", "-"),
+        "direction": ticket_map.get("Směr", "-"),
+        "entry": ticket_map.get("Vstupní reference", "-"),
+        "stop_loss": ticket_map.get("Stop loss", "-"),
+        "take_profit": ticket_map.get("Take profit", "-"),
+        "news_sentiment": ticket_map.get("Sentiment zpráv", ticket_map.get("Sentiment", "-")),
+        "checklist": [
+            "Potvrdit graf v XTB",
+            "Potvrdit spread a volatilitu",
+            "Vstoupit jen po potvrzení",
+        ],
+    }
+
+    return {
+        "regime": regime,
+        "decision": decision,
+        "ticket": ticket,
+    }
+
+
 def run_telegram_preview(payload=None) -> str:
     if not isinstance(payload, dict):
-        payload = {}
+        payload = _build_from_generated_files()
 
     supervisor = _safe_dict(payload.get("supervisor"))
     ticket = _safe_dict(payload.get("ticket"))

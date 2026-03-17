@@ -36,9 +36,9 @@ jobs:
           TIMEZONE: Europe/Prague
           RUN_MODE: learn
 
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          CHATID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          FMPAPIKEY: ${{ secrets.FMP_API_KEY }}
+          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
+          CHATID: ${{ secrets.CHATID }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
 
           BACKFILL_START: "2025-01-01"
           BACKFILL_END: ""   # empty => today

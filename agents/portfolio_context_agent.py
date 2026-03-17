@@ -52,3 +52,23 @@ def run_portfolio_context() -> str:
     output = "\n".join(lines)
     OUTPUT_PATH.write_text(output, encoding="utf-8")
     return output
+
+
+def load_portfolio_symbols(limit: int | None = 15) -> list[str]:
+    data = _load_portfolio()
+    if not data:
+        return []
+
+    seen = set()
+    symbols: list[str] = []
+    accounts = data.get("accounts", {})
+    for account in accounts.values():
+        for row in account.get("positions", []):
+            symbol = str(row.get("symbol", "")).strip()
+            if not symbol or symbol in seen:
+                continue
+            seen.add(symbol)
+            symbols.append(symbol)
+            if limit and len(symbols) >= limit:
+                return symbols
+    return symbols
