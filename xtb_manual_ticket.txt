@@ -1,13 +1,13 @@
 RUČNÍ XTB TICKET
-Symbol: DIA
+Symbol: BTC-USD
 Směr: long
-Režim trhu: risk-on
-Zdroj dat: yfinance
-Vstupní reference: 474.2
-Stop loss: 469.46
-Take profit: 483.68
-Odhad volatility: 1.0%
-Sentiment zpráv: neutrální
+Režim trhu: smíšený
+Zdroj dat: fallback
+Vstupní reference: 129.66
+Stop loss: 128.26
+Take profit: 132.25
+Odhad volatility: 1.08%
+Sentiment zpráv: negativní
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem
