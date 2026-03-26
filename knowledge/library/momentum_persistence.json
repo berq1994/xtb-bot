@@ -1,0 +1,28 @@
+{
+  "id": "momentum_persistence",
+  "title": "Momentum persistence after multi-day strength",
+  "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+  "keywords": [
+    "momentum",
+    "trend",
+    "breakout",
+    "follow-through",
+    "leadership"
+  ],
+  "regimes": [
+    "risk_on",
+    "mixed"
+  ],
+  "themes": [
+    "ai",
+    "semis",
+    "software",
+    "growth"
+  ],
+  "catalysts": [
+    "analyst",
+    "deal",
+    "product"
+  ],
+  "base_score": 0.34
+}

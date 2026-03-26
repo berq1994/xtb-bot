@@ -15,6 +15,9 @@ DEFAULT_WEIGHTS = {
     "sentiment": 1.0,
     "regime_alignment": 1.0,
     "risk_penalty": 1.0,
+    "evidence_quality": 1.0,
+    "playbook_alignment": 1.0,
+    "study_alignment": 1.0,
 }
 
 
@@ -39,7 +42,6 @@ def _load_rows(path: Path) -> list[dict]:
 def load_signal_weights() -> dict:
     if not WEIGHTS_PATH.exists():
         return DEFAULT_WEIGHTS.copy()
-
     try:
         data = json.loads(WEIGHTS_PATH.read_text(encoding="utf-8"))
         if isinstance(data, dict):
@@ -48,7 +50,6 @@ def load_signal_weights() -> dict:
             return merged
     except Exception:
         pass
-
     return DEFAULT_WEIGHTS.copy()
 
 
@@ -73,14 +74,7 @@ def _feedback_bias() -> dict[str, float]:
     if not useful_vals:
         return {}
     avg_usefulness = mean(useful_vals)
-    bias: dict[str, float] = {"overall_feedback_avg": round(avg_usefulness, 2)}
-    pos = [float(r.get("usefulness", 0.0)) for r in rows if str(r.get("sentiment_label", "")) == "positive"]
-    neg = [float(r.get("usefulness", 0.0)) for r in rows if str(r.get("sentiment_label", "")) == "negative"]
-    if pos:
-        bias["feedback_positive_avg"] = round(mean(pos), 2)
-    if neg:
-        bias["feedback_negative_avg"] = round(mean(neg), 2)
-    return bias
+    return {"overall_feedback_avg": round(avg_usefulness, 2)}
 
 
 def build_learning_summary(limit: int = 50) -> dict:
@@ -106,8 +100,13 @@ def build_learning_summary(limit: int = 50) -> dict:
     trend_down: list[float] = []
     overlap_high: list[float] = []
     overlap_low: list[float] = []
-    data_source_perf: dict[str, list[float]] = {}
-    news_provider_perf: dict[str, list[float]] = {}
+    evidence_high: list[float] = []
+    evidence_low: list[float] = []
+    study_high: list[float] = []
+    study_low: list[float] = []
+    playbook_yes: list[float] = []
+    playbook_no: list[float] = []
+    evidence_grade_perf: dict[str, list[float]] = {}
 
     for row in resolved:
         signal = row["signal"]
@@ -134,10 +133,23 @@ def build_learning_summary(limit: int = 50) -> dict:
             overlap_high.append(outcome_pct)
         else:
             overlap_low.append(outcome_pct)
-        data_source = str(features.get("data_source") or signal.get("source") or "unknown")
-        data_source_perf.setdefault(data_source, []).append(outcome_pct)
-        for provider in features.get("news_providers", []) or []:
-            news_provider_perf.setdefault(str(provider), []).append(outcome_pct)
+        evidence_score = float(features.get("evidence_score", 0.0) or 0.0)
+        if evidence_score >= 0.68:
+            evidence_high.append(outcome_pct)
+        else:
+            evidence_low.append(outcome_pct)
+        study_score = float(features.get("study_alignment_score", 0.0) or 0.0)
+        if study_score >= 0.65:
+            study_high.append(outcome_pct)
+        else:
+            study_low.append(outcome_pct)
+        playbooks = features.get("playbooks", []) or []
+        if playbooks:
+            playbook_yes.append(outcome_pct)
+        else:
+            playbook_no.append(outcome_pct)
+        grade = str(features.get("evidence_grade", "?"))
+        evidence_grade_perf.setdefault(grade, []).append(outcome_pct)
 
     avg_outcome = round(mean(outcome_vals), 2) if outcome_vals else 0.0
     win_rate = 0.0
@@ -148,11 +160,11 @@ def build_learning_summary(limit: int = 50) -> dict:
     suggestion = "Málo dat pro adaptaci vah."
     if resolved:
         if avg_outcome >= 1.25 and win_rate >= 55:
-            suggestion = "Research stack funguje slušně. Drž filtraci a jen jemně dolaďuj váhy."
+            suggestion = "Research stack funguje slušně. Drž filtraci a jemně dolaďuj váhy evidence a playbooků."
         elif avg_outcome >= 0.0:
-            suggestion = "Bot je použitelný, ale potřebuje lépe trestat přeplněná témata a slabé zprávy."
+            suggestion = "Bot je použitelný, ale potřebuje lépe trestat přeplněná témata a slabé důkazy."
         else:
-            suggestion = "Historické výsledky jsou slabé. Zpřísnit výběr, sentiment a risk overlay."
+            suggestion = "Historické výsledky jsou slabé. Zpřísnit výběr, důkazní vrstvu a obranný filtr."
 
     diagnostics = {
         "positive_sentiment_avg": round(mean(positive_sentiment), 2) if positive_sentiment else None,
@@ -161,23 +173,15 @@ def build_learning_summary(limit: int = 50) -> dict:
         "trend_down_avg": round(mean(trend_down), 2) if trend_down else None,
         "overlap_high_avg": round(mean(overlap_high), 2) if overlap_high else None,
         "overlap_low_avg": round(mean(overlap_low), 2) if overlap_low else None,
-        "best_data_source": None,
-        "worst_data_source": None,
-        "best_news_provider": None,
+        "evidence_high_avg": round(mean(evidence_high), 2) if evidence_high else None,
+        "evidence_low_avg": round(mean(evidence_low), 2) if evidence_low else None,
+        "study_high_avg": round(mean(study_high), 2) if study_high else None,
+        "study_low_avg": round(mean(study_low), 2) if study_low else None,
+        "playbook_yes_avg": round(mean(playbook_yes), 2) if playbook_yes else None,
+        "playbook_no_avg": round(mean(playbook_no), 2) if playbook_no else None,
+        "evidence_grade_avg": {k: round(mean(v), 2) for k, v in evidence_grade_perf.items() if v},
         "feedback": _feedback_bias(),
     }
-
-    if data_source_perf:
-        src_avg = {k: round(mean(v), 2) for k, v in data_source_perf.items() if v}
-        if src_avg:
-            diagnostics["best_data_source"] = max(src_avg, key=src_avg.get)
-            diagnostics["worst_data_source"] = min(src_avg, key=src_avg.get)
-            diagnostics["data_source_avg"] = src_avg
-    if news_provider_perf:
-        provider_avg = {k: round(mean(v), 2) for k, v in news_provider_perf.items() if v}
-        if provider_avg:
-            diagnostics["best_news_provider"] = max(provider_avg, key=provider_avg.get)
-            diagnostics["news_provider_avg"] = provider_avg
 
     return {
         "count": len(resolved),
@@ -218,6 +222,30 @@ def adapt_signal_weights(limit: int = 50) -> dict:
     if overlap_high is not None and overlap_low is not None and overlap_high < overlap_low:
         weights["risk_penalty"] = min(1.8, round(weights["risk_penalty"] + 0.08, 2))
 
+    evidence_high = diagnostics.get("evidence_high_avg")
+    evidence_low = diagnostics.get("evidence_low_avg")
+    if evidence_high is not None and evidence_low is not None:
+        if evidence_high >= evidence_low:
+            weights["evidence_quality"] = min(1.8, round(weights["evidence_quality"] + 0.06, 2))
+        else:
+            weights["evidence_quality"] = max(0.7, round(weights["evidence_quality"] - 0.05, 2))
+
+    study_high = diagnostics.get("study_high_avg")
+    study_low = diagnostics.get("study_low_avg")
+    if study_high is not None and study_low is not None:
+        if study_high >= study_low:
+            weights["study_alignment"] = min(1.8, round(weights["study_alignment"] + 0.04, 2))
+        else:
+            weights["study_alignment"] = max(0.7, round(weights["study_alignment"] - 0.04, 2))
+
+    playbook_yes = diagnostics.get("playbook_yes_avg")
+    playbook_no = diagnostics.get("playbook_no_avg")
+    if playbook_yes is not None and playbook_no is not None:
+        if playbook_yes >= playbook_no:
+            weights["playbook_alignment"] = min(1.8, round(weights["playbook_alignment"] + 0.05, 2))
+        else:
+            weights["playbook_alignment"] = max(0.7, round(weights["playbook_alignment"] - 0.05, 2))
+
     if summary["avg_outcome"] < 0:
         weights["regime_alignment"] = min(1.8, round(weights["regime_alignment"] + 0.05, 2))
     elif summary["avg_outcome"] > 1.0:
@@ -238,9 +266,8 @@ def adapt_signal_weights(limit: int = 50) -> dict:
 
 def run_learning_review(limit: int = 50) -> str:
     summary = build_learning_summary(limit=limit)
-
     lines = []
-    lines.append("PŘEHLED UČENÍ – FÁZE 5")
+    lines.append("PŘEHLED UČENÍ – AUTO VRSTVA")
     lines.append(f"Vyhodnocené vzorky: {summary['count']}")
     lines.append(f"Průměrný outcome: {summary['avg_outcome']}%")
     lines.append(f"Win rate: {summary['win_rate']}%")
@@ -265,9 +292,8 @@ def run_learning_review(limit: int = 50) -> str:
 def run_rebalance_weights(limit: int = 50) -> str:
     before = load_signal_weights()
     after = adapt_signal_weights(limit=limit)
-
     lines = []
-    lines.append("REBALANCE VAH – FÁZE 5")
+    lines.append("REBALANCE VAH – AUTO VRSTVA")
     for key in DEFAULT_WEIGHTS:
         lines.append(f"- {key}: {before.get(key)} -> {after.get(key)}")
     lines.append(f"Soubor vah: {WEIGHTS_PATH}")

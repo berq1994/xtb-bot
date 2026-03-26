@@ -1,0 +1,26 @@
+{
+  "id": "risk_off_quality",
+  "title": "Quality and defense in risk-off regime",
+  "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+  "keywords": [
+    "risk",
+    "defense",
+    "quality",
+    "drawdown",
+    "hedge"
+  ],
+  "regimes": [
+    "risk_off"
+  ],
+  "themes": [
+    "utilities",
+    "gold",
+    "energy",
+    "defense"
+  ],
+  "catalysts": [
+    "macro",
+    "legal"
+  ],
+  "base_score": 0.39
+}

@@ -1,0 +1,6 @@
+{
+  "id": "earnings_follow_through",
+  "title": "Earnings follow-through",
+  "description": "Po earnings a pozitivním sentimentu udržuj vyšší prioritu jen když je trend up a evidence není slabá.",
+  "category": "offense"
+}

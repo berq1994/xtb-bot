@@ -105,8 +105,13 @@ def build_snapshot_payload(
                 "news_count": top.get("news_count"),
                 "catalysts": top.get("catalysts", []),
                 "data_source": source,
-                "news_sources": top.get("news_sources", []),
+                "news_sources": top.get("trusted_sources", []),
                 "news_providers": top.get("news_providers", []),
+                "evidence_score": top.get("evidence_score"),
+                "evidence_grade": top.get("evidence_grade"),
+                "playbooks": top.get("playbooks", []),
+                "study_alignment_score": top.get("study_alignment_score"),
+                "matched_studies": top.get("matched_studies", []),
             },
         }
 
@@ -154,8 +159,13 @@ def build_snapshot_payload(
             "news_count": news_map.get(symbol, {}).get("news_count", 0),
             "catalysts": news_map.get(symbol, {}).get("catalysts", []),
             "data_source": overview.get("source", "unknown"),
-            "news_sources": news_map.get(symbol, {}).get("sources", []),
-            "news_providers": news_map.get(symbol, {}).get("providers", []),
+            "news_sources": [],
+            "news_providers": [],
+            "evidence_score": None,
+            "evidence_grade": None,
+            "playbooks": [],
+            "study_alignment_score": None,
+            "matched_studies": [],
         },
     }
 
@@ -201,7 +211,6 @@ def run_signal_history_review(limit: int = 10) -> str:
                 continue
 
     rows = rows[-limit:]
-
     lines = []
     lines.append("PŘEHLED HISTORIE SIGNÁLŮ")
     lines.append(f"Počet záznamů: {len(rows)}")

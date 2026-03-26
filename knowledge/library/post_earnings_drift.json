@@ -1,0 +1,26 @@
+{
+  "id": "post_earnings_drift",
+  "title": "Post-earnings drift and guidance follow-through",
+  "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+  "keywords": [
+    "earnings",
+    "guidance",
+    "revenue",
+    "eps",
+    "results"
+  ],
+  "regimes": [
+    "risk_on",
+    "mixed"
+  ],
+  "themes": [
+    "software",
+    "cloud",
+    "semis",
+    "internet"
+  ],
+  "catalysts": [
+    "earnings"
+  ],
+  "base_score": 0.42
+}

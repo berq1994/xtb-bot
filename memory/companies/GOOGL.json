@@ -1,0 +1,31 @@
+{
+  "symbol": "GOOGL",
+  "name": "Alphabet",
+  "themes": [
+    "ads",
+    "ai",
+    "internet"
+  ],
+  "sector_hints": [
+    "digitální reklama",
+    "technologie / AI",
+    "internet"
+  ],
+  "business_model": "Dossier pro GOOGL; doplň dlouhodobou investiční tezi a hlavní zdroje hodnoty.",
+  "key_catalysts": [
+    "výsledky",
+    "guidance",
+    "sektorový sentiment"
+  ],
+  "key_risks": [
+    "valuační riziko",
+    "vyšší citlivost na sentiment a sazby"
+  ],
+  "watch_for": [
+    "silný pohyb ceny s více zdroji",
+    "změna guidance nebo regulatoriky"
+  ],
+  "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+  "latest_observations": [],
+  "last_updated": "2026-03-26T14:59:45.362561+00:00"
+}

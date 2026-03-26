@@ -6,6 +6,8 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from agents.autonomous_learning_loop_agent import run_autonomous_learning_loop
+from agents.knowledge_ingestion_agent import run_knowledge_sync
 from agents.learning_agent import load_signal_weights, run_learning_review, run_rebalance_weights
 from agents.live_research_agent import run_live_research
 from agents.outcome_tracking_agent import OUTCOME_PATH, run_outcome_review, run_outcome_update
@@ -122,6 +124,7 @@ def _auto_log_top_research_items(state: dict[str, Any]) -> list[str]:
             'core_cycle': True,
             'category': category,
             'priority_score': item.get('priority_score'),
+            'evidence_grade': item.get('evidence_grade'),
         }
         append_history_entry(payload)
         _remember_signal(symbol, category, state, now_local)
@@ -145,11 +148,13 @@ def run_autonomous_core() -> str:
     now_local = _now_local()
     before_weights = load_signal_weights()
 
+    knowledge_sync = run_knowledge_sync()
     research_report = run_live_research()
     auto_logged = _auto_log_top_research_items(state)
     outcome_update = run_outcome_update()
     outcome_review = run_outcome_review()
     learning_review = run_learning_review()
+    autonomous_learning = run_autonomous_learning_loop()
 
     resolved_count = _resolved_count()
     rebalanced = False
@@ -179,6 +184,9 @@ def run_autonomous_core() -> str:
         lines.append(f'- {key}: {before_weights.get(key)} -> {after_weights.get(key)}')
     lines.extend([
         '',
+        'KNOWLEDGE SYNC',
+        knowledge_sync.strip(),
+        '',
         'STRUČNÝ STAV',
         research_report.strip(),
         '',
@@ -187,6 +195,8 @@ def run_autonomous_core() -> str:
         outcome_review.strip(),
         '',
         learning_review.strip(),
+        '',
+        autonomous_learning.strip(),
         '',
         rebalance_report.strip(),
     ])

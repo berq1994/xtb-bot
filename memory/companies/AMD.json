@@ -1,0 +1,29 @@
+{
+  "symbol": "AMD",
+  "name": "AMD",
+  "themes": [
+    "ai",
+    "semis"
+  ],
+  "sector_hints": [
+    "technologie / AI",
+    "polovodiče"
+  ],
+  "business_model": "Dossier pro AMD; doplň dlouhodobou investiční tezi a hlavní zdroje hodnoty.",
+  "key_catalysts": [
+    "výsledky",
+    "guidance",
+    "sektorový sentiment"
+  ],
+  "key_risks": [
+    "cykličnost poptávky",
+    "capex a supply chain"
+  ],
+  "watch_for": [
+    "silný pohyb ceny s více zdroji",
+    "změna guidance nebo regulatoriky"
+  ],
+  "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+  "latest_observations": [],
+  "last_updated": "2026-03-26T14:59:45.363417+00:00"
+}

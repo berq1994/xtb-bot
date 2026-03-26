@@ -1,0 +1,28 @@
+{
+  "symbol": "S",
+  "name": "SentinelOne",
+  "themes": [
+    "cybersecurity",
+    "software"
+  ],
+  "sector_hints": [
+    "software"
+  ],
+  "business_model": "Dossier pro S; doplň dlouhodobou investiční tezi a hlavní zdroje hodnoty.",
+  "key_catalysts": [
+    "výsledky",
+    "guidance",
+    "sektorový sentiment"
+  ],
+  "key_risks": [
+    "fundamentální změna thesis",
+    "slabá kvalita zpráv"
+  ],
+  "watch_for": [
+    "silný pohyb ceny s více zdroji",
+    "změna guidance nebo regulatoriky"
+  ],
+  "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+  "latest_observations": [],
+  "last_updated": "2026-03-26T14:59:41.610723+00:00"
+}

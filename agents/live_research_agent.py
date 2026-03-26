@@ -6,6 +6,10 @@ from typing import Iterable
 
 from agents.portfolio_context_agent import load_portfolio_symbols
 from integrations.openbb_engine import build_news_sentiment, generate_market_overview
+from knowledge.company_memory import load_company_dossier, sync_company_memory
+from knowledge.evidence_scoring import score_news_items
+from knowledge.playbooks import ensure_seed_playbooks, evaluate_playbooks_for_item
+from knowledge.study_library import ensure_seed_studies, match_studies_for_item
 
 try:
     from agents.corporate_research_agent import run_corporate_research
@@ -37,6 +41,9 @@ except Exception:  # pragma: no cover
             "sentiment": 1.0,
             "regime_alignment": 1.0,
             "risk_penalty": 1.0,
+            "evidence_quality": 1.0,
+            "playbook_alignment": 1.0,
+            "study_alignment": 1.0,
         }
 
 WATCHLIST_PATH = Path("config/watchlists/google_finance_watchlist.json")
@@ -79,7 +86,7 @@ def _load_portfolio_meta() -> dict[str, dict]:
             symbol = str(item.get("symbol", "")).strip().upper()
             if not symbol:
                 continue
-            row = meta.setdefault(symbol, {"themes": set(), "value": 0.0, "avg_price": None, "accounts": []})
+            row = meta.setdefault(symbol, {"themes": set(), "value": 0.0, "avg_price": None, "accounts": [], "name": None})
             row["value"] += float(item.get("value") or 0.0)
             avg_price = item.get("avg_price")
             if avg_price is not None and row.get("avg_price") is None:
@@ -91,6 +98,8 @@ def _load_portfolio_meta() -> dict[str, dict]:
             if isinstance(themes, list):
                 row["themes"].update(str(t).strip() for t in themes if str(t).strip())
             row["accounts"].append(account_name)
+            if item.get("name") and row.get("name") is None:
+                row["name"] = str(item.get("name")).strip()
 
     normalized: dict[str, dict] = {}
     for symbol, row in meta.items():
@@ -99,6 +108,7 @@ def _load_portfolio_meta() -> dict[str, dict]:
             "value": round(float(row["value"]), 2),
             "avg_price": row.get("avg_price"),
             "accounts": row.get("accounts", []),
+            "name": row.get("name") or symbol,
         }
     return normalized
 
@@ -212,6 +222,10 @@ def _external_modules() -> list[dict]:
 
 
 def run_live_research(watchlist: Iterable[str] | None = None) -> str:
+    ensure_seed_studies()
+    ensure_seed_playbooks()
+    sync_company_memory()
+
     resolved_watchlist = _resolve_watchlist(watchlist)
     overview = generate_market_overview(resolved_watchlist)
     rows = overview.get("symbols", [])
@@ -251,20 +265,9 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             elif count == 2:
                 overlap_penalty += 0.05
 
-        regime_fit = _regime_alignment(str(overview.get("regime", "mixed")), trend, change_pct)
-        score = 0.0
-        score += _clip(abs(change_pct) / 1.5, 0.0, 2.2) * float(weights.get("momentum", 1.0))
-        score += _clip(momentum_5d / 2.5, -1.2, 1.6) * float(weights.get("trend", 1.0))
-        score += _clip(momentum_20d / 6.0, -1.0, 1.4) * float(weights.get("trend", 1.0))
-        score += _sentiment_weight(sentiment_label) * float(weights.get("sentiment", 1.0))
-        score += _clip(sentiment_score / 6.0, -0.6, 0.8)
-        score += regime_fit * float(weights.get("regime_alignment", 1.0))
-        score -= overlap_penalty * float(weights.get("risk_penalty", 1.0))
-        score += 1.0 if held else 0.2
-        score += 0.2 if atr_proxy_pct <= 2.5 else -0.1
-
         item = {
             "symbol": symbol,
+            "name": meta.get("name") or sentiment.get("company_hint") or symbol,
             "price": round(price, 2),
             "change_pct": round(change_pct, 2),
             "trend": trend,
@@ -280,16 +283,55 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             "sentiment_label": sentiment_label,
             "sentiment_score": sentiment_score,
             "category": "watchlist_monitor",
-            "priority_score": round(score, 2),
+            "priority_score": 0.0,
             "headlines": sentiment.get("headlines", [])[:3],
             "reasons": sentiment.get("reasons", [])[:3],
             "catalysts": sentiment.get("catalysts", []),
             "news_count": int(sentiment.get("news_count", 0) or 0),
             "source_count": int(sentiment.get("source_count", 0) or 0),
-            "regime_alignment": round(regime_fit, 2),
+            "regime_alignment": 0.0,
             "theme_overlap_penalty": round(overlap_penalty, 2),
+            "news_items": sentiment.get("items", []),
         }
         item["category"] = _category_for(item)
+        evidence = score_news_items(item.get("news_items", []))
+        dossier = load_company_dossier(symbol, fallback_name=item.get("name"), themes=item.get("themes", []))
+        item["company_memory"] = {
+            "name": dossier.get("name"),
+            "sector_hints": dossier.get("sector_hints", []),
+            "key_catalysts": dossier.get("key_catalysts", [])[:3],
+            "key_risks": dossier.get("key_risks", [])[:3],
+            "thesis": dossier.get("thesis"),
+        }
+        item["evidence_score"] = evidence.get("score", 0.0)
+        item["evidence_grade"] = evidence.get("grade", "D")
+        item["trusted_sources"] = evidence.get("trusted_sources", [])
+        item["news_providers"] = evidence.get("providers", [])
+        item["evidence_reasons"] = evidence.get("reasons", [])
+        regime_fit = _regime_alignment(str(overview.get("regime", "mixed")), trend, change_pct)
+        item["regime_alignment"] = round(regime_fit, 2)
+        studies = match_studies_for_item(item, str(overview.get("regime", "mixed")))
+        item["study_alignment_score"] = studies.get("alignment_score", 0.0)
+        item["matched_studies"] = studies.get("matched", [])
+        item["study_notes"] = studies.get("notes", [])
+        playbooks = evaluate_playbooks_for_item(item, str(overview.get("regime", "mixed")))
+        item["playbook_score"] = playbooks.get("match_score", 0.0)
+        item["playbooks"] = playbooks.get("matches", [])
+
+        score = 0.0
+        score += _clip(abs(change_pct) / 1.5, 0.0, 2.2) * float(weights.get("momentum", 1.0))
+        score += _clip(momentum_5d / 2.5, -1.2, 1.6) * float(weights.get("trend", 1.0))
+        score += _clip(momentum_20d / 6.0, -1.0, 1.4) * float(weights.get("trend", 1.0))
+        score += _sentiment_weight(sentiment_label) * float(weights.get("sentiment", 1.0))
+        score += _clip(sentiment_score / 6.0, -0.6, 0.8)
+        score += regime_fit * float(weights.get("regime_alignment", 1.0))
+        score -= overlap_penalty * float(weights.get("risk_penalty", 1.0))
+        score += item["evidence_score"] * float(weights.get("evidence_quality", 1.0))
+        score += item["playbook_score"] * float(weights.get("playbook_alignment", 1.0))
+        score += item["study_alignment_score"] * float(weights.get("study_alignment", 1.0))
+        score += 1.0 if held else 0.2
+        score += 0.2 if atr_proxy_pct <= 2.5 else -0.1
+        item["priority_score"] = round(score, 2)
         ranked.append(item)
 
     ranked.sort(key=lambda x: x["priority_score"], reverse=True)
@@ -320,13 +362,21 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     for item in top_items:
         holding = "ano" if item["held"] else "ne"
         pnl = f" | P/L vs nákup {item['pnl_vs_cost_pct']}%" if item.get("pnl_vs_cost_pct") is not None else ""
+        playbook_titles = ", ".join(str(p.get("title")) for p in item.get("playbooks", [])[:2])
+        study_titles = ", ".join(str(s.get("title")) for s in item.get("matched_studies", [])[:2])
         lines.append(
-            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | držená pozice {holding} | kategorie {item['category']}{pnl}"
+            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | držená pozice {holding} | kategorie {item['category']}{pnl}"
         )
-        for headline in item.get("headlines", [])[:2]:
-            lines.append(f"  • {headline}")
-        for reason in item.get("reasons", [])[:2]:
-            lines.append(f"  · {reason}")
+        if playbook_titles:
+            lines.append(f"  · playbook: {playbook_titles}")
+        if study_titles:
+            lines.append(f"  · studie: {study_titles}")
+        if item.get("trusted_sources"):
+            lines.append(f"  · zdroje: {', '.join(item['trusted_sources'][:3])}")
+        for reason in item.get("reasons", [])[:1]:
+            lines.append(f"  · news logika: {reason}")
+        for reason in item.get("evidence_reasons", [])[:1]:
+            lines.append(f"  · evidence: {reason}")
     lines.append("")
     lines.append("Doplňkové výzkumné vrstvy:")
     if external_items:

@@ -1,0 +1,11 @@
+{
+  "count": 6,
+  "study_ids": [
+    "event_driven_geopolitics",
+    "mean_reversion_drawdown",
+    "momentum_persistence",
+    "post_earnings_drift",
+    "risk_off_quality",
+    "volatility_risk_filter"
+  ]
+}

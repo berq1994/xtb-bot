@@ -1,0 +1,29 @@
+{
+  "id": "event_driven_geopolitics",
+  "title": "Geopolitical event transmission",
+  "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+  "keywords": [
+    "geopolitics",
+    "oil",
+    "tariff",
+    "sanction",
+    "defense",
+    "rates"
+  ],
+  "regimes": [
+    "risk_off",
+    "mixed"
+  ],
+  "themes": [
+    "energy",
+    "defense",
+    "commodities",
+    "utilities"
+  ],
+  "catalysts": [
+    "macro",
+    "deal",
+    "legal"
+  ],
+  "base_score": 0.31
+}

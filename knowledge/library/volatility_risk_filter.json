@@ -1,0 +1,29 @@
+{
+  "id": "volatility_risk_filter",
+  "title": "Volatility filter and evidence discipline",
+  "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+  "keywords": [
+    "volatility",
+    "atr",
+    "evidence",
+    "source",
+    "noise"
+  ],
+  "regimes": [
+    "risk_on",
+    "risk_off",
+    "mixed"
+  ],
+  "themes": [
+    "crypto",
+    "growth",
+    "smallcap",
+    "ai"
+  ],
+  "catalysts": [
+    "macro",
+    "product",
+    "analyst"
+  ],
+  "base_score": 0.28
+}

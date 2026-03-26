@@ -1,0 +1,30 @@
+{
+  "symbol": "NBIS",
+  "name": "Nebius Group",
+  "themes": [
+    "ai",
+    "cloud",
+    "infra"
+  ],
+  "sector_hints": [
+    "technologie / AI",
+    "cloud"
+  ],
+  "business_model": "Dossier pro NBIS; doplň dlouhodobou investiční tezi a hlavní zdroje hodnoty.",
+  "key_catalysts": [
+    "výsledky",
+    "guidance",
+    "sektorový sentiment"
+  ],
+  "key_risks": [
+    "valuační riziko",
+    "vyšší citlivost na sentiment a sazby"
+  ],
+  "watch_for": [
+    "silný pohyb ceny s více zdroji",
+    "změna guidance nebo regulatoriky"
+  ],
+  "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+  "latest_observations": [],
+  "last_updated": "2026-03-26T14:59:41.611137+00:00"
+}

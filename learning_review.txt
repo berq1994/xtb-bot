@@ -1,4 +1,4 @@
-PŘEHLED UČENÍ – FÁZE 5
+PŘEHLED UČENÍ – AUTO VRSTVA
 Vyhodnocené vzorky: 0
 Průměrný outcome: 0.0%
 Win rate: 0.0%
@@ -11,9 +11,13 @@ Diagnostika:
 - trend_down_avg: None
 - overlap_high_avg: None
 - overlap_low_avg: None
-- best_data_source: None
-- worst_data_source: None
-- best_news_provider: None
+- evidence_high_avg: None
+- evidence_low_avg: None
+- study_high_avg: None
+- study_low_avg: None
+- playbook_yes_avg: None
+- playbook_no_avg: None
+- evidence_grade_avg: {}
 - feedback: {}
 Váhy:
 - trend: 1.0
@@ -21,4 +25,7 @@ Váhy:
 - sentiment: 1.0
 - regime_alignment: 1.0
 - risk_penalty: 1.0
+- evidence_quality: 1.0
+- playbook_alignment: 1.0
+- study_alignment: 1.0
 Doporučení: Málo dat pro adaptaci vah.

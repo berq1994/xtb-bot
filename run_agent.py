@@ -201,6 +201,16 @@ def main():
         return
 
 
+    if mode == "knowledge_sync":
+        from agents.knowledge_ingestion_agent import run_knowledge_sync
+        print(run_knowledge_sync())
+        return
+
+    if mode == "autonomous_learning_loop":
+        from agents.autonomous_learning_loop_agent import run_autonomous_learning_loop
+        print(run_autonomous_learning_loop())
+        return
+
     if mode == "autonomous_core":
         from agents.autonomous_core_agent import run_autonomous_core
         print(run_autonomous_core())
@@ -234,7 +244,7 @@ def main():
         "daily_briefing | telegram_preview | telegram_live | portfolio_context | intraday_levels | "
         "research_live | thesis_update | research_memory_update | research_review | "
         "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
-        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | autonomous_core | "
+        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | knowledge_sync | autonomous_learning_loop | autonomous_core | "
         "multi_agent_daily | multi_agent_weekly | multi_agent_audit"
     )
 

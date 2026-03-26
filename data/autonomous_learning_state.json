@@ -1,0 +1,23 @@
+{
+  "weights_snapshot": {
+    "trend": 1.0,
+    "momentum": 1.0,
+    "sentiment": 1.0,
+    "regime_alignment": 1.0,
+    "risk_penalty": 1.0,
+    "evidence_quality": 1.0,
+    "playbook_alignment": 1.0,
+    "study_alignment": 1.0
+  },
+  "sample_count": 0,
+  "category_avg": {},
+  "evidence_grade_avg": {},
+  "playbook_avg": {},
+  "study_alignment_avg": {},
+  "thresholds": {
+    "raise_priority_evidence_grade": null,
+    "avoid_evidence_grade": null,
+    "preferred_categories": [],
+    "weak_playbooks": []
+  }
+}

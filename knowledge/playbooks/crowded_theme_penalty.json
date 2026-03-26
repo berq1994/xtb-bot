@@ -1,0 +1,6 @@
+{
+  "id": "crowded_theme_penalty",
+  "title": "Crowded theme penalty",
+  "description": "Když je téma přeplněné v portfoliu, snižuj prioritu a čekej na silnější důkazy.",
+  "category": "risk"
+}

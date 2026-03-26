@@ -1,0 +1,26 @@
+{
+  "id": "mean_reversion_drawdown",
+  "title": "Controlled mean reversion after oversold drawdown",
+  "summary": "Prudké propady bez tvrdého fundamentálního zlomu mohou nabídnout mean reversion, ale jen při slušné kvalitě zdrojů a známkách stabilizace.",
+  "keywords": [
+    "drawdown",
+    "oversold",
+    "stabilization",
+    "rebound"
+  ],
+  "regimes": [
+    "mixed",
+    "risk_on"
+  ],
+  "themes": [
+    "internet",
+    "software",
+    "growth",
+    "crypto"
+  ],
+  "catalysts": [
+    "analyst",
+    "earnings"
+  ],
+  "base_score": 0.22
+}
