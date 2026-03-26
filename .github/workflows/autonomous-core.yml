@@ -27,6 +27,8 @@ jobs:
       AUTO_SIGNAL_COOLDOWN_MIN: "180"
       AUTO_SIGNAL_TOP_N: "2"
       NEWS_MAX_LIVE_FETCH_PER_RUN: "8"
+      ACTION_QUEUE_MIN_SCORE: "3.2"
+      ACTION_QUEUE_LIMIT: "5"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

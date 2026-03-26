@@ -11,6 +11,7 @@ from agents.portfolio_context_agent import load_portfolio_symbols
 from cz_utils import news_title_cs, sentiment_cs, source_cs, status_cs, trend_cs
 from integrations.openbb_engine import build_news_sentiment, generate_market_overview
 from production.telegram_http import send_telegram_http
+from agents.signal_quality_agent import action_hint
 
 try:
     from zoneinfo import ZoneInfo
@@ -20,9 +21,11 @@ except Exception:  # pragma: no cover
 TIMEZONE = os.getenv("TIMEZONE", "Europe/Prague")
 STATE_PATH = Path(".state/delivery/portfolio_telegram_alert_state.json")
 OUTPUT_PATH = Path("telegram_portfolio_alerts.txt")
+RESEARCH_STATE_PATH = Path("data/research_live_state.json")
 ALERT_MOVE_MIN = float(os.getenv("PORTFOLIO_ALERT_MIN_MOVE", "2.4"))
 ALERT_COOLDOWN_MIN = int(os.getenv("PORTFOLIO_ALERT_COOLDOWN_MIN", "180"))
 ALERT_MAX_ITEMS = int(os.getenv("PORTFOLIO_ALERT_MAX_ITEMS", "5"))
+ALERT_MIN_ACTIONABILITY = float(os.getenv("PORTFOLIO_ALERT_MIN_ACTIONABILITY", "4.0"))
 ALERT_WINDOW_START_HOUR = int(os.getenv("ALERT_WINDOW_START_HOUR", "8"))
 ALERT_WINDOW_END_HOUR = int(os.getenv("ALERT_WINDOW_END_HOUR", "21"))
 
@@ -49,6 +52,16 @@ def _load_state() -> dict[str, Any]:
 def _save_state(payload: dict[str, Any]) -> None:
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATE_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _load_research_state() -> dict[str, Any]:
+    if not RESEARCH_STATE_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(RESEARCH_STATE_PATH.read_text(encoding='utf-8'))
+        return payload if isinstance(payload, dict) else {}
+    except Exception:
+        return {}
 
 
 def _parse_dt(value: str | None) -> datetime | None:
@@ -103,45 +116,61 @@ def _build_candidates() -> list[dict[str, Any]]:
     if not symbols:
         return []
     overview = generate_market_overview(symbols)
-    rows = list(overview.get("symbols", []))
+    rows = list(overview.get('symbols', []))
     news_map = build_news_sentiment(symbols[:10]) if symbols else {}
-    source_label = source_cs(str(overview.get("source", rows[0].get("source", "unknown") if rows else "unknown")))
+    source_label = source_cs(str(overview.get('source', rows[0].get('source', 'unknown') if rows else 'unknown')))
+
+    research_state = _load_research_state()
+    queue = research_state.get('action_queue', []) if isinstance(research_state, dict) else []
+    queue_map = {str(item.get('symbol', '')).upper().strip(): item for item in queue if str(item.get('symbol', '')).strip()}
 
     candidates: list[dict[str, Any]] = []
     for row in rows:
-        symbol = str(row.get("symbol", "")).upper().strip()
+        symbol = str(row.get('symbol', '')).upper().strip()
         if not symbol:
             continue
-        change_pct = round(float(row.get("change_pct", 0.0)), 2)
-        if abs(change_pct) < ALERT_MOVE_MIN:
-            continue
+        change_pct = round(float(row.get('change_pct', 0.0)), 2)
         sentiment_payload = news_map.get(symbol, {})
-        sentiment = str(sentiment_payload.get("sentiment_label", "neutral"))
-        momentum_5d = round(float(row.get("momentum_5d", 0.0)), 2)
+        sentiment = str(sentiment_payload.get('sentiment_label', 'neutral'))
+        momentum_5d = round(float(row.get('momentum_5d', 0.0)), 2)
         category = _category(change_pct, sentiment, momentum_5d)
-        if not category:
+        quality = queue_map.get(symbol, {}) if isinstance(queue_map.get(symbol, {}), dict) else {}
+        actionability_score = float(quality.get('actionability_score', 0.0) or 0.0)
+        action_bucket = str(quality.get('action_bucket', 'low') or 'low')
+
+        if abs(change_pct) < ALERT_MOVE_MIN and actionability_score < ALERT_MIN_ACTIONABILITY:
             continue
-        headline = ""
-        headlines = sentiment_payload.get("headlines") or []
+        if not category and actionability_score < ALERT_MIN_ACTIONABILITY:
+            continue
+        if not category and actionability_score >= ALERT_MIN_ACTIONABILITY:
+            category = str(quality.get('category', 'watchlist_monitor') or 'watchlist_monitor')
+
+        headline = ''
+        headlines = sentiment_payload.get('headlines') or []
         if headlines:
             headline = str(headlines[0]).strip()
+        elif quality.get('headlines'):
+            headline = str((quality.get('headlines') or [''])[0]).strip()
         candidates.append(
             {
-                "symbol": symbol,
-                "price": round(float(row.get("price", 0.0)), 2),
-                "change_pct": change_pct,
-                "trend": str(row.get("trend", "flat")),
-                "momentum_5d": momentum_5d,
-                "sentiment": sentiment,
-                "category": category,
-                "headline": headline,
-                "headline_cs": news_title_cs(headline),
-                "source_label": source_label,
-                "severity": round(abs(change_pct) + (1.0 if sentiment == "negative" else 0.6 if sentiment == "positive" else 0.0), 2),
+                'symbol': symbol,
+                'price': round(float(row.get('price', 0.0)), 2),
+                'change_pct': change_pct,
+                'trend': str(row.get('trend', 'flat')),
+                'momentum_5d': momentum_5d,
+                'sentiment': sentiment,
+                'category': category,
+                'headline': headline,
+                'headline_cs': news_title_cs(headline),
+                'source_label': source_label,
+                'severity': round(abs(change_pct) + max(actionability_score - 3.0, 0.0), 2),
+                'actionability_score': round(actionability_score, 2),
+                'action_bucket': action_bucket,
+                'action_hint': str(quality.get('action_hint') or ''),
             }
         )
 
-    candidates.sort(key=lambda x: (x["severity"], abs(x["change_pct"])), reverse=True)
+    candidates.sort(key=lambda x: (x['severity'], x['actionability_score'], abs(x['change_pct'])), reverse=True)
     return candidates
 
 
@@ -190,9 +219,9 @@ def build_portfolio_alert_message() -> tuple[str, list[dict[str, Any]], dict[str
     for item in selected:
         headline = f" | zpráva: {item['headline_cs']}" if item.get("headline_cs") else ""
         lines.append(
-            f"- {item['symbol']} {item['change_pct']}% | cena {item['price']} | trend {trend_cs(item['trend'])} | sentiment {sentiment_cs(item['sentiment'])} | zdroj cen {item['source_label']}"
+            f"- {item['symbol']} {item['change_pct']}% | cena {item['price']} | trend {trend_cs(item['trend'])} | sentiment {sentiment_cs(item['sentiment'])} | akčnost {item.get('actionability_score', 0.0)} | zdroj cen {item['source_label']}"
         )
-        lines.append(f"  Podnět: {_hint(item['category'])}{headline}")
+        lines.append(f"  Podnět: {item.get('action_hint') or _hint(item['category'])}{headline}")
     lines.append("")
     lines.append("Jen portfolio a jen nová situace — podobné alerty držím v cooldownu.")
     message = "\n".join(lines).strip()

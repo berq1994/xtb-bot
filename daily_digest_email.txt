@@ -1,0 +1,28 @@
+XTB BOT – RANNÍ BRIEFING (26.03.2026)
+=====================================
+Čas: 26.03.2026 22:48 CET
+
+SVĚT
+- Bez nových ověřených světových titulků [fallback]
+
+GEOPOLITIKA
+- Bez nových ověřených geopolitických titulků [fallback]
+
+AKCIE A PORTFOLIO
+- Režim trhu: obranný (risk-off)
+- Zdroj cen: nouzový fallback
+- Průměrná denní změna sledovaných pozic: -0.11%
+- Nejsilnější pozice: EQT 1.3%, FCX 1.3%, FSLR 1.3%
+- Nejslabší pozice: GOOGL -1.3%, S -1.3%, LEU -1.3%
+
+CO HÝBALO PORTFOLIEM
+- Žádná portfolio pozice dnes výrazněji nevybočuje.
+
+AKČNÍ FRONTA
+- FCX | akčnost 4.03 | kategorie winner_management | podnět: hlídat výběr části zisku nebo přitažení stopu, ne vstup za každou cenu
+- EQT | akčnost 4.03 | kategorie winner_management | podnět: hlídat výběr části zisku nebo přitažení stopu, ne vstup za každou cenu
+- NVO | akčnost 3.48 | kategorie winner_management | podnět: hlídat výběr části zisku nebo přitažení stopu, ne vstup za každou cenu
+
+POZNÁMKA
+- Titulky zpráv převádím do krátkého českého shrnutí, aby byl briefing čitelnější.
+- Ranní e-mail je čistý briefing: svět, geopolitika a stav tvých akcií před hlavní částí dne.

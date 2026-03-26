@@ -25,6 +25,7 @@ TIMEZONE = os.getenv("TIMEZONE", "Europe/Prague")
 OUTPUT_PATH = Path("daily_digest_email.txt")
 STATE_PATH = Path(".state/delivery/email_digest_state.json")
 REQUEST_TIMEOUT = 5
+RESEARCH_STATE_PATH = Path("data/research_live_state.json")
 
 
 def _now_local() -> datetime:
@@ -49,6 +50,16 @@ def _load_state() -> dict[str, Any]:
 def _save_state(payload: dict[str, Any]) -> None:
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATE_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _load_research_state() -> dict[str, Any]:
+    if not RESEARCH_STATE_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(RESEARCH_STATE_PATH.read_text(encoding='utf-8'))
+        return payload if isinstance(payload, dict) else {}
+    except Exception:
+        return {}
 
 
 def _normalize_text(value: str) -> str:
@@ -169,6 +180,8 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
     portfolio_summary = _portfolio_summary(portfolio_rows)
     symbols = [str(row.get("symbol", "")).upper().strip() for row in portfolio_rows if str(row.get("symbol", "")).strip()]
     news_map = build_news_sentiment(symbols[:8]) if symbols else {}
+    research_state = _load_research_state()
+    action_queue = research_state.get('action_queue', []) if isinstance(research_state, dict) else []
 
     watch_rows: list[dict[str, Any]] = []
     for row in sorted(portfolio_rows, key=lambda x: abs(float(x.get("change_pct", 0.0))), reverse=True):
@@ -238,6 +251,16 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         lines.append("- Žádná portfolio pozice dnes výrazněji nevybočuje.")
     lines.append("")
 
+    lines.append("AKČNÍ FRONTA")
+    if action_queue:
+        for item in action_queue[:3]:
+            lines.append(
+                f"- {item.get('symbol')} | akčnost {item.get('actionability_score')} | kategorie {item.get('category')} | podnět: {item.get('action_hint', '')}"
+            )
+    else:
+        lines.append("- Bez nové akční fronty nad prahovou hodnotou.")
+    lines.append("")
+
     lines.append("POZNÁMKA")
     lines.append("- Titulky zpráv převádím do krátkého českého shrnutí, aby byl briefing čitelnější.")
     if slot == "morning":
@@ -255,6 +278,7 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         "geo_items": geo_items,
         "portfolio_watch": watch_rows,
         "portfolio_summary": portfolio_summary,
+        "action_queue": action_queue[:3],
     }
     return subject, body, payload
 

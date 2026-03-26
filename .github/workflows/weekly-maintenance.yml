@@ -1,0 +1,31 @@
+name: weekly-maintenance
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 5 * * 0"
+
+concurrency:
+  group: weekly-maintenance
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: .state
+          key: xtb-state-weekly-maintenance
+      - name: Run weekly maintenance
+        run: python run_agent.py weekly_maintenance

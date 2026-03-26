@@ -221,6 +221,11 @@ def main():
         print(run_autonomous_core())
         return
 
+    if mode == "weekly_maintenance":
+        from agents.weekly_maintenance_agent import run_weekly_maintenance
+        print(run_weekly_maintenance())
+        return
+
     if mode == "multi_agent_daily":
         from multi_agent.orchestrator_v2 import run_multi_agent_daily
         print(run_multi_agent_daily()["report"])
@@ -250,7 +255,7 @@ def main():
         "research_live | thesis_update | research_memory_update | research_review | "
         "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
         "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | knowledge_sync | autonomous_learning_loop | autonomous_core | "
-        "multi_agent_daily | multi_agent_weekly | multi_agent_audit"
+        "multi_agent_daily | multi_agent_weekly | multi_agent_audit | weekly_maintenance"
     )
 
 

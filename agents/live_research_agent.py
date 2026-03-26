@@ -12,6 +12,7 @@ from knowledge.company_memory import load_company_dossier, sync_company_memory
 from knowledge.evidence_scoring import score_news_items
 from knowledge.playbooks import ensure_seed_playbooks, evaluate_playbooks_for_item
 from knowledge.study_library import ensure_seed_studies, match_studies_for_item
+from agents.signal_quality_agent import build_action_queue, score_actionability
 
 try:
     from agents.corporate_research_agent import run_corporate_research
@@ -344,8 +345,12 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         item["priority_score"] = round(score, 2)
         ranked.append(item)
 
+    for item in ranked:
+        item.update(score_actionability(item, str(overview.get('regime', 'mixed'))))
+
     ranked.sort(key=lambda x: x["priority_score"], reverse=True)
     top_items = ranked[:10]
+    action_queue = build_action_queue(top_items, str(overview.get('regime', 'mixed')), limit=5)
     external_items = _external_modules()
 
     state = {
@@ -354,6 +359,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         "watchlist_size": len(resolved_watchlist),
         "portfolio_symbols": sorted(portfolio_symbols),
         "top_items": top_items,
+        "action_queue": action_queue,
         "all_items": ranked,
         "external_items": external_items,
         "weights_used": weights,
@@ -368,6 +374,19 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     lines.append(f"Zdroj dat: {overview.get('source', 'unknown')}")
     lines.append(f"Velikost watchlistu: {len(resolved_watchlist)}")
     lines.append("")
+    lines.append("Akční fronta:")
+    if action_queue:
+        for item in action_queue:
+            lines.append(
+                f"- {item['symbol']} | akčnost {item['actionability_score']} | bucket {item['action_bucket']} | score {item['priority_score']} | kategorie {item['category']}"
+            )
+            lines.append(f"  · podnět: {item.get('action_hint', '')}")
+            if item.get('headline_cs'):
+                lines.append(f"  · zpráva: {item['headline_cs']}")
+    else:
+        lines.append("- Bez nové akční položky nad prahovou hodnotou.")
+    lines.append("")
+
     lines.append("Hlavní priority:")
     for item in top_items:
         holding = "ano" if item["held"] else "ne"

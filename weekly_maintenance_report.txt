@@ -1,0 +1,8 @@
+WEEKLY MAINTENANCE
+Čas: 26.03.2026 22:48 CET
+
+- Telegram cooldown stav: 0 -> 0
+- Autonomní cooldown stav: 2 -> 2
+- Historie signálů: 22 -> 22 řádků
+- Outcome tracking: 16 -> 16 řádků
+- Reset FMP budget cache: ne / nic k resetu

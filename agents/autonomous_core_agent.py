@@ -102,7 +102,8 @@ def _remember_signal(symbol: str, category: str, state: dict[str, Any], now_loca
 
 def _auto_log_top_research_items(state: dict[str, Any]) -> list[str]:
     research_state = _load_json(Path('data/research_live_state.json'))
-    top_items = research_state.get('top_items', []) if isinstance(research_state, dict) else []
+    queue = research_state.get('action_queue', []) if isinstance(research_state, dict) else []
+    top_items = queue if isinstance(queue, list) and queue else (research_state.get('top_items', []) if isinstance(research_state, dict) else [])
     now_local = _now_local()
     logged: list[str] = []
     for item in top_items[:TOP_N_SIGNALS]:
@@ -125,6 +126,8 @@ def _auto_log_top_research_items(state: dict[str, Any]) -> list[str]:
             'category': category,
             'priority_score': item.get('priority_score'),
             'evidence_grade': item.get('evidence_grade'),
+            'actionability_score': item.get('actionability_score'),
+            'action_bucket': item.get('action_bucket'),
         }
         append_history_entry(payload)
         _remember_signal(symbol, category, state, now_local)
@@ -183,6 +186,19 @@ def run_autonomous_core() -> str:
     ]
     for key in sorted(after_weights):
         lines.append(f'- {key}: {before_weights.get(key)} -> {after_weights.get(key)}')
+    research_state = _load_json(Path('data/research_live_state.json'))
+    action_queue = research_state.get('action_queue', []) if isinstance(research_state, dict) else []
+
+    lines.extend([
+        '',
+        'AKČNÍ FRONTA',
+    ])
+    if action_queue:
+        for item in action_queue[:5]:
+            lines.append(f"- {item.get('symbol')} | akčnost {item.get('actionability_score')} | bucket {item.get('action_bucket')} | kategorie {item.get('category')}")
+    else:
+        lines.append('- Bez nové akční položky pro zápis.')
+
     lines.extend([
         '',
         'KNOWLEDGE SYNC',
