@@ -1,14 +1,18 @@
+import hashlib
 import json
 import os
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional
 
 from symbol_utils import internal_symbol_from_provider, provider_symbol
 
 BASE_URL = "https://financialmodelingprep.com/stable"
+USAGE_PATH = Path(".state/fmp_usage_state.json")
+CACHE_PATH = Path(".state/fmp_response_cache.json")
 
 
 def _get_api_key() -> Optional[str]:
@@ -19,10 +23,113 @@ def _get_api_key() -> Optional[str]:
     )
 
 
-def _http_get_json(path: str, params: Dict[str, Any]) -> Any:
+def _env_flag(name: str, default: bool = False) -> bool:
+    raw = str(os.getenv(name, "1" if default else "0")).strip().lower()
+    return raw in {"1", "true", "yes", "on"}
+
+
+def _low_call_mode() -> bool:
+    return _env_flag("FMP_LOW_CALL_MODE", default=False)
+
+
+def _daily_budget() -> int:
+    try:
+        return max(0, int(os.getenv("FMP_DAILY_BUDGET", "35") or 35))
+    except Exception:
+        return 35
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return payload if isinstance(payload, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _cache_key(path: str, params: Dict[str, Any]) -> str:
+    payload = json.dumps({"path": path, "params": params}, sort_keys=True, ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _cache_get(path: str, params: Dict[str, Any], ttl_hours: float) -> Any:
+    cache = _load_json(CACHE_PATH)
+    row = cache.get(_cache_key(path, params))
+    if not isinstance(row, dict):
+        return None
+    fetched_at = str(row.get("fetched_at") or "")
+    try:
+        fetched = datetime.fromisoformat(fetched_at.replace("Z", "+00:00"))
+    except Exception:
+        return None
+    if fetched.tzinfo is None:
+        fetched = fetched.replace(tzinfo=timezone.utc)
+    age_hours = (datetime.now(timezone.utc) - fetched.astimezone(timezone.utc)).total_seconds() / 3600
+    if age_hours > max(ttl_hours, 0):
+        return None
+    return row.get("payload")
+
+
+def _cache_put(path: str, params: Dict[str, Any], payload: Any) -> None:
+    cache = _load_json(CACHE_PATH)
+    cache[_cache_key(path, params)] = {
+        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "payload": payload,
+    }
+    _save_json(CACHE_PATH, cache)
+
+
+def _usage_today() -> tuple[dict[str, Any], str]:
+    today = date.today().isoformat()
+    state = _load_json(USAGE_PATH)
+    if state.get("date") != today:
+        state = {"date": today, "count": 0, "paths": {}}
+    return state, today
+
+
+def _increment_usage(path: str) -> None:
+    state, _ = _usage_today()
+    state["count"] = int(state.get("count", 0) or 0) + 1
+    paths = state.get("paths")
+    if not isinstance(paths, dict):
+        paths = {}
+    paths[path] = int(paths.get(path, 0) or 0) + 1
+    state["paths"] = paths
+    _save_json(USAGE_PATH, state)
+
+
+def _budget_exhausted() -> bool:
+    if not _low_call_mode():
+        return False
+    state, _ = _usage_today()
+    return int(state.get("count", 0) or 0) >= _daily_budget()
+
+
+def _http_get_json(path: str, params: Dict[str, Any], cache_ttl_hours: float = 0.0, best_effort: bool = True) -> Any:
     api_key = _get_api_key()
     if not api_key:
         return None
+
+    if cache_ttl_hours > 0:
+        cached = _cache_get(path, params, cache_ttl_hours)
+        if cached is not None:
+            return cached
+
+    if _budget_exhausted():
+        return {
+            "_error": True,
+            "http_status": 429,
+            "reason": "local_budget_exhausted",
+            "path": path,
+        }
+
     q = dict(params)
     q["apikey"] = api_key
     url = f"{BASE_URL}{path}?{urllib.parse.urlencode(q)}"
@@ -30,9 +137,10 @@ def _http_get_json(path: str, params: Dict[str, Any]) -> Any:
     try:
         with urllib.request.urlopen(req, timeout=20) as resp:
             raw = resp.read().decode("utf-8")
+            _increment_usage(path)
     except urllib.error.HTTPError as exc:
-        # Safe fallback: never break the whole production run because of FMP.
-        if exc.code in {401, 402, 403, 404, 429}:
+        _increment_usage(path)
+        if best_effort and exc.code in {401, 402, 403, 404, 429}:
             return {
                 "_error": True,
                 "http_status": exc.code,
@@ -47,9 +155,12 @@ def _http_get_json(path: str, params: Dict[str, Any]) -> Any:
     except Exception:
         return None
     try:
-        return json.loads(raw)
+        payload = json.loads(raw)
     except json.JSONDecodeError:
         return None
+    if cache_ttl_hours > 0:
+        _cache_put(path, params, payload)
+    return payload
 
 
 def _parse_dt(value: str) -> Optional[datetime]:
@@ -72,7 +183,6 @@ def _parse_dt(value: str) -> Optional[datetime]:
     return dt.astimezone(timezone.utc)
 
 
-
 def _extract_series_rows(payload: Any) -> list[dict[str, Any]]:
     if isinstance(payload, list):
         return [row for row in payload if isinstance(row, dict)]
@@ -88,8 +198,12 @@ def fetch_quotes(symbols: Iterable[str], allow_eod_fallback: bool = True) -> Dic
     if not cleaned:
         return {}
 
+    # In low-call basic mode do not spend budget on real-time quote endpoints.
+    if _low_call_mode():
+        return fetch_latest_eod_prices(cleaned, days_back=7) if allow_eod_fallback else {}
+
     provider_symbols = [provider_symbol(symbol, "fmp") for symbol in cleaned]
-    payload = _http_get_json("/quote", {"symbol": ",".join(provider_symbols)})
+    payload = _http_get_json("/quote", {"symbol": ",".join(provider_symbols)}, cache_ttl_hours=0.1)
     rows = payload if isinstance(payload, list) else []
 
     out: Dict[str, Dict[str, Any]] = {}
@@ -115,41 +229,15 @@ def fetch_quotes(symbols: Iterable[str], allow_eod_fallback: bool = True) -> Dic
         }
         seen_provider.add(provider_value)
 
-    missing = [provider for provider in provider_symbols if provider not in seen_provider]
-    for provider_value in missing:
-        single = _http_get_json("/quote", {"symbol": provider_value})
-        if not isinstance(single, list):
-            continue
-        for row in single:
-            row_provider = str(row.get("symbol", "")).upper().strip()
-            internal_value = internal_symbol_from_provider(row_provider, "fmp")
-            if not row_provider or not internal_value or internal_value in out:
-                continue
-            price = row.get("price") or row.get("previousClose") or row.get("close")
-            if price is None:
-                continue
-            try:
-                price_val = float(price)
-            except (TypeError, ValueError):
-                continue
-            out[internal_value] = {
-                "symbol": internal_value,
-                "provider_symbol": row_provider,
-                "price": price_val,
-                "raw": row,
-                "source": "fmp_quote",
-            }
-
     if out or not allow_eod_fallback:
         return out
 
-    latest_map = fetch_latest_eod_prices(cleaned, days_back=7)
-    for internal_value, row in latest_map.items():
-        out[internal_value] = row
-    return out
+    return fetch_latest_eod_prices(cleaned, days_back=7)
 
 
 def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 3) -> List[Dict[str, Any]]:
+    if _low_call_mode():
+        return []
     symbol = str(symbol).upper().strip()
     provider_value = provider_symbol(symbol, "fmp")
     if not symbol:
@@ -160,6 +248,7 @@ def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 
     payload = _http_get_json(
         f"/historical-chart/{interval}",
         {"symbol": provider_value, "from": start, "to": end},
+        cache_ttl_hours=0.5,
     )
     if not isinstance(payload, list):
         return []
@@ -190,6 +279,7 @@ def fetch_eod_series(symbol: str, days_back: int = 10) -> List[Dict[str, Any]]:
     payload = _http_get_json(
         "/historical-price-eod/light",
         {"symbol": provider_value, "from": start.isoformat(), "to": end.isoformat()},
+        cache_ttl_hours=24.0 if _low_call_mode() else 6.0,
     )
     payload_rows = _extract_series_rows(payload)
     rows: List[Dict[str, Any]] = []
@@ -212,7 +302,9 @@ def fetch_eod_series(symbol: str, days_back: int = 10) -> List[Dict[str, Any]]:
 def fetch_latest_eod_prices(symbols: Iterable[str], days_back: int = 7) -> Dict[str, Dict[str, Any]]:
     cleaned = sorted({str(s).upper().strip() for s in symbols if str(s).strip()})
     out: Dict[str, Dict[str, Any]] = {}
-    for symbol in cleaned:
+    # Hard cap requests in low-call mode.
+    max_symbols = 3 if _low_call_mode() else len(cleaned)
+    for symbol in cleaned[:max_symbols]:
         provider_value = provider_symbol(symbol, "fmp")
         series = fetch_eod_series(symbol, days_back=days_back)
         if not series:
@@ -250,35 +342,30 @@ def enrich_alerts_with_entry_prices(alerts: List[Dict[str, Any]]) -> Dict[str, A
     return {
         "quote_symbols": len(symbols),
         "entry_prices_enriched": enriched,
-        "entry_price_source": "fmp_quote" if enriched else None,
+        "entry_price_source": "fmp_eod" if _low_call_mode() else ("fmp_quote" if enriched else None),
         "api_key_present": bool(_get_api_key()),
         "fmp_safe_mode": True,
+        "low_call_mode": _low_call_mode(),
+        "daily_budget": _daily_budget(),
     }
 
 
 def nearest_price(series: List[Dict[str, Any]], target_dt: datetime, mode: str = "after") -> Optional[float]:
     if not series:
         return None
-    target_dt = target_dt.astimezone(timezone.utc)
+    best: Optional[float] = None
     if mode == "after":
         for row in series:
-            if row["dt"] >= target_dt:
+            dt = row.get("dt")
+            if dt and dt >= target_dt:
                 return float(row["close"])
         return float(series[-1]["close"])
-    if mode == "before":
-        for row in reversed(series):
-            if row["dt"] <= target_dt:
-                return float(row["close"])
-        return float(series[0]["close"])
-    best = min(series, key=lambda row: abs((row["dt"] - target_dt).total_seconds()))
-    return float(best["close"])
+    for row in reversed(series):
+        dt = row.get("dt")
+        if dt and dt <= target_dt:
+            return float(row["close"])
+    return float(series[0]["close"])
 
 
 def next_eod_price(series: List[Dict[str, Any]], target_dt: datetime) -> Optional[float]:
-    if not series:
-        return None
-    target_date = target_dt.date()
-    for row in series:
-        if row["dt"].date() >= target_date:
-            return float(row["close"])
-    return float(series[-1]["close"])
+    return nearest_price(series, target_dt, mode="after")

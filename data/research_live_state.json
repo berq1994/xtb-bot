@@ -1,7 +1,7 @@
 {
   "regime": "mixed",
   "source": "fallback",
-  "watchlist_size": 44,
+  "watchlist_size": 43,
   "portfolio_symbols": [
     "AMD",
     "CSG",
@@ -53,7 +53,7 @@
         "Market participants monitor FCX for follow-through"
       ],
       "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
+        "sledovaný zdroj: scaffold"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -382,8 +382,8 @@
       ]
     },
     {
-      "symbol": "AAOI",
-      "name": "AAOI",
+      "symbol": "AMZN",
+      "name": "AMZN",
       "price": 236.03,
       "change_pct": 1.3,
       "trend": "up",
@@ -401,8 +401,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "AAOI trading activity remains in focus",
-        "Market participants monitor AAOI for follow-through"
+        "AMZN trading activity remains in focus",
+        "Market participants monitor AMZN for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -414,7 +414,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "AAOI trading activity remains in focus",
+          "title": "AMZN trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -422,7 +422,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor AAOI for follow-through",
+          "title": "Market participants monitor AMZN for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -431,7 +431,7 @@
         }
       ],
       "company_memory": {
-        "name": "AAOI",
+        "name": "AMZN",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -492,8 +492,8 @@
       ]
     },
     {
-      "symbol": "BTC-USD",
-      "name": "BTC-USD",
+      "symbol": "CAG",
+      "name": "CAG",
       "price": 271.48,
       "change_pct": 1.3,
       "trend": "up",
@@ -511,8 +511,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "Crypto sentiment improves with risk appetite",
-        "Volatility remains elevated across digital assets"
+        "CAG trading activity remains in focus",
+        "Market participants monitor CAG for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -524,7 +524,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "Crypto sentiment improves with risk appetite",
+          "title": "CAG trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -532,7 +532,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Volatility remains elevated across digital assets",
+          "title": "Market participants monitor CAG for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -541,7 +541,7 @@
         }
       ],
       "company_memory": {
-        "name": "BTC-USD",
+        "name": "CAG",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -602,8 +602,8 @@
       ]
     },
     {
-      "symbol": "DPZ",
-      "name": "DPZ",
+      "symbol": "GEV",
+      "name": "GEV",
       "price": 306.94,
       "change_pct": 1.3,
       "trend": "up",
@@ -621,8 +621,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "DPZ trading activity remains in focus",
-        "Market participants monitor DPZ for follow-through"
+        "GEV trading activity remains in focus",
+        "Market participants monitor GEV for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -634,7 +634,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "DPZ trading activity remains in focus",
+          "title": "GEV trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -642,7 +642,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor DPZ for follow-through",
+          "title": "Market participants monitor GEV for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -651,7 +651,7 @@
         }
       ],
       "company_memory": {
-        "name": "DPZ",
+        "name": "GEV",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -712,8 +712,8 @@
       ]
     },
     {
-      "symbol": "META",
-      "name": "META",
+      "symbol": "NFLX",
+      "name": "NFLX",
       "price": 342.39,
       "change_pct": 1.3,
       "trend": "up",
@@ -731,8 +731,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "META trading activity remains in focus",
-        "Market participants monitor META for follow-through"
+        "NFLX trading activity remains in focus",
+        "Market participants monitor NFLX for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -744,7 +744,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "META trading activity remains in focus",
+          "title": "NFLX trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -752,7 +752,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor META for follow-through",
+          "title": "Market participants monitor NFLX for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -761,7 +761,7 @@
         }
       ],
       "company_memory": {
-        "name": "META",
+        "name": "NFLX",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -822,8 +822,8 @@
       ]
     },
     {
-      "symbol": "PYPL",
-      "name": "PYPL",
+      "symbol": "SCCO",
+      "name": "SCCO",
       "price": 377.85,
       "change_pct": 1.3,
       "trend": "up",
@@ -841,8 +841,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "PYPL trading activity remains in focus",
-        "Market participants monitor PYPL for follow-through"
+        "SCCO trading activity remains in focus",
+        "Market participants monitor SCCO for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -854,7 +854,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "PYPL trading activity remains in focus",
+          "title": "SCCO trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -862,7 +862,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor PYPL for follow-through",
+          "title": "Market participants monitor SCCO for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -871,7 +871,7 @@
         }
       ],
       "company_memory": {
-        "name": "PYPL",
+        "name": "SCCO",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -1046,47 +1046,45 @@
       ]
     },
     {
-      "symbol": "MSFT",
-      "name": "Microsoft",
-      "price": 114.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
+      "symbol": "IREN",
+      "name": "Iris Energy",
+      "price": 192.24,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
       "atr_proxy_pct": 1.0,
       "held": true,
       "themes": [
-        "ai",
-        "cloud",
-        "software"
+        "ai_hpc",
+        "bitcoin",
+        "energy"
       ],
       "accounts": [
-        "xtb",
-        "raiffeisenbank"
+        "xtb"
       ],
-      "position_value": 1100.78,
-      "avg_cost": 384.62,
-      "pnl_vs_cost_pct": -70.36,
-      "sentiment_label": "positive",
-      "sentiment_score": 4.0,
-      "category": "drawdown_control",
-      "priority_score": 3.68,
+      "position_value": 229.84,
+      "avg_cost": 41.98,
+      "pnl_vs_cost_pct": 357.93,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "winner_management",
+      "priority_score": 3.67,
       "headlines": [
-        "Cloud and AI narrative remains constructive",
-        "Large-cap quality bid supports resilience"
+        "IREN trading activity remains in focus",
+        "Market participants monitor IREN for follow-through"
       ],
       "reasons": [
-        "sledovaný zdroj: scaffold",
-        "titulek má převahu pozitivních výrazů"
+        "další symboly jedou v rychlém fallback režimu"
       ],
       "catalysts": [],
       "news_count": 2,
       "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.29,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.12,
       "news_items": [
         {
-          "title": "Cloud and AI narrative remains constructive",
+          "title": "IREN trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1094,7 +1092,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Large-cap quality bid supports resilience",
+          "title": "Market participants monitor IREN for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1103,11 +1101,9 @@
         }
       ],
       "company_memory": {
-        "name": "Microsoft Corporation",
+        "name": "Iris Energy",
         "sector_hints": [
-          "technologie / AI",
-          "cloud",
-          "software"
+          "energie"
         ],
         "key_catalysts": [
           "výsledky",
@@ -1115,8 +1111,8 @@
           "sektorový sentiment"
         ],
         "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
+          "cena komodit",
+          "regulace a geopolitika"
         ],
         "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
       },
@@ -1131,35 +1127,35 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
-      "study_alignment_score": 0.68,
+      "study_alignment_score": 0.57,
       "matched_studies": [
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.57
+        },
         {
           "id": "post_earnings_drift",
           "title": "Post-earnings drift and guidance follow-through",
           "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.68
+          "score": 0.56
         },
         {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.6
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.51
         }
       ],
       "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+        "studie potvrzují setup: Geopolitical event transmission, Post-earnings drift and guidance follow-through"
       ],
       "playbook_score": 0.5,
       "playbooks": [
         {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
+          "id": "winner_management",
+          "title": "Winner management",
           "category": "risk",
           "score": 0.5
         }
@@ -1197,7 +1193,7 @@
         "Market participants monitor FCX for follow-through"
       ],
       "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
+        "sledovaný zdroj: scaffold"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -1526,8 +1522,8 @@
       ]
     },
     {
-      "symbol": "AAOI",
-      "name": "AAOI",
+      "symbol": "AMZN",
+      "name": "AMZN",
       "price": 236.03,
       "change_pct": 1.3,
       "trend": "up",
@@ -1545,8 +1541,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "AAOI trading activity remains in focus",
-        "Market participants monitor AAOI for follow-through"
+        "AMZN trading activity remains in focus",
+        "Market participants monitor AMZN for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -1558,7 +1554,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "AAOI trading activity remains in focus",
+          "title": "AMZN trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1566,7 +1562,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor AAOI for follow-through",
+          "title": "Market participants monitor AMZN for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1575,7 +1571,7 @@
         }
       ],
       "company_memory": {
-        "name": "AAOI",
+        "name": "AMZN",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -1636,8 +1632,8 @@
       ]
     },
     {
-      "symbol": "BTC-USD",
-      "name": "BTC-USD",
+      "symbol": "CAG",
+      "name": "CAG",
       "price": 271.48,
       "change_pct": 1.3,
       "trend": "up",
@@ -1655,8 +1651,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "Crypto sentiment improves with risk appetite",
-        "Volatility remains elevated across digital assets"
+        "CAG trading activity remains in focus",
+        "Market participants monitor CAG for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -1668,7 +1664,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "Crypto sentiment improves with risk appetite",
+          "title": "CAG trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1676,7 +1672,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Volatility remains elevated across digital assets",
+          "title": "Market participants monitor CAG for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1685,7 +1681,7 @@
         }
       ],
       "company_memory": {
-        "name": "BTC-USD",
+        "name": "CAG",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -1746,8 +1742,8 @@
       ]
     },
     {
-      "symbol": "DPZ",
-      "name": "DPZ",
+      "symbol": "GEV",
+      "name": "GEV",
       "price": 306.94,
       "change_pct": 1.3,
       "trend": "up",
@@ -1765,8 +1761,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "DPZ trading activity remains in focus",
-        "Market participants monitor DPZ for follow-through"
+        "GEV trading activity remains in focus",
+        "Market participants monitor GEV for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -1778,7 +1774,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "DPZ trading activity remains in focus",
+          "title": "GEV trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1786,7 +1782,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor DPZ for follow-through",
+          "title": "Market participants monitor GEV for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1795,7 +1791,7 @@
         }
       ],
       "company_memory": {
-        "name": "DPZ",
+        "name": "GEV",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -1856,8 +1852,8 @@
       ]
     },
     {
-      "symbol": "META",
-      "name": "META",
+      "symbol": "NFLX",
+      "name": "NFLX",
       "price": 342.39,
       "change_pct": 1.3,
       "trend": "up",
@@ -1875,8 +1871,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "META trading activity remains in focus",
-        "Market participants monitor META for follow-through"
+        "NFLX trading activity remains in focus",
+        "Market participants monitor NFLX for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -1888,7 +1884,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "META trading activity remains in focus",
+          "title": "NFLX trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1896,7 +1892,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor META for follow-through",
+          "title": "Market participants monitor NFLX for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -1905,7 +1901,7 @@
         }
       ],
       "company_memory": {
-        "name": "META",
+        "name": "NFLX",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -1966,8 +1962,8 @@
       ]
     },
     {
-      "symbol": "PYPL",
-      "name": "PYPL",
+      "symbol": "SCCO",
+      "name": "SCCO",
       "price": 377.85,
       "change_pct": 1.3,
       "trend": "up",
@@ -1985,8 +1981,8 @@
       "category": "breakout_watch",
       "priority_score": 4.08,
       "headlines": [
-        "PYPL trading activity remains in focus",
-        "Market participants monitor PYPL for follow-through"
+        "SCCO trading activity remains in focus",
+        "Market participants monitor SCCO for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -1998,7 +1994,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "PYPL trading activity remains in focus",
+          "title": "SCCO trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2006,7 +2002,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor PYPL for follow-through",
+          "title": "Market participants monitor SCCO for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2015,7 +2011,7 @@
         }
       ],
       "company_memory": {
-        "name": "PYPL",
+        "name": "SCCO",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -2184,126 +2180,6 @@
         {
           "id": "winner_management",
           "title": "Winner management",
-          "category": "risk",
-          "score": 0.5
-        }
-      ]
-    },
-    {
-      "symbol": "MSFT",
-      "name": "Microsoft",
-      "price": 114.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "cloud",
-        "software"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1100.78,
-      "avg_cost": 384.62,
-      "pnl_vs_cost_pct": -70.36,
-      "sentiment_label": "positive",
-      "sentiment_score": 4.0,
-      "category": "drawdown_control",
-      "priority_score": 3.68,
-      "headlines": [
-        "Cloud and AI narrative remains constructive",
-        "Large-cap quality bid supports resilience"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold",
-        "titulek má převahu pozitivních výrazů"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.29,
-      "news_items": [
-        {
-          "title": "Cloud and AI narrative remains constructive",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Large-cap quality bid supports resilience",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "Microsoft Corporation",
-        "sector_hints": [
-          "technologie / AI",
-          "cloud",
-          "software"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.68,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.68
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.6
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
           "category": "risk",
           "score": 0.5
         }
@@ -2455,7 +2331,7 @@
         "Market participants monitor PLTR for follow-through"
       ],
       "reasons": [
-        "sledovaný zdroj: scaffold"
+        "další symboly jedou v rychlém fallback režimu"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -2666,8 +2542,8 @@
       ]
     },
     {
-      "symbol": "AAPL",
-      "name": "AAPL",
+      "symbol": "AAOI",
+      "name": "AAOI",
       "price": 227.47,
       "change_pct": 0.65,
       "trend": "up",
@@ -2685,8 +2561,8 @@
       "category": "watchlist_monitor",
       "priority_score": 2.48,
       "headlines": [
-        "Consumer demand mixed ahead of product cycle",
-        "Mega-cap quality still supports defensive interest"
+        "AAOI trading activity remains in focus",
+        "Market participants monitor AAOI for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -2698,7 +2574,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "Consumer demand mixed ahead of product cycle",
+          "title": "AAOI trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2706,7 +2582,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Mega-cap quality still supports defensive interest",
+          "title": "Market participants monitor AAOI for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2715,7 +2591,7 @@
         }
       ],
       "company_memory": {
-        "name": "AAPL",
+        "name": "AAOI",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -2769,8 +2645,8 @@
       "playbooks": []
     },
     {
-      "symbol": "BRK-B",
-      "name": "BRK-B",
+      "symbol": "BTC-USD",
+      "name": "BTC-USD",
       "price": 262.7,
       "change_pct": 0.65,
       "trend": "up",
@@ -2788,8 +2664,8 @@
       "category": "watchlist_monitor",
       "priority_score": 2.48,
       "headlines": [
-        "BRK-B trading activity remains in focus",
-        "Market participants monitor BRK-B for follow-through"
+        "Crypto sentiment improves with risk appetite",
+        "Volatility remains elevated across digital assets"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -2801,7 +2677,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "BRK-B trading activity remains in focus",
+          "title": "Crypto sentiment improves with risk appetite",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2809,7 +2685,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor BRK-B for follow-through",
+          "title": "Volatility remains elevated across digital assets",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2818,7 +2694,7 @@
         }
       ],
       "company_memory": {
-        "name": "BRK-B",
+        "name": "BTC-USD",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -2872,8 +2748,8 @@
       "playbooks": []
     },
     {
-      "symbol": "CVNA",
-      "name": "CVNA",
+      "symbol": "DPZ",
+      "name": "DPZ",
       "price": 297.92,
       "change_pct": 0.65,
       "trend": "up",
@@ -2891,8 +2767,8 @@
       "category": "watchlist_monitor",
       "priority_score": 2.48,
       "headlines": [
-        "CVNA trading activity remains in focus",
-        "Market participants monitor CVNA for follow-through"
+        "DPZ trading activity remains in focus",
+        "Market participants monitor DPZ for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -2904,7 +2780,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "CVNA trading activity remains in focus",
+          "title": "DPZ trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2912,7 +2788,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor CVNA for follow-through",
+          "title": "Market participants monitor DPZ for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2921,7 +2797,7 @@
         }
       ],
       "company_memory": {
-        "name": "CVNA",
+        "name": "DPZ",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -2975,8 +2851,8 @@
       "playbooks": []
     },
     {
-      "symbol": "INTC",
-      "name": "INTC",
+      "symbol": "META",
+      "name": "META",
       "price": 333.15,
       "change_pct": 0.65,
       "trend": "up",
@@ -2994,8 +2870,8 @@
       "category": "watchlist_monitor",
       "priority_score": 2.48,
       "headlines": [
-        "INTC trading activity remains in focus",
-        "Market participants monitor INTC for follow-through"
+        "META trading activity remains in focus",
+        "Market participants monitor META for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -3007,7 +2883,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "INTC trading activity remains in focus",
+          "title": "META trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -3015,7 +2891,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor INTC for follow-through",
+          "title": "Market participants monitor META for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -3024,7 +2900,7 @@
         }
       ],
       "company_memory": {
-        "name": "INTC",
+        "name": "META",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -3078,8 +2954,8 @@
       "playbooks": []
     },
     {
-      "symbol": "PANW",
-      "name": "PANW",
+      "symbol": "PYPL",
+      "name": "PYPL",
       "price": 368.38,
       "change_pct": 0.65,
       "trend": "up",
@@ -3097,8 +2973,8 @@
       "category": "watchlist_monitor",
       "priority_score": 2.48,
       "headlines": [
-        "PANW trading activity remains in focus",
-        "Market participants monitor PANW for follow-through"
+        "PYPL trading activity remains in focus",
+        "Market participants monitor PYPL for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -3110,7 +2986,7 @@
       "theme_overlap_penalty": 0.0,
       "news_items": [
         {
-          "title": "PANW trading activity remains in focus",
+          "title": "PYPL trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -3118,110 +2994,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor PANW for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "PANW",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.56,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.48
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
-      "symbol": "TTD",
-      "name": "TTD",
-      "price": 403.61,
-      "change_pct": 0.65,
-      "trend": "up",
-      "momentum_5d": 0.98,
-      "momentum_20d": 1.95,
-      "atr_proxy_pct": 1.0,
-      "held": false,
-      "themes": [],
-      "accounts": [],
-      "position_value": 0.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 2.48,
-      "headlines": [
-        "TTD trading activity remains in focus",
-        "Market participants monitor TTD for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.1,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "TTD trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor TTD for follow-through",
+          "title": "Market participants monitor PYPL for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -3230,7 +3003,7 @@
         }
       ],
       "company_memory": {
-        "name": "TTD",
+        "name": "PYPL",
         "sector_hints": [
           "obecná equity / watchlist"
         ],
@@ -3401,6 +3174,125 @@
       ]
     },
     {
+      "symbol": "MSFT",
+      "name": "Microsoft",
+      "price": 114.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "ai",
+        "cloud",
+        "software"
+      ],
+      "accounts": [
+        "xtb",
+        "raiffeisenbank"
+      ],
+      "position_value": 1100.78,
+      "avg_cost": 384.62,
+      "pnl_vs_cost_pct": -70.36,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.36,
+      "headlines": [
+        "Cloud and AI narrative remains constructive",
+        "Large-cap quality bid supports resilience"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.29,
+      "news_items": [
+        {
+          "title": "Cloud and AI narrative remains constructive",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Large-cap quality bid supports resilience",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "Microsoft Corporation",
+        "sector_hints": [
+          "technologie / AI",
+          "cloud",
+          "software"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.68,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.68
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.6
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
+          "category": "risk",
+          "score": 0.5
+        }
+      ]
+    },
+    {
       "symbol": "AMD",
       "name": "AMD",
       "price": 106.3,
@@ -3429,7 +3321,7 @@
         "Market participants monitor AMD for follow-through"
       ],
       "reasons": [
-        "sledovaný zdroj: scaffold"
+        "další symboly jedou v rychlém fallback režimu"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -3635,114 +3527,6 @@
       ]
     },
     {
-      "symbol": "CVX",
-      "name": "Chevron Corp",
-      "price": 219.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "energy",
-        "oil"
-      ],
-      "accounts": [
-        "raiffeisenbank"
-      ],
-      "position_value": 835.8,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 2.03,
-      "headlines": [
-        "CVX trading activity remains in focus",
-        "Market participants monitor CVX for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.12,
-      "news_items": [
-        {
-          "title": "CVX trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor CVX for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "Chevron Corp",
-        "sector_hints": [
-          "energie"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cena komodit",
-          "regulace a geopolitika"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.68,
-      "matched_studies": [
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.68
-        },
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.51
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Geopolitical event transmission, Post-earnings drift and guidance follow-through"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
       "symbol": "S",
       "name": "SentinelOne",
       "price": 133.25,
@@ -3858,114 +3642,6 @@
       ]
     },
     {
-      "symbol": "CSG",
-      "name": "CSG B.V.",
-      "price": 210.62,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "defense",
-        "industrial"
-      ],
-      "accounts": [
-        "raiffeisenbank"
-      ],
-      "position_value": 23166.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "pullback_control",
-      "priority_score": 1.87,
-      "headlines": [
-        "CSG trading activity remains in focus",
-        "Market participants monitor CSG for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "CSG trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor CSG for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "CSG B.V.",
-        "sector_hints": [
-          "obrana"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.68,
-      "matched_studies": [
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.68
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.62
-        },
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Geopolitical event transmission, Quality and defense in risk-off regime"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
       "symbol": "GRMN",
       "name": "Garmin",
       "price": 175.85,
@@ -4068,6 +3744,114 @@
       ],
       "study_notes": [
         "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "CVX",
+      "name": "Chevron Corp",
+      "price": 210.62,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "energy",
+        "oil"
+      ],
+      "accounts": [
+        "raiffeisenbank"
+      ],
+      "position_value": 835.8,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "pullback_control",
+      "priority_score": 1.75,
+      "headlines": [
+        "CVX trading activity remains in focus",
+        "Market participants monitor CVX for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.12,
+      "news_items": [
+        {
+          "title": "CVX trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CVX for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "Chevron Corp",
+        "sector_hints": [
+          "energie"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "cena komodit",
+          "regulace a geopolitika"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.68,
+      "matched_studies": [
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.68
+        },
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.51
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Geopolitical event transmission, Post-earnings drift and guidance follow-through"
       ],
       "playbook_score": 0.0,
       "playbooks": []
@@ -4400,8 +4184,111 @@
       "playbooks": []
     },
     {
-      "symbol": "BKNG",
-      "name": "BKNG",
+      "symbol": "AAPL",
+      "name": "AAPL",
+      "price": 219.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.23,
+      "headlines": [
+        "Consumer demand mixed ahead of product cycle",
+        "Mega-cap quality still supports defensive interest"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "Consumer demand mixed ahead of product cycle",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Mega-cap quality still supports defensive interest",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "AAPL",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.56,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.48
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "BRK-B",
+      "name": "BRK-B",
       "price": 254.0,
       "change_pct": 0.0,
       "trend": "flat",
@@ -4418,6 +4305,521 @@
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
       "priority_score": 1.23,
+      "headlines": [
+        "BRK-B trading activity remains in focus",
+        "Market participants monitor BRK-B for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "BRK-B trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor BRK-B for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "BRK-B",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.56,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.48
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "CVNA",
+      "name": "CVNA",
+      "price": 289.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.23,
+      "headlines": [
+        "CVNA trading activity remains in focus",
+        "Market participants monitor CVNA for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "CVNA trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CVNA for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "CVNA",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.56,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.48
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "INTC",
+      "name": "INTC",
+      "price": 324.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.23,
+      "headlines": [
+        "INTC trading activity remains in focus",
+        "Market participants monitor INTC for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "INTC trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor INTC for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "INTC",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.56,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.48
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "PANW",
+      "name": "PANW",
+      "price": 359.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.23,
+      "headlines": [
+        "PANW trading activity remains in focus",
+        "Market participants monitor PANW for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "PANW trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor PANW for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "PANW",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.56,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.48
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "TTD",
+      "name": "TTD",
+      "price": 394.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.23,
+      "headlines": [
+        "TTD trading activity remains in focus",
+        "Market participants monitor TTD for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "TTD trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor TTD for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "company_memory": {
+        "name": "TTD",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
+      },
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.56,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.56
+        },
+        {
+          "id": "momentum_persistence",
+          "title": "Momentum persistence after multi-day strength",
+          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
+          "score": 0.48
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
+      ],
+      "playbook_score": 0.0,
+      "playbooks": []
+    },
+    {
+      "symbol": "BKNG",
+      "name": "BKNG",
+      "price": 245.39,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.95,
       "headlines": [
         "BKNG trading activity remains in focus",
         "Market participants monitor BKNG for follow-through"
@@ -4505,11 +4907,11 @@
     {
       "symbol": "COKE",
       "name": "COKE",
-      "price": 289.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
+      "price": 280.17,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
       "atr_proxy_pct": 1.0,
       "held": false,
       "themes": [],
@@ -4520,7 +4922,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.23,
+      "priority_score": 0.95,
       "headlines": [
         "COKE trading activity remains in focus",
         "Market participants monitor COKE for follow-through"
@@ -4608,11 +5010,11 @@
     {
       "symbol": "IBIT",
       "name": "IBIT",
-      "price": 324.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
+      "price": 314.94,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
       "atr_proxy_pct": 1.0,
       "held": false,
       "themes": [],
@@ -4623,7 +5025,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.23,
+      "priority_score": 0.95,
       "headlines": [
         "IBIT trading activity remains in focus",
         "Market participants monitor IBIT for follow-through"
@@ -4711,11 +5113,11 @@
     {
       "symbol": "ORCL",
       "name": "ORCL",
-      "price": 359.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
+      "price": 349.71,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
       "atr_proxy_pct": 1.0,
       "held": false,
       "themes": [],
@@ -4726,7 +5128,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.23,
+      "priority_score": 0.95,
       "headlines": [
         "ORCL trading activity remains in focus",
         "Market participants monitor ORCL for follow-through"
@@ -4814,11 +5216,11 @@
     {
       "symbol": "SPY",
       "name": "SPY",
-      "price": 394.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
+      "price": 384.48,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
       "atr_proxy_pct": 1.0,
       "held": false,
       "themes": [],
@@ -4829,7 +5231,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.23,
+      "priority_score": 0.95,
       "headlines": [
         "SPY trading activity remains in focus",
         "Market participants monitor SPY for follow-through"
@@ -4917,12 +5319,12 @@
     {
       "symbol": "BDC",
       "name": "BDC",
-      "price": 245.39,
-      "change_pct": -0.65,
+      "price": 236.88,
+      "change_pct": -1.3,
       "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
       "held": false,
       "themes": [],
       "accounts": [],
@@ -4932,7 +5334,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 0.95,
+      "priority_score": 0.67,
       "headlines": [
         "BDC trading activity remains in focus",
         "Market participants monitor BDC for follow-through"
@@ -5020,12 +5422,12 @@
     {
       "symbol": "CENX",
       "name": "CENX",
-      "price": 280.17,
-      "change_pct": -0.65,
+      "price": 271.43,
+      "change_pct": -1.3,
       "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
       "held": false,
       "themes": [],
       "accounts": [],
@@ -5035,7 +5437,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 0.95,
+      "priority_score": 0.67,
       "headlines": [
         "CENX trading activity remains in focus",
         "Market participants monitor CENX for follow-through"
@@ -5123,12 +5525,12 @@
     {
       "symbol": "GOOG",
       "name": "GOOG",
-      "price": 314.94,
-      "change_pct": -0.65,
+      "price": 305.97,
+      "change_pct": -1.3,
       "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
       "held": false,
       "themes": [],
       "accounts": [],
@@ -5138,7 +5540,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 0.95,
+      "priority_score": 0.67,
       "headlines": [
         "GOOG trading activity remains in focus",
         "Market participants monitor GOOG for follow-through"
@@ -5226,12 +5628,12 @@
     {
       "symbol": "ONDS",
       "name": "ONDS",
-      "price": 349.71,
-      "change_pct": -0.65,
+      "price": 340.51,
+      "change_pct": -1.3,
       "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
       "held": false,
       "themes": [],
       "accounts": [],
@@ -5241,7 +5643,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 0.95,
+      "priority_score": 0.67,
       "headlines": [
         "ONDS trading activity remains in focus",
         "Market participants monitor ONDS for follow-through"
@@ -5329,12 +5731,12 @@
     {
       "symbol": "SNDK",
       "name": "SNDK",
-      "price": 384.48,
-      "change_pct": -0.65,
+      "price": 375.06,
+      "change_pct": -1.3,
       "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
       "held": false,
       "themes": [],
       "accounts": [],
@@ -5344,7 +5746,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 0.95,
+      "priority_score": 0.67,
       "headlines": [
         "SNDK trading activity remains in focus",
         "Market participants monitor SNDK for follow-through"
@@ -5377,521 +5779,6 @@
       ],
       "company_memory": {
         "name": "SNDK",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.56,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.48
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
-      "symbol": "AMZN",
-      "name": "AMZN",
-      "price": 236.88,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": false,
-      "themes": [],
-      "accounts": [],
-      "position_value": 0.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 0.67,
-      "headlines": [
-        "AMZN trading activity remains in focus",
-        "Market participants monitor AMZN for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "AMZN trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor AMZN for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "AMZN",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.56,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.48
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
-      "symbol": "CAG",
-      "name": "CAG",
-      "price": 271.43,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": false,
-      "themes": [],
-      "accounts": [],
-      "position_value": 0.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 0.67,
-      "headlines": [
-        "CAG trading activity remains in focus",
-        "Market participants monitor CAG for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "CAG trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor CAG for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "CAG",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.56,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.48
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
-      "symbol": "GEV",
-      "name": "GEV",
-      "price": 305.97,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": false,
-      "themes": [],
-      "accounts": [],
-      "position_value": 0.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 0.67,
-      "headlines": [
-        "GEV trading activity remains in focus",
-        "Market participants monitor GEV for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "GEV trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor GEV for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "GEV",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.56,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.48
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
-      "symbol": "NFLX",
-      "name": "NFLX",
-      "price": 340.51,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": false,
-      "themes": [],
-      "accounts": [],
-      "position_value": 0.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 0.67,
-      "headlines": [
-        "NFLX trading activity remains in focus",
-        "Market participants monitor NFLX for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "NFLX trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor NFLX for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "NFLX",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy."
-      },
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.56,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.56
-        },
-        {
-          "id": "momentum_persistence",
-          "title": "Momentum persistence after multi-day strength",
-          "summary": "Akcie se silným 5d a 20d momentum mají vyšší šanci na pokračování trendu, pokud zároveň není sentiment prudce negativní.",
-          "score": 0.48
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Momentum persistence after multi-day strength"
-      ],
-      "playbook_score": 0.0,
-      "playbooks": []
-    },
-    {
-      "symbol": "SCCO",
-      "name": "SCCO",
-      "price": 375.06,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": false,
-      "themes": [],
-      "accounts": [],
-      "position_value": 0.0,
-      "avg_cost": null,
-      "pnl_vs_cost_pct": null,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 0.67,
-      "headlines": [
-        "SCCO trading activity remains in focus",
-        "Market participants monitor SCCO for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "SCCO trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor SCCO for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "company_memory": {
-        "name": "SCCO",
         "sector_hints": [
           "obecná equity / watchlist"
         ],

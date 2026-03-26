@@ -12,3 +12,5 @@
 {"signal_id": "2026-03-26T11:45:03.803174+00:00|FCX", "timestamp": "2026-03-26T11:45:03.803184+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
 {"signal_id": "2026-03-26T13:48:12.541643+00:00|FCX", "timestamp": "2026-03-26T13:48:12.541660+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
 {"signal_id": "2026-03-26T13:48:12.542016+00:00|FSLR", "timestamp": "2026-03-26T13:48:12.542022+00:00", "symbol": "FSLR", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
+{"signal_id": "2026-03-26T18:49:58.816686+00:00|FCX", "timestamp": "2026-03-26T18:49:58.816696+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
+{"signal_id": "2026-03-26T18:49:58.817030+00:00|FSLR", "timestamp": "2026-03-26T18:49:58.817034+00:00", "symbol": "FSLR", "decision": "watch_long", "direction": "long", "entry_price": 200.57}

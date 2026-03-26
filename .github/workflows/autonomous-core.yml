@@ -19,11 +19,14 @@ jobs:
       EMAIL_SEND_ENABLED: "false"
       FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
       FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+      FMP_LOW_CALL_MODE: "true"
+      FMP_DAILY_BUDGET: "25"
+      FMP_NEWS_ENABLED: "false"
       AUTO_REBALANCE_MIN_RESOLVED: "8"
       AUTO_REBALANCE_COOLDOWN_HOURS: "24"
       AUTO_SIGNAL_COOLDOWN_MIN: "180"
       AUTO_SIGNAL_TOP_N: "2"
-      NEWS_MAX_LIVE_FETCH_PER_RUN: "18"
+      NEWS_MAX_LIVE_FETCH_PER_RUN: "8"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,8 +40,6 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .state
-          key: xtb-state-autonomous-core
-      - name: FMP smoke test
-        run: python run_agent.py fmp_smoke_test
+          key: xtb-state-autonomous-core-low-call
       - name: Run autonomous core
         run: python run_agent.py autonomous_core

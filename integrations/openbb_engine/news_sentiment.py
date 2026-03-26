@@ -23,7 +23,9 @@ PORTFOLIO_PATH = Path("config/portfolio_state.json")
 CACHE_TTL_SECONDS = 60 * 60 * 6
 REQUEST_TIMEOUT = 4
 GOOGLE_NEWS_MAX_ITEMS = 4
-MAX_LIVE_FETCH_PER_RUN = int(os.getenv("NEWS_MAX_LIVE_FETCH_PER_RUN", "18") or 18)
+MAX_LIVE_FETCH_PER_RUN = int(os.getenv("NEWS_MAX_LIVE_FETCH_PER_RUN", "8") or 8)
+LOW_CALL_MODE = str(os.getenv("FMP_LOW_CALL_MODE", "0")).strip().lower() in {"1", "true", "yes", "on"}
+FMP_NEWS_ENABLED = str(os.getenv("FMP_NEWS_ENABLED", "0" if LOW_CALL_MODE else "1")).strip().lower() in {"1", "true", "yes", "on"}
 
 DEFAULT_HEADLINES = {
     "NVDA": [
@@ -205,6 +207,8 @@ def _fetch_google_news(symbol: str, company: str | None = None) -> list[dict]:
 
 
 def _fetch_fmp_news(symbol: str) -> list[dict]:
+    if not FMP_NEWS_ENABLED:
+        return []
     api_key = os.getenv("FMP_API_KEY") or os.getenv("FMPAPIKEY") or os.getenv("FMP_APIKEY")
     if not api_key:
         return []

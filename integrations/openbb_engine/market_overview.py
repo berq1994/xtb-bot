@@ -1,9 +1,14 @@
 from __future__ import annotations
 
 from datetime import date, timedelta
+import os
 from typing import Iterable, Dict, Any, List
 
 DEFAULT_WATCHLIST = ["SPY", "QQQ", "DIA", "IWM", "BTC-USD", "GLD", "TLT", "NVDA", "MSFT", "AAPL"]
+
+
+def _low_call_mode() -> bool:
+    return str(os.getenv("FMP_LOW_CALL_MODE", "0")).strip().lower() in {"1", "true", "yes", "on"}
 
 
 def _fallback_snapshot(symbol: str, idx: int) -> Dict[str, Any]:
@@ -104,7 +109,7 @@ def _try_openbb(symbols: List[str]) -> List[Dict[str, Any]]:
         try:
             data = obb.equity.price.historical(symbol, provider="yfinance", interval="1d", start_date=start_date)
             df = data.to_df()
-            if df is None or len(df) < 2:
+            if df is None or df.empty or "close" not in df.columns:
                 continue
             closes = [float(x) for x in df["close"].tolist() if x == x]
             row = _row_from_closes(symbol, closes, "openbb")
@@ -135,6 +140,17 @@ def _try_yfinance(symbols: List[str]) -> List[Dict[str, Any]]:
     return rows
 
 
+def _merge_rows(primary: List[Dict[str, Any]], supplement: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    out = {str(row.get("symbol", "")).upper(): dict(row) for row in primary if str(row.get("symbol", "")).strip()}
+    for row in supplement:
+        symbol = str(row.get("symbol", "")).upper()
+        if not symbol:
+            continue
+        if symbol not in out:
+            out[symbol] = dict(row)
+    return list(out.values())
+
+
 def _regime_from_rows(rows: List[Dict[str, Any]]) -> str:
     if not rows:
         return "mixed"
@@ -158,13 +174,37 @@ def _regime_from_rows(rows: List[Dict[str, Any]]) -> str:
 def generate_market_overview(watchlist: Iterable[str] | None = None) -> Dict[str, Any]:
     symbols = list(watchlist or DEFAULT_WATCHLIST)
 
-    rows = _try_fmp(symbols)
-    if not rows:
-        rows = _try_openbb(symbols)
-    if not rows:
+    rows: List[Dict[str, Any]] = []
+    source = "fallback"
+
+    if _low_call_mode():
         rows = _try_yfinance(symbols)
+        if rows:
+            source = "yfinance_low_call"
+        else:
+            rows = _try_openbb(symbols)
+            if rows:
+                source = "openbb_low_call"
+        if not rows:
+            rows = _try_fmp(symbols[:3])
+            if rows:
+                source = "fmp_eod_low_call"
+    else:
+        rows = _try_fmp(symbols)
+        if rows:
+            source = "fmp_eod"
+        if not rows:
+            rows = _try_openbb(symbols)
+            if rows:
+                source = "openbb"
+        if not rows:
+            rows = _try_yfinance(symbols)
+            if rows:
+                source = "yfinance"
+
     if not rows:
         rows = [_fallback_snapshot(symbol, idx) for idx, symbol in enumerate(symbols)]
+        source = "fallback"
 
     leaders = sorted(rows, key=lambda x: x.get("change_pct", 0), reverse=True)[:3]
     laggards = sorted(rows, key=lambda x: x.get("change_pct", 0))[:3]
@@ -172,7 +212,7 @@ def generate_market_overview(watchlist: Iterable[str] | None = None) -> Dict[str
     regime = _regime_from_rows(rows)
 
     return {
-        "source": rows[0].get("source", "fallback") if rows else "fallback",
+        "source": source,
         "symbols": rows,
         "leaders": leaders,
         "laggards": laggards,

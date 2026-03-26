@@ -10,6 +10,7 @@ jobs:
     env:
       FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
       FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+      FMP_LOW_CALL_MODE: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

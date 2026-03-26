@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from statistics import mean
@@ -76,10 +77,16 @@ def _fetch_series_yfinance(symbol: str, start_ts: datetime) -> list[dict]:
 
 
 def _fetch_series(symbol: str, start_ts: datetime) -> tuple[list[dict], str]:
+    low_call_mode = str(os.getenv("FMP_LOW_CALL_MODE", "0")).strip().lower() in {"1", "true", "yes", "on"}
     try:
         from production.fmp_market_data import fetch_eod_series
     except Exception:
         fetch_eod_series = None
+
+    if low_call_mode:
+        yf_series = _fetch_series_yfinance(symbol, start_ts)
+        if yf_series:
+            return yf_series, "yfinance"
 
     if fetch_eod_series is not None:
         try:
@@ -89,6 +96,7 @@ def _fetch_series(symbol: str, start_ts: datetime) -> tuple[list[dict], str]:
                 return series, "fmp_eod"
         except Exception:
             pass
+
     return _fetch_series_yfinance(symbol, start_ts), "yfinance"
 
 
