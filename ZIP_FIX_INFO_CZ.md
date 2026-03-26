@@ -10,5 +10,5 @@ Opraveno:
 Doporučený test po rozbalení:
 ```powershell
 Get-ChildItem -Recurse -Filter *.py | Select-String '\\n$'
-python run_agent.py production_cycle
+python run_agent.py production_cycle .
 ```
