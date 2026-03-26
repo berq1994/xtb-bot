@@ -54,6 +54,22 @@ def _decision_from_candidate(regime: str, candidate: dict, sentiment_label: str)
     return "wait"
 
 
+
+
+def _select_state_candidate(state: dict, ticket_symbol: str | None = None) -> dict:
+    symbol = str(ticket_symbol or "").strip().upper()
+    pools = []
+    if isinstance(state, dict):
+        for key in ("top_items", "all_items"):
+            rows = state.get(key, [])
+            if isinstance(rows, list):
+                pools.extend([row for row in rows if isinstance(row, dict)])
+    if symbol:
+        for row in pools:
+            if str(row.get("symbol", "")).strip().upper() == symbol:
+                return row
+    return pools[0] if pools else {}
+
 def build_snapshot_payload(
     overview_or_watchlist=None,
     decision: str | None = None,
@@ -61,16 +77,16 @@ def build_snapshot_payload(
 ) -> dict:
     state = overview_or_watchlist if isinstance(overview_or_watchlist, dict) else _load_research_state()
 
-    top_items = state.get("top_items", []) if isinstance(state, dict) else []
-    if top_items:
-        top = top_items[0]
+    selected = _select_state_candidate(state, ticket_symbol)
+    if selected:
         regime = str(state.get("regime", "mixed"))
         source = str(state.get("source", "unknown"))
-        symbol = str(ticket_symbol or top.get("symbol") or "")
-        entry_price = float(top.get("price", 0.0) or 0.0)
-        direction = "short_watch" if regime == "risk_off" and str(top.get("trend", "flat")) == "down" else "long"
-        sentiment_label = str(top.get("sentiment_label", "neutral"))
-        inferred_decision = decision or _decision_from_candidate(regime, top, sentiment_label)
+        symbol = str(ticket_symbol or selected.get("symbol") or "")
+        entry_price = float(selected.get("price", 0.0) or 0.0)
+        direction = "short_watch" if regime == "risk_off" and str(selected.get("trend", "flat")) == "down" else "long"
+        sentiment_label = str(selected.get("sentiment_label", "neutral"))
+        inferred_decision = decision or _decision_from_candidate(regime, selected, sentiment_label)
+        top_items = state.get("top_items", []) if isinstance(state, dict) else []
         return {
             "signal_id": f"{_utc_now_iso()}|{symbol}",
             "timestamp": _utc_now_iso(),
@@ -85,33 +101,33 @@ def build_snapshot_payload(
                 "symbol": symbol,
                 "direction": direction,
                 "entry_reference": round(entry_price, 2) if entry_price else None,
-                "priority_score": top.get("priority_score"),
-                "category": top.get("category"),
+                "priority_score": selected.get("priority_score"),
+                "category": selected.get("category"),
             },
             "supervisor": {
                 "decision": inferred_decision,
-                "reason": top.get("category"),
+                "reason": selected.get("category"),
             },
             "features": {
-                "trend": top.get("trend"),
-                "change_pct": top.get("change_pct"),
-                "momentum_5d": top.get("momentum_5d"),
-                "momentum_20d": top.get("momentum_20d"),
+                "trend": selected.get("trend"),
+                "change_pct": selected.get("change_pct"),
+                "momentum_5d": selected.get("momentum_5d"),
+                "momentum_20d": selected.get("momentum_20d"),
                 "sentiment_label": sentiment_label,
-                "sentiment_score": top.get("sentiment_score"),
-                "theme_overlap_penalty": top.get("theme_overlap_penalty"),
-                "held": top.get("held"),
-                "pnl_vs_cost_pct": top.get("pnl_vs_cost_pct"),
-                "news_count": top.get("news_count"),
-                "catalysts": top.get("catalysts", []),
+                "sentiment_score": selected.get("sentiment_score"),
+                "theme_overlap_penalty": selected.get("theme_overlap_penalty"),
+                "held": selected.get("held"),
+                "pnl_vs_cost_pct": selected.get("pnl_vs_cost_pct"),
+                "news_count": selected.get("news_count"),
+                "catalysts": selected.get("catalysts", []),
                 "data_source": source,
-                "news_sources": top.get("trusted_sources", []),
-                "news_providers": top.get("news_providers", []),
-                "evidence_score": top.get("evidence_score"),
-                "evidence_grade": top.get("evidence_grade"),
-                "playbooks": top.get("playbooks", []),
-                "study_alignment_score": top.get("study_alignment_score"),
-                "matched_studies": top.get("matched_studies", []),
+                "news_sources": selected.get("trusted_sources", []),
+                "news_providers": selected.get("news_providers", []),
+                "evidence_score": selected.get("evidence_score"),
+                "evidence_grade": selected.get("evidence_grade"),
+                "playbooks": selected.get("playbooks", []),
+                "study_alignment_score": selected.get("study_alignment_score"),
+                "matched_studies": selected.get("matched_studies", []),
             },
         }
 

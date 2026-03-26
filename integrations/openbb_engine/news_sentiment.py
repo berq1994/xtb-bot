@@ -8,6 +8,8 @@ import urllib.parse
 from pathlib import Path
 from typing import Iterable, Dict, Any, List
 
+from symbol_utils import provider_symbol
+
 import requests
 from xml.etree import ElementTree as ET
 
@@ -21,7 +23,7 @@ PORTFOLIO_PATH = Path("config/portfolio_state.json")
 CACHE_TTL_SECONDS = 60 * 60 * 6
 REQUEST_TIMEOUT = 4
 GOOGLE_NEWS_MAX_ITEMS = 4
-MAX_LIVE_FETCH_PER_RUN = 6
+MAX_LIVE_FETCH_PER_RUN = int(os.getenv("NEWS_MAX_LIVE_FETCH_PER_RUN", "18") or 18)
 
 DEFAULT_HEADLINES = {
     "NVDA": [
@@ -207,9 +209,10 @@ def _fetch_fmp_news(symbol: str) -> list[dict]:
     if not api_key:
         return []
 
+    query_symbol = provider_symbol(symbol, "fmp")
     url = (
         "https://financialmodelingprep.com/api/v3/stock_news?"
-        f"tickers={urllib.parse.quote(symbol)}&limit=4&apikey={urllib.parse.quote(api_key)}"
+        f"tickers={urllib.parse.quote(query_symbol)}&limit=4&apikey={urllib.parse.quote(api_key)}"
     )
     try:
         response = requests.get(url, timeout=REQUEST_TIMEOUT)
@@ -331,6 +334,15 @@ def _read_cached_symbol(symbol: str, cache: dict) -> dict | None:
     return payload if isinstance(payload, dict) else None
 
 
+
+
+def _read_any_cached_symbol(symbol: str, cache: dict) -> dict | None:
+    row = cache.get(symbol)
+    if not isinstance(row, dict):
+        return None
+    payload = row.get("payload")
+    return payload if isinstance(payload, dict) else None
+
 def _store_cached_symbol(symbol: str, payload: dict, cache: dict) -> None:
     cache[symbol] = {
         "fetched_at": time.time(),
@@ -388,18 +400,25 @@ def build_news_sentiment(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
             payload = _build_payload(symbol)
             live_fetches += 1
         else:
-            payload = {
-                "headlines": [item.get("title", "") for item in _fallback_items(symbol)[:2]],
-                "items": _fallback_items(symbol),
-                "reasons": ["další symboly jedou v rychlém fallback režimu"],
-                "sentiment_score": 0.0,
-                "sentiment_label": "neutral",
-                "source": "scaffold",
-                "source_count": 1,
-                "news_count": 2,
-                "catalysts": [],
-                "company_hint": COMPANY_MAP.get(symbol),
-            }
+            stale = _read_any_cached_symbol(symbol, cache)
+            if stale is not None:
+                payload = dict(stale)
+                reasons = list(payload.get("reasons", []))
+                reasons.insert(0, "použita starší cache, aby se omezil scaffold režim")
+                payload["reasons"] = reasons[:3]
+            else:
+                payload = {
+                    "headlines": [item.get("title", "") for item in _fallback_items(symbol)[:2]],
+                    "items": _fallback_items(symbol),
+                    "reasons": ["další symboly jedou v rychlém fallback režimu"],
+                    "sentiment_score": 0.0,
+                    "sentiment_label": "neutral",
+                    "source": "scaffold",
+                    "source_count": 1,
+                    "news_count": 2,
+                    "catalysts": [],
+                    "company_hint": COMPANY_MAP.get(symbol),
+                }
         _store_cached_symbol(symbol, payload, cache)
         result[symbol] = payload
         dirty = True

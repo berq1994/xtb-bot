@@ -108,6 +108,28 @@ def _entry_from_series(series: list[dict], start_ts: datetime) -> float | None:
     return float(series[0]["close"])
 
 
+
+
+def _entry_looks_suspicious(entry_price: float | None, current_price: float | None) -> bool:
+    if entry_price in (None, 0, 0.0) or current_price in (None, 0, 0.0):
+        return False
+    try:
+        entry = float(entry_price)
+        current = float(current_price)
+    except (TypeError, ValueError):
+        return True
+    if entry <= 0 or current <= 0:
+        return True
+    ratio = max(entry, current) / min(entry, current)
+    return ratio >= 8.0
+
+
+def _invalid_outcome(outcome_pct: float) -> bool:
+    try:
+        return abs(float(outcome_pct)) > 250.0
+    except (TypeError, ValueError):
+        return True
+
 def _outcome_label(value: float, age_days: int) -> str:
     if age_days < 1:
         return "pending"
@@ -180,13 +202,26 @@ def run_outcome_update() -> str:
             existing[signal_id] = row
             continue
 
+        series_entry = _entry_from_series(series, signal_ts)
+        anomaly_reason = None
+        if _entry_looks_suspicious(entry_price, current_price) and series_entry not in (None, 0, 0.0):
+            entry_price = float(series_entry)
+            anomaly_reason = "entry_rebased_from_series"
+
         age_days = _days_since(signal_ts)
         direction = str(row.get("direction", "long"))
         if direction == "short_watch":
             outcome_pct = round(((entry_price - current_price) / entry_price) * 100, 2)
         else:
             outcome_pct = round(((current_price - entry_price) / entry_price) * 100, 2)
-        label = _outcome_label(outcome_pct, age_days)
+
+        if _invalid_outcome(outcome_pct):
+            label = "invalid"
+            anomaly_reason = anomaly_reason or "outcome_out_of_bounds"
+            resolved_at = None
+        else:
+            label = _outcome_label(outcome_pct, age_days)
+            resolved_at = datetime.now(timezone.utc).isoformat() if label != "pending" else None
 
         row.update(
             {
@@ -196,7 +231,8 @@ def run_outcome_update() -> str:
                 "age_days": age_days,
                 "outcome_pct": outcome_pct,
                 "outcome_label": label,
-                "resolved_at": datetime.now(timezone.utc).isoformat() if label != "pending" else None,
+                "resolved_at": resolved_at,
+                "anomaly": anomaly_reason,
             }
         )
         existing[signal_id] = row
@@ -232,7 +268,7 @@ def run_outcome_review() -> str:
         return output
 
     resolved = [r for r in rows if r.get("outcome_label") in {"win", "loss", "flat"}]
-    vals = [float(r.get("outcome_pct", 0.0)) for r in resolved]
+    vals = [float(r.get("outcome_pct", 0.0)) for r in resolved if not _invalid_outcome(float(r.get("outcome_pct", 0.0)))]
     labels: dict[str, int] = {}
     by_decision: dict[str, list[float]] = {}
     for row in rows:

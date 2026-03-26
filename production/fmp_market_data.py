@@ -6,6 +6,8 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Iterable, List, Optional
 
+from symbol_utils import internal_symbol_from_provider, provider_symbol
+
 BASE_URL = "https://financialmodelingprep.com/stable"
 
 
@@ -70,19 +72,22 @@ def _parse_dt(value: str) -> Optional[datetime]:
     return dt.astimezone(timezone.utc)
 
 
+
 def fetch_quotes(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
     cleaned = sorted({str(s).upper().strip() for s in symbols if str(s).strip()})
     if not cleaned:
         return {}
 
-    payload = _http_get_json("/quote", {"symbol": ",".join(cleaned)})
-    if not isinstance(payload, list):
-        return {}
+    provider_symbols = [provider_symbol(symbol, "fmp") for symbol in cleaned]
+    payload = _http_get_json("/quote", {"symbol": ",".join(provider_symbols)})
+    rows = payload if isinstance(payload, list) else []
 
     out: Dict[str, Dict[str, Any]] = {}
-    for row in payload:
-        symbol = str(row.get("symbol", "")).upper().strip()
-        if not symbol:
+    seen_provider: set[str] = set()
+    for row in rows:
+        provider_value = str(row.get("symbol", "")).upper().strip()
+        internal_value = internal_symbol_from_provider(provider_value, "fmp")
+        if not provider_value or not internal_value:
             continue
         price = row.get("price") or row.get("previousClose") or row.get("close")
         if price is None:
@@ -91,17 +96,45 @@ def fetch_quotes(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
             price_val = float(price)
         except (TypeError, ValueError):
             continue
-        out[symbol] = {
-            "symbol": symbol,
+        out[internal_value] = {
+            "symbol": internal_value,
+            "provider_symbol": provider_value,
             "price": price_val,
             "raw": row,
             "source": "fmp_quote",
         }
+        seen_provider.add(provider_value)
+
+    missing = [provider for provider in provider_symbols if provider not in seen_provider]
+    for provider_value in missing:
+        single = _http_get_json("/quote", {"symbol": provider_value})
+        if not isinstance(single, list):
+            continue
+        for row in single:
+            row_provider = str(row.get("symbol", "")).upper().strip()
+            internal_value = internal_symbol_from_provider(row_provider, "fmp")
+            if not row_provider or not internal_value or internal_value in out:
+                continue
+            price = row.get("price") or row.get("previousClose") or row.get("close")
+            if price is None:
+                continue
+            try:
+                price_val = float(price)
+            except (TypeError, ValueError):
+                continue
+            out[internal_value] = {
+                "symbol": internal_value,
+                "provider_symbol": row_provider,
+                "price": price_val,
+                "raw": row,
+                "source": "fmp_quote",
+            }
     return out
 
 
 def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 3) -> List[Dict[str, Any]]:
     symbol = str(symbol).upper().strip()
+    provider_value = provider_symbol(symbol, "fmp")
     if not symbol:
         return []
     now = datetime.now(timezone.utc)
@@ -109,7 +142,7 @@ def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 
     end = (now + timedelta(days=1)).date().isoformat()
     payload = _http_get_json(
         f"/historical-chart/{interval}",
-        {"symbol": symbol, "from": start, "to": end},
+        {"symbol": provider_value, "from": start, "to": end},
     )
     if not isinstance(payload, list):
         return []
@@ -132,13 +165,14 @@ def fetch_intraday_series(symbol: str, interval: str = "5min", days_back: int = 
 
 def fetch_eod_series(symbol: str, days_back: int = 10) -> List[Dict[str, Any]]:
     symbol = str(symbol).upper().strip()
+    provider_value = provider_symbol(symbol, "fmp")
     if not symbol:
         return []
     end = datetime.now(timezone.utc).date()
     start = end - timedelta(days=max(days_back, 3))
     payload = _http_get_json(
         "/historical-price-eod/light",
-        {"symbol": symbol, "from": start.isoformat(), "to": end.isoformat()},
+        {"symbol": provider_value, "from": start.isoformat(), "to": end.isoformat()},
     )
     if not isinstance(payload, list):
         return []

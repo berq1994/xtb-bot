@@ -4,6 +4,8 @@ import json
 from pathlib import Path
 from typing import Iterable
 
+from symbol_utils import filter_enabled_symbols
+
 from agents.portfolio_context_agent import load_portfolio_symbols
 from integrations.openbb_engine import build_news_sentiment, generate_market_overview
 from knowledge.company_memory import load_company_dossier, sync_company_memory
@@ -62,7 +64,7 @@ def _load_default_watchlist() -> list[str]:
     symbols = payload.get("symbols", [])
     if not isinstance(symbols, list):
         return []
-    return [str(s).strip() for s in symbols if str(s).strip()]
+    return filter_enabled_symbols(str(s).strip() for s in symbols if str(s).strip())
 
 
 def _load_portfolio_meta() -> dict[str, dict]:
@@ -133,12 +135,12 @@ def _resolve_watchlist(watchlist: Iterable[str] | None = None) -> list[str]:
     merged: list[str] = []
     seen: set[str] = set()
     for symbol in [*portfolio, *defaults]:
-        sym = str(symbol).strip()
+        sym = str(symbol).strip().upper()
         if not sym or sym in seen:
             continue
         seen.add(sym)
         merged.append(sym)
-    return merged
+    return filter_enabled_symbols(merged)
 
 
 def _sentiment_weight(label: str) -> float:
@@ -232,7 +234,15 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     portfolio_symbols = set(load_portfolio_symbols(limit=50))
     portfolio_meta = _load_portfolio_meta()
     theme_counts = _theme_counts(portfolio_meta)
-    symbols = [str(r.get("symbol", "")).strip().upper() for r in rows if str(r.get("symbol", "")).strip()]
+    symbols_ranked_for_news = sorted(
+        rows,
+        key=lambda r: (
+            1 if str(r.get("symbol", "")).strip().upper() in portfolio_symbols else 0,
+            abs(float(r.get("change_pct", 0.0) or 0.0)),
+        ),
+        reverse=True,
+    )
+    symbols = [str(r.get("symbol", "")).strip().upper() for r in symbols_ranked_for_news if str(r.get("symbol", "")).strip()]
     news_map = build_news_sentiment(symbols)
     weights = load_signal_weights()
 
