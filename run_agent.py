@@ -211,6 +211,11 @@ def main():
         print(run_autonomous_learning_loop())
         return
 
+    if mode == "fmp_smoke_test":
+        from agents.fmp_smoke_test_agent import run_fmp_smoke_test
+        print(run_fmp_smoke_test())
+        return
+
     if mode == "autonomous_core":
         from agents.autonomous_core_agent import run_autonomous_core
         print(run_autonomous_core())

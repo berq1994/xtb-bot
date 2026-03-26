@@ -38,5 +38,7 @@ jobs:
         with:
           path: .state
           key: xtb-state-autonomous-core
+      - name: FMP smoke test
+        run: python run_agent.py fmp_smoke_test
       - name: Run autonomous core
         run: python run_agent.py autonomous_core
