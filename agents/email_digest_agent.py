@@ -12,6 +12,7 @@ from xml.etree import ElementTree as ET
 import requests
 
 from agents.portfolio_context_agent import load_portfolio_symbols
+from cz_utils import news_title_cs, regime_cs, sentiment_cs, source_cs, status_cs, trend_cs
 from integrations.openbb_engine import build_news_sentiment, generate_market_overview
 from real_delivery.email_live import send_email_live
 
@@ -91,6 +92,7 @@ def _fetch_google_news(query: str, limit: int = 4) -> list[dict[str, str]]:
         items.append(
             {
                 "title": title,
+                "title_cs": news_title_cs(title),
                 "source": source,
                 "published": _normalize_text(item.findtext("pubDate") or ""),
                 "summary": _normalize_text(item.findtext("description") or ""),
@@ -141,7 +143,7 @@ def _build_subject(slot: str, now_local: datetime) -> str:
 def _render_items(items: Iterable[dict[str, str]], prefix: str = "- ") -> list[str]:
     lines: list[str] = []
     for item in items:
-        title = str(item.get("title", "")).strip()
+        title = str(item.get("title_cs") or item.get("title") or "").strip()
         source = str(item.get("source", "")).strip()
         if not title:
             continue
@@ -177,6 +179,7 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         if abs(change_pct) < 1.4:
             continue
         sentiment = news_map.get(symbol, {})
+        headline = (sentiment.get("headlines") or [""])[0]
         watch_rows.append(
             {
                 "symbol": symbol,
@@ -184,7 +187,8 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
                 "price": round(float(row.get("price", 0.0)), 2),
                 "trend": str(row.get("trend", "flat")),
                 "sentiment": str(sentiment.get("sentiment_label", "neutral")),
-                "headline": (sentiment.get("headlines") or [""])[0],
+                "headline": headline,
+                "headline_cs": news_title_cs(str(headline or "")),
             }
         )
         if len(watch_rows) >= 5:
@@ -197,16 +201,16 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
     lines.append("")
 
     lines.append("SVĚT")
-    lines.extend(_render_items(world_items or [{"title": "Bez nových ověřených světových titulků", "source": "fallback"}]))
+    lines.extend(_render_items(world_items or [{"title_cs": "Bez nových ověřených světových titulků", "source": "fallback"}]))
     lines.append("")
 
     lines.append("GEOPOLITIKA")
-    lines.extend(_render_items(geo_items or [{"title": "Bez nových ověřených geopolitických titulků", "source": "fallback"}]))
+    lines.extend(_render_items(geo_items or [{"title_cs": "Bez nových ověřených geopolitických titulků", "source": "fallback"}]))
     lines.append("")
 
     lines.append("AKCIE A PORTFOLIO")
-    lines.append(f"- Režim trhu: {portfolio_summary['regime']}")
-    lines.append(f"- Zdroj cen: {portfolio_summary['source']}")
+    lines.append(f"- Režim trhu: {regime_cs(str(portfolio_summary['regime']))}")
+    lines.append(f"- Zdroj cen: {source_cs(str(portfolio_summary['source']))}")
     lines.append(f"- Průměrná denní změna sledovaných pozic: {portfolio_summary['avg_change']}%")
     if portfolio_summary["leaders"]:
         leader_line = ", ".join(
@@ -222,19 +226,20 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         lines.append(f"- Nejslabší pozice: {laggard_line}")
     lines.append("")
 
-    lines.append("CO HNULO PORTFOLIEM")
+    lines.append("CO HÝBALO PORTFOLIEM")
     if watch_rows:
         for row in watch_rows:
-            headline = str(row.get("headline", "")).strip()
+            headline = str(row.get("headline_cs", "")).strip()
             note = f" | zpráva: {headline}" if headline else ""
             lines.append(
-                f"- {row['symbol']}: {row['change_pct']}% | cena {row['price']} | trend {row['trend']} | sentiment {row['sentiment']}{note}"
+                f"- {row['symbol']}: {row['change_pct']}% | cena {row['price']} | trend {trend_cs(str(row['trend']))} | sentiment {sentiment_cs(str(row['sentiment']))}{note}"
             )
     else:
         lines.append("- Žádná portfolio pozice dnes výrazněji nevybočuje.")
     lines.append("")
 
     lines.append("POZNÁMKA")
+    lines.append("- Titulky zpráv převádím do krátkého českého shrnutí, aby byl briefing čitelnější.")
     if slot == "morning":
         lines.append("- Ranní e-mail je čistý briefing: svět, geopolitika a stav tvých akcií před hlavní částí dne.")
     else:
@@ -279,10 +284,10 @@ def run_email_digest(slot: str = "morning", send: bool = True) -> str:
 
     OUTPUT_PATH.write_text(body, encoding="utf-8")
     report = [
-        f"EMAIL DIGEST ({slot})",
-        f"Subject: {subject}",
-        f"Status: {'sent' if delivery.get('delivered') else 'not_sent'}",
-        f"Reason: {delivery.get('reason', 'OK')}",
+        f"EMAIL DIGEST ({'ráno' if slot == 'morning' else 'večer'})",
+        f"Předmět: {subject}",
+        f"Stav: {status_cs('sent' if delivery.get('delivered') else 'not_sent')}",
+        f"Důvod: {delivery.get('reason', 'OK')}",
         "",
         body,
     ]

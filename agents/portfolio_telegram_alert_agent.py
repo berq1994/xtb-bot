@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from agents.portfolio_context_agent import load_portfolio_symbols
+from cz_utils import news_title_cs, sentiment_cs, source_cs, status_cs, trend_cs
 from integrations.openbb_engine import build_news_sentiment, generate_market_overview
 from production.telegram_http import send_telegram_http
 
@@ -94,6 +95,7 @@ def _build_candidates() -> list[dict[str, Any]]:
     overview = generate_market_overview(symbols)
     rows = list(overview.get("symbols", []))
     news_map = build_news_sentiment(symbols[:10]) if symbols else {}
+    source_label = source_cs(str(overview.get("source", rows[0].get("source", "unknown") if rows else "unknown")))
 
     candidates: list[dict[str, Any]] = []
     for row in rows:
@@ -123,6 +125,8 @@ def _build_candidates() -> list[dict[str, Any]]:
                 "sentiment": sentiment,
                 "category": category,
                 "headline": headline,
+                "headline_cs": news_title_cs(headline),
+                "source_label": source_label,
                 "severity": round(abs(change_pct) + (1.0 if sentiment == "negative" else 0.6 if sentiment == "positive" else 0.0), 2),
             }
         )
@@ -170,13 +174,13 @@ def build_portfolio_alert_message() -> tuple[str, list[dict[str, Any]], dict[str
         )
 
     lines = []
-    lines.append("PORTFOLIO ALERT")
+    lines.append("PORTFOLIO ALERT – OKAMŽITÁ KONTROLA")
     lines.append(now_local.strftime("%d.%m.%Y %H:%M %Z"))
     lines.append("")
     for item in selected:
-        headline = f" | zpráva: {item['headline']}" if item.get("headline") else ""
+        headline = f" | zpráva: {item['headline_cs']}" if item.get("headline_cs") else ""
         lines.append(
-            f"- {item['symbol']} {item['change_pct']}% | cena {item['price']} | trend {item['trend']} | sentiment {item['sentiment']}"
+            f"- {item['symbol']} {item['change_pct']}% | cena {item['price']} | trend {trend_cs(item['trend'])} | sentiment {sentiment_cs(item['sentiment'])} | zdroj cen {item['source_label']}"
         )
         lines.append(f"  Podnět: {_hint(item['category'])}{headline}")
     lines.append("")
@@ -201,13 +205,13 @@ def run_portfolio_telegram_alerts(send: bool = True) -> str:
     elif state:
         _save_state(state)
 
-    preview = message or "Žádná nová akční portfolio situace."
+    preview = message or "Žádná nová akční situace v portfoliu."
     OUTPUT_PATH.write_text(preview, encoding="utf-8")
     report = [
-        "PORTFOLIO TELEGRAM ALERTS",
-        f"Status: {'sent' if delivery.get('delivered') else 'not_sent'}",
-        f"Reason: {delivery.get('reason', 'OK')}",
-        f"Selected: {len(selected)}",
+        "TELEGRAM – PORTFOLIO ALERTY",
+        f"Stav: {status_cs('sent' if delivery.get('delivered') else 'not_sent')}",
+        f"Důvod: {delivery.get('reason', 'OK')}",
+        f"Počet alertů: {len(selected)}",
         "",
         preview,
     ]
