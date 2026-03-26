@@ -2,8 +2,6 @@ name: radar-earnings
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 7 * * 1"  # Pondělí 07:00 UTC (08:00 Prague)
 
 concurrency:
   group: radar-earnings

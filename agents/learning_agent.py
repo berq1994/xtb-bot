@@ -7,6 +7,7 @@ from statistics import mean
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
 OUTCOME_PATH = Path("data/outcome_tracking.jsonl")
 WEIGHTS_PATH = Path("data/phase5_signal_weights.json")
+USER_FEEDBACK_PATH = Path("data/user_feedback.jsonl")
 
 DEFAULT_WEIGHTS = {
     "trend": 1.0,
@@ -27,9 +28,11 @@ def _load_rows(path: Path) -> list[dict]:
             if not line:
                 continue
             try:
-                rows.append(json.loads(line))
+                row = json.loads(line)
             except json.JSONDecodeError:
                 continue
+            if isinstance(row, dict):
+                rows.append(row)
     return rows
 
 
@@ -62,6 +65,24 @@ def _build_history_index(rows: list[dict]) -> dict[str, dict]:
     return out
 
 
+def _feedback_bias() -> dict[str, float]:
+    rows = _load_rows(USER_FEEDBACK_PATH)[-100:]
+    if not rows:
+        return {}
+    useful_vals = [float(r.get("usefulness", 0.0)) for r in rows if r.get("usefulness") is not None]
+    if not useful_vals:
+        return {}
+    avg_usefulness = mean(useful_vals)
+    bias: dict[str, float] = {"overall_feedback_avg": round(avg_usefulness, 2)}
+    pos = [float(r.get("usefulness", 0.0)) for r in rows if str(r.get("sentiment_label", "")) == "positive"]
+    neg = [float(r.get("usefulness", 0.0)) for r in rows if str(r.get("sentiment_label", "")) == "negative"]
+    if pos:
+        bias["feedback_positive_avg"] = round(mean(pos), 2)
+    if neg:
+        bias["feedback_negative_avg"] = round(mean(neg), 2)
+    return bias
+
+
 def build_learning_summary(limit: int = 50) -> dict:
     history_rows = _load_rows(HISTORY_PATH)[-max(limit * 2, 50):]
     outcome_rows = _load_rows(OUTCOME_PATH)
@@ -85,6 +106,8 @@ def build_learning_summary(limit: int = 50) -> dict:
     trend_down: list[float] = []
     overlap_high: list[float] = []
     overlap_low: list[float] = []
+    data_source_perf: dict[str, list[float]] = {}
+    news_provider_perf: dict[str, list[float]] = {}
 
     for row in resolved:
         signal = row["signal"]
@@ -111,6 +134,10 @@ def build_learning_summary(limit: int = 50) -> dict:
             overlap_high.append(outcome_pct)
         else:
             overlap_low.append(outcome_pct)
+        data_source = str(features.get("data_source") or signal.get("source") or "unknown")
+        data_source_perf.setdefault(data_source, []).append(outcome_pct)
+        for provider in features.get("news_providers", []) or []:
+            news_provider_perf.setdefault(str(provider), []).append(outcome_pct)
 
     avg_outcome = round(mean(outcome_vals), 2) if outcome_vals else 0.0
     win_rate = 0.0
@@ -134,7 +161,23 @@ def build_learning_summary(limit: int = 50) -> dict:
         "trend_down_avg": round(mean(trend_down), 2) if trend_down else None,
         "overlap_high_avg": round(mean(overlap_high), 2) if overlap_high else None,
         "overlap_low_avg": round(mean(overlap_low), 2) if overlap_low else None,
+        "best_data_source": None,
+        "worst_data_source": None,
+        "best_news_provider": None,
+        "feedback": _feedback_bias(),
     }
+
+    if data_source_perf:
+        src_avg = {k: round(mean(v), 2) for k, v in data_source_perf.items() if v}
+        if src_avg:
+            diagnostics["best_data_source"] = max(src_avg, key=src_avg.get)
+            diagnostics["worst_data_source"] = min(src_avg, key=src_avg.get)
+            diagnostics["data_source_avg"] = src_avg
+    if news_provider_perf:
+        provider_avg = {k: round(mean(v), 2) for k, v in news_provider_perf.items() if v}
+        if provider_avg:
+            diagnostics["best_news_provider"] = max(provider_avg, key=provider_avg.get)
+            diagnostics["news_provider_avg"] = provider_avg
 
     return {
         "count": len(resolved),
@@ -179,6 +222,15 @@ def adapt_signal_weights(limit: int = 50) -> dict:
         weights["regime_alignment"] = min(1.8, round(weights["regime_alignment"] + 0.05, 2))
     elif summary["avg_outcome"] > 1.0:
         weights["regime_alignment"] = max(0.8, round(weights["regime_alignment"] - 0.02, 2))
+
+    feedback = diagnostics.get("feedback", {}) if isinstance(diagnostics.get("feedback"), dict) else {}
+    overall_feedback = feedback.get("overall_feedback_avg")
+    if overall_feedback is not None:
+        if overall_feedback >= 1.2:
+            weights["momentum"] = min(1.8, round(weights["momentum"] + 0.03, 2))
+        elif overall_feedback <= -1.0:
+            weights["risk_penalty"] = min(1.8, round(weights["risk_penalty"] + 0.05, 2))
+            weights["sentiment"] = max(0.7, round(weights["sentiment"] - 0.03, 2))
 
     _save_weights(weights)
     return weights

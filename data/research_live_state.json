@@ -1,7 +1,7 @@
 {
   "regime": "mixed",
   "source": "fallback",
-  "watchlist_size": 15,
+  "watchlist_size": 44,
   "portfolio_symbols": [
     "AMD",
     "CSG",
@@ -133,6 +133,161 @@
       "theme_overlap_penalty": 0.12
     },
     {
+      "symbol": "AAOI",
+      "price": 236.03,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "AAOI trading activity remains in focus",
+        "Market participants monitor AAOI for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "BTC-USD",
+      "price": 271.48,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "Crypto sentiment improves with risk appetite",
+        "Volatility remains elevated across digital assets"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "DPZ",
+      "price": 306.94,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "DPZ trading activity remains in focus",
+        "Market participants monitor DPZ for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "META",
+      "price": 342.39,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "META trading activity remains in focus",
+        "Market participants monitor META for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "PYPL",
+      "price": 377.85,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "PYPL trading activity remains in focus",
+        "Market participants monitor PYPL for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
       "symbol": "NVO",
       "price": 157.01,
       "change_pct": 0.65,
@@ -203,191 +358,6 @@
       "source_count": 1,
       "regime_alignment": 0.1,
       "theme_overlap_penalty": 0.12
-    },
-    {
-      "symbol": "MSFT",
-      "price": 114.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "cloud",
-        "software"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1100.78,
-      "avg_cost": 384.62,
-      "pnl_vs_cost_pct": -70.36,
-      "sentiment_label": "positive",
-      "sentiment_score": 4.0,
-      "category": "drawdown_control",
-      "priority_score": 2.38,
-      "headlines": [
-        "Cloud and AI narrative remains constructive",
-        "Large-cap quality bid supports resilience"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold",
-        "titulek má převahu pozitivních výrazů"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.29
-    },
-    {
-      "symbol": "PLTR",
-      "price": 121.79,
-      "change_pct": 0.65,
-      "trend": "up",
-      "momentum_5d": 0.98,
-      "momentum_20d": 1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "data",
-        "software"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 23.68,
-      "avg_cost": 128.0,
-      "pnl_vs_cost_pct": -4.85,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 2.36,
-      "headlines": [
-        "PLTR trading activity remains in focus",
-        "Market participants monitor PLTR for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.1,
-      "theme_overlap_penalty": 0.24
-    },
-    {
-      "symbol": "NBIS",
-      "price": 149.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "cloud",
-        "infra"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 411.38,
-      "avg_cost": 83.41,
-      "pnl_vs_cost_pct": 78.64,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 1.18,
-      "headlines": [
-        "NBIS trading activity remains in focus",
-        "Market participants monitor NBIS for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.17
-    },
-    {
-      "symbol": "NVDA",
-      "price": 184.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "semis"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1222.53,
-      "avg_cost": 186.44,
-      "pnl_vs_cost_pct": -1.31,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 1.11,
-      "headlines": [
-        "AI demand remains strong across data center cycle",
-        "Semiconductor leadership supports momentum"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.24
-    },
-    {
-      "symbol": "GRMN",
-      "price": 175.85,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "consumer_tech"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 48.95,
-      "avg_cost": 240.33,
-      "pnl_vs_cost_pct": -26.83,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 1.07,
-      "headlines": [
-        "GRMN trading activity remains in focus",
-        "Market participants monitor GRMN for follow-through"
-      ],
-      "reasons": [
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.0
     }
   ],
   "all_items": [
@@ -501,6 +471,161 @@
       "theme_overlap_penalty": 0.12
     },
     {
+      "symbol": "AAOI",
+      "price": 236.03,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "AAOI trading activity remains in focus",
+        "Market participants monitor AAOI for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "BTC-USD",
+      "price": 271.48,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "Crypto sentiment improves with risk appetite",
+        "Volatility remains elevated across digital assets"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "DPZ",
+      "price": 306.94,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "DPZ trading activity remains in focus",
+        "Market participants monitor DPZ for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "META",
+      "price": 342.39,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "META trading activity remains in focus",
+        "Market participants monitor META for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "PYPL",
+      "price": 377.85,
+      "change_pct": 1.3,
+      "trend": "up",
+      "momentum_5d": 1.95,
+      "momentum_20d": 3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "breakout_watch",
+      "priority_score": 2.95,
+      "headlines": [
+        "PYPL trading activity remains in focus",
+        "Market participants monitor PYPL for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
       "symbol": "NVO",
       "price": 157.01,
       "change_pct": 0.65,
@@ -649,6 +774,228 @@
       "theme_overlap_penalty": 0.24
     },
     {
+      "symbol": "AAPL",
+      "price": 227.47,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.8,
+      "headlines": [
+        "Consumer demand mixed ahead of product cycle",
+        "Mega-cap quality still supports defensive interest"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "BRK-B",
+      "price": 262.7,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.8,
+      "headlines": [
+        "BRK-B trading activity remains in focus",
+        "Market participants monitor BRK-B for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "CVNA",
+      "price": 297.92,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.8,
+      "headlines": [
+        "CVNA trading activity remains in focus",
+        "Market participants monitor CVNA for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "INTC",
+      "price": 333.15,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.8,
+      "headlines": [
+        "INTC trading activity remains in focus",
+        "Market participants monitor INTC for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "PANW",
+      "price": 368.38,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.8,
+      "headlines": [
+        "PANW trading activity remains in focus",
+        "Market participants monitor PANW for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "TTD",
+      "price": 403.61,
+      "change_pct": 0.65,
+      "trend": "up",
+      "momentum_5d": 0.98,
+      "momentum_20d": 1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.8,
+      "headlines": [
+        "TTD trading activity remains in focus",
+        "Market participants monitor TTD for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.1,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "CVX",
+      "price": 219.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "energy",
+        "oil"
+      ],
+      "accounts": [
+        "raiffeisenbank"
+      ],
+      "position_value": 835.8,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 1.23,
+      "headlines": [
+        "CVX trading activity remains in focus",
+        "Market participants monitor CVX for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.12
+    },
+    {
       "symbol": "NBIS",
       "price": 149.0,
       "change_pct": 0.0,
@@ -747,6 +1094,42 @@
       "headlines": [
         "GRMN trading activity remains in focus",
         "Market participants monitor GRMN for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "CSG",
+      "price": 210.62,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "defense",
+        "industrial"
+      ],
+      "accounts": [
+        "raiffeisenbank"
+      ],
+      "position_value": 23166.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "pullback_control",
+      "priority_score": 1.07,
+      "headlines": [
+        "CSG trading activity remains in focus",
+        "Market participants monitor CSG for follow-through"
       ],
       "reasons": [
         "další symboly jedou v rychlém fallback režimu"
@@ -868,6 +1251,42 @@
       "theme_overlap_penalty": 0.0
     },
     {
+      "symbol": "IGLD_HEDGED",
+      "price": 202.34,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "gold",
+        "hedge"
+      ],
+      "accounts": [
+        "raiffeisenbank"
+      ],
+      "position_value": 998.86,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "pullback_control",
+      "priority_score": 0.79,
+      "headlines": [
+        "IGLD_HEDGED trading activity remains in focus",
+        "Market participants monitor IGLD_HEDGED for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
       "symbol": "GOOGL",
       "price": 98.7,
       "change_pct": -1.3,
@@ -939,6 +1358,471 @@
       "source_count": 1,
       "regime_alignment": 0.0,
       "theme_overlap_penalty": 0.12
+    },
+    {
+      "symbol": "BKNG",
+      "price": 254.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.55,
+      "headlines": [
+        "BKNG trading activity remains in focus",
+        "Market participants monitor BKNG for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "COKE",
+      "price": 289.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.55,
+      "headlines": [
+        "COKE trading activity remains in focus",
+        "Market participants monitor COKE for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "IBIT",
+      "price": 324.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.55,
+      "headlines": [
+        "IBIT trading activity remains in focus",
+        "Market participants monitor IBIT for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "ORCL",
+      "price": 359.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.55,
+      "headlines": [
+        "ORCL trading activity remains in focus",
+        "Market participants monitor ORCL for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "SPY",
+      "price": 394.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.55,
+      "headlines": [
+        "SPY trading activity remains in focus",
+        "Market participants monitor SPY for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "BDC",
+      "price": 245.39,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.27,
+      "headlines": [
+        "BDC trading activity remains in focus",
+        "Market participants monitor BDC for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "CENX",
+      "price": 280.17,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.27,
+      "headlines": [
+        "CENX trading activity remains in focus",
+        "Market participants monitor CENX for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "GOOG",
+      "price": 314.94,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.27,
+      "headlines": [
+        "GOOG trading activity remains in focus",
+        "Market participants monitor GOOG for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "ONDS",
+      "price": 349.71,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.27,
+      "headlines": [
+        "ONDS trading activity remains in focus",
+        "Market participants monitor ONDS for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "SNDK",
+      "price": 384.48,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 0.27,
+      "headlines": [
+        "SNDK trading activity remains in focus",
+        "Market participants monitor SNDK for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "AMZN",
+      "price": 236.88,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": -0.01,
+      "headlines": [
+        "AMZN trading activity remains in focus",
+        "Market participants monitor AMZN for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "CAG",
+      "price": 271.43,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": -0.01,
+      "headlines": [
+        "CAG trading activity remains in focus",
+        "Market participants monitor CAG for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "GEV",
+      "price": 305.97,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": -0.01,
+      "headlines": [
+        "GEV trading activity remains in focus",
+        "Market participants monitor GEV for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "NFLX",
+      "price": 340.51,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": -0.01,
+      "headlines": [
+        "NFLX trading activity remains in focus",
+        "Market participants monitor NFLX for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
+    },
+    {
+      "symbol": "SCCO",
+      "price": 375.06,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": false,
+      "themes": [],
+      "accounts": [],
+      "position_value": 0.0,
+      "avg_cost": null,
+      "pnl_vs_cost_pct": null,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": -0.01,
+      "headlines": [
+        "SCCO trading activity remains in focus",
+        "Market participants monitor SCCO for follow-through"
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.0
     }
   ],
   "external_items": [

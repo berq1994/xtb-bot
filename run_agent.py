@@ -200,6 +200,12 @@ def main():
         print(run_learning_review())
         return
 
+
+    if mode == "autonomous_core":
+        from agents.autonomous_core_agent import run_autonomous_core
+        print(run_autonomous_core())
+        return
+
     if mode == "multi_agent_daily":
         from multi_agent.orchestrator_v2 import run_multi_agent_daily
         print(run_multi_agent_daily()["report"])
@@ -228,7 +234,7 @@ def main():
         "daily_briefing | telegram_preview | telegram_live | portfolio_context | intraday_levels | "
         "research_live | thesis_update | research_memory_update | research_review | "
         "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
-        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | "
+        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | autonomous_core | "
         "multi_agent_daily | multi_agent_weekly | multi_agent_audit"
     )
 

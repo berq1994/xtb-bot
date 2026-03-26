@@ -2,8 +2,6 @@ name: multi-agent-daily
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "20 6 * * 1-5"
 
 jobs:
   multi_agent_daily:

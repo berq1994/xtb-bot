@@ -104,6 +104,9 @@ def build_snapshot_payload(
                 "pnl_vs_cost_pct": top.get("pnl_vs_cost_pct"),
                 "news_count": top.get("news_count"),
                 "catalysts": top.get("catalysts", []),
+                "data_source": source,
+                "news_sources": top.get("news_sources", []),
+                "news_providers": top.get("news_providers", []),
             },
         }
 
@@ -150,6 +153,9 @@ def build_snapshot_payload(
             "pnl_vs_cost_pct": None,
             "news_count": news_map.get(symbol, {}).get("news_count", 0),
             "catalysts": news_map.get(symbol, {}).get("catalysts", []),
+            "data_source": overview.get("source", "unknown"),
+            "news_sources": news_map.get(symbol, {}).get("sources", []),
+            "news_providers": news_map.get(symbol, {}).get("providers", []),
         },
     }
 

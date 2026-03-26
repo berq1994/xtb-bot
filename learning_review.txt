@@ -11,6 +11,10 @@ Diagnostika:
 - trend_down_avg: None
 - overlap_high_avg: None
 - overlap_low_avg: None
+- best_data_source: None
+- worst_data_source: None
+- best_news_provider: None
+- feedback: {}
 Váhy:
 - trend: 1.0
 - momentum: 1.0

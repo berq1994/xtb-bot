@@ -2,8 +2,6 @@ name: block15a-autonomous-research
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/15 8-20 * * 1-5"
 
 jobs:
   block15a_autonomous:
