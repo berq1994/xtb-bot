@@ -83,6 +83,41 @@ def main():
         print(run_telegram_preview())
         return
 
+    if mode == "telegram_live":
+        from agents.telegram_live_agent import run_telegram_live
+        print(run_telegram_live())
+        return
+
+    if mode == "portfolio_context":
+        from agents.portfolio_context_agent import run_portfolio_context
+        print(run_portfolio_context())
+        return
+
+    if mode == "intraday_levels":
+        from agents.intraday_levels_agent import run_intraday_levels
+        print(run_intraday_levels())
+        return
+
+    if mode == "research_live":
+        from agents.live_research_agent import run_live_research
+        print(run_live_research())
+        return
+
+    if mode == "thesis_update":
+        from agents.thesis_agent import run_thesis_update
+        print(run_thesis_update())
+        return
+
+    if mode == "research_memory_update":
+        from agents.research_memory_agent import run_research_memory_update
+        print(run_research_memory_update())
+        return
+
+    if mode == "research_review":
+        from agents.research_review_agent import run_research_review
+        print(run_research_review())
+        return
+
     if mode == "log_signal":
         from agents.signal_history_agent import run_log_signal
         print(run_log_signal())
@@ -106,11 +141,6 @@ def main():
     if mode == "full_cycle":
         from agents.workflow_runner_agent import run_full_cycle
         print(run_full_cycle())
-        return
-
-    if mode == "telegram_live":
-        from agents.telegram_live_agent import run_telegram_live
-        print(run_telegram_live())
         return
 
     if mode == "schedule_plan":
@@ -138,6 +168,21 @@ def main():
         print(run_production_cycle())
         return
 
+    if mode == "multi_agent_daily":
+        from multi_agent.orchestrator_v2 import run_multi_agent_daily
+        print(run_multi_agent_daily()["report"])
+        return
+
+    if mode == "multi_agent_weekly":
+        from multi_agent.orchestrator_v2 import run_multi_agent_weekly
+        print(run_multi_agent_weekly()["report"])
+        return
+
+    if mode == "multi_agent_audit":
+        from multi_agent.orchestrator_v2 import run_multi_agent_audit
+        print(json.dumps(run_multi_agent_audit(), ensure_ascii=False, indent=2))
+        return
+
     if mode == "ai_walkforward":
         from backtesting.walk_forward import run_walk_forward
         result = run_walk_forward()
@@ -148,9 +193,11 @@ def main():
         "Použij: python run_agent.py "
         "backtest | ai_daily | ai_recalibrate | ai_walkforward | "
         "openbb_scan | openbb_signal | openbb_news | supervisor | xtb_ticket | "
-        "daily_briefing | telegram_preview | log_signal | "
-        "learning_review | rebalance_weights | performance_review | full_cycle | "
-        "telegram_live | schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle"
+        "daily_briefing | telegram_preview | telegram_live | portfolio_context | intraday_levels | "
+        "research_live | thesis_update | research_memory_update | research_review | "
+        "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
+        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | "
+        "multi_agent_daily | multi_agent_weekly | multi_agent_audit"
     )
 
 

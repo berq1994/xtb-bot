@@ -1,0 +1,36 @@
+LIVE RESEARCH
+Režim trhu: mixed
+Zdroj dat: fallback
+Velikost watchlistu: 15
+
+Hlavní priority:
+- EQT | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • EQT trading activity remains in focus
+  • Market participants monitor EQT for follow-through
+- FCX | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • FCX trading activity remains in focus
+  • Market participants monitor FCX for follow-through
+- FSLR | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • FSLR trading activity remains in focus
+  • Market participants monitor FSLR for follow-through
+- GOOGL | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • GOOGL trading activity remains in focus
+  • Market participants monitor GOOGL for follow-through
+- S | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • S trading activity remains in focus
+  • Market participants monitor S for follow-through
+- LEU | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • LEU trading activity remains in focus
+  • Market participants monitor LEU for follow-through
+- PLTR | score 2.15 | pohyb 0.65% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • PLTR trading activity remains in focus
+  • Market participants monitor PLTR for follow-through
+- NVO | score 2.15 | pohyb 0.65% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • NVO trading activity remains in focus
+  • Market participants monitor NVO for follow-through
+
+Doplňkové výzkumné vrstvy:
+- macro: Makro událost může změnit risk-on / risk-off režim dne | impact 0.69 | relevance 0.83
+- corporate: Firma zveřejnila významné firemní oznámení a nový výhled | impact 0.66 | relevance 0.81
+- earnings: Blíží se earnings event s možným vysokým gap riskem | impact 0.76 | relevance 0.92
+- geo: Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis | impact 0.8 | relevance 0.86

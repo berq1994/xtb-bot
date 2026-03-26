@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+RESEARCH_PATH = Path("research_live_report.txt")
+THESIS_PATH = Path("thesis_updates.txt")
+
 
 def _safe_dict(value):
     return value if isinstance(value, dict) else {}
@@ -19,6 +22,30 @@ def _parse_key_values(path: str) -> dict:
         key, value = line.split(":", 1)
         data[key.strip()] = value.strip()
     return data
+
+
+def _read_research_highlights(limit: int = 2) -> list[str]:
+    highlights: list[str] = []
+    if RESEARCH_PATH.exists():
+        for raw in RESEARCH_PATH.read_text(encoding="utf-8").splitlines():
+            line = raw.strip()
+            if line.startswith("-"):
+                highlights.append(line)
+            if len(highlights) >= limit:
+                break
+    return highlights
+
+
+def _read_thesis_lines(limit: int = 2) -> list[str]:
+    picks: list[str] = []
+    if THESIS_PATH.exists():
+        for raw in THESIS_PATH.read_text(encoding="utf-8").splitlines():
+            line = raw.strip()
+            if line.startswith("-"):
+                picks.append(line)
+            if len(picks) >= limit:
+                break
+    return picks
 
 
 def _build_from_generated_files() -> dict:
@@ -46,6 +73,8 @@ def _build_from_generated_files() -> dict:
         "regime": regime,
         "decision": decision,
         "ticket": ticket,
+        "research_highlights": _read_research_highlights(),
+        "thesis_lines": _read_thesis_lines(),
     }
 
 
@@ -77,6 +106,19 @@ def run_telegram_preview(payload=None) -> str:
         lines.append(
             f"Slabý: {weak.get('symbol', '-')} | {weak.get('change_pct', 0)}% | trend {weak.get('trend', '-')} | zprávy {weak.get('sentiment_label', '-')}"
         )
+
+    research_highlights = payload.get("research_highlights", [])
+    thesis_lines = payload.get("thesis_lines", [])
+    if isinstance(research_highlights, list) and research_highlights:
+        lines.append("")
+        lines.append("Live research:")
+        for item in research_highlights[:2]:
+            lines.append(item)
+    if isinstance(thesis_lines, list) and thesis_lines:
+        lines.append("")
+        lines.append("Thesis update:")
+        for item in thesis_lines[:2]:
+            lines.append(item)
 
     lines.append("")
     lines.append("Ruční XTB ticket")

@@ -1,0 +1,12 @@
+RESEARCH REVIEW
+Počet symbolů v paměti: 9
+Držené pozice v paměti: 9
+Negativní / kontrolní teze: 4
+Opakovaně řešené symboly (mentions >= 3): 7
+Mix akcí:
+- držet / přikoupit jen na pullbacku: 5
+- watchlist bez akce: 4
+Doporučení pro self-improvement:
+- Research je silně zaměřený na držené pozice – přidej více nových témat z watchlistu.
+- Více tickerů má oslabenou tezi – zpřísni breakout vstupy a preferuj pullbacky.
+- Několik symbolů se opakuje příliš často – zvaž deduplikaci a category caps.

@@ -1,282 +1,290 @@
 INTRADAY LEVELS
-Režim trhu: risk_off
+Režim trhu: mixed
+Zdroj dat: fallback
 
-AAPL | cena 258.23 | trend down
-- koupit na pullbacku pod: 247.04
-- koupit breakout nad: 266.49
-- částečně vybírat nad: 272.43
-- ochranný stop pod: 245.83
+AAPL | cena 98.7 | trend down
+- koupit na pullbacku pod: 94.42
+- koupit breakout nad: 101.86
+- částečně vybírat nad: 104.13
+- ochranný stop pod: 93.96
 - portfolio kontext: mírné tematické překrytí
 
-AMD | cena 203.13 | trend up
-- koupit na pullbacku pod: 179.77
-- koupit breakout nad: 218.3
-- částečně vybírat nad: 230.55
-- ochranný stop pod: 177.13
+AMD | cena 106.3 | trend down
+- koupit na pullbacku pod: 96.02
+- koupit breakout nad: 118.21
+- částečně vybírat nad: 120.65
+- ochranný stop pod: 92.69
 - portfolio kontext: už držená pozice
 
-AAOI | cena 116.21 | trend up
-- koupit na pullbacku pod: 114.47
-- koupit breakout nad: 117.14
-- částečně vybírat nad: 120.28
-- ochranný stop pod: 112.96
+AAOI | cena 114.0 | trend flat
+- koupit na pullbacku pod: 112.29
+- koupit breakout nad: 114.91
+- částečně vybírat nad: 117.99
+- ochranný stop pod: 110.81
 - portfolio kontext: nové téma / diverzifikace
 
-AMZN | cena 210.72 | trend down
-- koupit na pullbacku pod: 193.86
-- koupit breakout nad: 229.05
-- částečně vybírat nad: 233.9
-- ochranný stop pod: 189.02
+AMZN | cena 121.79 | trend up
+- koupit na pullbacku pod: 110.83
+- koupit breakout nad: 128.85
+- částečně vybírat nad: 135.19
+- ochranný stop pod: 109.25
 - portfolio kontext: vysoké překrytí AI/semis
 
-BDC | cena 121.21 | trend down
-- koupit na pullbacku pod: 115.96
-- koupit breakout nad: 125.09
-- částečně vybírat nad: 127.88
-- ochranný stop pod: 115.39
+BDC | cena 129.66 | trend up
+- koupit na pullbacku pod: 125.12
+- koupit breakout nad: 132.43
+- částečně vybírat nad: 136.79
+- ochranný stop pod: 123.44
 - portfolio kontext: mírné tematické překrytí
 
-BKNG | cena 4306.93 | trend down
-- koupit na pullbacku pod: 4177.72
-- koupit breakout nad: 4358.61
-- částečně vybírat nad: 4457.67
-- ochranný stop pod: 4186.34
+BKNG | cena 133.25 | trend down
+- koupit na pullbacku pod: 129.25
+- koupit breakout nad: 134.85
+- částečně vybírat nad: 137.91
+- ochranný stop pod: 129.52
 - portfolio kontext: nové téma / diverzifikace
 
-BRK-B | cena 490.47 | trend down
-- koupit na pullbacku pod: 475.76
-- koupit breakout nad: 496.36
-- částečně vybírat nad: 507.64
-- ochranný stop pod: 476.74
+BRK-B | cena 141.08 | trend down
+- koupit na pullbacku pod: 136.85
+- koupit breakout nad: 142.77
+- částečně vybírat nad: 146.02
+- ochranný stop pod: 137.13
 - portfolio kontext: nové téma / diverzifikace
 
-BTC-USD | cena 70015.99 | trend up
-- koupit na pullbacku pod: 67565.43
-- koupit breakout nad: 71509.66
-- částečně vybírat nad: 73866.87
-- ochranný stop pod: 66655.22
+BTC-USD | cena 149.0 | trend flat
+- koupit na pullbacku pod: 143.78
+- koupit breakout nad: 152.18
+- částečně vybírat nad: 157.19
+- ochranný stop pod: 141.85
 - portfolio kontext: mírné tematické překrytí
 
-CAG | cena 16.58 | trend down
-- koupit na pullbacku pod: 16.08
-- koupit breakout nad: 16.78
-- částečně vybírat nad: 17.16
-- ochranný stop pod: 16.12
+CAG | cena 157.01 | trend up
+- koupit na pullbacku pod: 154.65
+- koupit breakout nad: 158.27
+- částečně vybírat nad: 162.51
+- ochranný stop pod: 152.61
 - portfolio kontext: nové téma / diverzifikace
 
-CENX | cena 58.33 | trend up
-- koupit na pullbacku pod: 56.29
-- koupit breakout nad: 59.57
-- částečně vybírat nad: 61.54
-- ochranný stop pod: 55.53
+CENX | cena 165.12 | trend up
+- koupit na pullbacku pod: 159.34
+- koupit breakout nad: 168.64
+- částečně vybírat nad: 174.2
+- ochranný stop pod: 157.19
 - portfolio kontext: mírné tematické překrytí
 
-COKE | cena 209.97 | trend up
-- koupit na pullbacku pod: 206.82
-- koupit breakout nad: 211.65
-- částečně vybírat nad: 217.32
-- ochranný stop pod: 204.09
+COKE | cena 167.79 | trend down
+- koupit na pullbacku pod: 162.76
+- koupit breakout nad: 169.8
+- částečně vybírat nad: 173.66
+- ochranný stop pod: 163.09
 - portfolio kontext: nové téma / diverzifikace
 
-CVNA | cena 304.58 | trend down
-- koupit na pullbacku pod: 295.44
-- koupit breakout nad: 308.23
-- částečně vybírat nad: 315.24
-- ochranný stop pod: 296.05
-- portfolio kontext: nové téma / diverzifikace
-
-CVX | cena 192.81 | trend up
-- koupit na pullbacku pod: 170.64
-- koupit breakout nad: 207.21
-- částečně vybírat nad: 218.84
-- ochranný stop pod: 168.13
+CSG | cena 175.85 | trend down
+- koupit na pullbacku pod: 158.85
+- koupit breakout nad: 195.55
+- částečně vybírat nad: 199.59
+- ochranný stop pod: 153.34
 - portfolio kontext: už držená pozice
 
-DPZ | cena 389.8 | trend down
-- koupit na pullbacku pod: 378.11
-- koupit breakout nad: 394.48
-- částečně vybírat nad: 403.44
-- ochranný stop pod: 378.89
+CVNA | cena 184.0 | trend flat
+- koupit na pullbacku pod: 181.24
+- koupit breakout nad: 185.47
+- částečně vybírat nad: 190.44
+- ochranný stop pod: 178.85
 - portfolio kontext: nové téma / diverzifikace
 
-EQT | cena 64.14 | trend up
-- koupit na pullbacku pod: 56.76
-- koupit breakout nad: 68.93
-- částečně vybírat nad: 72.8
-- ochranný stop pod: 55.93
+CVX | cena 192.24 | trend up
+- koupit na pullbacku pod: 170.13
+- koupit breakout nad: 206.59
+- částečně vybírat nad: 218.19
+- ochranný stop pod: 167.63
 - portfolio kontext: už držená pozice
 
-FCX | cena 60.89 | trend down
-- koupit na pullbacku pod: 55.0
-- koupit breakout nad: 67.71
-- částečně vybírat nad: 69.11
-- ochranný stop pod: 53.1
+DPZ | cena 200.57 | trend up
+- koupit na pullbacku pod: 197.56
+- koupit breakout nad: 202.17
+- částečně vybírat nad: 207.59
+- ochranný stop pod: 194.95
+- portfolio kontext: nové téma / diverzifikace
+
+EQT | cena 202.34 | trend down
+- koupit na pullbacku pod: 182.78
+- koupit breakout nad: 225.0
+- částečně vybírat nad: 229.66
+- ochranný stop pod: 176.44
 - portfolio kontext: už držená pozice
 
-GEV | cena 840.42 | trend up
-- koupit na pullbacku pod: 811.01
-- koupit breakout nad: 858.35
-- částečně vybírat nad: 886.64
-- ochranný stop pod: 800.08
+FCX | cena 210.62 | trend down
+- koupit na pullbacku pod: 190.26
+- koupit breakout nad: 234.21
+- částečně vybírat nad: 239.05
+- ochranný stop pod: 183.66
+- portfolio kontext: už držená pozice
+
+GEV | cena 219.0 | trend flat
+- koupit na pullbacku pod: 211.33
+- koupit breakout nad: 223.67
+- částečně vybírat nad: 231.04
+- ochranný stop pod: 208.49
 - portfolio kontext: mírné tematické překrytí
 
-GOOG | cena 307.13 | trend up
-- koupit na pullbacku pod: 279.49
-- koupit breakout nad: 324.94
-- částečně vybírat nad: 340.91
-- ochranný stop pod: 275.5
+GOOG | cena 227.47 | trend up
+- koupit na pullbacku pod: 207.0
+- koupit breakout nad: 240.66
+- částečně vybírat nad: 252.49
+- ochranný stop pod: 204.04
 - portfolio kontext: vysoké překrytí AI/semis
 
-GRMN | cena 232.8 | trend down
-- koupit na pullbacku pod: 210.3
-- koupit breakout nad: 258.87
-- částečně vybírat nad: 264.23
-- ochranný stop pod: 203.0
+GRMN | cena 236.03 | trend up
+- koupit na pullbacku pod: 208.89
+- koupit breakout nad: 253.65
+- částečně vybírat nad: 267.89
+- ochranný stop pod: 205.82
 - portfolio kontext: už držená pozice
 
-IBIT | cena 39.88 | trend up
-- koupit na pullbacku pod: 38.48
-- koupit breakout nad: 40.73
-- částečně vybírat nad: 42.07
-- ochranný stop pod: 37.97
+IBIT | cena 236.88 | trend down
+- koupit na pullbacku pod: 226.62
+- koupit breakout nad: 244.46
+- částečně vybírat nad: 249.91
+- ochranný stop pod: 225.51
 - portfolio kontext: mírné tematické překrytí
 
-INTC | cena 47.08 | trend up
-- koupit na pullbacku pod: 42.84
-- koupit breakout nad: 49.81
-- částečně vybírat nad: 52.26
-- ochranný stop pod: 42.23
+INTC | cena 245.39 | trend down
+- koupit na pullbacku pod: 225.76
+- koupit breakout nad: 266.74
+- částečně vybírat nad: 272.38
+- ochranný stop pod: 220.11
 - portfolio kontext: vysoké překrytí AI/semis
 
-IREN | cena 40.96 | trend up
-- koupit na pullbacku pod: 36.25
-- koupit breakout nad: 44.02
-- částečně vybírat nad: 46.49
-- ochranný stop pod: 35.72
+IREN | cena 254.0 | trend flat
+- koupit na pullbacku pod: 224.79
+- koupit breakout nad: 272.97
+- částečně vybírat nad: 288.29
+- ochranný stop pod: 221.49
 - portfolio kontext: už držená pozice
 
-LEU | cena 204.99 | trend up
-- koupit na pullbacku pod: 181.42
-- koupit breakout nad: 220.3
-- částečně vybírat nad: 232.66
-- ochranný stop pod: 178.75
+LEU | cena 262.7 | trend up
+- koupit na pullbacku pod: 232.49
+- koupit breakout nad: 282.31
+- částečně vybírat nad: 298.16
+- ochranný stop pod: 229.07
 - portfolio kontext: už držená pozice
 
-META | cena 648.74 | trend down
-- koupit na pullbacku pod: 596.84
-- koupit breakout nad: 705.18
-- částečně vybírat nad: 720.1
-- ochranný stop pod: 581.92
+META | cena 271.48 | trend up
+- koupit na pullbacku pod: 247.05
+- koupit breakout nad: 287.23
+- částečně vybírat nad: 301.34
+- ochranný stop pod: 243.52
 - portfolio kontext: vysoké překrytí AI/semis
 
-MSFT | cena 404.41 | trend down
-- koupit na pullbacku pod: 365.32
-- koupit breakout nad: 449.7
-- částečně vybírat nad: 459.01
-- ochranný stop pod: 352.65
+MSFT | cena 271.43 | trend down
+- koupit na pullbacku pod: 245.19
+- koupit breakout nad: 301.83
+- částečně vybírat nad: 308.07
+- ochranný stop pod: 236.69
 - portfolio kontext: už držená pozice
 
-NBIS | cena 109.85 | trend up
-- koupit na pullbacku pod: 97.22
-- koupit breakout nad: 118.05
-- částečně vybírat nad: 124.68
-- ochranný stop pod: 95.79
+NBIS | cena 280.17 | trend down
+- koupit na pullbacku pod: 253.09
+- koupit breakout nad: 311.55
+- částečně vybírat nad: 317.99
+- ochranný stop pod: 244.31
 - portfolio kontext: už držená pozice
 
-NFLX | cena 95.23 | trend down
-- koupit na pullbacku pod: 92.37
-- koupit breakout nad: 96.37
-- částečně vybírat nad: 98.56
-- ochranný stop pod: 92.56
+NFLX | cena 289.0 | trend flat
+- koupit na pullbacku pod: 284.67
+- koupit breakout nad: 291.31
+- částečně vybírat nad: 299.11
+- ochranný stop pod: 280.91
 - portfolio kontext: nové téma / diverzifikace
 
-NVDA | cena 184.62 | trend up
-- koupit na pullbacku pod: 163.39
-- koupit breakout nad: 198.4
-- částečně vybírat nad: 209.54
-- ochranný stop pod: 160.99
+NVDA | cena 297.92 | trend up
+- koupit na pullbacku pod: 263.66
+- koupit breakout nad: 320.16
+- částečně vybírat nad: 338.14
+- ochranný stop pod: 259.79
 - portfolio kontext: už držená pozice
 
-ONDS | cena 10.02 | trend up
-- koupit na pullbacku pod: 9.67
-- koupit breakout nad: 10.23
-- částečně vybírat nad: 10.57
-- ochranný stop pod: 9.54
+ONDS | cena 306.94 | trend up
+- koupit na pullbacku pod: 296.2
+- koupit breakout nad: 313.49
+- částečně vybírat nad: 323.82
+- ochranný stop pod: 292.21
 - portfolio kontext: mírné tematické překrytí
 
-ORCL | cena 166.3 | trend up
-- koupit na pullbacku pod: 160.48
-- koupit breakout nad: 169.85
-- částečně vybírat nad: 175.45
-- ochranný stop pod: 158.32
+ORCL | cena 305.97 | trend down
+- koupit na pullbacku pod: 292.71
+- koupit breakout nad: 315.76
+- částečně vybírat nad: 322.8
+- ochranný stop pod: 291.28
 - portfolio kontext: mírné tematické překrytí
 
-PANW | cena 166.64 | trend up
-- koupit na pullbacku pod: 160.81
-- koupit breakout nad: 170.19
-- částečně vybírat nad: 175.81
-- ochranný stop pod: 158.64
+PANW | cena 314.94 | trend down
+- koupit na pullbacku pod: 301.29
+- koupit breakout nad: 325.02
+- částečně vybírat nad: 332.26
+- ochranný stop pod: 299.82
 - portfolio kontext: mírné tematické překrytí
 
-PLTR | cena 154.41 | trend up
-- koupit na pullbacku pod: 136.65
-- koupit breakout nad: 165.94
-- částečně vybírat nad: 175.26
-- ochranný stop pod: 134.65
+PLTR | cena 324.0 | trend flat
+- koupit na pullbacku pod: 286.74
+- koupit breakout nad: 348.19
+- částečně vybírat nad: 367.74
+- ochranný stop pod: 282.53
 - portfolio kontext: už držená pozice
 
-PYPL | cena 45.45 | trend down
-- koupit na pullbacku pod: 44.09
-- koupit breakout nad: 46.0
-- částečně vybírat nad: 47.04
-- ochranný stop pod: 44.18
+PYPL | cena 333.15 | trend up
+- koupit na pullbacku pod: 328.15
+- koupit breakout nad: 335.82
+- částečně vybírat nad: 344.81
+- ochranný stop pod: 323.82
 - portfolio kontext: nové téma / diverzifikace
 
-S | cena 14.27 | trend up
-- koupit na pullbacku pod: 12.63
-- koupit breakout nad: 15.34
-- částečně vybírat nad: 16.2
-- ochranný stop pod: 12.44
+S | cena 342.39 | trend up
+- koupit na pullbacku pod: 303.02
+- koupit breakout nad: 367.96
+- částečně vybírat nad: 388.61
+- ochranný stop pod: 298.56
 - portfolio kontext: už držená pozice
 
-SCCO | cena 188.43 | trend down
-- koupit na pullbacku pod: 180.26
-- koupit breakout nad: 194.46
-- částečně vybírat nad: 198.79
-- ochranný stop pod: 179.39
+SCCO | cena 340.51 | trend down
+- koupit na pullbacku pod: 325.75
+- koupit breakout nad: 351.41
+- částečně vybírat nad: 359.24
+- ochranný stop pod: 324.17
 - portfolio kontext: mírné tematické překrytí
 
-SNDK | cena 647.53 | trend up
-- koupit na pullbacku pod: 589.25
-- koupit breakout nad: 685.09
-- částečně vybírat nad: 718.76
-- ochranný stop pod: 580.83
+SNDK | cena 349.71 | trend down
+- koupit na pullbacku pod: 321.73
+- koupit breakout nad: 380.13
+- částečně vybírat nad: 388.18
+- ochranný stop pod: 313.69
 - portfolio kontext: vysoké překrytí AI/semis
 
-SPY | cena 670.98 | trend down
-- koupit na pullbacku pod: 650.85
-- koupit breakout nad: 679.03
-- částečně vybírat nad: 694.46
-- ochranný stop pod: 652.19
+SPY | cena 359.0 | trend flat
+- koupit na pullbacku pod: 353.62
+- koupit breakout nad: 361.87
+- částečně vybírat nad: 371.56
+- ochranný stop pod: 348.95
 - portfolio kontext: nové téma / diverzifikace
 
-TSM | cena 345.27 | trend down
-- koupit na pullbacku pod: 311.89
-- koupit breakout nad: 383.94
-- částečně vybírat nad: 391.88
-- ochranný stop pod: 301.08
+TSM | cena 368.38 | trend up
+- koupit na pullbacku pod: 326.02
+- koupit breakout nad: 395.89
+- částečně vybírat nad: 418.11
+- ochranný stop pod: 321.23
 - portfolio kontext: už držená pozice
 
-TTD | cena 27.59 | trend down
-- koupit na pullbacku pod: 26.39
-- koupit breakout nad: 28.47
-- částečně vybírat nad: 29.11
-- ochranný stop pod: 26.27
+TTD | cena 377.85 | trend up
+- koupit na pullbacku pod: 364.63
+- koupit breakout nad: 385.91
+- částečně vybírat nad: 398.63
+- ochranný stop pod: 359.71
 - portfolio kontext: mírné tematické překrytí
 
-NVO | cena 38.83 | trend down
-- koupit na pullbacku pod: 35.08
-- koupit breakout nad: 43.18
-- částečně vybírat nad: 44.07
-- ochranný stop pod: 33.86
+NVO | cena 375.06 | trend down
+- koupit na pullbacku pod: 338.8
+- koupit breakout nad: 417.07
+- částečně vybírat nad: 425.69
+- ochranný stop pod: 327.05
 - portfolio kontext: už držená pozice

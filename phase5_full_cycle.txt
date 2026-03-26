@@ -1,112 +1,525 @@
-DAILY BRIEFING
+DENNÍ BRIEFING
 ========================================
 
-OPENBB SIGNAL BUNDLE
-Market regime: mixed
-Data source: fallback
+OPENBB SIGNÁLOVÝ BALÍČEK
+Režim trhu: smíšený
+Zdroj dat: fallback
 
-Primary long candidate:
-- BTC-USD | move 1.3% | trend up | price 129.66
-- Action: watch breakout / manual XTB confirmation
+Hlavní kandidát na long:
+- EQT | pohyb 1.3% | trend rostoucí | cena 129.66
+- Akce: sledovat breakout / ruční potvrzení v XTB
 
-Primary weak candidate:
-- SPY | move -1.3% | trend down | price 98.7
-- Action: watch weakness / hedge / avoid impulsive long
+Hlavní slabý kandidát:
+- GOOGL | pohyb -1.3% | trend klesající | cena 98.7
+- Akce: sledovat slabost / hedge / nebrat impulzivní long
 
-Manual execution checklist:
-1. Confirm chart on XTB
-2. Confirm spread and volatility
-3. Set stop loss before entry
-4. Risk max 1% per trade
+Kontrolní seznam pro ruční vstup:
+1. Potvrdit graf v XTB
+2. Potvrdit spread a volatilitu
+3. Nastavit stop loss ještě před vstupem
+4. Riziko max. 1 % na obchod
 
-OPENBB NEWS / SENTIMENT
-Market regime: mixed
+OPENBB ZPRÁVY / SENTIMENT
+Režim trhu: smíšený
 
-BTC-USD: negative (score -1)
-- Crypto sentiment improves with risk appetite
-- Volatility remains elevated across digital assets
+EQT: neutrální (skóre 0)
+- Bez doplňujícího komentáře
 
-AAPL: positive (score 2)
-- Consumer demand mixed ahead of product cycle
-- Mega-cap quality still supports defensive interest
+FCX: neutrální (skóre 0)
+- Bez doplňujícího komentáře
 
-IWM: neutral (score 0)
-- IWM trading activity remains in focus
-- Market participants monitor IWM for follow-through
+FSLR: neutrální (skóre 0)
+- Bez doplňujícího komentáře
 
-SPY: neutral (score 0)
-- SPY trading activity remains in focus
-- Market participants monitor SPY for follow-through
+GOOGL: neutrální (skóre 0)
+- Bez doplňujícího komentáře
 
-GLD: neutral (score 0)
-- GLD trading activity remains in focus
-- Market participants monitor GLD for follow-through
+S: neutrální (skóre 0)
+- Bez doplňujícího komentáře
 
-QQQ: neutral (score 0)
-- QQQ trading activity remains in focus
-- Market participants monitor QQQ for follow-through
+LEU: neutrální (skóre 0)
+- Bez doplňujícího komentáře
 
-SUPERVISOR DECISION
-Market regime: mixed
-Decision: watch_hedge
-Lead setup: BTC-USD | 1.3% | trend up | news negative
-Weak setup: SPY | -1.3% | trend down | news neutral
-Next step:
-- Avoid impulsive long entries
-- Consider defensive hedge review
+ROZHODNUTÍ SUPERVISORU
+Režim trhu: smíšený
+Rozhodnutí: sledovat long
 
-XTB MANUAL TICKET
-Symbol: BTC-USD
-Direction: long
-Market regime: mixed
-Entry reference: 129.66
-Stop loss: 127.72
-Take profit: 133.55
-News sentiment: negative
-Checklist:
-- Confirm 15m and 1h chart structure
-- Confirm spread before entry
-- Max 1% account risk
-- Enter only on chart confirmation
+Hlavní setup: EQT | 1.3% | trend rostoucí | zprávy neutrální
+Slabý setup: GOOGL | -1.3% | trend klesající | zprávy neutrální
 
-TELEGRAM PREVIEW
-📊 Daily market intelligence
-Regime: mixed
-Decision: watch_hedge
-Lead: BTC-USD | 1.3% | trend up | news negative
-Weak: SPY | -1.3% | trend down | news neutral
+Důvod: Lead setup je silný a může nabídnout pokračování trendu.
 
-🎯 Manual XTB ticket
-Symbol: BTC-USD
-Direction: long
-Entry: 129.66
-SL: 127.72
-TP: 133.55
-Sentiment: negative
+RUČNÍ XTB TICKET
+Symbol: EQT
+Směr: long
+Režim trhu: smíšený
+Zdroj dat: fallback
+Vstupní reference: 129.66
+Stop loss: 128.26
+Take profit: 132.25
+Odhad volatility: 1.08%
+Sentiment zpráv: neutrální
+Kontrolní seznam:
+- Potvrdit strukturu na 15m a 1h grafu
+- Potvrdit spread před vstupem
+- Max. riziko účtu 1 %
+- Vstoupit jen po potvrzení v grafu
 
-Checklist:
-• Confirm chart on XTB
-• Confirm spread and volatility
-• Risk max 1%
-• Enter only after confirmation
+PORTFOLIO CONTEXT
+Počet pozic: 21
+Měnová expozice:
+- CZK: 23166.0
+- EUR: 2882.86
+- USD: 4201.36
+Hlavní témata:
+- defense: 23166.0
+- industrial: 23166.0
+- ai: 4469.28
+- semis: 2847.96
+- cloud: 1512.16
+- software: 1179.34
+- energy: 1144.63
+- gold: 998.86
+- hedge: 998.86
+- oil: 835.8
+Nejdůležitější risk flagy:
+- high_ai_semiconductor_overlap
+- high_usd_exposure
+- clustered_growth_risk
+- moderate_energy_overlap
+Použité override váhy:
+- new_ai_long_penalty: 0.3
+- new_semiconductor_long_penalty: 0.35
+- new_energy_long_penalty: 0.15
+- gold_hedge_bonus: 0.05
+- non_correlated_sector_bonus: 0.2
+- usd_concentration_penalty: 0.1
+- existing_position_trim_bias: 0.08
+Sledované symboly v portfoliu:
+AMD, CSG, CVX, EQT, FCX, FSLR, GOOGL, GRMN, IGLD_HEDGED, IREN, LEU, MSFT, NBIS, NVDA, NVO, PLTR, S, TSM
 
-SIGNAL LOGGED
-Timestamp: 2026-03-12T08:49:26
-Regime: mixed
-Decision: watch_hedge
-Ticket symbol: BTC-USD
-History file: data/openbb_signal_history.jsonl
-Journal file: data/openbb_trade_journal.txt
+LIVE RESEARCH
+Režim trhu: mixed
+Zdroj dat: fallback
+Velikost watchlistu: 15
 
-PHASE 5 LEARNING REVIEW
-History samples: 2
-Average quality score: 1.9
-Decision mix:
-- watch_hedge: 2
-Weights:
+Hlavní priority:
+- EQT | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • EQT trading activity remains in focus
+  • Market participants monitor EQT for follow-through
+- FCX | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • FCX trading activity remains in focus
+  • Market participants monitor FCX for follow-through
+- FSLR | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • FSLR trading activity remains in focus
+  • Market participants monitor FSLR for follow-through
+- GOOGL | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • GOOGL trading activity remains in focus
+  • Market participants monitor GOOGL for follow-through
+- S | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • S trading activity remains in focus
+  • Market participants monitor S for follow-through
+- LEU | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • LEU trading activity remains in focus
+  • Market participants monitor LEU for follow-through
+- PLTR | score 2.15 | pohyb 0.65% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • PLTR trading activity remains in focus
+  • Market participants monitor PLTR for follow-through
+- NVO | score 2.15 | pohyb 0.65% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  • NVO trading activity remains in focus
+  • Market participants monitor NVO for follow-through
+
+Doplňkové výzkumné vrstvy:
+- macro: Makro událost může změnit risk-on / risk-off režim dne | impact 0.69 | relevance 0.83
+- corporate: Firma zveřejnila významné firemní oznámení a nový výhled | impact 0.66 | relevance 0.81
+- earnings: Blíží se earnings event s možným vysokým gap riskem | impact 0.76 | relevance 0.92
+- geo: Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis | impact 0.8 | relevance 0.86
+
+THESIS UPDATE
+Režim trhu: mixed
+
+- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- FSLR | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- GOOGL | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- S | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- LEU | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- PLTR | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- NVO | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+
+INTRADAY LEVELS
+Režim trhu: mixed
+Zdroj dat: fallback
+
+AAPL | cena 98.7 | trend down
+- koupit na pullbacku pod: 94.42
+- koupit breakout nad: 101.86
+- částečně vybírat nad: 104.13
+- ochranný stop pod: 93.96
+- portfolio kontext: mírné tematické překrytí
+
+AMD | cena 106.3 | trend down
+- koupit na pullbacku pod: 96.02
+- koupit breakout nad: 118.21
+- částečně vybírat nad: 120.65
+- ochranný stop pod: 92.69
+- portfolio kontext: už držená pozice
+
+AAOI | cena 114.0 | trend flat
+- koupit na pullbacku pod: 112.29
+- koupit breakout nad: 114.91
+- částečně vybírat nad: 117.99
+- ochranný stop pod: 110.81
+- portfolio kontext: nové téma / diverzifikace
+
+AMZN | cena 121.79 | trend up
+- koupit na pullbacku pod: 110.83
+- koupit breakout nad: 128.85
+- částečně vybírat nad: 135.19
+- ochranný stop pod: 109.25
+- portfolio kontext: vysoké překrytí AI/semis
+
+BDC | cena 129.66 | trend up
+- koupit na pullbacku pod: 125.12
+- koupit breakout nad: 132.43
+- částečně vybírat nad: 136.79
+- ochranný stop pod: 123.44
+- portfolio kontext: mírné tematické překrytí
+
+BKNG | cena 133.25 | trend down
+- koupit na pullbacku pod: 129.25
+- koupit breakout nad: 134.85
+- částečně vybírat nad: 137.91
+- ochranný stop pod: 129.52
+- portfolio kontext: nové téma / diverzifikace
+
+BRK-B | cena 141.08 | trend down
+- koupit na pullbacku pod: 136.85
+- koupit breakout nad: 142.77
+- částečně vybírat nad: 146.02
+- ochranný stop pod: 137.13
+- portfolio kontext: nové téma / diverzifikace
+
+BTC-USD | cena 149.0 | trend flat
+- koupit na pullbacku pod: 143.78
+- koupit breakout nad: 152.18
+- částečně vybírat nad: 157.19
+- ochranný stop pod: 141.85
+- portfolio kontext: mírné tematické překrytí
+
+CAG | cena 157.01 | trend up
+- koupit na pullbacku pod: 154.65
+- koupit breakout nad: 158.27
+- částečně vybírat nad: 162.51
+- ochranný stop pod: 152.61
+- portfolio kontext: nové téma / diverzifikace
+
+CENX | cena 165.12 | trend up
+- koupit na pullbacku pod: 159.34
+- koupit breakout nad: 168.64
+- částečně vybírat nad: 174.2
+- ochranný stop pod: 157.19
+- portfolio kontext: mírné tematické překrytí
+
+COKE | cena 167.79 | trend down
+- koupit na pullbacku pod: 162.76
+- koupit breakout nad: 169.8
+- částečně vybírat nad: 173.66
+- ochranný stop pod: 163.09
+- portfolio kontext: nové téma / diverzifikace
+
+CSG | cena 175.85 | trend down
+- koupit na pullbacku pod: 158.85
+- koupit breakout nad: 195.55
+- částečně vybírat nad: 199.59
+- ochranný stop pod: 153.34
+- portfolio kontext: už držená pozice
+
+CVNA | cena 184.0 | trend flat
+- koupit na pullbacku pod: 181.24
+- koupit breakout nad: 185.47
+- částečně vybírat nad: 190.44
+- ochranný stop pod: 178.85
+- portfolio kontext: nové téma / diverzifikace
+
+CVX | cena 192.24 | trend up
+- koupit na pullbacku pod: 170.13
+- koupit breakout nad: 206.59
+- částečně vybírat nad: 218.19
+- ochranný stop pod: 167.63
+- portfolio kontext: už držená pozice
+
+DPZ | cena 200.57 | trend up
+- koupit na pullbacku pod: 197.56
+- koupit breakout nad: 202.17
+- částečně vybírat nad: 207.59
+- ochranný stop pod: 194.95
+- portfolio kontext: nové téma / diverzifikace
+
+EQT | cena 202.34 | trend down
+- koupit na pullbacku pod: 182.78
+- koupit breakout nad: 225.0
+- částečně vybírat nad: 229.66
+- ochranný stop pod: 176.44
+- portfolio kontext: už držená pozice
+
+FCX | cena 210.62 | trend down
+- koupit na pullbacku pod: 190.26
+- koupit breakout nad: 234.21
+- částečně vybírat nad: 239.05
+- ochranný stop pod: 183.66
+- portfolio kontext: už držená pozice
+
+GEV | cena 219.0 | trend flat
+- koupit na pullbacku pod: 211.33
+- koupit breakout nad: 223.67
+- částečně vybírat nad: 231.04
+- ochranný stop pod: 208.49
+- portfolio kontext: mírné tematické překrytí
+
+GOOG | cena 227.47 | trend up
+- koupit na pullbacku pod: 207.0
+- koupit breakout nad: 240.66
+- částečně vybírat nad: 252.49
+- ochranný stop pod: 204.04
+- portfolio kontext: vysoké překrytí AI/semis
+
+GRMN | cena 236.03 | trend up
+- koupit na pullbacku pod: 208.89
+- koupit breakout nad: 253.65
+- částečně vybírat nad: 267.89
+- ochranný stop pod: 205.82
+- portfolio kontext: už držená pozice
+
+IBIT | cena 236.88 | trend down
+- koupit na pullbacku pod: 226.62
+- koupit breakout nad: 244.46
+- částečně vybírat nad: 249.91
+- ochranný stop pod: 225.51
+- portfolio kontext: mírné tematické překrytí
+
+INTC | cena 245.39 | trend down
+- koupit na pullbacku pod: 225.76
+- koupit breakout nad: 266.74
+- částečně vybírat nad: 272.38
+- ochranný stop pod: 220.11
+- portfolio kontext: vysoké překrytí AI/semis
+
+IREN | cena 254.0 | trend flat
+- koupit na pullbacku pod: 224.79
+- koupit breakout nad: 272.97
+- částečně vybírat nad: 288.29
+- ochranný stop pod: 221.49
+- portfolio kontext: už držená pozice
+
+LEU | cena 262.7 | trend up
+- koupit na pullbacku pod: 232.49
+- koupit breakout nad: 282.31
+- částečně vybírat nad: 298.16
+- ochranný stop pod: 229.07
+- portfolio kontext: už držená pozice
+
+META | cena 271.48 | trend up
+- koupit na pullbacku pod: 247.05
+- koupit breakout nad: 287.23
+- částečně vybírat nad: 301.34
+- ochranný stop pod: 243.52
+- portfolio kontext: vysoké překrytí AI/semis
+
+MSFT | cena 271.43 | trend down
+- koupit na pullbacku pod: 245.19
+- koupit breakout nad: 301.83
+- částečně vybírat nad: 308.07
+- ochranný stop pod: 236.69
+- portfolio kontext: už držená pozice
+
+NBIS | cena 280.17 | trend down
+- koupit na pullbacku pod: 253.09
+- koupit breakout nad: 311.55
+- částečně vybírat nad: 317.99
+- ochranný stop pod: 244.31
+- portfolio kontext: už držená pozice
+
+NFLX | cena 289.0 | trend flat
+- koupit na pullbacku pod: 284.67
+- koupit breakout nad: 291.31
+- částečně vybírat nad: 299.11
+- ochranný stop pod: 280.91
+- portfolio kontext: nové téma / diverzifikace
+
+NVDA | cena 297.92 | trend up
+- koupit na pullbacku pod: 263.66
+- koupit breakout nad: 320.16
+- částečně vybírat nad: 338.14
+- ochranný stop pod: 259.79
+- portfolio kontext: už držená pozice
+
+ONDS | cena 306.94 | trend up
+- koupit na pullbacku pod: 296.2
+- koupit breakout nad: 313.49
+- částečně vybírat nad: 323.82
+- ochranný stop pod: 292.21
+- portfolio kontext: mírné tematické překrytí
+
+ORCL | cena 305.97 | trend down
+- koupit na pullbacku pod: 292.71
+- koupit breakout nad: 315.76
+- částečně vybírat nad: 322.8
+- ochranný stop pod: 291.28
+- portfolio kontext: mírné tematické překrytí
+
+PANW | cena 314.94 | trend down
+- koupit na pullbacku pod: 301.29
+- koupit breakout nad: 325.02
+- částečně vybírat nad: 332.26
+- ochranný stop pod: 299.82
+- portfolio kontext: mírné tematické překrytí
+
+PLTR | cena 324.0 | trend flat
+- koupit na pullbacku pod: 286.74
+- koupit breakout nad: 348.19
+- částečně vybírat nad: 367.74
+- ochranný stop pod: 282.53
+- portfolio kontext: už držená pozice
+
+PYPL | cena 333.15 | trend up
+- koupit na pullbacku pod: 328.15
+- koupit breakout nad: 335.82
+- částečně vybírat nad: 344.81
+- ochranný stop pod: 323.82
+- portfolio kontext: nové téma / diverzifikace
+
+S | cena 342.39 | trend up
+- koupit na pullbacku pod: 303.02
+- koupit breakout nad: 367.96
+- částečně vybírat nad: 388.61
+- ochranný stop pod: 298.56
+- portfolio kontext: už držená pozice
+
+SCCO | cena 340.51 | trend down
+- koupit na pullbacku pod: 325.75
+- koupit breakout nad: 351.41
+- částečně vybírat nad: 359.24
+- ochranný stop pod: 324.17
+- portfolio kontext: mírné tematické překrytí
+
+SNDK | cena 349.71 | trend down
+- koupit na pullbacku pod: 321.73
+- koupit breakout nad: 380.13
+- částečně vybírat nad: 388.18
+- ochranný stop pod: 313.69
+- portfolio kontext: vysoké překrytí AI/semis
+
+SPY | cena 359.0 | trend flat
+- koupit na pullbacku pod: 353.62
+- koupit breakout nad: 361.87
+- částečně vybírat nad: 371.56
+- ochranný stop pod: 348.95
+- portfolio kontext: nové téma / diverzifikace
+
+TSM | cena 368.38 | trend up
+- koupit na pullbacku pod: 326.02
+- koupit breakout nad: 395.89
+- částečně vybírat nad: 418.11
+- ochranný stop pod: 321.23
+- portfolio kontext: už držená pozice
+
+TTD | cena 377.85 | trend up
+- koupit na pullbacku pod: 364.63
+- koupit breakout nad: 385.91
+- částečně vybírat nad: 398.63
+- ochranný stop pod: 359.71
+- portfolio kontext: mírné tematické překrytí
+
+NVO | cena 375.06 | trend down
+- koupit na pullbacku pod: 338.8
+- koupit breakout nad: 417.07
+- částečně vybírat nad: 425.69
+- ochranný stop pod: 327.05
+- portfolio kontext: už držená pozice
+
+Denní přehled trhu
+Režim: smíšený
+Rozhodnutí: sledovat long
+
+Live research:
+- EQT | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+- FCX | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+
+Thesis update:
+- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+
+Ruční XTB ticket
+Symbol: EQT
+Směr: long
+Vstup: 129.66
+SL: 128.26
+TP: 132.25
+Sentiment: neutrální
+
+Kontrolní seznam:
+- Potvrdit graf v XTB
+- Potvrdit spread a volatilitu
+- Vstoupit jen po potvrzení
+
+SIGNÁL ULOŽEN
+Čas: 2026-03-26T10:57:40.054380
+Režim: mixed
+Rozhodnutí: watch
+Ticker: -
+Soubor historie: data/openbb_signal_history.jsonl
+
+PŘEHLED UČENÍ – FÁZE 5
+Počet vzorků historie: 11
+Průměrné skóre kvality: 2.0
+Mix rozhodnutí:
+- unknown: 2
+- watch: 9
+Váhy:
 - trend: 1.0
 - momentum: 1.0
 - sentiment: 1.0
 - regime_alignment: 1.0
 - risk_penalty: 1.0
-Suggestion: System is stable but should filter mediocre setups harder. Negative news flow appears too often in lead setups.
+Doporučení: Systém je použitelný, ale měl by tvrději filtrovat slabé setupy.
+
+RESEARCH MEMORY UPDATE
+Aktualizováno symbolů: 8
+Režim trhu: mixed
+Category mix:
+- portfolio_priority: 8
+Nejčastěji sledované symboly:
+- EQT: mentions 2 | action držet / přikoupit jen na pullbacku | thesis posílení teze
+- FCX: mentions 2 | action držet / přikoupit jen na pullbacku | thesis posílení teze
+- FSLR: mentions 2 | action držet / přikoupit jen na pullbacku | thesis posílení teze
+- GOOGL: mentions 2 | action watchlist bez akce | thesis nutná kontrola teze
+- LEU: mentions 2 | action watchlist bez akce | thesis nutná kontrola teze
+
+RESEARCH REVIEW
+Počet symbolů v paměti: 9
+Držené pozice v paměti: 9
+Negativní / kontrolní teze: 4
+Opakovaně řešené symboly (mentions >= 3): 0
+Mix akcí:
+- držet / přikoupit jen na pullbacku: 5
+- watchlist bez akce: 4
+Doporučení pro self-improvement:
+- Research je silně zaměřený na držené pozice – přidej více nových témat z watchlistu.
+- Více tickerů má oslabenou tezi – zpřísni breakout vstupy a preferuj pullbacky.

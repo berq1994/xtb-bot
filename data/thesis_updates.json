@@ -1,0 +1,110 @@
+{
+  "regime": "mixed",
+  "source": "fallback",
+  "updates": [
+    {
+      "symbol": "EQT",
+      "thesis_change": "posílení teze",
+      "strength": "střední",
+      "confidence": 4,
+      "action": "držet / přikoupit jen na pullbacku",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.71
+    },
+    {
+      "symbol": "FCX",
+      "thesis_change": "posílení teze",
+      "strength": "střední",
+      "confidence": 4,
+      "action": "držet / přikoupit jen na pullbacku",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.71
+    },
+    {
+      "symbol": "FSLR",
+      "thesis_change": "posílení teze",
+      "strength": "střední",
+      "confidence": 4,
+      "action": "držet / přikoupit jen na pullbacku",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.71
+    },
+    {
+      "symbol": "GOOGL",
+      "thesis_change": "nutná kontrola teze",
+      "strength": "střední",
+      "confidence": 3,
+      "action": "watchlist bez akce",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.4
+    },
+    {
+      "symbol": "S",
+      "thesis_change": "nutná kontrola teze",
+      "strength": "střední",
+      "confidence": 3,
+      "action": "watchlist bez akce",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.4
+    },
+    {
+      "symbol": "LEU",
+      "thesis_change": "nutná kontrola teze",
+      "strength": "střední",
+      "confidence": 3,
+      "action": "watchlist bez akce",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.4
+    },
+    {
+      "symbol": "PLTR",
+      "thesis_change": "beze změny",
+      "strength": "slabší",
+      "confidence": 3,
+      "action": "držet / přikoupit jen na pullbacku",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.15
+    },
+    {
+      "symbol": "NVO",
+      "thesis_change": "beze změny",
+      "strength": "slabší",
+      "confidence": 3,
+      "action": "držet / přikoupit jen na pullbacku",
+      "held": true,
+      "time_horizon": "1-5 dní",
+      "bull_case": "trend a sentiment zatím podporují pokračování",
+      "bear_case": "negativní zprávy nebo slabší follow-through mohou setup zlomit",
+      "category": "portfolio_priority",
+      "priority_score": 2.15
+    }
+  ]
+}

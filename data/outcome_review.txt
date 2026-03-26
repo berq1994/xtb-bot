@@ -1,5 +1,5 @@
 PŘEHLED VÝSLEDKŮ
-Počet vzorků: 6
+Počet vzorků: 7
 Průměrný výsledek %: 0.0
 Štítky:
-- čeká: 6
+- čeká: 7

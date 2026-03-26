@@ -1,14 +1,22 @@
 Denní přehled trhu
-Režim: mixed
-Rozhodnutí: watch
+Režim: smíšený
+Rozhodnutí: sledovat long
+
+Live research:
+- EQT | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+- FCX | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+
+Thesis update:
+- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
 
 Ruční XTB ticket
-Symbol: -
-Směr: -
-Vstup: -
-SL: -
-TP: -
-Sentiment: -
+Symbol: EQT
+Směr: long
+Vstup: 129.66
+SL: 128.26
+TP: 132.25
+Sentiment: neutrální
 
 Kontrolní seznam:
 - Potvrdit graf v XTB

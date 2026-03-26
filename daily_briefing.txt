@@ -6,11 +6,11 @@ Režim trhu: smíšený
 Zdroj dat: fallback
 
 Hlavní kandidát na long:
-- BTC-USD | pohyb 1.3% | trend rostoucí | cena 129.66
+- EQT | pohyb 1.3% | trend rostoucí | cena 129.66
 - Akce: sledovat breakout / ruční potvrzení v XTB
 
 Hlavní slabý kandidát:
-- SPY | pohyb -1.3% | trend klesající | cena 98.7
+- GOOGL | pohyb -1.3% | trend klesající | cena 98.7
 - Akce: sledovat slabost / hedge / nebrat impulzivní long
 
 Kontrolní seznam pro ruční vstup:
@@ -22,35 +22,35 @@ Kontrolní seznam pro ruční vstup:
 OPENBB ZPRÁVY / SENTIMENT
 Režim trhu: smíšený
 
-BTC-USD: negativní (skóre -1)
+EQT: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-AAPL: pozitivní (skóre 2)
+FCX: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-IWM: neutrální (skóre 0)
+FSLR: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-SPY: neutrální (skóre 0)
+GOOGL: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-GLD: neutrální (skóre 0)
+S: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
-QQQ: neutrální (skóre 0)
+LEU: neutrální (skóre 0)
 - Bez doplňujícího komentáře
 
 ROZHODNUTÍ SUPERVISORU
 Režim trhu: smíšený
-Rozhodnutí: vyčkat
+Rozhodnutí: sledovat long
 
-Hlavní setup: BTC-USD | 1.3% | trend rostoucí | zprávy negativní
-Slabý setup: SPY | -1.3% | trend klesající | zprávy neutrální
+Hlavní setup: EQT | 1.3% | trend rostoucí | zprávy neutrální
+Slabý setup: GOOGL | -1.3% | trend klesající | zprávy neutrální
 
-Důvod: Trend je sice pozitivní, ale zprávy zhoršují kvalitu setupu.
+Důvod: Lead setup je silný a může nabídnout pokračování trendu.
 
 RUČNÍ XTB TICKET
-Symbol: BTC-USD
+Symbol: EQT
 Směr: long
 Režim trhu: smíšený
 Zdroj dat: fallback
@@ -58,7 +58,7 @@ Vstupní reference: 129.66
 Stop loss: 128.26
 Take profit: 132.25
 Odhad volatility: 1.08%
-Sentiment zpráv: negativní
+Sentiment zpráv: neutrální
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem

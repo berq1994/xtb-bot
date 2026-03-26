@@ -1,0 +1,27 @@
+THESIS UPDATE
+Režim trhu: mixed
+
+- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- FSLR | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- GOOGL | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- S | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- LEU | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- PLTR | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- NVO | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+  bull: trend a sentiment zatím podporují pokračování
+  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit

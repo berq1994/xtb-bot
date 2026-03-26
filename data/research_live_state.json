@@ -1,0 +1,177 @@
+{
+  "regime": "mixed",
+  "source": "fallback",
+  "watchlist_size": 15,
+  "portfolio_symbols": [
+    "AMD",
+    "CSG",
+    "CVX",
+    "EQT",
+    "FCX",
+    "FSLR",
+    "GOOGL",
+    "GRMN",
+    "IGLD_HEDGED",
+    "IREN",
+    "LEU",
+    "MSFT",
+    "NBIS",
+    "NVDA",
+    "NVO",
+    "PLTR",
+    "S",
+    "TSM"
+  ],
+  "top_items": [
+    {
+      "symbol": "EQT",
+      "price": 129.66,
+      "change_pct": 1.3,
+      "trend": "up",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.71,
+      "headlines": [
+        "EQT trading activity remains in focus",
+        "Market participants monitor EQT for follow-through"
+      ]
+    },
+    {
+      "symbol": "FCX",
+      "price": 165.12,
+      "change_pct": 1.3,
+      "trend": "up",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.71,
+      "headlines": [
+        "FCX trading activity remains in focus",
+        "Market participants monitor FCX for follow-through"
+      ]
+    },
+    {
+      "symbol": "FSLR",
+      "price": 200.57,
+      "change_pct": 1.3,
+      "trend": "up",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.71,
+      "headlines": [
+        "FSLR trading activity remains in focus",
+        "Market participants monitor FSLR for follow-through"
+      ]
+    },
+    {
+      "symbol": "GOOGL",
+      "price": 98.7,
+      "change_pct": -1.3,
+      "trend": "down",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.4,
+      "headlines": [
+        "GOOGL trading activity remains in focus",
+        "Market participants monitor GOOGL for follow-through"
+      ]
+    },
+    {
+      "symbol": "S",
+      "price": 133.25,
+      "change_pct": -1.3,
+      "trend": "down",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.4,
+      "headlines": [
+        "S trading activity remains in focus",
+        "Market participants monitor S for follow-through"
+      ]
+    },
+    {
+      "symbol": "LEU",
+      "price": 167.79,
+      "change_pct": -1.3,
+      "trend": "down",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.4,
+      "headlines": [
+        "LEU trading activity remains in focus",
+        "Market participants monitor LEU for follow-through"
+      ]
+    },
+    {
+      "symbol": "PLTR",
+      "price": 121.79,
+      "change_pct": 0.65,
+      "trend": "up",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.15,
+      "headlines": [
+        "PLTR trading activity remains in focus",
+        "Market participants monitor PLTR for follow-through"
+      ]
+    },
+    {
+      "symbol": "NVO",
+      "price": 157.01,
+      "change_pct": 0.65,
+      "trend": "up",
+      "held": true,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "portfolio_priority",
+      "priority_score": 2.15,
+      "headlines": [
+        "NVO trading activity remains in focus",
+        "Market participants monitor NVO for follow-through"
+      ]
+    }
+  ],
+  "external_items": [
+    {
+      "source": "macro",
+      "headline": "Makro událost může změnit risk-on / risk-off režim dne",
+      "summary": "",
+      "impact": 0.69,
+      "relevance": 0.83
+    },
+    {
+      "source": "corporate",
+      "headline": "Firma zveřejnila významné firemní oznámení a nový výhled",
+      "summary": "",
+      "impact": 0.66,
+      "relevance": 0.81
+    },
+    {
+      "source": "earnings",
+      "headline": "Blíží se earnings event s možným vysokým gap riskem",
+      "summary": "",
+      "impact": 0.76,
+      "relevance": 0.92
+    },
+    {
+      "source": "geo",
+      "headline": "Napětí v klíčovém regionu může zvýšit volatilitu v energiích a semis",
+      "summary": "",
+      "impact": 0.8,
+      "relevance": 0.86
+    }
+  ]
+}

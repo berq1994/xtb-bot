@@ -1,0 +1,11 @@
+RESEARCH MEMORY UPDATE
+Aktualizováno symbolů: 8
+Režim trhu: mixed
+Category mix:
+- portfolio_priority: 8
+Nejčastěji sledované symboly:
+- EQT: mentions 3 | action držet / přikoupit jen na pullbacku | thesis posílení teze
+- FCX: mentions 3 | action držet / přikoupit jen na pullbacku | thesis posílení teze
+- FSLR: mentions 3 | action držet / přikoupit jen na pullbacku | thesis posílení teze
+- GOOGL: mentions 3 | action watchlist bez akce | thesis nutná kontrola teze
+- LEU: mentions 3 | action watchlist bez akce | thesis nutná kontrola teze

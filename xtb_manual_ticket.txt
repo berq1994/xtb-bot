@@ -1,5 +1,5 @@
 RUČNÍ XTB TICKET
-Symbol: BTC-USD
+Symbol: EQT
 Směr: long
 Režim trhu: smíšený
 Zdroj dat: fallback
@@ -7,7 +7,7 @@ Vstupní reference: 129.66
 Stop loss: 128.26
 Take profit: 132.25
 Odhad volatility: 1.08%
-Sentiment zpráv: negativní
+Sentiment zpráv: neutrální
 Kontrolní seznam:
 - Potvrdit strukturu na 15m a 1h grafu
 - Potvrdit spread před vstupem
