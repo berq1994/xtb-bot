@@ -1,13 +1,20 @@
 PŘEHLED UČENÍ – FÁZE 5
-Počet vzorků historie: 13
-Průměrné skóre kvality: 2.0
+Vyhodnocené vzorky: 0
+Průměrný outcome: 0.0%
+Win rate: 0.0%
 Mix rozhodnutí:
-- unknown: 2
-- watch: 11
+Štítky:
+Diagnostika:
+- positive_sentiment_avg: None
+- negative_sentiment_avg: None
+- trend_up_avg: None
+- trend_down_avg: None
+- overlap_high_avg: None
+- overlap_low_avg: None
 Váhy:
 - trend: 1.0
 - momentum: 1.0
 - sentiment: 1.0
 - regime_alignment: 1.0
 - risk_penalty: 1.0
-Doporučení: Systém je použitelný, ale měl by tvrději filtrovat slabé setupy.
+Doporučení: Málo dat pro adaptaci vah.

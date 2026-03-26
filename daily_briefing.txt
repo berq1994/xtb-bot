@@ -22,23 +22,23 @@ Kontrolní seznam pro ruční vstup:
 OPENBB ZPRÁVY / SENTIMENT
 Režim trhu: smíšený
 
-EQT: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+EQT: neutrální (skóre 0.0)
+- sledovaný zdroj: scaffold
 
-FCX: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+FCX: neutrální (skóre 0.0)
+- další symboly jedou v rychlém fallback režimu
 
-FSLR: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+FSLR: neutrální (skóre 0.0)
+- další symboly jedou v rychlém fallback režimu
 
-GOOGL: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+GOOGL: neutrální (skóre 0.0)
+- sledovaný zdroj: scaffold
 
-S: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+S: neutrální (skóre 0.0)
+- sledovaný zdroj: scaffold
 
-LEU: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+LEU: neutrální (skóre 0.0)
+- další symboly jedou v rychlém fallback režimu
 
 ROZHODNUTÍ SUPERVISORU
 Režim trhu: smíšený

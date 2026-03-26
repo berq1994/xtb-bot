@@ -2,10 +2,6 @@ name: radar-snapshot
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "30 6 * * 1-5"   # Po–Pá 06:30 UTC (07:30 Prague)
-    - cron: "0 19 * * 1-5"   # Po–Pá 19:00 UTC (20:00 Prague)
-
 concurrency:
   group: radar-snapshot
   cancel-in-progress: true

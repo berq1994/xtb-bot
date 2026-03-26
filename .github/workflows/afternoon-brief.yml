@@ -2,10 +2,6 @@ name: afternoon-brief
 
 on:
   workflow_dispatch:
-  schedule:
-    # 15:00 Prague ~= 14:00 UTC (v zimě). V létě může být potřeba 13:00 UTC.
-    - cron: "0 14 * * 1-5"
-
 concurrency:
   group: afternoon-brief
   cancel-in-progress: true

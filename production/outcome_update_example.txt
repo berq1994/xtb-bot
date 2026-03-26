@@ -1,5 +1,5 @@
 AKTUALIZACE VÝSLEDKU
-Symbol: NONE
-Rozhodnutí: vyčkat
-Stav: přidán záznam placeholderu výsledku
+Aktualizováno signálů: 0
+Vyhodnoceno: 0
+Pending: 8
 Soubor: data/outcome_tracking.jsonl

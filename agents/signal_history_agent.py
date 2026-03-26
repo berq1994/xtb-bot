@@ -1,39 +1,156 @@
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
+from integrations.openbb_engine import build_news_sentiment, generate_market_overview
 
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
+RESEARCH_STATE_PATH = Path("data/research_live_state.json")
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _load_research_state() -> dict:
+    if not RESEARCH_STATE_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(RESEARCH_STATE_PATH.read_text(encoding="utf-8"))
+        return payload if isinstance(payload, dict) else {}
+    except Exception:
+        return {}
+
+
+def _fallback_candidate_from_overview(overview: dict) -> dict:
+    leaders = overview.get("leaders", [])
+    laggards = overview.get("laggards", [])
+    if overview.get("regime") == "risk_off" and laggards:
+        candidate = laggards[0]
+        direction = "short_watch"
+    elif leaders:
+        candidate = leaders[0]
+        direction = "long"
+    elif laggards:
+        candidate = laggards[0]
+        direction = "short_watch"
+    else:
+        candidate = {}
+        direction = "wait"
+    return {"candidate": candidate, "direction": direction}
+
+
+def _decision_from_candidate(regime: str, candidate: dict, sentiment_label: str) -> str:
+    if not candidate:
+        return "wait"
+    if regime == "risk_off" and candidate.get("trend") == "down":
+        return "watch_hedge"
+    if sentiment_label == "negative" and candidate.get("trend") == "down":
+        return "reduce_risk"
+    if candidate.get("trend") == "up":
+        return "watch_long"
+    return "wait"
 
 
 def build_snapshot_payload(
     overview_or_watchlist=None,
-    decision: str = "watch",
+    decision: str | None = None,
     ticket_symbol: str | None = None,
 ) -> dict:
+    state = overview_or_watchlist if isinstance(overview_or_watchlist, dict) else _load_research_state()
+
+    top_items = state.get("top_items", []) if isinstance(state, dict) else []
+    if top_items:
+        top = top_items[0]
+        regime = str(state.get("regime", "mixed"))
+        source = str(state.get("source", "unknown"))
+        symbol = str(ticket_symbol or top.get("symbol") or "")
+        entry_price = float(top.get("price", 0.0) or 0.0)
+        direction = "short_watch" if regime == "risk_off" and str(top.get("trend", "flat")) == "down" else "long"
+        sentiment_label = str(top.get("sentiment_label", "neutral"))
+        inferred_decision = decision or _decision_from_candidate(regime, top, sentiment_label)
+        return {
+            "signal_id": f"{_utc_now_iso()}|{symbol}",
+            "timestamp": _utc_now_iso(),
+            "regime": regime,
+            "decision": inferred_decision,
+            "ticket_symbol": symbol or None,
+            "entry_price": round(entry_price, 2) if entry_price else None,
+            "source": source,
+            "leaders": top_items[:3],
+            "laggards": [],
+            "ticket": {
+                "symbol": symbol,
+                "direction": direction,
+                "entry_reference": round(entry_price, 2) if entry_price else None,
+                "priority_score": top.get("priority_score"),
+                "category": top.get("category"),
+            },
+            "supervisor": {
+                "decision": inferred_decision,
+                "reason": top.get("category"),
+            },
+            "features": {
+                "trend": top.get("trend"),
+                "change_pct": top.get("change_pct"),
+                "momentum_5d": top.get("momentum_5d"),
+                "momentum_20d": top.get("momentum_20d"),
+                "sentiment_label": sentiment_label,
+                "sentiment_score": top.get("sentiment_score"),
+                "theme_overlap_penalty": top.get("theme_overlap_penalty"),
+                "held": top.get("held"),
+                "pnl_vs_cost_pct": top.get("pnl_vs_cost_pct"),
+                "news_count": top.get("news_count"),
+                "catalysts": top.get("catalysts", []),
+            },
+        }
+
     if isinstance(overview_or_watchlist, dict):
         overview = overview_or_watchlist
     else:
-        overview = {
-            "regime": "mixed",
-            "source": "unknown",
-            "leaders": [],
-            "laggards": [],
-        }
+        overview = generate_market_overview(overview_or_watchlist)
 
-    leaders = overview.get("leaders", [])
-    laggards = overview.get("laggards", [])
+    choice = _fallback_candidate_from_overview(overview)
+    candidate = choice["candidate"]
+    symbol = str(ticket_symbol or candidate.get("symbol") or "")
+    news_map = build_news_sentiment([symbol] if symbol else [])
+    sentiment_label = news_map.get(symbol, {}).get("sentiment_label", "neutral") if symbol else "neutral"
+    inferred_decision = decision or _decision_from_candidate(str(overview.get("regime", "mixed")), candidate, sentiment_label)
 
     return {
-        "timestamp": datetime.utcnow().isoformat(),
+        "signal_id": f"{_utc_now_iso()}|{symbol}",
+        "timestamp": _utc_now_iso(),
         "regime": overview.get("regime", "mixed"),
-        "decision": decision,
-        "ticket_symbol": ticket_symbol,
+        "decision": inferred_decision,
+        "ticket_symbol": symbol or None,
+        "entry_price": candidate.get("price"),
         "source": overview.get("source", "unknown"),
-        "leaders": leaders[:3],
-        "laggards": laggards[:3],
+        "leaders": overview.get("leaders", [])[:3],
+        "laggards": overview.get("laggards", [])[:3],
+        "ticket": {
+            "symbol": symbol,
+            "direction": choice["direction"],
+            "entry_reference": candidate.get("price"),
+        },
+        "supervisor": {
+            "decision": inferred_decision,
+            "reason": f"trend={candidate.get('trend', 'flat')} sentiment={sentiment_label}",
+        },
+        "features": {
+            "trend": candidate.get("trend"),
+            "change_pct": candidate.get("change_pct"),
+            "momentum_5d": candidate.get("momentum_5d"),
+            "momentum_20d": candidate.get("momentum_20d"),
+            "sentiment_label": sentiment_label,
+            "sentiment_score": news_map.get(symbol, {}).get("sentiment_score", 0),
+            "theme_overlap_penalty": 0.0,
+            "held": False,
+            "pnl_vs_cost_pct": None,
+            "news_count": news_map.get(symbol, {}).get("news_count", 0),
+            "catalysts": news_map.get(symbol, {}).get("catalysts", []),
+        },
     }
 
 
@@ -45,7 +162,7 @@ def append_history_entry(payload: dict) -> None:
 
 def run_log_signal(
     overview_or_watchlist=None,
-    decision: str = "watch",
+    decision: str | None = None,
     ticket_symbol: str | None = None,
 ) -> str:
     payload = build_snapshot_payload(overview_or_watchlist, decision, ticket_symbol)
@@ -57,6 +174,7 @@ def run_log_signal(
     lines.append(f"Režim: {payload['regime']}")
     lines.append(f"Rozhodnutí: {payload['decision']}")
     lines.append(f"Ticker: {payload['ticket_symbol'] or '-'}")
+    lines.append(f"Entry reference: {payload.get('entry_price') or '-'}")
     lines.append(f"Soubor historie: {HISTORY_PATH}")
     return "\n".join(lines)
 
@@ -91,7 +209,8 @@ def run_signal_history_review(limit: int = 10) -> str:
         ts = row.get("timestamp", "neznámý čas")
         regime = row.get("regime", "unknown")
         decision = row.get("decision", "unknown")
-        ticket = row.get("ticket_symbol") or "-"
-        lines.append(f"- {ts} | režim {regime} | rozhodnutí {decision} | ticker {ticket}")
+        ticket = row.get("ticket_symbol") or row.get("ticket", {}).get("symbol") or "-"
+        entry = row.get("entry_price") or row.get("ticket", {}).get("entry_reference") or "-"
+        lines.append(f"- {ts} | režim {regime} | rozhodnutí {decision} | ticker {ticket} | entry {entry}")
 
     return "\n".join(lines)

@@ -1,43 +1,44 @@
 name: email-morning
 
 on:
-  schedule:
-    - cron: "0 7 * * *"
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1-5"  # 08:00 Prague during CEST
+    - cron: "0 7 * * 1-5"  # 08:00 Prague during CET
 
 jobs:
   morning:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
       - name: Restore state cache
         uses: actions/cache@v4
         with:
           path: .state
-          key: xtb-state
-
-      - name: Run snapshot (email enabled)
-        run: python run_agent.py snapshot
+          key: xtb-state-email-morning
+      - name: Run morning email digest
+        run: python run_agent.py email_morning_digest
         env:
           TIMEZONE: Europe/Prague
-          PORTFOLIO_SNAPSHOT_PATH: portfolio_snapshot/portfolio.yml
-          TELEGRAMTOKEN: ${{ secrets.TELEGRAMTOKEN }}
-          CHATID: ${{ secrets.CHATID }}
+          TELEGRAM_SEND_ENABLED: "false"
+          EMAIL_SEND_ENABLED: "true"
           EMAIL_ENABLED: "true"
+          EMAIL_SMTP_HOST: ${{ secrets.EMAIL_SMTP_HOST }}
+          EMAIL_SMTP_PORT: ${{ vars.EMAIL_SMTP_PORT }}
+          EMAIL_SMTP_USER: ${{ secrets.EMAIL_SMTP_USER }}
+          EMAIL_SMTP_PASS: ${{ secrets.EMAIL_SMTP_PASS }}
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           GMAILPASSWORD: ${{ secrets.GMAILPASSWORD }}
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}

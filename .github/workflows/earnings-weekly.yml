@@ -1,11 +1,7 @@
 name: weekly-earnings
 
 on:
-  schedule:
-    - cron: "0 6 * * 1"   # 08:00 Praha v létě (CEST)
-    - cron: "0 7 * * 1"   # 08:00 Praha v zimě (CET)
   workflow_dispatch:
-
 jobs:
   run:
     runs-on: ubuntu-latest

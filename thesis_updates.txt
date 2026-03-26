@@ -1,27 +1,27 @@
 THESIS UPDATE
 Režim trhu: mixed
 
-- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FCX | posílení teze | síla silná | confidence 5/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FSLR | posílení teze | síla silná | confidence 5/5 | akce sledovat breakout buy | držená pozice ano | horizont 1-3 dny
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- FSLR | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- EQT | posílení teze | síla silná | confidence 5/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- GOOGL | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+- NVO | posílení teze | síla střední | confidence 4/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- S | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+- IREN | posílení teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- LEU | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+- MSFT | beze změny | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
+  bull: akcie může jen konsolidovat před dalším pohybem
+  bear: bez impulsu může kapitál zůstat zamčený
+- PLTR | beze změny | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- PLTR | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
-  bull: trend a sentiment zatím podporují pokračování
-  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- NVO | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
-  bull: trend a sentiment zatím podporují pokračování
-  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- NBIS | beze změny | síla slabší | confidence 2/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
+  bull: akcie může jen konsolidovat před dalším pohybem
+  bear: bez impulsu může kapitál zůstat zamčený

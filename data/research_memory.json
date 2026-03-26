@@ -1,13 +1,13 @@
 {
-  "last_updated": "2026-03-26T10:57:48.986360+00:00",
+  "last_updated": "2026-03-26T11:45:03.804346+00:00",
   "regime": "mixed",
   "source": "fallback",
   "symbols": {
     "EQT": {
-      "mentions": 3,
-      "last_action": "držet / přikoupit jen na pullbacku",
+      "mentions": 5,
+      "last_action": "watchlist bez akce",
       "last_thesis_change": "posílení teze",
-      "last_confidence": 4,
+      "last_confidence": 5,
       "held": true,
       "history": [
         {
@@ -30,14 +30,28 @@
           "thesis_change": "posílení teze",
           "confidence": 4,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351168+00:00",
+          "action": "držet / přikoupit jen na pullbacku",
+          "thesis_change": "posílení teze",
+          "confidence": 4,
+          "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:45:03.804326+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "posílení teze",
+          "confidence": 5,
+          "category": "winner_management"
         }
       ]
     },
     "FCX": {
-      "mentions": 3,
-      "last_action": "držet / přikoupit jen na pullbacku",
+      "mentions": 5,
+      "last_action": "watchlist bez akce",
       "last_thesis_change": "posílení teze",
-      "last_confidence": 4,
+      "last_confidence": 5,
       "held": true,
       "history": [
         {
@@ -60,14 +74,28 @@
           "thesis_change": "posílení teze",
           "confidence": 4,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351181+00:00",
+          "action": "držet / přikoupit jen na pullbacku",
+          "thesis_change": "posílení teze",
+          "confidence": 4,
+          "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:45:03.804309+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "posílení teze",
+          "confidence": 5,
+          "category": "winner_management"
         }
       ]
     },
     "FSLR": {
-      "mentions": 3,
-      "last_action": "držet / přikoupit jen na pullbacku",
+      "mentions": 5,
+      "last_action": "sledovat breakout buy",
       "last_thesis_change": "posílení teze",
-      "last_confidence": 4,
+      "last_confidence": 5,
       "held": true,
       "history": [
         {
@@ -90,11 +118,25 @@
           "thesis_change": "posílení teze",
           "confidence": 4,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351186+00:00",
+          "action": "držet / přikoupit jen na pullbacku",
+          "thesis_change": "posílení teze",
+          "confidence": 4,
+          "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:45:03.804321+00:00",
+          "action": "sledovat breakout buy",
+          "thesis_change": "posílení teze",
+          "confidence": 5,
+          "category": "breakout_watch"
         }
       ]
     },
     "GOOGL": {
-      "mentions": 3,
+      "mentions": 4,
       "last_action": "watchlist bez akce",
       "last_thesis_change": "nutná kontrola teze",
       "last_confidence": 3,
@@ -120,6 +162,13 @@
           "thesis_change": "nutná kontrola teze",
           "confidence": 3,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351190+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "nutná kontrola teze",
+          "confidence": 3,
+          "category": "portfolio_priority"
         }
       ]
     },
@@ -139,8 +188,24 @@
         }
       ]
     },
+    "IREN": {
+      "mentions": 1,
+      "last_action": "watchlist bez akce",
+      "last_thesis_change": "posílení teze",
+      "last_confidence": 3,
+      "held": true,
+      "history": [
+        {
+          "ts": "2026-03-26T11:45:03.804334+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "posílení teze",
+          "confidence": 3,
+          "category": "winner_management"
+        }
+      ]
+    },
     "LEU": {
-      "mentions": 3,
+      "mentions": 4,
       "last_action": "watchlist bez akce",
       "last_thesis_change": "nutná kontrola teze",
       "last_confidence": 3,
@@ -166,14 +231,53 @@
           "thesis_change": "nutná kontrola teze",
           "confidence": 3,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351197+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "nutná kontrola teze",
+          "confidence": 3,
+          "category": "portfolio_priority"
+        }
+      ]
+    },
+    "MSFT": {
+      "mentions": 1,
+      "last_action": "watchlist bez akce",
+      "last_thesis_change": "beze změny",
+      "last_confidence": 3,
+      "held": true,
+      "history": [
+        {
+          "ts": "2026-03-26T11:45:03.804338+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "beze změny",
+          "confidence": 3,
+          "category": "drawdown_control"
+        }
+      ]
+    },
+    "NBIS": {
+      "mentions": 1,
+      "last_action": "watchlist bez akce",
+      "last_thesis_change": "beze změny",
+      "last_confidence": 2,
+      "held": true,
+      "history": [
+        {
+          "ts": "2026-03-26T11:45:03.804344+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "beze změny",
+          "confidence": 2,
+          "category": "winner_management"
         }
       ]
     },
     "NVO": {
-      "mentions": 2,
-      "last_action": "držet / přikoupit jen na pullbacku",
-      "last_thesis_change": "beze změny",
-      "last_confidence": 3,
+      "mentions": 4,
+      "last_action": "watchlist bez akce",
+      "last_thesis_change": "posílení teze",
+      "last_confidence": 4,
       "held": true,
       "history": [
         {
@@ -189,12 +293,26 @@
           "thesis_change": "beze změny",
           "confidence": 3,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351203+00:00",
+          "action": "držet / přikoupit jen na pullbacku",
+          "thesis_change": "beze změny",
+          "confidence": 3,
+          "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:45:03.804330+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "posílení teze",
+          "confidence": 4,
+          "category": "winner_management"
         }
       ]
     },
     "PLTR": {
-      "mentions": 3,
-      "last_action": "držet / přikoupit jen na pullbacku",
+      "mentions": 5,
+      "last_action": "watchlist bez akce",
       "last_thesis_change": "beze změny",
       "last_confidence": 3,
       "held": true,
@@ -219,11 +337,25 @@
           "thesis_change": "beze změny",
           "confidence": 3,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351200+00:00",
+          "action": "držet / přikoupit jen na pullbacku",
+          "thesis_change": "beze změny",
+          "confidence": 3,
+          "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:45:03.804341+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "beze změny",
+          "confidence": 3,
+          "category": "watchlist_monitor"
         }
       ]
     },
     "S": {
-      "mentions": 3,
+      "mentions": 4,
       "last_action": "watchlist bez akce",
       "last_thesis_change": "nutná kontrola teze",
       "last_confidence": 3,
@@ -249,11 +381,21 @@
           "thesis_change": "nutná kontrola teze",
           "confidence": 3,
           "category": "portfolio_priority"
+        },
+        {
+          "ts": "2026-03-26T11:28:35.351193+00:00",
+          "action": "watchlist bez akce",
+          "thesis_change": "nutná kontrola teze",
+          "confidence": 3,
+          "category": "portfolio_priority"
         }
       ]
     }
   },
   "last_category_mix": {
-    "portfolio_priority": 8
+    "winner_management": 5,
+    "breakout_watch": 1,
+    "drawdown_control": 1,
+    "watchlist_monitor": 1
   }
 }

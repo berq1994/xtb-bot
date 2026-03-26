@@ -1,5 +1,7 @@
 PŘEHLED VÝSLEDKŮ
-Počet vzorků: 7
+Počet vzorků: 12
+Vyhodnoceno: 0
 Průměrný výsledek %: 0.0
+Win rate: 0.0%
 Štítky:
-- čeká: 7
+- čeká: 12

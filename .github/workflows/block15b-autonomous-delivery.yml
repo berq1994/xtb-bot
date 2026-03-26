@@ -2,9 +2,6 @@ name: block15b-autonomous-delivery
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "5 9-21 * * 1-5"
-
 jobs:
   block15b_delivery:
     runs-on: ubuntu-latest

@@ -1,0 +1,1631 @@
+{
+  "GOOGL": {
+    "fetched_at": 1774525472.0453975,
+    "payload": {
+      "headlines": [
+        "GOOGL trading activity remains in focus",
+        "Market participants monitor GOOGL for follow-through"
+      ],
+      "items": [
+        {
+          "title": "GOOGL trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GOOGL for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Alphabet"
+    }
+  },
+  "AMD": {
+    "fetched_at": 1774525477.0518324,
+    "payload": {
+      "headlines": [
+        "AMD trading activity remains in focus",
+        "Market participants monitor AMD for follow-through"
+      ],
+      "items": [
+        {
+          "title": "AMD trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor AMD for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "AMD"
+    }
+  },
+  "MSFT": {
+    "fetched_at": 1774525477.0541112,
+    "payload": {
+      "headlines": [
+        "Cloud and AI narrative remains constructive",
+        "Large-cap quality bid supports resilience"
+      ],
+      "items": [
+        {
+          "title": "Cloud and AI narrative remains constructive",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Large-cap quality bid supports resilience",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold",
+        "titulek má převahu pozitivních výrazů"
+      ],
+      "sentiment_score": 4.0,
+      "sentiment_label": "positive",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Microsoft Corporation"
+    }
+  },
+  "PLTR": {
+    "fetched_at": 1774525482.0559754,
+    "payload": {
+      "headlines": [
+        "PLTR trading activity remains in focus",
+        "Market participants monitor PLTR for follow-through"
+      ],
+      "items": [
+        {
+          "title": "PLTR trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor PLTR for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Palantir"
+    }
+  },
+  "EQT": {
+    "fetched_at": 1774525482.0583973,
+    "payload": {
+      "headlines": [
+        "EQT trading activity remains in focus",
+        "Market participants monitor EQT for follow-through"
+      ],
+      "items": [
+        {
+          "title": "EQT trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor EQT for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "EQT"
+    }
+  },
+  "S": {
+    "fetched_at": 1774525487.0611463,
+    "payload": {
+      "headlines": [
+        "S trading activity remains in focus",
+        "Market participants monitor S for follow-through"
+      ],
+      "items": [
+        {
+          "title": "S trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor S for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "SentinelOne"
+    }
+  },
+  "TSM": {
+    "fetched_at": 1774525487.0611565,
+    "payload": {
+      "headlines": [
+        "TSM trading activity remains in focus",
+        "Market participants monitor TSM for follow-through"
+      ],
+      "items": [
+        {
+          "title": "TSM trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor TSM for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Taiwan Semiconductor ADR"
+    }
+  },
+  "NBIS": {
+    "fetched_at": 1774525487.0611618,
+    "payload": {
+      "headlines": [
+        "NBIS trading activity remains in focus",
+        "Market participants monitor NBIS for follow-through"
+      ],
+      "items": [
+        {
+          "title": "NBIS trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor NBIS for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Nebius Group"
+    }
+  },
+  "NVO": {
+    "fetched_at": 1774525487.061165,
+    "payload": {
+      "headlines": [
+        "NVO trading activity remains in focus",
+        "Market participants monitor NVO for follow-through"
+      ],
+      "items": [
+        {
+          "title": "NVO trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor NVO for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Novo Nordisk"
+    }
+  },
+  "FCX": {
+    "fetched_at": 1774525487.061171,
+    "payload": {
+      "headlines": [
+        "FCX trading activity remains in focus",
+        "Market participants monitor FCX for follow-through"
+      ],
+      "items": [
+        {
+          "title": "FCX trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor FCX for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Freeport-McMoRan"
+    }
+  },
+  "LEU": {
+    "fetched_at": 1774525487.061174,
+    "payload": {
+      "headlines": [
+        "LEU trading activity remains in focus",
+        "Market participants monitor LEU for follow-through"
+      ],
+      "items": [
+        {
+          "title": "LEU trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor LEU for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Centrus Energy"
+    }
+  },
+  "GRMN": {
+    "fetched_at": 1774525487.061178,
+    "payload": {
+      "headlines": [
+        "GRMN trading activity remains in focus",
+        "Market participants monitor GRMN for follow-through"
+      ],
+      "items": [
+        {
+          "title": "GRMN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GRMN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Garmin"
+    }
+  },
+  "NVDA": {
+    "fetched_at": 1774525487.0611835,
+    "payload": {
+      "headlines": [
+        "AI demand remains strong across data center cycle",
+        "Semiconductor leadership supports momentum"
+      ],
+      "items": [
+        {
+          "title": "AI demand remains strong across data center cycle",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Semiconductor leadership supports momentum",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Nvidia Corp"
+    }
+  },
+  "IREN": {
+    "fetched_at": 1774525487.061187,
+    "payload": {
+      "headlines": [
+        "IREN trading activity remains in focus",
+        "Market participants monitor IREN for follow-through"
+      ],
+      "items": [
+        {
+          "title": "IREN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor IREN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Iris Energy"
+    }
+  },
+  "FSLR": {
+    "fetched_at": 1774525487.06119,
+    "payload": {
+      "headlines": [
+        "FSLR trading activity remains in focus",
+        "Market participants monitor FSLR for follow-through"
+      ],
+      "items": [
+        {
+          "title": "FSLR trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor FSLR for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "First Solar"
+    }
+  },
+  "IGLD_HEDGED": {
+    "fetched_at": 1774525487.0611954,
+    "payload": {
+      "headlines": [
+        "IGLD_HEDGED trading activity remains in focus",
+        "Market participants monitor IGLD_HEDGED for follow-through"
+      ],
+      "items": [
+        {
+          "title": "IGLD_HEDGED trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor IGLD_HEDGED for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "iShares Physical Gold EUR Hedged ETC"
+    }
+  },
+  "CSG": {
+    "fetched_at": 1774525487.0611985,
+    "payload": {
+      "headlines": [
+        "CSG trading activity remains in focus",
+        "Market participants monitor CSG for follow-through"
+      ],
+      "items": [
+        {
+          "title": "CSG trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CSG for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "CSG B.V."
+    }
+  },
+  "CVX": {
+    "fetched_at": 1774525487.0612016,
+    "payload": {
+      "headlines": [
+        "CVX trading activity remains in focus",
+        "Market participants monitor CVX for follow-through"
+      ],
+      "items": [
+        {
+          "title": "CVX trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CVX for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": "Chevron Corp"
+    }
+  },
+  "AAPL": {
+    "fetched_at": 1774525487.0612068,
+    "payload": {
+      "headlines": [
+        "Consumer demand mixed ahead of product cycle",
+        "Mega-cap quality still supports defensive interest"
+      ],
+      "items": [
+        {
+          "title": "Consumer demand mixed ahead of product cycle",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Mega-cap quality still supports defensive interest",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "AAOI": {
+    "fetched_at": 1774525487.0612097,
+    "payload": {
+      "headlines": [
+        "AAOI trading activity remains in focus",
+        "Market participants monitor AAOI for follow-through"
+      ],
+      "items": [
+        {
+          "title": "AAOI trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor AAOI for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "AMZN": {
+    "fetched_at": 1774525487.061212,
+    "payload": {
+      "headlines": [
+        "AMZN trading activity remains in focus",
+        "Market participants monitor AMZN for follow-through"
+      ],
+      "items": [
+        {
+          "title": "AMZN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor AMZN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "BDC": {
+    "fetched_at": 1774525487.0612147,
+    "payload": {
+      "headlines": [
+        "BDC trading activity remains in focus",
+        "Market participants monitor BDC for follow-through"
+      ],
+      "items": [
+        {
+          "title": "BDC trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor BDC for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "BKNG": {
+    "fetched_at": 1774525487.0612185,
+    "payload": {
+      "headlines": [
+        "BKNG trading activity remains in focus",
+        "Market participants monitor BKNG for follow-through"
+      ],
+      "items": [
+        {
+          "title": "BKNG trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor BKNG for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "BRK-B": {
+    "fetched_at": 1774525487.061221,
+    "payload": {
+      "headlines": [
+        "BRK-B trading activity remains in focus",
+        "Market participants monitor BRK-B for follow-through"
+      ],
+      "items": [
+        {
+          "title": "BRK-B trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor BRK-B for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "BTC-USD": {
+    "fetched_at": 1774525487.0612235,
+    "payload": {
+      "headlines": [
+        "Crypto sentiment improves with risk appetite",
+        "Volatility remains elevated across digital assets"
+      ],
+      "items": [
+        {
+          "title": "Crypto sentiment improves with risk appetite",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Volatility remains elevated across digital assets",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "CAG": {
+    "fetched_at": 1774525487.0612278,
+    "payload": {
+      "headlines": [
+        "CAG trading activity remains in focus",
+        "Market participants monitor CAG for follow-through"
+      ],
+      "items": [
+        {
+          "title": "CAG trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CAG for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "CENX": {
+    "fetched_at": 1774525487.0612295,
+    "payload": {
+      "headlines": [
+        "CENX trading activity remains in focus",
+        "Market participants monitor CENX for follow-through"
+      ],
+      "items": [
+        {
+          "title": "CENX trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CENX for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "COKE": {
+    "fetched_at": 1774525487.0612338,
+    "payload": {
+      "headlines": [
+        "COKE trading activity remains in focus",
+        "Market participants monitor COKE for follow-through"
+      ],
+      "items": [
+        {
+          "title": "COKE trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor COKE for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "CVNA": {
+    "fetched_at": 1774525487.0612376,
+    "payload": {
+      "headlines": [
+        "CVNA trading activity remains in focus",
+        "Market participants monitor CVNA for follow-through"
+      ],
+      "items": [
+        {
+          "title": "CVNA trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor CVNA for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "DPZ": {
+    "fetched_at": 1774525487.0612395,
+    "payload": {
+      "headlines": [
+        "DPZ trading activity remains in focus",
+        "Market participants monitor DPZ for follow-through"
+      ],
+      "items": [
+        {
+          "title": "DPZ trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor DPZ for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "GEV": {
+    "fetched_at": 1774525487.0612414,
+    "payload": {
+      "headlines": [
+        "GEV trading activity remains in focus",
+        "Market participants monitor GEV for follow-through"
+      ],
+      "items": [
+        {
+          "title": "GEV trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GEV for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "GOOG": {
+    "fetched_at": 1774525487.061253,
+    "payload": {
+      "headlines": [
+        "GOOG trading activity remains in focus",
+        "Market participants monitor GOOG for follow-through"
+      ],
+      "items": [
+        {
+          "title": "GOOG trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GOOG for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "IBIT": {
+    "fetched_at": 1774525487.0612566,
+    "payload": {
+      "headlines": [
+        "IBIT trading activity remains in focus",
+        "Market participants monitor IBIT for follow-through"
+      ],
+      "items": [
+        {
+          "title": "IBIT trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor IBIT for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "INTC": {
+    "fetched_at": 1774525487.0612597,
+    "payload": {
+      "headlines": [
+        "INTC trading activity remains in focus",
+        "Market participants monitor INTC for follow-through"
+      ],
+      "items": [
+        {
+          "title": "INTC trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor INTC for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "META": {
+    "fetched_at": 1774525487.0612652,
+    "payload": {
+      "headlines": [
+        "META trading activity remains in focus",
+        "Market participants monitor META for follow-through"
+      ],
+      "items": [
+        {
+          "title": "META trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor META for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "NFLX": {
+    "fetched_at": 1774525487.0612736,
+    "payload": {
+      "headlines": [
+        "NFLX trading activity remains in focus",
+        "Market participants monitor NFLX for follow-through"
+      ],
+      "items": [
+        {
+          "title": "NFLX trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor NFLX for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "ONDS": {
+    "fetched_at": 1774525487.0612767,
+    "payload": {
+      "headlines": [
+        "ONDS trading activity remains in focus",
+        "Market participants monitor ONDS for follow-through"
+      ],
+      "items": [
+        {
+          "title": "ONDS trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor ONDS for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "ORCL": {
+    "fetched_at": 1774525487.0612795,
+    "payload": {
+      "headlines": [
+        "ORCL trading activity remains in focus",
+        "Market participants monitor ORCL for follow-through"
+      ],
+      "items": [
+        {
+          "title": "ORCL trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor ORCL for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "PANW": {
+    "fetched_at": 1774525487.061284,
+    "payload": {
+      "headlines": [
+        "PANW trading activity remains in focus",
+        "Market participants monitor PANW for follow-through"
+      ],
+      "items": [
+        {
+          "title": "PANW trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor PANW for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "PYPL": {
+    "fetched_at": 1774525487.061286,
+    "payload": {
+      "headlines": [
+        "PYPL trading activity remains in focus",
+        "Market participants monitor PYPL for follow-through"
+      ],
+      "items": [
+        {
+          "title": "PYPL trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor PYPL for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "SCCO": {
+    "fetched_at": 1774525487.0612879,
+    "payload": {
+      "headlines": [
+        "SCCO trading activity remains in focus",
+        "Market participants monitor SCCO for follow-through"
+      ],
+      "items": [
+        {
+          "title": "SCCO trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor SCCO for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "SNDK": {
+    "fetched_at": 1774525487.06129,
+    "payload": {
+      "headlines": [
+        "SNDK trading activity remains in focus",
+        "Market participants monitor SNDK for follow-through"
+      ],
+      "items": [
+        {
+          "title": "SNDK trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor SNDK for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "SPY": {
+    "fetched_at": 1774525487.061292,
+    "payload": {
+      "headlines": [
+        "SPY trading activity remains in focus",
+        "Market participants monitor SPY for follow-through"
+      ],
+      "items": [
+        {
+          "title": "SPY trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor SPY for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  },
+  "TTD": {
+    "fetched_at": 1774525487.0612998,
+    "payload": {
+      "headlines": [
+        "TTD trading activity remains in focus",
+        "Market participants monitor TTD for follow-through"
+      ],
+      "items": [
+        {
+          "title": "TTD trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor TTD for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "reasons": [
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "sentiment_score": 0.0,
+      "sentiment_label": "neutral",
+      "source": "scaffold",
+      "source_count": 1,
+      "news_count": 2,
+      "catalysts": [],
+      "company_hint": null
+    }
+  }
+}

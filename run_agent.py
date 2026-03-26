@@ -168,6 +168,38 @@ def main():
         print(run_production_cycle())
         return
 
+
+    if mode == "email_morning_digest":
+        from agents.email_digest_agent import run_email_digest
+        print(run_email_digest("morning"))
+        return
+
+    if mode == "email_evening_digest":
+        from agents.email_digest_agent import run_email_digest
+        print(run_email_digest("evening"))
+        return
+
+    if mode == "telegram_portfolio_alerts":
+        from agents.portfolio_telegram_alert_agent import run_portfolio_telegram_alerts
+        print(run_portfolio_telegram_alerts())
+        return
+
+    if mode == "auto_research":
+        from agents.live_research_agent import run_live_research
+        from agents.signal_history_agent import run_log_signal
+        from agents.outcome_tracking_agent import run_outcome_update, run_outcome_review
+        from agents.learning_agent import run_learning_review
+        print(run_live_research())
+        print()
+        print(run_log_signal())
+        print()
+        print(run_outcome_update())
+        print()
+        print(run_outcome_review())
+        print()
+        print(run_learning_review())
+        return
+
     if mode == "multi_agent_daily":
         from multi_agent.orchestrator_v2 import run_multi_agent_daily
         print(run_multi_agent_daily()["report"])
@@ -196,7 +228,7 @@ def main():
         "daily_briefing | telegram_preview | telegram_live | portfolio_context | intraday_levels | "
         "research_live | thesis_update | research_memory_update | research_review | "
         "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
-        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | "
+        "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | "
         "multi_agent_daily | multi_agent_weekly | multi_agent_audit"
     )
 

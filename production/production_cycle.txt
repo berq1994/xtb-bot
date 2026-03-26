@@ -22,23 +22,23 @@ Kontrolní seznam pro ruční vstup:
 OPENBB ZPRÁVY / SENTIMENT
 Režim trhu: smíšený
 
-EQT: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+EQT: neutrální (skóre 0.0)
+- sledovaný zdroj: scaffold
 
-FCX: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+FCX: neutrální (skóre 0.0)
+- další symboly jedou v rychlém fallback režimu
 
-FSLR: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+FSLR: neutrální (skóre 0.0)
+- další symboly jedou v rychlém fallback režimu
 
-GOOGL: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+GOOGL: neutrální (skóre 0.0)
+- sledovaný zdroj: scaffold
 
-S: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+S: neutrální (skóre 0.0)
+- sledovaný zdroj: scaffold
 
-LEU: neutrální (skóre 0)
-- Bez doplňujícího komentáře
+LEU: neutrální (skóre 0.0)
+- další symboly jedou v rychlém fallback režimu
 
 ROZHODNUTÍ SUPERVISORU
 Režim trhu: smíšený
@@ -104,30 +104,47 @@ Zdroj dat: fallback
 Velikost watchlistu: 15
 
 Hlavní priority:
-- EQT | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
-  • EQT trading activity remains in focus
-  • Market participants monitor EQT for follow-through
-- FCX | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+- FCX | score 3.75 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | držená pozice ano | kategorie winner_management | P/L vs nákup 147.7%
   • FCX trading activity remains in focus
   • Market participants monitor FCX for follow-through
-- FSLR | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  · další symboly jedou v rychlém fallback režimu
+- FSLR | score 3.75 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | držená pozice ano | kategorie breakout_watch | P/L vs nákup 1.01%
   • FSLR trading activity remains in focus
   • Market participants monitor FSLR for follow-through
-- GOOGL | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
-  • GOOGL trading activity remains in focus
-  • Market participants monitor GOOGL for follow-through
-- S | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
-  • S trading activity remains in focus
-  • Market participants monitor S for follow-through
-- LEU | score 2.4 | pohyb -1.3% | trend down | sentiment neutral | držená pozice ano | kategorie portfolio_priority
-  • LEU trading activity remains in focus
-  • Market participants monitor LEU for follow-through
-- PLTR | score 2.15 | pohyb 0.65% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
-  • PLTR trading activity remains in focus
-  • Market participants monitor PLTR for follow-through
-- NVO | score 2.15 | pohyb 0.65% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+  · další symboly jedou v rychlém fallback režimu
+- EQT | score 3.63 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | držená pozice ano | kategorie winner_management | P/L vs nákup 114.1%
+  • EQT trading activity remains in focus
+  • Market participants monitor EQT for follow-through
+  · sledovaný zdroj: scaffold
+- NVO | score 2.6 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | držená pozice ano | kategorie winner_management | P/L vs nákup 186.72%
   • NVO trading activity remains in focus
   • Market participants monitor NVO for follow-through
+  · další symboly jedou v rychlém fallback režimu
+- IREN | score 2.48 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | držená pozice ano | kategorie winner_management | P/L vs nákup 357.93%
+  • IREN trading activity remains in focus
+  • Market participants monitor IREN for follow-through
+  · další symboly jedou v rychlém fallback režimu
+- MSFT | score 2.38 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment positive | držená pozice ano | kategorie drawdown_control | P/L vs nákup -70.36%
+  • Cloud and AI narrative remains constructive
+  • Large-cap quality bid supports resilience
+  · sledovaný zdroj: scaffold
+  · titulek má převahu pozitivních výrazů
+- PLTR | score 2.36 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | držená pozice ano | kategorie watchlist_monitor | P/L vs nákup -4.85%
+  • PLTR trading activity remains in focus
+  • Market participants monitor PLTR for follow-through
+  · sledovaný zdroj: scaffold
+- NBIS | score 1.18 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | držená pozice ano | kategorie winner_management | P/L vs nákup 78.64%
+  • NBIS trading activity remains in focus
+  • Market participants monitor NBIS for follow-through
+  · další symboly jedou v rychlém fallback režimu
+- NVDA | score 1.11 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | držená pozice ano | kategorie watchlist_monitor | P/L vs nákup -1.31%
+  • AI demand remains strong across data center cycle
+  • Semiconductor leadership supports momentum
+  · další symboly jedou v rychlém fallback režimu
+- GRMN | score 1.07 | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | držená pozice ano | kategorie drawdown_control | P/L vs nákup -26.83%
+  • GRMN trading activity remains in focus
+  • Market participants monitor GRMN for follow-through
+  · další symboly jedou v rychlém fallback režimu
 
 Doplňkové výzkumné vrstvy:
 - macro: Makro událost může změnit risk-on / risk-off režim dne | impact 0.69 | relevance 0.83
@@ -138,30 +155,30 @@ Doplňkové výzkumné vrstvy:
 THESIS UPDATE
 Režim trhu: mixed
 
-- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FCX | posílení teze | síla silná | confidence 5/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FSLR | posílení teze | síla silná | confidence 5/5 | akce sledovat breakout buy | držená pozice ano | horizont 1-3 dny
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- FSLR | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- EQT | posílení teze | síla silná | confidence 5/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- GOOGL | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+- NVO | posílení teze | síla střední | confidence 4/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- S | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+- IREN | posílení teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- LEU | nutná kontrola teze | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-5 dní
+- MSFT | beze změny | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
+  bull: akcie může jen konsolidovat před dalším pohybem
+  bear: bez impulsu může kapitál zůstat zamčený
+- PLTR | beze změny | síla střední | confidence 3/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
   bull: trend a sentiment zatím podporují pokračování
   bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- PLTR | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
-  bull: trend a sentiment zatím podporují pokračování
-  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
-- NVO | beze změny | síla slabší | confidence 3/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
-  bull: trend a sentiment zatím podporují pokračování
-  bear: negativní zprávy nebo slabší follow-through mohou setup zlomit
+- NBIS | beze změny | síla slabší | confidence 2/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
+  bull: akcie může jen konsolidovat před dalším pohybem
+  bear: bez impulsu může kapitál zůstat zamčený
 
 INTRADAY LEVELS
 Režim trhu: mixed
@@ -459,12 +476,12 @@ Režim: smíšený
 Rozhodnutí: sledovat long
 
 Live research:
-- EQT | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
-- FCX | score 2.71 | pohyb 1.3% | trend up | sentiment neutral | držená pozice ano | kategorie portfolio_priority
+- FCX | score 3.75 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | držená pozice ano | kategorie winner_management | P/L vs nákup 147.7%
+- FSLR | score 3.75 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | držená pozice ano | kategorie breakout_watch | P/L vs nákup 1.01%
 
 Thesis update:
-- EQT | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
-- FCX | posílení teze | síla střední | confidence 4/5 | akce držet / přikoupit jen na pullbacku | držená pozice ano | horizont 1-5 dní
+- FCX | posílení teze | síla silná | confidence 5/5 | akce watchlist bez akce | držená pozice ano | horizont 1-10 dní
+- FSLR | posílení teze | síla silná | confidence 5/5 | akce sledovat breakout buy | držená pozice ano | horizont 1-3 dny
 
 Ruční XTB ticket
 Symbol: EQT
@@ -485,59 +502,72 @@ Důvod: chybí TELEGRAMTOKEN/TG_BOT_TOKEN/TELEGRAM_BOT_TOKEN nebo CHATID/TG_CHAT
 Soubor náhledu: telegram_preview.txt
 
 SIGNÁL ULOŽEN
-Čas: 2026-03-26T10:57:48.985354
+Čas: 2026-03-26T11:45:03.803184+00:00
 Režim: mixed
-Rozhodnutí: watch
-Ticker: -
+Rozhodnutí: watch_long
+Ticker: FCX
+Entry reference: 165.12
 Soubor historie: data/openbb_signal_history.jsonl
 
 PŘEHLED UČENÍ – FÁZE 5
-Počet vzorků historie: 13
-Průměrné skóre kvality: 2.0
+Vyhodnocené vzorky: 0
+Průměrný outcome: 0.0%
+Win rate: 0.0%
 Mix rozhodnutí:
-- unknown: 2
-- watch: 11
+Štítky:
+Diagnostika:
+- positive_sentiment_avg: None
+- negative_sentiment_avg: None
+- trend_up_avg: None
+- trend_down_avg: None
+- overlap_high_avg: None
+- overlap_low_avg: None
 Váhy:
 - trend: 1.0
 - momentum: 1.0
 - sentiment: 1.0
 - regime_alignment: 1.0
 - risk_penalty: 1.0
-Doporučení: Systém je použitelný, ale měl by tvrději filtrovat slabé setupy.
+Doporučení: Málo dat pro adaptaci vah.
 
 RESEARCH MEMORY UPDATE
 Aktualizováno symbolů: 8
 Režim trhu: mixed
 Category mix:
-- portfolio_priority: 8
+- winner_management: 5
+- breakout_watch: 1
+- drawdown_control: 1
+- watchlist_monitor: 1
 Nejčastěji sledované symboly:
-- EQT: mentions 3 | action držet / přikoupit jen na pullbacku | thesis posílení teze
-- FCX: mentions 3 | action držet / přikoupit jen na pullbacku | thesis posílení teze
-- FSLR: mentions 3 | action držet / přikoupit jen na pullbacku | thesis posílení teze
-- GOOGL: mentions 3 | action watchlist bez akce | thesis nutná kontrola teze
-- LEU: mentions 3 | action watchlist bez akce | thesis nutná kontrola teze
+- EQT: mentions 5 | action watchlist bez akce | thesis posílení teze
+- FCX: mentions 5 | action watchlist bez akce | thesis posílení teze
+- FSLR: mentions 5 | action sledovat breakout buy | thesis posílení teze
+- PLTR: mentions 5 | action watchlist bez akce | thesis beze změny
+- GOOGL: mentions 4 | action watchlist bez akce | thesis nutná kontrola teze
 
 RESEARCH REVIEW
-Počet symbolů v paměti: 9
-Držené pozice v paměti: 9
+Počet symbolů v paměti: 12
+Držené pozice v paměti: 12
 Negativní / kontrolní teze: 4
-Opakovaně řešené symboly (mentions >= 3): 7
+Opakovaně řešené symboly (mentions >= 3): 8
 Mix akcí:
-- držet / přikoupit jen na pullbacku: 5
-- watchlist bez akce: 4
+- watchlist bez akce: 11
+- sledovat breakout buy: 1
 Doporučení pro self-improvement:
 - Research je silně zaměřený na držené pozice – přidej více nových témat z watchlistu.
 - Více tickerů má oslabenou tezi – zpřísni breakout vstupy a preferuj pullbacky.
 - Několik symbolů se opakuje příliš často – zvaž deduplikaci a category caps.
 
 AKTUALIZACE VÝSLEDKU
-Symbol: NONE
-Rozhodnutí: vyčkat
-Stav: přidán záznam placeholderu výsledku
+Aktualizováno signálů: 0
+Vyhodnoceno: 0
+Pending: 8
 Soubor: data/outcome_tracking.jsonl
 
 PŘEHLED VÝSLEDKŮ
-Počet vzorků: 7
+Počet vzorků: 12
+Vyhodnoceno: 0
 Průměrný výsledek %: 0.0
+Win rate: 0.0%
 Štítky:
-- čeká: 7
+- čeká: 12

@@ -2,14 +2,23 @@ import os
 import smtplib
 from email.message import EmailMessage
 
+
+def _first(*keys: str) -> str:
+    for key in keys:
+        value = (os.getenv(key) or "").strip()
+        if value:
+            return value
+    return ""
+
+
 def send_email_live(subject: str, body: str):
-    host = os.getenv("EMAIL_SMTP_HOST")
-    port = int(os.getenv("EMAIL_SMTP_PORT", "587"))
-    user = os.getenv("EMAIL_SMTP_USER")
-    pwd = os.getenv("EMAIL_SMTP_PASS")
-    email_from = os.getenv("EMAIL_FROM")
-    email_to = os.getenv("EMAIL_TO")
-    enabled = str(os.getenv("EMAIL_SEND_ENABLED", "false")).lower() in ["1","true","yes","on"]
+    host = _first("EMAIL_SMTP_HOST") or "smtp.gmail.com"
+    port = int(_first("EMAIL_SMTP_PORT") or "587")
+    user = _first("EMAIL_SMTP_USER", "EMAIL_SENDER")
+    pwd = _first("EMAIL_SMTP_PASS", "GMAILPASSWORD")
+    email_from = _first("EMAIL_FROM", "EMAIL_SMTP_USER", "EMAIL_SENDER")
+    email_to = _first("EMAIL_TO", "EMAIL_RECEIVER")
+    enabled = str(_first("EMAIL_SEND_ENABLED", "EMAIL_ENABLED") or "false").lower() in ["1", "true", "yes", "on"]
 
     ready = all([host, user, pwd, email_from, email_to]) and enabled
     if not ready:
@@ -29,7 +38,8 @@ def send_email_live(subject: str, body: str):
     try:
         with smtplib.SMTP(host, port, timeout=20) as server:
             server.starttls()
-            server.login(user, pwd)
+            if user and pwd:
+                server.login(user, pwd)
             server.send_message(msg)
         return {
             "delivered": True,

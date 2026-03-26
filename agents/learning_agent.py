@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-
+from statistics import mean
 
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
+OUTCOME_PATH = Path("data/outcome_tracking.jsonl")
 WEIGHTS_PATH = Path("data/phase5_signal_weights.json")
-
 
 DEFAULT_WEIGHTS = {
     "trend": 1.0,
@@ -17,12 +17,11 @@ DEFAULT_WEIGHTS = {
 }
 
 
-def _load_rows():
-    if not HISTORY_PATH.exists():
+def _load_rows(path: Path) -> list[dict]:
+    if not path.exists():
         return []
-
     rows = []
-    with HISTORY_PATH.open("r", encoding="utf-8") as f:
+    with path.open("r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -34,7 +33,7 @@ def _load_rows():
     return rows
 
 
-def _load_weights():
+def load_signal_weights() -> dict:
     if not WEIGHTS_PATH.exists():
         return DEFAULT_WEIGHTS.copy()
 
@@ -55,91 +54,164 @@ def _save_weights(weights: dict) -> None:
     WEIGHTS_PATH.write_text(json.dumps(weights, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
-def build_learning_summary(limit: int = 25) -> dict:
-    rows = _load_rows()[-limit:]
-    weights = _load_weights()
-
-    decision_mix = {}
-    score_total = 0.0
-
+def _build_history_index(rows: list[dict]) -> dict[str, dict]:
+    out: dict[str, dict] = {}
     for row in rows:
-        decision = row.get("decision", "unknown")
+        signal_id = str(row.get("signal_id") or f"{row.get('timestamp', '')}|{row.get('ticket_symbol') or row.get('ticket', {}).get('symbol') or 'NONE'}")
+        out[signal_id] = row
+    return out
+
+
+def build_learning_summary(limit: int = 50) -> dict:
+    history_rows = _load_rows(HISTORY_PATH)[-max(limit * 2, 50):]
+    outcome_rows = _load_rows(OUTCOME_PATH)
+    weights = load_signal_weights()
+    history_index = _build_history_index(history_rows)
+
+    resolved: list[dict] = []
+    for outcome in outcome_rows:
+        if outcome.get("outcome_label") not in {"win", "loss", "flat"}:
+            continue
+        signal = history_index.get(str(outcome.get("signal_id", "")), {})
+        resolved.append({"signal": signal, "outcome": outcome})
+
+    resolved = resolved[-limit:]
+    decision_mix: dict[str, int] = {}
+    labels: dict[str, int] = {}
+    outcome_vals: list[float] = []
+    positive_sentiment: list[float] = []
+    negative_sentiment: list[float] = []
+    trend_up: list[float] = []
+    trend_down: list[float] = []
+    overlap_high: list[float] = []
+    overlap_low: list[float] = []
+
+    for row in resolved:
+        signal = row["signal"]
+        outcome = row["outcome"]
+        decision = str(outcome.get("decision") or signal.get("decision") or "unknown")
         decision_mix[decision] = decision_mix.get(decision, 0) + 1
-
-        score = 0.0
-        regime = row.get("regime", "mixed")
-        if regime == "risk_on":
-            score += 3.0
-        elif regime == "mixed":
-            score += 2.0
+        label = str(outcome.get("outcome_label", "pending"))
+        labels[label] = labels.get(label, 0) + 1
+        outcome_pct = float(outcome.get("outcome_pct", 0.0))
+        outcome_vals.append(outcome_pct)
+        features = signal.get("features", {}) if isinstance(signal, dict) else {}
+        sentiment_label = str(features.get("sentiment_label", "neutral"))
+        if sentiment_label == "positive":
+            positive_sentiment.append(outcome_pct)
+        elif sentiment_label == "negative":
+            negative_sentiment.append(outcome_pct)
+        trend = str(features.get("trend", "flat"))
+        if trend == "up":
+            trend_up.append(outcome_pct)
+        elif trend == "down":
+            trend_down.append(outcome_pct)
+        overlap = float(features.get("theme_overlap_penalty", 0.0) or 0.0)
+        if overlap >= 0.2:
+            overlap_high.append(outcome_pct)
         else:
-            score += 1.0
+            overlap_low.append(outcome_pct)
 
-        if row.get("ticket_symbol"):
-            score += 1.0
-
-        score_total += score
-
-    avg_quality = round(score_total / len(rows), 2) if rows else 0.0
+    avg_outcome = round(mean(outcome_vals), 2) if outcome_vals else 0.0
+    win_rate = 0.0
+    decisive = labels.get("win", 0) + labels.get("loss", 0)
+    if decisive:
+        win_rate = round((labels.get("win", 0) / decisive) * 100, 1)
 
     suggestion = "Málo dat pro adaptaci vah."
-    if rows:
-        if avg_quality >= 3.0:
-            suggestion = "Současný signal stack vypadá zdravě."
-        elif avg_quality >= 2.0:
-            suggestion = "Systém je použitelný, ale měl by tvrději filtrovat slabé setupy."
+    if resolved:
+        if avg_outcome >= 1.25 and win_rate >= 55:
+            suggestion = "Research stack funguje slušně. Drž filtraci a jen jemně dolaďuj váhy."
+        elif avg_outcome >= 0.0:
+            suggestion = "Bot je použitelný, ale potřebuje lépe trestat přeplněná témata a slabé zprávy."
         else:
-            suggestion = "Kvalita signálů je nízká. Zpřísnit vstupní podmínky."
+            suggestion = "Historické výsledky jsou slabé. Zpřísnit výběr, sentiment a risk overlay."
+
+    diagnostics = {
+        "positive_sentiment_avg": round(mean(positive_sentiment), 2) if positive_sentiment else None,
+        "negative_sentiment_avg": round(mean(negative_sentiment), 2) if negative_sentiment else None,
+        "trend_up_avg": round(mean(trend_up), 2) if trend_up else None,
+        "trend_down_avg": round(mean(trend_down), 2) if trend_down else None,
+        "overlap_high_avg": round(mean(overlap_high), 2) if overlap_high else None,
+        "overlap_low_avg": round(mean(overlap_low), 2) if overlap_low else None,
+    }
 
     return {
-        "count": len(rows),
-        "avg_quality": avg_quality,
+        "count": len(resolved),
+        "avg_outcome": avg_outcome,
+        "win_rate": win_rate,
         "decision_mix": decision_mix,
+        "labels": labels,
         "weights": weights,
         "suggestion": suggestion,
+        "diagnostics": diagnostics,
     }
 
 
-def adapt_signal_weights(limit: int = 25) -> dict:
+def adapt_signal_weights(limit: int = 50) -> dict:
     summary = build_learning_summary(limit=limit)
     weights = summary["weights"].copy()
+    diagnostics = summary.get("diagnostics", {})
 
-    avg_quality = summary["avg_quality"]
-    if avg_quality < 2.0:
-        weights["risk_penalty"] = round(weights["risk_penalty"] + 0.1, 2)
-        weights["sentiment"] = round(weights["sentiment"] + 0.1, 2)
-    elif avg_quality >= 3.0:
-        weights["trend"] = round(weights["trend"] + 0.1, 2)
-        weights["momentum"] = round(weights["momentum"] + 0.1, 2)
+    pos = diagnostics.get("positive_sentiment_avg")
+    neg = diagnostics.get("negative_sentiment_avg")
+    if pos is not None and neg is not None:
+        if pos > neg:
+            weights["sentiment"] = min(1.8, round(weights["sentiment"] + 0.05, 2))
+        else:
+            weights["sentiment"] = max(0.7, round(weights["sentiment"] - 0.05, 2))
+
+    trend_up = diagnostics.get("trend_up_avg")
+    trend_down = diagnostics.get("trend_down_avg")
+    if trend_up is not None and trend_down is not None:
+        if trend_up >= trend_down:
+            weights["trend"] = min(1.8, round(weights["trend"] + 0.05, 2))
+            weights["momentum"] = min(1.8, round(weights["momentum"] + 0.05, 2))
+        else:
+            weights["trend"] = max(0.7, round(weights["trend"] - 0.05, 2))
+
+    overlap_high = diagnostics.get("overlap_high_avg")
+    overlap_low = diagnostics.get("overlap_low_avg")
+    if overlap_high is not None and overlap_low is not None and overlap_high < overlap_low:
+        weights["risk_penalty"] = min(1.8, round(weights["risk_penalty"] + 0.08, 2))
+
+    if summary["avg_outcome"] < 0:
+        weights["regime_alignment"] = min(1.8, round(weights["regime_alignment"] + 0.05, 2))
+    elif summary["avg_outcome"] > 1.0:
+        weights["regime_alignment"] = max(0.8, round(weights["regime_alignment"] - 0.02, 2))
 
     _save_weights(weights)
     return weights
 
 
-def run_learning_review(limit: int = 25) -> str:
+def run_learning_review(limit: int = 50) -> str:
     summary = build_learning_summary(limit=limit)
 
     lines = []
     lines.append("PŘEHLED UČENÍ – FÁZE 5")
-    lines.append(f"Počet vzorků historie: {summary['count']}")
-    lines.append(f"Průměrné skóre kvality: {summary['avg_quality']}")
+    lines.append(f"Vyhodnocené vzorky: {summary['count']}")
+    lines.append(f"Průměrný outcome: {summary['avg_outcome']}%")
+    lines.append(f"Win rate: {summary['win_rate']}%")
     lines.append("Mix rozhodnutí:")
-
     for key, value in summary["decision_mix"].items():
         lines.append(f"- {key}: {value}")
-
+    lines.append("Štítky:")
+    for key, value in summary["labels"].items():
+        lines.append(f"- {key}: {value}")
+    lines.append("Diagnostika:")
+    for key, value in summary["diagnostics"].items():
+        lines.append(f"- {key}: {value}")
     lines.append("Váhy:")
     for key, value in summary["weights"].items():
         lines.append(f"- {key}: {value}")
-
     lines.append(f"Doporučení: {summary['suggestion']}")
     output = "\n".join(lines)
     Path("learning_review.txt").write_text(output, encoding="utf-8")
     return output
 
 
-def run_rebalance_weights(limit: int = 25) -> str:
-    before = _load_weights()
+def run_rebalance_weights(limit: int = 50) -> str:
+    before = load_signal_weights()
     after = adapt_signal_weights(limit=limit)
 
     lines = []

@@ -2,9 +2,6 @@ name: radar-d-paper
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "*/15 8-21 * * 1-5"
-
 jobs:
   radar_d:
     runs-on: ubuntu-latest

@@ -1,7 +1,12 @@
 {"timestamp": "2026-03-12T08:49:26", "symbol": "BTC-USD", "decision": "watch_hedge", "outcome_pct": 0.0, "outcome_label": "pending"}
+{"signal_id": "2026-03-12T08:49:26|BTC-USD", "timestamp": "2026-03-12T08:49:26", "symbol": "BTC-USD", "decision": "watch_hedge", "direction": "long", "entry_price": 129.66}
 {"timestamp": "2026-03-12T10:19:14", "symbol": "NVDA", "decision": "watch_long", "outcome_pct": 0.0, "outcome_label": "pending"}
 {"timestamp": "2026-03-12T14:42:39", "symbol": "IWM", "decision": "defensive_only", "outcome_pct": 0.0, "outcome_label": "pending"}
 {"timestamp": "2026-03-12T14:45:02", "symbol": "IWM", "decision": "defensive_only", "outcome_pct": 0.0, "outcome_label": "pending"}
 {"timestamp": "2026-03-12T20:21:38.599954", "symbol": "NONE", "decision": "wait", "outcome_pct": 0.0, "outcome_label": "pending"}
 {"timestamp": "2026-03-17T13:24:00.465627", "symbol": "NONE", "decision": "wait", "outcome_pct": 0.0, "outcome_label": "pending"}
 {"timestamp": "2026-03-26T10:57:48.985354", "symbol": "NONE", "decision": "wait", "outcome_pct": 0.0, "outcome_label": "pending"}
+{"timestamp": "2026-03-26T11:28:35.350332", "symbol": "NONE", "decision": "wait", "outcome_pct": 0.0, "outcome_label": "pending"}
+{"signal_id": "2026-03-26T11:44:56.715602+00:00|FCX", "timestamp": "2026-03-26T11:44:56.715619+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
+{"signal_id": "2026-03-26T11:45:03.792316+00:00|FCX", "timestamp": "2026-03-26T11:45:03.792337+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
+{"signal_id": "2026-03-26T11:45:03.803174+00:00|FCX", "timestamp": "2026-03-26T11:45:03.803184+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
