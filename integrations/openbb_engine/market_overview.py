@@ -73,11 +73,11 @@ def _row_from_closes(symbol: str, closes: List[float], source: str, price: float
 
 def _try_fmp(symbols: List[str]) -> List[Dict[str, Any]]:
     try:
-        from production.fmp_market_data import fetch_quotes, fetch_eod_series
+        from production.fmp_market_data import fetch_eod_series, fetch_latest_eod_prices
     except Exception:
         return []
 
-    quote_map = fetch_quotes(symbols)
+    latest_map = fetch_latest_eod_prices(symbols, days_back=10)
     rows: List[Dict[str, Any]] = []
     for symbol in symbols:
         try:
@@ -85,8 +85,8 @@ def _try_fmp(symbols: List[str]) -> List[Dict[str, Any]]:
         except Exception:
             series = []
         closes = [float(row["close"]) for row in series if row.get("close") is not None]
-        price = quote_map.get(str(symbol).upper(), {}).get("price")
-        row = _row_from_closes(symbol, closes, "fmp", price=float(price) if price is not None else None)
+        price = latest_map.get(str(symbol).upper(), {}).get("price")
+        row = _row_from_closes(symbol, closes, "fmp_eod", price=float(price) if price is not None else None)
         if row:
             rows.append(row)
     return rows

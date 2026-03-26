@@ -73,7 +73,17 @@ def _parse_dt(value: str) -> Optional[datetime]:
 
 
 
-def fetch_quotes(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
+def _extract_series_rows(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, list):
+        return [row for row in payload if isinstance(row, dict)]
+    if isinstance(payload, dict):
+        historical = payload.get("historical")
+        if isinstance(historical, list):
+            return [row for row in historical if isinstance(row, dict)]
+    return []
+
+
+def fetch_quotes(symbols: Iterable[str], allow_eod_fallback: bool = True) -> Dict[str, Dict[str, Any]]:
     cleaned = sorted({str(s).upper().strip() for s in symbols if str(s).strip()})
     if not cleaned:
         return {}
@@ -129,6 +139,13 @@ def fetch_quotes(symbols: Iterable[str]) -> Dict[str, Dict[str, Any]]:
                 "raw": row,
                 "source": "fmp_quote",
             }
+
+    if out or not allow_eod_fallback:
+        return out
+
+    latest_map = fetch_latest_eod_prices(cleaned, days_back=7)
+    for internal_value, row in latest_map.items():
+        out[internal_value] = row
     return out
 
 
@@ -174,10 +191,9 @@ def fetch_eod_series(symbol: str, days_back: int = 10) -> List[Dict[str, Any]]:
         "/historical-price-eod/light",
         {"symbol": provider_value, "from": start.isoformat(), "to": end.isoformat()},
     )
-    if not isinstance(payload, list):
-        return []
+    payload_rows = _extract_series_rows(payload)
     rows: List[Dict[str, Any]] = []
-    for row in payload:
+    for row in payload_rows:
         dt = _parse_dt(str(row.get("date", "")))
         if not dt:
             continue
@@ -193,6 +209,25 @@ def fetch_eod_series(symbol: str, days_back: int = 10) -> List[Dict[str, Any]]:
     return rows
 
 
+def fetch_latest_eod_prices(symbols: Iterable[str], days_back: int = 7) -> Dict[str, Dict[str, Any]]:
+    cleaned = sorted({str(s).upper().strip() for s in symbols if str(s).strip()})
+    out: Dict[str, Dict[str, Any]] = {}
+    for symbol in cleaned:
+        provider_value = provider_symbol(symbol, "fmp")
+        series = fetch_eod_series(symbol, days_back=days_back)
+        if not series:
+            continue
+        latest = series[-1]
+        out[symbol] = {
+            "symbol": symbol,
+            "provider_symbol": provider_value,
+            "price": float(latest["close"]),
+            "raw": latest,
+            "source": "fmp_eod",
+        }
+    return out
+
+
 def enrich_alerts_with_entry_prices(alerts: List[Dict[str, Any]]) -> Dict[str, Any]:
     symbols: List[str] = []
     for alert in alerts:
@@ -200,7 +235,7 @@ def enrich_alerts_with_entry_prices(alerts: List[Dict[str, Any]]) -> Dict[str, A
         if tickers:
             symbols.append(tickers[0])
     try:
-        quote_map = fetch_quotes(symbols)
+        quote_map = fetch_quotes(symbols, allow_eod_fallback=True)
     except Exception:
         quote_map = {}
     enriched = 0

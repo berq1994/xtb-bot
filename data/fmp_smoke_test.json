@@ -1,0 +1,30 @@
+{
+  "secret_present": false,
+  "secret_name": "none",
+  "secret_mask": "není",
+  "test_symbols": [
+    "SPY",
+    "MSFT",
+    "AAPL"
+  ],
+  "quote_test": {
+    "endpoint": "https://financialmodelingprep.com/stable/quote",
+    "http_status": null,
+    "rows": 0,
+    "returned_symbols": [],
+    "body_preview": null,
+    "ok": false
+  },
+  "eod_test": {
+    "endpoint": "https://financialmodelingprep.com/stable/historical-price-eod/light",
+    "symbol": "SPY",
+    "provider_symbol": "SPY",
+    "http_status": null,
+    "rows": 0,
+    "latest_date": null,
+    "latest_close": null,
+    "body_preview": null,
+    "ok": false
+  },
+  "safe_mode_ok": false
+}

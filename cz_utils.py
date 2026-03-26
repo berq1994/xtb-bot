@@ -61,6 +61,9 @@ def status_cs(value: str) -> str:
 def source_cs(value: str) -> str:
     return {
         "fmp": "FMP",
+        "fmp_eod": "FMP (EOD safe mode)",
+        "fmp_eod_latest": "FMP (EOD safe mode)",
+        "fmp_quote": "FMP quote",
         "yfinance": "Yahoo Finance",
         "openbb": "OpenBB / Yahoo Finance",
         "fallback": "nouzový fallback",
