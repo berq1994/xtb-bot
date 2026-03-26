@@ -3,7 +3,8 @@ name: telegram-portfolio-alerts
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/15 8-21 * * 1-5"
+    - cron: "*/15 8-20 * * 1-5"
+    - cron: "0 21 * * 1-5"
 
 concurrency:
   group: telegram-portfolio-alerts
@@ -25,15 +26,22 @@ jobs:
       PORTFOLIO_ALERT_MIN_MOVE: "2.4"
       PORTFOLIO_ALERT_COOLDOWN_MIN: "180"
       PORTFOLIO_ALERT_MAX_ITEMS: "5"
+      ALERT_WINDOW_START_HOUR: "8"
+      ALERT_WINDOW_END_HOUR: "21"
     steps:
-      - name: Check Prague time window (09:00-22:00)
+      - name: Check Prague time window (08:00-21:00)
         run: |
           python - << 'PY'
+          import os
           from datetime import datetime
           from zoneinfo import ZoneInfo
+          start_hour = int(os.getenv('ALERT_WINDOW_START_HOUR', '8'))
+          end_hour = int(os.getenv('ALERT_WINDOW_END_HOUR', '21'))
           now = datetime.now(ZoneInfo('Europe/Prague'))
           print('NOW_PRAGUE=', now.strftime('%Y-%m-%d %H:%M:%S %Z'))
-          if not (9 <= now.hour <= 22):
+          allowed = (start_hour <= now.hour < end_hour) or (now.hour == end_hour and now.minute == 0)
+          print('ALERT_WINDOW=', f'{start_hour:02d}:00-{end_hour:02d}:00')
+          if not allowed:
               raise SystemExit(0)
           PY
       - uses: actions/checkout@v4

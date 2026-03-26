@@ -23,6 +23,8 @@ OUTPUT_PATH = Path("telegram_portfolio_alerts.txt")
 ALERT_MOVE_MIN = float(os.getenv("PORTFOLIO_ALERT_MIN_MOVE", "2.4"))
 ALERT_COOLDOWN_MIN = int(os.getenv("PORTFOLIO_ALERT_COOLDOWN_MIN", "180"))
 ALERT_MAX_ITEMS = int(os.getenv("PORTFOLIO_ALERT_MAX_ITEMS", "5"))
+ALERT_WINDOW_START_HOUR = int(os.getenv("ALERT_WINDOW_START_HOUR", "8"))
+ALERT_WINDOW_END_HOUR = int(os.getenv("ALERT_WINDOW_END_HOUR", "21"))
 
 
 def _now_local() -> datetime:
@@ -56,6 +58,14 @@ def _parse_dt(value: str | None) -> datetime | None:
         return datetime.fromisoformat(str(value))
     except Exception:
         return None
+
+
+def _is_within_alert_window(now_local: datetime) -> bool:
+    if ALERT_WINDOW_START_HOUR <= now_local.hour < ALERT_WINDOW_END_HOUR:
+        return True
+    if now_local.hour == ALERT_WINDOW_END_HOUR and now_local.minute == 0:
+        return True
+    return False
 
 
 def _category(change_pct: float, sentiment: str, momentum_5d: float) -> str | None:
@@ -195,6 +205,21 @@ def build_portfolio_alert_message() -> tuple[str, list[dict[str, Any]], dict[str
 
 
 def run_portfolio_telegram_alerts(send: bool = True) -> str:
+    now_local = _now_local()
+    window_label = f"{ALERT_WINDOW_START_HOUR:02d}:00-{ALERT_WINDOW_END_HOUR:02d}:00"
+    if send and not _is_within_alert_window(now_local):
+        preview = f"Mimo časové okno alertů ({window_label}). Telegram neposlán."
+        OUTPUT_PATH.write_text(preview, encoding="utf-8")
+        report = [
+            "TELEGRAM – PORTFOLIO ALERTY",
+            f"Stav: {status_cs('not_sent')}",
+            "Důvod: OUTSIDE_ALERT_WINDOW",
+            f"Časové okno: {window_label}",
+            "",
+            preview,
+        ]
+        return "\n".join(report)
+
     message, selected, payload = build_portfolio_alert_message()
     state = payload.get("state", {}) if isinstance(payload, dict) else {}
     delivery = {"delivered": False, "reason": payload.get("reason", "NO_MESSAGE") if isinstance(payload, dict) else "NO_MESSAGE"}
@@ -211,6 +236,7 @@ def run_portfolio_telegram_alerts(send: bool = True) -> str:
         "TELEGRAM – PORTFOLIO ALERTY",
         f"Stav: {status_cs('sent' if delivery.get('delivered') else 'not_sent')}",
         f"Důvod: {delivery.get('reason', 'OK')}",
+        f"Časové okno: {window_label}",
         f"Počet alertů: {len(selected)}",
         "",
         preview,
