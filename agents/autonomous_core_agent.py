@@ -177,7 +177,7 @@ def run_autonomous_core() -> str:
         f'Automaticky zapsané signály: {", ".join(auto_logged) if auto_logged else "žádné nové"}',
         f'Vyhodnocené outcome vzorky: {resolved_count}',
         f'Rebalance vah: {rebalance_status}',
-        f'Nízkovolací FMP režim: {'ano' if str(os.getenv('FMP_LOW_CALL_MODE', '0')).strip().lower() in {'1','true','yes','on'} else 'ne'}',
+        f"Nízkovolací FMP režim: {'ano' if str(os.getenv('FMP_LOW_CALL_MODE', '0')).strip().lower() in {'1','true','yes','on'} else 'ne'}",
         '',
         'VÁHY PŘED -> PO',
     ]
