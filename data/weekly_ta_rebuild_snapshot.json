@@ -1,0 +1,102 @@
+{
+  "generated_at": "2026-03-30T11:38:08.604799+00:00",
+  "count": 8,
+  "symbols": {
+    "GOOGL": {
+      "symbol": "GOOGL",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "PLTR": {
+      "symbol": "PLTR",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "EQT": {
+      "symbol": "EQT",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "S": {
+      "symbol": "S",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "TSM": {
+      "symbol": "TSM",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    },
+    "NBIS": {
+      "symbol": "NBIS",
+      "status": "history_missing",
+      "trend_regime": "unknown",
+      "setup_type": "none",
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "ta_score": 0.0,
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+    }
+  }
+}
