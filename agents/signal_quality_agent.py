@@ -83,6 +83,7 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
     category = str(item.get('category', 'watchlist_monitor') or 'watchlist_monitor').strip()
     trend = str(item.get('trend', 'flat') or 'flat').strip()
     source_count = int(item.get('source_count', 0) or 0)
+    source_name = str(item.get('news_source') or item.get('source') or '').strip().lower()
     atr_proxy_pct = float(item.get('atr_proxy_pct', 0.0) or 0.0)
     pnl = item.get('pnl_vs_cost_pct')
     pnl_value = float(pnl or 0.0) if pnl not in (None, '') else None
@@ -130,9 +131,12 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
 
     suppress_reason = ''
     suppressed = False
-    if data_quality_score < 0.4:
+    if data_quality_score < 0.55:
         suppressed = True
         suppress_reason = 'slabá datová kvalita'
+    elif 'scaffold' in source_name and evidence_grade in {'D', '?'}:
+        suppressed = True
+        suppress_reason = 'scaffold bez důkazů'
     elif not held and evidence_grade == 'D' and source_count <= 1:
         suppressed = True
         suppress_reason = 'slabé potvrzení mimo portfolio'
@@ -154,6 +158,12 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
         bucket = 'medium'
     else:
         bucket = 'low'
+
+    if evidence_grade in {'D', '?'} or 'scaffold' in source_name:
+        if bucket == 'urgent':
+            bucket = 'high' if held else 'low'
+        elif bucket == 'high' and not held:
+            bucket = 'medium'
 
     delivery_channel = 'telegram' if held and bucket in {'urgent', 'high'} else ('email' if bucket in {'high', 'medium'} else 'none')
 

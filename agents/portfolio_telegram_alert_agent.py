@@ -109,7 +109,7 @@ def _build_candidates() -> list[dict[str, Any]]:
             continue
         quality = queue_map.get(symbol, {}) if isinstance(queue_map.get(symbol, {}), dict) else {}
         actionability_score = float(quality.get('actionability_score', 0.0) or 0.0)
-        if float(quality.get('data_quality_score', 0.7) or 0.7) < 0.45:
+        if float(quality.get('data_quality_score', 0.7) or 0.7) < 0.6:
             continue
         if str(quality.get('delivery_channel', 'none')) != 'telegram':
             continue

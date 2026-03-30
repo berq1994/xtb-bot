@@ -1,1 +1,11 @@
-Mimo časové okno alertů (08:00-21:00). Telegram neposlán.
+PORTFOLIO ALERT – OKAMŽITÁ KONTROLA
+30.03.2026 10:59 CEST
+
+- AMD -0.65% | cena 106.3 | trend klesající | sentiment neutrální | akčnost 5.02 | dnes sledovat | zdroj cen nouzový fallback
+  Podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv | zpráva: AMD trading activity remains in focus
+- EQT 1.3% | cena 129.66 | trend rostoucí | sentiment neutrální | akčnost 4.92 | dnes sledovat | zdroj cen nouzový fallback
+  Podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup | zpráva: EQT trading activity remains in focus
+- FCX 1.3% | cena 165.12 | trend rostoucí | sentiment neutrální | akčnost 4.92 | dnes sledovat | zdroj cen nouzový fallback
+  Podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup | zpráva: FCX trading activity remains in focus
+
+Jen portfolio, jen nová situace a přísnější anti-spam filtr.

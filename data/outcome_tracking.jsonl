@@ -17,3 +17,5 @@
 {"signal_id": "2026-03-26T21:48:17.563526+00:00|EQT", "timestamp": "2026-03-26T21:48:17.563536+00:00", "symbol": "EQT", "decision": "watch_long", "direction": "long", "entry_price": 129.66}
 {"signal_id": "2026-03-27T21:06:26.714946+00:00|FCX", "timestamp": "2026-03-27T21:06:26.714957+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
 {"signal_id": "2026-03-27T21:06:26.718272+00:00|EQT", "timestamp": "2026-03-27T21:06:26.718279+00:00", "symbol": "EQT", "decision": "watch_long", "direction": "long", "entry_price": 129.66}
+{"signal_id": "2026-03-30T08:59:09.662716+00:00|AMD", "timestamp": "2026-03-30T08:59:09.662728+00:00", "symbol": "AMD", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 106.3}
+{"signal_id": "2026-03-30T08:59:09.663440+00:00|FCX", "timestamp": "2026-03-30T08:59:09.663449+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}

@@ -8,7 +8,7 @@ import urllib.parse
 from pathlib import Path
 from typing import Iterable, Dict, Any, List
 
-from symbol_utils import provider_symbol
+from symbol_utils import provider_symbol, looks_valid_symbol
 
 import requests
 from xml.etree import ElementTree as ET
@@ -249,6 +249,8 @@ def _fetch_fmp_news(symbol: str) -> list[dict]:
 
 
 def _fallback_items(symbol: str) -> list[dict]:
+    if not looks_valid_symbol(symbol):
+        return []
     headlines = DEFAULT_HEADLINES.get(
         symbol,
         [

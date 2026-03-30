@@ -1,5 +1,5 @@
 {
-  "input_count": 43,
+  "input_count": 42,
   "valid_symbols": [
     "GOOGL",
     "AMD",
@@ -16,7 +16,6 @@
     "NVDA",
     "IREN",
     "FSLR",
-    "IGLD_HEDGED",
     "CVX",
     "AAPL",
     "AAOI",
@@ -47,5 +46,5 @@
   ],
   "disabled_symbols": [],
   "suspicious_symbols": [],
-  "valid_count": 43
+  "valid_count": 42
 }

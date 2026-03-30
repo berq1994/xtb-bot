@@ -125,6 +125,13 @@ def build_learning_summary(limit: int = 80) -> dict:
             if outcome.get(h) not in (None, ''):
                 horizons[h].append(float(outcome[h]))
         features = signal.get("features", {}) if isinstance(signal, dict) else {}
+        weak_source = str(features.get('news_source') or features.get('source') or '').strip().lower()
+        if str(features.get('evidence_grade', '?')).strip().upper() in {'D', '?'}:
+            continue
+        if 'scaffold' in weak_source or 'fallback' in weak_source:
+            continue
+        if float(features.get('data_quality_score', 0.0) or 0.0) < 0.6:
+            continue
         sentiment_label = str(features.get("sentiment_label", "neutral"))
         if sentiment_label == "positive":
             positive_sentiment.append(outcome_pct)

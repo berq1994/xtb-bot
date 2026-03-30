@@ -86,3 +86,19 @@ def internal_symbol_from_provider(symbol: str, provider: str = "fmp") -> str:
     if not provider_value:
         return provider_value
     return _reverse_provider_map(provider).get(provider_value, provider_value)
+
+
+def looks_valid_symbol(symbol: str) -> bool:
+    internal = _norm(symbol)
+    if not internal:
+        return False
+    row = load_ticker_map().get(internal)
+    if row:
+        return bool(row.get("enabled", True))
+    if " " in internal:
+        return False
+    if internal.count("_") >= 1:
+        return False
+    if len(internal) > 15:
+        return False
+    return True

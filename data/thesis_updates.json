@@ -3,15 +3,15 @@
   "updated_symbols": 10,
   "top_symbols": [
     "FCX",
-    "FSLR",
     "EQT",
+    "FSLR",
     "NVO",
     "IREN"
   ],
   "risk_summary": {
-    "held_count": 17,
+    "held_count": 16,
     "largest_position_symbol": "TSM",
-    "largest_position_share_pct": 22.2,
+    "largest_position_share_pct": 25.85,
     "concentration_warning": false,
     "top_themes": [
       [
@@ -32,11 +32,11 @@
       ]
     ],
     "defense_names": [
-      "MSFT",
-      "AMD",
-      "TSM",
       "GRMN",
-      "GOOGL"
+      "AMD",
+      "MSFT",
+      "TSM",
+      "LEU"
     ]
   }
 }

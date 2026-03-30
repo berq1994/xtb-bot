@@ -4,6 +4,8 @@ from datetime import date, timedelta
 import os
 from typing import Iterable, Dict, Any, List
 
+from symbol_utils import provider_symbol, internal_symbol_from_provider, filter_enabled_symbols, looks_valid_symbol
+
 DEFAULT_WATCHLIST = ["SPY", "QQQ", "DIA", "IWM", "BTC-USD", "GLD", "TLT", "NVDA", "MSFT", "AAPL"]
 
 
@@ -85,6 +87,8 @@ def _try_fmp(symbols: List[str]) -> List[Dict[str, Any]]:
     latest_map = fetch_latest_eod_prices(symbols, days_back=10)
     rows: List[Dict[str, Any]] = []
     for symbol in symbols:
+        if not looks_valid_symbol(symbol):
+            continue
         try:
             series = fetch_eod_series(symbol, days_back=80)
         except Exception:
@@ -106,13 +110,15 @@ def _try_openbb(symbols: List[str]) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
     start_date = (date.today() - timedelta(days=120)).isoformat()
     for symbol in symbols:
+        if not looks_valid_symbol(symbol):
+            continue
         try:
-            data = obb.equity.price.historical(symbol, provider="yfinance", interval="1d", start_date=start_date)
+            data = obb.equity.price.historical(provider_symbol(symbol, "yahoo"), provider="yfinance", interval="1d", start_date=start_date)
             df = data.to_df()
             if df is None or df.empty or "close" not in df.columns:
                 continue
             closes = [float(x) for x in df["close"].tolist() if x == x]
-            row = _row_from_closes(symbol, closes, "openbb")
+            row = _row_from_closes(internal_symbol_from_provider(symbol, "yahoo"), closes, "openbb")
             if row:
                 rows.append(row)
         except Exception:
@@ -127,12 +133,14 @@ def _try_yfinance(symbols: List[str]) -> List[Dict[str, Any]]:
         return []
     rows: List[Dict[str, Any]] = []
     for symbol in symbols:
+        if not looks_valid_symbol(symbol):
+            continue
         try:
-            hist = yf.Ticker(symbol).history(period="6mo", interval="1d")
+            hist = yf.Ticker(provider_symbol(symbol, "yahoo")).history(period="6mo", interval="1d")
             if hist is None or hist.empty or len(hist) < 2:
                 continue
             closes = [float(x) for x in hist["Close"].tolist()]
-            row = _row_from_closes(symbol, closes, "yfinance")
+            row = _row_from_closes(internal_symbol_from_provider(symbol, "yahoo"), closes, "yfinance")
             if row:
                 rows.append(row)
         except Exception:
@@ -172,7 +180,7 @@ def _regime_from_rows(rows: List[Dict[str, Any]]) -> str:
 
 
 def generate_market_overview(watchlist: Iterable[str] | None = None) -> Dict[str, Any]:
-    symbols = list(watchlist or DEFAULT_WATCHLIST)
+    symbols = filter_enabled_symbols(list(watchlist or DEFAULT_WATCHLIST))
 
     rows: List[Dict[str, Any]] = []
     source = "fallback"

@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from symbol_utils import filter_enabled_symbols, load_ticker_map, provider_symbol
+from symbol_utils import filter_enabled_symbols, load_ticker_map, provider_symbol, looks_valid_symbol
 
 REPORT_PATH = Path("data/data_integrity_report.json")
 
@@ -18,8 +18,10 @@ def _infer_provider_ok(symbol: str) -> bool:
     internal = _norm(symbol)
     if not internal:
         return False
+    if not looks_valid_symbol(internal):
+        return False
     mapped = provider_symbol(internal, 'fmp')
-    return bool(mapped)
+    return bool(mapped) and mapped == mapped.strip().upper()
 
 
 def validate_symbols(symbols: list[str]) -> dict[str, Any]:
@@ -73,15 +75,18 @@ def score_row_quality(row: dict[str, Any]) -> dict[str, Any]:
     if 'fallback' in source or 'scaffold' in source:
         quality -= 0.35
         reasons.append('fallback_source')
-    if abs(float(row.get('change_pct', 0.0) or 0.0)) > 35:
+    if abs(float(row.get('change_pct', 0.0) or 0.0)) > 25:
         quality -= 0.2
         reasons.append('extreme_move_needs_validation')
     if abs(float(row.get('atr_proxy_pct', 0.0) or 0.0)) > 12:
         quality -= 0.1
         reasons.append('high_volatility_proxy')
     if not _infer_provider_ok(symbol):
-        quality -= 0.25
+        quality -= 0.35
         reasons.append('provider_mapping_unclear')
+    if '_' in symbol:
+        quality -= 0.25
+        reasons.append('synthetic_or_underscored_symbol')
     score = round(max(0.0, min(1.0, quality)), 2)
     if score >= 0.8:
         label = 'good'
