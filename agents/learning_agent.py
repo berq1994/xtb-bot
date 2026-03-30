@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import json
@@ -77,8 +78,8 @@ def _feedback_bias() -> dict[str, float]:
     return {"overall_feedback_avg": round(avg_usefulness, 2)}
 
 
-def build_learning_summary(limit: int = 50) -> dict:
-    history_rows = _load_rows(HISTORY_PATH)[-max(limit * 2, 50):]
+def build_learning_summary(limit: int = 80) -> dict:
+    history_rows = _load_rows(HISTORY_PATH)[-max(limit * 2, 80):]
     outcome_rows = _load_rows(OUTCOME_PATH)
     weights = load_signal_weights()
     history_index = _build_history_index(history_rows)
@@ -106,7 +107,10 @@ def build_learning_summary(limit: int = 50) -> dict:
     study_low: list[float] = []
     playbook_yes: list[float] = []
     playbook_no: list[float] = []
+    data_good: list[float] = []
+    data_bad: list[float] = []
     evidence_grade_perf: dict[str, list[float]] = {}
+    horizons: dict[str, list[float]] = {'h1d': [], 'h3d': [], 'h5d': [], 'h20d': []}
 
     for row in resolved:
         signal = row["signal"]
@@ -117,6 +121,9 @@ def build_learning_summary(limit: int = 50) -> dict:
         labels[label] = labels.get(label, 0) + 1
         outcome_pct = float(outcome.get("outcome_pct", 0.0))
         outcome_vals.append(outcome_pct)
+        for h in horizons:
+            if outcome.get(h) not in (None, ''):
+                horizons[h].append(float(outcome[h]))
         features = signal.get("features", {}) if isinstance(signal, dict) else {}
         sentiment_label = str(features.get("sentiment_label", "neutral"))
         if sentiment_label == "positive":
@@ -143,6 +150,11 @@ def build_learning_summary(limit: int = 50) -> dict:
             study_high.append(outcome_pct)
         else:
             study_low.append(outcome_pct)
+        data_quality_score = float(features.get('data_quality_score', 0.0) or 0.0)
+        if data_quality_score >= 0.75:
+            data_good.append(outcome_pct)
+        else:
+            data_bad.append(outcome_pct)
         playbooks = features.get("playbooks", []) or []
         if playbooks:
             playbook_yes.append(outcome_pct)
@@ -160,9 +172,9 @@ def build_learning_summary(limit: int = 50) -> dict:
     suggestion = "Málo dat pro adaptaci vah."
     if resolved:
         if avg_outcome >= 1.25 and win_rate >= 55:
-            suggestion = "Research stack funguje slušně. Drž filtraci a jemně dolaďuj váhy evidence a playbooků."
+            suggestion = "Research stack funguje slušně. Drž filtraci a jemně dolaďuj váhy evidence, playbooků a datové kvality."
         elif avg_outcome >= 0.0:
-            suggestion = "Bot je použitelný, ale potřebuje lépe trestat přeplněná témata a slabé důkazy."
+            suggestion = "Bot je použitelný, ale potřebuje lépe trestat přeplněná témata, slabé důkazy a nekvalitní data."
         else:
             suggestion = "Historické výsledky jsou slabé. Zpřísnit výběr, důkazní vrstvu a obranný filtr."
 
@@ -179,23 +191,17 @@ def build_learning_summary(limit: int = 50) -> dict:
         "study_low_avg": round(mean(study_low), 2) if study_low else None,
         "playbook_yes_avg": round(mean(playbook_yes), 2) if playbook_yes else None,
         "playbook_no_avg": round(mean(playbook_no), 2) if playbook_no else None,
+        "data_good_avg": round(mean(data_good), 2) if data_good else None,
+        "data_bad_avg": round(mean(data_bad), 2) if data_bad else None,
+        "horizons": {k: (round(mean(v), 2) if v else None) for k, v in horizons.items()},
         "evidence_grade_avg": {k: round(mean(v), 2) for k, v in evidence_grade_perf.items() if v},
         "feedback": _feedback_bias(),
     }
 
-    return {
-        "count": len(resolved),
-        "avg_outcome": avg_outcome,
-        "win_rate": win_rate,
-        "decision_mix": decision_mix,
-        "labels": labels,
-        "weights": weights,
-        "suggestion": suggestion,
-        "diagnostics": diagnostics,
-    }
+    return {"count": len(resolved), "avg_outcome": avg_outcome, "win_rate": win_rate, "decision_mix": decision_mix, "labels": labels, "weights": weights, "suggestion": suggestion, "diagnostics": diagnostics}
 
 
-def adapt_signal_weights(limit: int = 50) -> dict:
+def adapt_signal_weights(limit: int = 80) -> dict:
     summary = build_learning_summary(limit=limit)
     weights = summary["weights"].copy()
     diagnostics = summary.get("diagnostics", {})
@@ -230,6 +236,15 @@ def adapt_signal_weights(limit: int = 50) -> dict:
         else:
             weights["evidence_quality"] = max(0.7, round(weights["evidence_quality"] - 0.05, 2))
 
+    data_good = diagnostics.get('data_good_avg')
+    data_bad = diagnostics.get('data_bad_avg')
+    if data_good is not None and data_bad is not None:
+        if data_good >= data_bad:
+            weights['momentum'] = min(1.8, round(weights['momentum'] + 0.03, 2))
+        else:
+            weights['risk_penalty'] = min(1.8, round(weights['risk_penalty'] + 0.06, 2))
+            weights['trend'] = max(0.7, round(weights['trend'] - 0.03, 2))
+
     study_high = diagnostics.get("study_high_avg")
     study_low = diagnostics.get("study_low_avg")
     if study_high is not None and study_low is not None:
@@ -245,6 +260,15 @@ def adapt_signal_weights(limit: int = 50) -> dict:
             weights["playbook_alignment"] = min(1.8, round(weights["playbook_alignment"] + 0.05, 2))
         else:
             weights["playbook_alignment"] = max(0.7, round(weights["playbook_alignment"] - 0.05, 2))
+
+    horizons = diagnostics.get('horizons', {}) if isinstance(diagnostics.get('horizons'), dict) else {}
+    h5 = horizons.get('h5d')
+    h20 = horizons.get('h20d')
+    if h5 is not None and h20 is not None:
+        if h20 >= h5 >= 0:
+            weights['regime_alignment'] = min(1.8, round(weights['regime_alignment'] + 0.04, 2))
+        elif h20 < 0 and h5 < 0:
+            weights['risk_penalty'] = min(1.8, round(weights['risk_penalty'] + 0.05, 2))
 
     if summary["avg_outcome"] < 0:
         weights["regime_alignment"] = min(1.8, round(weights["regime_alignment"] + 0.05, 2))
@@ -264,7 +288,7 @@ def adapt_signal_weights(limit: int = 50) -> dict:
     return weights
 
 
-def run_learning_review(limit: int = 50) -> str:
+def run_learning_review(limit: int = 80) -> str:
     summary = build_learning_summary(limit=limit)
     lines = []
     lines.append("PŘEHLED UČENÍ – AUTO VRSTVA")
@@ -289,7 +313,7 @@ def run_learning_review(limit: int = 50) -> str:
     return output
 
 
-def run_rebalance_weights(limit: int = 50) -> str:
+def run_rebalance_weights(limit: int = 80) -> str:
     before = load_signal_weights()
     after = adapt_signal_weights(limit=limit)
     lines = []

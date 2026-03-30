@@ -221,6 +221,12 @@ def main():
         print(run_autonomous_core())
         return
 
+
+    if mode == "data_health":
+        from agents.data_integrity_agent import validate_symbols
+        from agents.portfolio_context_agent import load_portfolio_symbols
+        print(validate_symbols(load_portfolio_symbols(limit=50)))
+        return
     if mode == "weekly_maintenance":
         from agents.weekly_maintenance_agent import run_weekly_maintenance
         print(run_weekly_maintenance())

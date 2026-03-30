@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import json
@@ -67,7 +68,7 @@ def _normalize_text(value: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def _fetch_google_news(query: str, limit: int = 4) -> list[dict[str, str]]:
+def _fetch_google_news(query: str, limit: int = 3) -> list[dict[str, str]]:
     encoded = urllib.parse.quote(query)
     url = f"https://news.google.com/rss/search?q={encoded}&hl=en-US&gl=US&ceid=US:en"
     headers = {
@@ -100,15 +101,7 @@ def _fetch_google_news(query: str, limit: int = 4) -> list[dict[str, str]]:
         source_node = item.find("source")
         if source_node is not None and (source_node.text or "").strip():
             source = _normalize_text(source_node.text or "")
-        items.append(
-            {
-                "title": title,
-                "title_cs": news_title_cs(title),
-                "source": source,
-                "published": _normalize_text(item.findtext("pubDate") or ""),
-                "summary": _normalize_text(item.findtext("description") or ""),
-            }
-        )
+        items.append({"title": title, "title_cs": news_title_cs(title), "source": source, "published": _normalize_text(item.findtext("pubDate") or ""), "summary": _normalize_text(item.findtext("description") or "")})
         if len(items) >= limit:
             break
     return items
@@ -122,28 +115,14 @@ def _portfolio_rows() -> list[dict[str, Any]]:
 
 def _portfolio_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     if not rows:
-        return {
-            "regime": "mixed",
-            "source": "unknown",
-            "avg_change": 0.0,
-            "leaders": [],
-            "laggards": [],
-            "movers": [],
-        }
+        return {"regime": "mixed", "source": "unknown", "avg_change": 0.0, "leaders": [], "laggards": [], "movers": []}
     leaders = sorted(rows, key=lambda x: float(x.get("change_pct", 0.0)), reverse=True)[:3]
     laggards = sorted(rows, key=lambda x: float(x.get("change_pct", 0.0)))[:3]
     movers = sorted(rows, key=lambda x: abs(float(x.get("change_pct", 0.0))), reverse=True)[:5]
     avg_change = round(sum(float(r.get("change_pct", 0.0)) for r in rows) / len(rows), 2)
     source = str(rows[0].get("source", "unknown"))
     proxy_overview = generate_market_overview(["SPY", "QQQ", "BTC-USD", "TLT"])
-    return {
-        "regime": proxy_overview.get("regime", "mixed"),
-        "source": source,
-        "avg_change": avg_change,
-        "leaders": leaders,
-        "laggards": laggards,
-        "movers": movers,
-    }
+    return {"regime": proxy_overview.get("regime", "mixed"), "source": source, "avg_change": avg_change, "leaders": leaders, "laggards": laggards, "movers": movers}
 
 
 def _build_subject(slot: str, now_local: datetime) -> str:
@@ -170,11 +149,8 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
     slot = "evening" if str(slot).strip().lower() == "evening" else "morning"
     subject = _build_subject(slot, now_local)
 
-    world_items = _fetch_google_news("world markets OR stocks OR fed OR inflation when:1d", limit=4)
-    geo_items = _fetch_google_news(
-        "geopolitics OR sanctions OR taiwan OR china OR russia OR ukraine OR iran OR oil when:1d",
-        limit=4,
-    )
+    world_items = _fetch_google_news("world markets OR stocks OR fed OR inflation when:1d", limit=3)
+    geo_items = _fetch_google_news("geopolitics OR sanctions OR taiwan OR china OR russia OR ukraine OR iran OR oil when:1d", limit=3)
 
     portfolio_rows = _portfolio_rows()
     portfolio_summary = _portfolio_summary(portfolio_rows)
@@ -182,6 +158,8 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
     news_map = build_news_sentiment(symbols[:8]) if symbols else {}
     research_state = _load_research_state()
     action_queue = research_state.get('action_queue', []) if isinstance(research_state, dict) else []
+    risk_summary = research_state.get('risk_summary', {}) if isinstance(research_state, dict) else {}
+    data_health = research_state.get('data_health', {}) if isinstance(research_state, dict) else {}
 
     watch_rows: list[dict[str, Any]] = []
     for row in sorted(portfolio_rows, key=lambda x: abs(float(x.get("change_pct", 0.0))), reverse=True):
@@ -189,22 +167,12 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         if not symbol:
             continue
         change_pct = round(float(row.get("change_pct", 0.0)), 2)
-        if abs(change_pct) < 1.4:
+        if abs(change_pct) < 1.2:
             continue
         sentiment = news_map.get(symbol, {})
         headline = (sentiment.get("headlines") or [""])[0]
-        watch_rows.append(
-            {
-                "symbol": symbol,
-                "change_pct": change_pct,
-                "price": round(float(row.get("price", 0.0)), 2),
-                "trend": str(row.get("trend", "flat")),
-                "sentiment": str(sentiment.get("sentiment_label", "neutral")),
-                "headline": headline,
-                "headline_cs": news_title_cs(str(headline or "")),
-            }
-        )
-        if len(watch_rows) >= 5:
+        watch_rows.append({"symbol": symbol, "change_pct": change_pct, "price": round(float(row.get("price", 0.0)), 2), "trend": str(row.get("trend", "flat")), "sentiment": str(sentiment.get("sentiment_label", "neutral")), "headline": headline, "headline_cs": news_title_cs(str(headline or ""))})
+        if len(watch_rows) >= 4:
             break
 
     lines: list[str] = []
@@ -213,73 +181,59 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
     lines.append(f"Čas: {now_local.strftime('%d.%m.%Y %H:%M %Z')}")
     lines.append("")
 
-    lines.append("SVĚT")
+    lines.append("TOP 3 ZE SVĚTA")
     lines.extend(_render_items(world_items or [{"title_cs": "Bez nových ověřených světových titulků", "source": "fallback"}]))
     lines.append("")
 
-    lines.append("GEOPOLITIKA")
+    lines.append("TOP 3 Z GEOPOLITIKY")
     lines.extend(_render_items(geo_items or [{"title_cs": "Bez nových ověřených geopolitických titulků", "source": "fallback"}]))
     lines.append("")
 
-    lines.append("AKCIE A PORTFOLIO")
+    lines.append("RYCHLÝ STAV PORTFOLIA")
     lines.append(f"- Režim trhu: {regime_cs(str(portfolio_summary['regime']))}")
     lines.append(f"- Zdroj cen: {source_cs(str(portfolio_summary['source']))}")
     lines.append(f"- Průměrná denní změna sledovaných pozic: {portfolio_summary['avg_change']}%")
     if portfolio_summary["leaders"]:
-        leader_line = ", ".join(
-            f"{row['symbol']} {round(float(row.get('change_pct', 0.0)), 2)}%"
-            for row in portfolio_summary["leaders"]
-        )
-        lines.append(f"- Nejsilnější pozice: {leader_line}")
+        lines.append("- Nejsilnější pozice: " + ", ".join(f"{row['symbol']} {round(float(row.get('change_pct', 0.0)), 2)}%" for row in portfolio_summary["leaders"]))
     if portfolio_summary["laggards"]:
-        laggard_line = ", ".join(
-            f"{row['symbol']} {round(float(row.get('change_pct', 0.0)), 2)}%"
-            for row in portfolio_summary["laggards"]
-        )
-        lines.append(f"- Nejslabší pozice: {laggard_line}")
-    lines.append("")
-
-    lines.append("CO HÝBALO PORTFOLIEM")
-    if watch_rows:
-        for row in watch_rows:
-            headline = str(row.get("headline_cs", "")).strip()
-            note = f" | zpráva: {headline}" if headline else ""
-            lines.append(
-                f"- {row['symbol']}: {row['change_pct']}% | cena {row['price']} | trend {trend_cs(str(row['trend']))} | sentiment {sentiment_cs(str(row['sentiment']))}{note}"
-            )
-    else:
-        lines.append("- Žádná portfolio pozice dnes výrazněji nevybočuje.")
+        lines.append("- Nejslabší pozice: " + ", ".join(f"{row['symbol']} {round(float(row.get('change_pct', 0.0)), 2)}%" for row in portfolio_summary["laggards"]))
     lines.append("")
 
     lines.append("AKČNÍ FRONTA")
     if action_queue:
         for item in action_queue[:3]:
-            lines.append(
-                f"- {item.get('symbol')} | akčnost {item.get('actionability_score')} | kategorie {item.get('category')} | podnět: {item.get('action_hint', '')}"
-            )
+            lines.append(f"- {item.get('symbol')} | {item.get('urgency_label', 'mít na očích')} | akčnost {item.get('actionability_score')} | kategorie {item.get('category')} | podnět: {item.get('action_hint', '')}")
     else:
         lines.append("- Bez nové akční fronty nad prahovou hodnotou.")
     lines.append("")
 
-    lines.append("POZNÁMKA")
-    lines.append("- Titulky zpráv převádím do krátkého českého shrnutí, aby byl briefing čitelnější.")
-    if slot == "morning":
-        lines.append("- Ranní e-mail je čistý briefing: svět, geopolitika a stav tvých akcií před hlavní částí dne.")
+    lines.append("CO DNES HÝBALO PORTFOLIEM")
+    if watch_rows:
+        for row in watch_rows:
+            headline = str(row.get("headline_cs", "")).strip()
+            note = f" | zpráva: {headline}" if headline else ""
+            lines.append(f"- {row['symbol']}: {row['change_pct']}% | cena {row['price']} | trend {trend_cs(str(row['trend']))} | sentiment {sentiment_cs(str(row['sentiment']))}{note}")
     else:
-        lines.append("- Večerní e-mail je uzavírací souhrn dne: co se stalo a které tvoje pozice se hýbaly nejvíc.")
+        lines.append("- Žádná portfolio pozice dnes výrazněji nevybočuje.")
+    lines.append("")
+
+    lines.append("RIZIKO A KVALITA DAT")
+    if risk_summary:
+        lines.append(f"- Největší pozice: {risk_summary.get('largest_position_symbol', '-')} | podíl {risk_summary.get('largest_position_share_pct', 0)}%")
+        lines.append(f"- Koncentrační varování: {'ano' if risk_summary.get('concentration_warning') else 'ne'}")
+    if data_health:
+        lines.append(f"- Datová kvalita research vrstvy: {data_health.get('avg_quality', 0.0)}")
+    lines.append("")
+
+    lines.append("POZNÁMKA")
+    lines.append("- Titulky převádím do krátkého českého shrnutí, aby byl briefing čitelnější.")
+    if slot == "morning":
+        lines.append("- Ranní e-mail je čistý briefing: svět, geopolitika, portfolio a akční fronta před hlavní částí dne.")
+    else:
+        lines.append("- Večerní e-mail uzavírá den: co se stalo a které tvoje pozice se hýbaly nejvíc.")
 
     body = "\n".join(lines).strip()
-    payload = {
-        "slot": slot,
-        "subject": subject,
-        "body": body,
-        "generated_at": now_local.isoformat(),
-        "world_items": world_items,
-        "geo_items": geo_items,
-        "portfolio_watch": watch_rows,
-        "portfolio_summary": portfolio_summary,
-        "action_queue": action_queue[:3],
-    }
+    payload = {"slot": slot, "subject": subject, "body": body, "generated_at": now_local.isoformat(), "world_items": world_items, "geo_items": geo_items, "portfolio_watch": watch_rows, "portfolio_summary": portfolio_summary, "action_queue": action_queue[:3], 'risk_summary': risk_summary, 'data_health': data_health}
     return subject, body, payload
 
 
@@ -299,20 +253,9 @@ def run_email_digest(slot: str = "morning", send: bool = True) -> str:
         else:
             delivery = send_email_live(subject, body)
             if delivery.get("delivered"):
-                state[slot] = {
-                    "day": today_key,
-                    "sent_at": now_local.isoformat(),
-                    "subject": subject,
-                }
+                state[slot] = {"day": today_key, "sent_at": now_local.isoformat(), "subject": subject}
                 _save_state(state)
 
     OUTPUT_PATH.write_text(body, encoding="utf-8")
-    report = [
-        f"EMAIL DIGEST ({'ráno' if slot == 'morning' else 'večer'})",
-        f"Předmět: {subject}",
-        f"Stav: {status_cs('sent' if delivery.get('delivered') else 'not_sent')}",
-        f"Důvod: {delivery.get('reason', 'OK')}",
-        "",
-        body,
-    ]
+    report = [f"EMAIL DIGEST ({'ráno' if slot == 'morning' else 'večer'})", f"Předmět: {subject}", f"Stav: {status_cs('sent' if delivery.get('delivered') else 'not_sent')}", f"Důvod: {delivery.get('reason', 'OK')}", "", body]
     return "\n".join(report)

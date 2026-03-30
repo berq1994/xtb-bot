@@ -1,12 +1,12 @@
-RESEARCH REVIEW
-Počet symbolů v paměti: 12
-Držené pozice v paměti: 12
-Negativní / kontrolní teze: 4
-Opakovaně řešené symboly (mentions >= 3): 8
-Mix akcí:
-- watchlist bez akce: 11
-- sledovat breakout buy: 1
-Doporučení pro self-improvement:
-- Research je silně zaměřený na držené pozice – přidej více nových témat z watchlistu.
-- Více tickerů má oslabenou tezi – zpřísni breakout vstupy a preferuj pullbacky.
-- Několik symbolů se opakuje příliš často – zvaž deduplikaci a category caps.
+PŘEHLED VÝSLEDKŮ
+Počet vzorků: 19
+Vyhodnoceno: 0
+Průměrný výsledek %: 0.0
+Win rate: 0.0%
+Štítky:
+- čeká: 19
+Horizonty:
+- h1d: 0.0% | vzorky 0
+- h3d: 0.0% | vzorky 0
+- h5d: 0.0% | vzorky 0
+- h20d: 0.0% | vzorky 0

@@ -17,6 +17,9 @@ Diagnostika:
 - study_low_avg: None
 - playbook_yes_avg: None
 - playbook_no_avg: None
+- data_good_avg: None
+- data_bad_avg: None
+- horizons: {'h1d': None, 'h3d': None, 'h5d': None, 'h20d': None}
 - evidence_grade_avg: {}
 - feedback: {}
 Váhy:

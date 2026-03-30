@@ -1,3 +1,4 @@
+
 from __future__ import annotations
 
 import json
@@ -6,9 +7,10 @@ from typing import Iterable
 
 from symbol_utils import filter_enabled_symbols
 
+from agents.data_integrity_agent import build_data_health_summary, validate_symbols
 from agents.portfolio_context_agent import load_portfolio_symbols
 from integrations.openbb_engine import build_news_sentiment, generate_market_overview
-from knowledge.company_memory import load_company_dossier, sync_company_memory
+from knowledge.company_memory import load_company_dossier, sync_company_memory, update_company_memory_from_research_state
 from knowledge.evidence_scoring import score_news_items
 from knowledge.playbooks import ensure_seed_playbooks, evaluate_playbooks_for_item
 from knowledge.study_library import ensure_seed_studies, match_studies_for_item
@@ -53,6 +55,7 @@ WATCHLIST_PATH = Path("config/watchlists/google_finance_watchlist.json")
 PORTFOLIO_PATH = Path("config/portfolio_state.json")
 STATE_PATH = Path("data/research_live_state.json")
 REPORT_PATH = Path("research_live_report.txt")
+THESIS_UPDATES_PATH = Path("data/thesis_updates.json")
 
 
 def _load_default_watchlist() -> list[str]:
@@ -89,8 +92,9 @@ def _load_portfolio_meta() -> dict[str, dict]:
             symbol = str(item.get("symbol", "")).strip().upper()
             if not symbol:
                 continue
-            row = meta.setdefault(symbol, {"themes": set(), "value": 0.0, "avg_price": None, "accounts": [], "name": None})
+            row = meta.setdefault(symbol, {"themes": set(), "value": 0.0, "avg_price": None, "accounts": [], "name": None, "quantity": 0.0})
             row["value"] += float(item.get("value") or 0.0)
+            row["quantity"] += float(item.get("quantity") or 0.0)
             avg_price = item.get("avg_price")
             if avg_price is not None and row.get("avg_price") is None:
                 try:
@@ -109,6 +113,7 @@ def _load_portfolio_meta() -> dict[str, dict]:
         normalized[symbol] = {
             "themes": sorted(row["themes"]),
             "value": round(float(row["value"]), 2),
+            "quantity": round(float(row["quantity"]), 4),
             "avg_price": row.get("avg_price"),
             "accounts": row.get("accounts", []),
             "name": row.get("name") or symbol,
@@ -128,7 +133,7 @@ def _resolve_watchlist(watchlist: Iterable[str] | None = None) -> list[str]:
     if watchlist:
         resolved = [str(s).strip() for s in watchlist if str(s).strip()]
         if resolved:
-            return resolved
+            return validate_symbols(resolved).get('valid_symbols', resolved)
 
     defaults = _load_default_watchlist()
     portfolio = load_portfolio_symbols(limit=20)
@@ -141,7 +146,7 @@ def _resolve_watchlist(watchlist: Iterable[str] | None = None) -> list[str]:
             continue
         seen.add(sym)
         merged.append(sym)
-    return filter_enabled_symbols(merged)
+    return validate_symbols(filter_enabled_symbols(merged)).get('valid_symbols', merged)
 
 
 def _sentiment_weight(label: str) -> float:
@@ -212,16 +217,49 @@ def _external_modules() -> list[dict]:
             summary = str(item.get("summary") or item.get("body") or "")
             impact = float(item.get("impact") or item.get("impact_score") or 0.0)
             relevance = float(item.get("relevance") or item.get("relevance_score") or 0.0)
-            items.append(
-                {
-                    "source": name,
-                    "headline": headline,
-                    "summary": summary,
-                    "impact": round(impact, 2),
-                    "relevance": round(relevance, 2),
-                }
-            )
+            items.append({"source": name, "headline": headline, "summary": summary, "impact": round(impact, 2), "relevance": round(relevance, 2)})
     return items
+
+
+def _thesis_strength_from_dossier(dossier: dict) -> float:
+    strength = 0.25
+    if dossier.get('key_catalysts'):
+        strength += 0.15
+    if dossier.get('key_risks'):
+        strength += 0.15
+    thesis = str(dossier.get('thesis') or '').strip()
+    if thesis and 'Neutrální výchozí teze' not in thesis:
+        strength += 0.25
+    if dossier.get('latest_observations'):
+        strength += 0.1
+    if dossier.get('watch_for'):
+        strength += 0.1
+    return round(min(1.0, strength), 2)
+
+
+def _build_risk_summary(items: list[dict]) -> dict:
+    held = [i for i in items if i.get('held')]
+    if not held:
+        return {'held_count': 0, 'concentration_warning': False, 'top_themes': [], 'defense_names': []}
+    total_value = sum(float(i.get('position_value', 0.0) or 0.0) for i in held) or 1.0
+    biggest = max(held, key=lambda x: float(x.get('position_value', 0.0) or 0.0))
+    concentration = round((float(biggest.get('position_value', 0.0) or 0.0) / total_value) * 100, 2)
+    theme_count: dict[str, int] = {}
+    defense_names: list[str] = []
+    for item in held:
+        for theme in item.get('themes', []):
+            theme_count[theme] = theme_count.get(theme, 0) + 1
+        if str(item.get('category')) in {'portfolio_defense', 'drawdown_control'}:
+            defense_names.append(str(item.get('symbol')))
+    top_themes = sorted(theme_count.items(), key=lambda kv: kv[1], reverse=True)[:4]
+    return {
+        'held_count': len(held),
+        'largest_position_symbol': str(biggest.get('symbol')),
+        'largest_position_share_pct': concentration,
+        'concentration_warning': concentration >= 35.0,
+        'top_themes': top_themes,
+        'defense_names': defense_names[:5],
+    }
 
 
 def run_live_research(watchlist: Iterable[str] | None = None) -> str:
@@ -232,6 +270,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     resolved_watchlist = _resolve_watchlist(watchlist)
     overview = generate_market_overview(resolved_watchlist)
     rows = overview.get("symbols", [])
+    health = build_data_health_summary(rows)
+    rows = health.get('rows', rows)
     portfolio_symbols = set(load_portfolio_symbols(limit=50))
     portfolio_meta = _load_portfolio_meta()
     theme_counts = _theme_counts(portfolio_meta)
@@ -239,6 +279,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         rows,
         key=lambda r: (
             1 if str(r.get("symbol", "")).strip().upper() in portfolio_symbols else 0,
+            float(r.get('data_quality_score', 0.0) or 0.0),
             abs(float(r.get("change_pct", 0.0) or 0.0)),
         ),
         reverse=True,
@@ -289,6 +330,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             "themes": meta.get("themes", []),
             "accounts": meta.get("accounts", []),
             "position_value": meta.get("value", 0.0),
+            "quantity": meta.get('quantity', 0.0),
             "avg_cost": avg_cost,
             "pnl_vs_cost_pct": pnl_vs_cost_pct,
             "sentiment_label": sentiment_label,
@@ -303,17 +345,24 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             "regime_alignment": 0.0,
             "theme_overlap_penalty": round(overlap_penalty, 2),
             "news_items": sentiment.get("items", []),
+            'data_quality_score': float(row.get('data_quality_score', 0.0) or 0.0),
+            'data_quality_label': str(row.get('data_quality_label', 'ok')),
+            'data_quality_reasons': row.get('data_quality_reasons', []),
+            'source': row.get('source', overview.get('source', 'unknown')),
         }
         item["category"] = _category_for(item)
         evidence = score_news_items(item.get("news_items", []))
         dossier = load_company_dossier(symbol, fallback_name=item.get("name"), themes=item.get("themes", []))
+        thesis_strength = _thesis_strength_from_dossier(dossier)
         item["company_memory"] = {
             "name": dossier.get("name"),
             "sector_hints": dossier.get("sector_hints", []),
             "key_catalysts": dossier.get("key_catalysts", [])[:3],
             "key_risks": dossier.get("key_risks", [])[:3],
             "thesis": dossier.get("thesis"),
+            'watch_for': dossier.get('watch_for', [])[:3],
         }
+        item['thesis_strength'] = thesis_strength
         item["evidence_score"] = evidence.get("score", 0.0)
         item["evidence_grade"] = evidence.get("grade", "D")
         item["trusted_sources"] = evidence.get("trusted_sources", [])
@@ -340,6 +389,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         score += item["evidence_score"] * float(weights.get("evidence_quality", 1.0))
         score += item["playbook_score"] * float(weights.get("playbook_alignment", 1.0))
         score += item["study_alignment_score"] * float(weights.get("study_alignment", 1.0))
+        score += (thesis_strength - 0.45)
+        score += (item['data_quality_score'] - 0.55) * 1.1
         score += 1.0 if held else 0.2
         score += 0.2 if atr_proxy_pct <= 2.5 else -0.1
         item["priority_score"] = round(score, 2)
@@ -348,10 +399,15 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     for item in ranked:
         item.update(score_actionability(item, str(overview.get('regime', 'mixed'))))
 
-    ranked.sort(key=lambda x: x["priority_score"], reverse=True)
+    ranked.sort(key=lambda x: (
+        1 if bool(x.get('held')) else 0,
+        float(x.get('priority_score', 0.0) or 0.0),
+        float(x.get('data_quality_score', 0.0) or 0.0),
+    ), reverse=True)
     top_items = ranked[:10]
     action_queue = build_action_queue(top_items, str(overview.get('regime', 'mixed')), limit=5)
     external_items = _external_modules()
+    risk_summary = _build_risk_summary(ranked)
 
     state = {
         "regime": overview.get("regime", "mixed"),
@@ -363,22 +419,33 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         "all_items": ranked,
         "external_items": external_items,
         "weights_used": weights,
+        'data_health': {'avg_quality': health.get('avg_quality'), 'counts': health.get('counts')},
+        'risk_summary': risk_summary,
     }
 
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATE_PATH.write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+    mem_update = update_company_memory_from_research_state(state)
+    THESIS_UPDATES_PATH.parent.mkdir(parents=True, exist_ok=True)
+    THESIS_UPDATES_PATH.write_text(json.dumps({
+        'generated_from': 'live_research',
+        'updated_symbols': mem_update.get('updated_symbols', 0),
+        'top_symbols': [str(i.get('symbol')) for i in top_items[:5]],
+        'risk_summary': risk_summary,
+    }, ensure_ascii=False, indent=2), encoding='utf-8')
 
     lines = []
     lines.append("LIVE RESEARCH")
     lines.append(f"Režim trhu: {overview.get('regime', 'mixed')}")
     lines.append(f"Zdroj dat: {overview.get('source', 'unknown')}")
     lines.append(f"Velikost watchlistu: {len(resolved_watchlist)}")
+    lines.append(f"Datová kvalita: {health.get('avg_quality', 0.0)} | good {health.get('counts', {}).get('good', 0)} | ok {health.get('counts', {}).get('ok', 0)} | weak {health.get('counts', {}).get('weak', 0)} | bad {health.get('counts', {}).get('bad', 0)}")
     lines.append("")
     lines.append("Akční fronta:")
     if action_queue:
         for item in action_queue:
             lines.append(
-                f"- {item['symbol']} | akčnost {item['actionability_score']} | bucket {item['action_bucket']} | score {item['priority_score']} | kategorie {item['category']}"
+                f"- {item['symbol']} | akčnost {item['actionability_score']} | bucket {item['action_bucket']} | urgence {item.get('urgency_label')} | score {item['priority_score']} | kategorie {item['category']}"
             )
             lines.append(f"  · podnět: {item.get('action_hint', '')}")
             if item.get('headline_cs'):
@@ -394,7 +461,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         playbook_titles = ", ".join(str(p.get("title")) for p in item.get("playbooks", [])[:2])
         study_titles = ", ".join(str(s.get("title")) for s in item.get("matched_studies", [])[:2])
         lines.append(
-            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | držená pozice {holding} | kategorie {item['category']}{pnl}"
+            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | data {item['data_quality_label']} ({item['data_quality_score']}) | držená pozice {holding} | kategorie {item['category']}{pnl}"
         )
         if playbook_titles:
             lines.append(f"  · playbook: {playbook_titles}")
@@ -402,17 +469,27 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             lines.append(f"  · studie: {study_titles}")
         if item.get("trusted_sources"):
             lines.append(f"  · zdroje: {', '.join(item['trusted_sources'][:3])}")
+        thesis = str(item.get('company_memory', {}).get('thesis') or '').strip()
+        if thesis:
+            lines.append(f"  · teze: {thesis[:140]}")
         for reason in item.get("reasons", [])[:1]:
             lines.append(f"  · news logika: {reason}")
         for reason in item.get("evidence_reasons", [])[:1]:
             lines.append(f"  · evidence: {reason}")
     lines.append("")
+    lines.append("Riziková vrstva:")
+    lines.append(f"- Počet držených pozic ve výzkumu: {risk_summary.get('held_count', 0)}")
+    lines.append(f"- Největší pozice: {risk_summary.get('largest_position_symbol', '-')} | podíl {risk_summary.get('largest_position_share_pct', 0)}%")
+    lines.append(f"- Koncentrační varování: {'ano' if risk_summary.get('concentration_warning') else 'ne'}")
+    if risk_summary.get('top_themes'):
+        lines.append('- Hlavní témata: ' + ', '.join(f"{k} ({v})" for k, v in risk_summary.get('top_themes', [])))
+    if risk_summary.get('defense_names'):
+        lines.append('- Obranně sledované pozice: ' + ', '.join(risk_summary.get('defense_names', [])))
+    lines.append("")
     lines.append("Doplňkové výzkumné vrstvy:")
     if external_items:
         for item in external_items[:6]:
-            lines.append(
-                f"- {item['source']}: {item['headline']} | impact {item['impact']} | relevance {item['relevance']}"
-            )
+            lines.append(f"- {item['source']}: {item['headline']} | impact {item['impact']} | relevance {item['relevance']}")
     else:
         lines.append("- Bez doplňkových modulů")
 
