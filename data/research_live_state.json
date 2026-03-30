@@ -79,6 +79,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -106,6 +108,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "FCX",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -213,6 +235,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -240,6 +264,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "EQT",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -353,6 +397,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -380,6 +426,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "FSLR",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -482,6 +548,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -509,6 +577,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -613,6 +690,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -640,6 +719,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -750,6 +838,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -778,6 +868,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -829,6 +928,146 @@
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
       "suppress_reason": "slabý pohyb bez nutnosti zásahu"
+    },
+    {
+      "symbol": "GRMN",
+      "name": "Garmin",
+      "price": 175.85,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "consumer_tech"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 48.95,
+      "quantity": 0.0,
+      "avg_cost": 240.33,
+      "pnl_vs_cost_pct": -26.83,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.88,
+      "headlines": [
+        "GRMN trading activity remains in focus",
+        "Market participants monitor GRMN for follow-through"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "GRMN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GRMN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Garmin",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.53,
+      "matched_studies": [
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "high",
+      "urgency_label": "dnes sledovat",
+      "delivery_channel": "telegram",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": ""
     },
     {
       "symbol": "NBIS",
@@ -888,6 +1127,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -916,6 +1157,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -971,135 +1221,6 @@
       "urgency_label": "mít na očích",
       "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "GRMN",
-      "name": "Garmin",
-      "price": 175.85,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "consumer_tech"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 48.95,
-      "quantity": 0.0,
-      "avg_cost": 240.33,
-      "pnl_vs_cost_pct": -26.83,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.78,
-      "headlines": [
-        "GRMN trading activity remains in focus",
-        "Market participants monitor GRMN for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "GRMN trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor GRMN for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Garmin",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.65,
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
       "suppress_reason": ""
     },
@@ -1161,6 +1282,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -1189,6 +1312,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -1296,6 +1428,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -1324,6 +1458,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "AMD",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -1385,6 +1539,146 @@
   ],
   "action_queue": [
     {
+      "symbol": "GRMN",
+      "name": "Garmin",
+      "price": 175.85,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "consumer_tech"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 48.95,
+      "quantity": 0.0,
+      "avg_cost": 240.33,
+      "pnl_vs_cost_pct": -26.83,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.88,
+      "headlines": [
+        "GRMN trading activity remains in focus",
+        "Market participants monitor GRMN for follow-through"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "GRMN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GRMN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Garmin",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.53,
+      "matched_studies": [
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "high",
+      "urgency_label": "dnes sledovat",
+      "delivery_channel": "telegram",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": ""
+    },
+    {
       "symbol": "AMD",
       "name": "AMD",
       "price": 106.3,
@@ -1439,6 +1733,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -1467,6 +1763,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "AMD",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -1581,6 +1897,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -1608,6 +1926,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "FCX",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -1715,6 +2053,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -1742,6 +2082,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "EQT",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -1801,135 +2161,6 @@
       "suppress_reason": ""
     },
     {
-      "symbol": "GRMN",
-      "name": "Garmin",
-      "price": 175.85,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "consumer_tech"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 48.95,
-      "quantity": 0.0,
-      "avg_cost": 240.33,
-      "pnl_vs_cost_pct": -26.83,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.78,
-      "headlines": [
-        "GRMN trading activity remains in focus",
-        "Market participants monitor GRMN for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "GRMN trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor GRMN for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Garmin",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.65,
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
       "symbol": "NVO",
       "name": "Novo Nordisk",
       "price": 157.01,
@@ -1985,6 +2216,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2012,6 +2245,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2116,6 +2358,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2143,6 +2387,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "FCX",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2250,6 +2514,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2277,6 +2543,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "EQT",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2390,6 +2676,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2417,6 +2705,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "FSLR",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2519,6 +2827,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2546,6 +2856,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2650,6 +2969,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2677,6 +2998,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2787,6 +3117,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2815,6 +3147,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2866,6 +3207,146 @@
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
       "suppress_reason": "slabý pohyb bez nutnosti zásahu"
+    },
+    {
+      "symbol": "GRMN",
+      "name": "Garmin",
+      "price": 175.85,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "consumer_tech"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 48.95,
+      "quantity": 0.0,
+      "avg_cost": 240.33,
+      "pnl_vs_cost_pct": -26.83,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.88,
+      "headlines": [
+        "GRMN trading activity remains in focus",
+        "Market participants monitor GRMN for follow-through"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "další symboly jedou v rychlém fallback režimu"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "GRMN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GRMN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Garmin",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "study_alignment_score": 0.53,
+      "matched_studies": [
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "high",
+      "urgency_label": "dnes sledovat",
+      "delivery_channel": "telegram",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": ""
     },
     {
       "symbol": "NBIS",
@@ -2925,6 +3406,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -2953,6 +3436,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -3008,135 +3500,6 @@
       "urgency_label": "mít na očích",
       "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "GRMN",
-      "name": "Garmin",
-      "price": 175.85,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "consumer_tech"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 48.95,
-      "quantity": 0.0,
-      "avg_cost": 240.33,
-      "pnl_vs_cost_pct": -26.83,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.78,
-      "headlines": [
-        "GRMN trading activity remains in focus",
-        "Market participants monitor GRMN for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "GRMN trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor GRMN for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Garmin",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.65,
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
       "suppress_reason": ""
     },
@@ -3198,6 +3561,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -3226,6 +3591,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -3333,6 +3707,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -3361,6 +3737,26 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "AMD",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -3478,6 +3874,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -3507,6 +3905,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -3614,6 +4021,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -3641,6 +4050,26 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {
+        "symbol": "CVX",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -3752,6 +4181,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -3780,6 +4211,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -3893,6 +4333,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -3920,6 +4362,26 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {
+        "symbol": "LEU",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4021,6 +4483,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4048,6 +4512,26 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {
+        "symbol": "S",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4162,6 +4646,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4191,6 +4677,26 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {
+        "symbol": "GOOGL",
+        "status": "history_missing",
+        "trend_regime": "unknown",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 0.0,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Vyčkat na nová data.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Vyčkat na nová data.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4295,6 +4801,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4322,6 +4830,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4420,6 +4937,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4447,6 +4966,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4545,6 +5073,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4572,6 +5102,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4670,6 +5209,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4697,6 +5238,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4795,6 +5345,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4822,6 +5374,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -4920,6 +5481,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -4947,6 +5510,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5038,6 +5610,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5065,6 +5639,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5156,6 +5739,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5183,6 +5768,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5274,6 +5868,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5301,6 +5897,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5392,6 +5997,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5419,6 +6026,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5510,6 +6126,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5537,6 +6155,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5628,6 +6255,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5655,6 +6284,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5746,6 +6384,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5773,6 +6413,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5864,6 +6513,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -5891,6 +6542,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -5982,6 +6642,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6009,6 +6671,15 @@
         ]
       },
       "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6100,6 +6771,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6127,6 +6800,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6218,6 +6900,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6245,6 +6929,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6336,6 +7029,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6363,6 +7058,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6454,6 +7158,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6481,6 +7187,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6572,6 +7287,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6599,6 +7316,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6690,6 +7416,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6717,6 +7445,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6808,6 +7545,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6835,6 +7574,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -6926,6 +7674,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -6953,6 +7703,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -7044,6 +7803,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -7071,6 +7832,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -7162,6 +7932,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -7189,6 +7961,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -7280,6 +8061,8 @@
           "provider": "scaffold"
         }
       ],
+      "official_items": [],
+      "official_item_count": 0,
       "data_quality_score": 0.65,
       "data_quality_label": "ok",
       "data_quality_reasons": [
@@ -7307,6 +8090,15 @@
         ]
       },
       "thesis_strength": 0.65,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -7426,5 +8218,48 @@
       "TSM",
       "LEU"
     ]
+  },
+  "official_source_count": 0,
+  "technical_summary": {
+    "GOOGL": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "EQT": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "S": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "FCX": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "LEU": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "FSLR": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "CVX": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "AMD": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    }
   }
 }

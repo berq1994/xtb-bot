@@ -201,6 +201,21 @@ def main():
         return
 
 
+    if mode == "official_sources":
+        from agents.official_company_sources_agent import run_official_company_sources
+        print(run_official_company_sources().get("report", ""))
+        return
+
+    if mode == "technical_analysis":
+        from agents.technical_analysis_agent import run_technical_analysis
+        print(run_technical_analysis())
+        return
+
+    if mode == "weekly_ta_rebuild":
+        from agents.weekly_ta_rebuild_agent import run_weekly_ta_rebuild
+        print(run_weekly_ta_rebuild())
+        return
+
     if mode == "knowledge_sync":
         from agents.knowledge_ingestion_agent import run_knowledge_sync
         print(run_knowledge_sync())
@@ -261,7 +276,7 @@ def main():
         "research_live | thesis_update | research_memory_update | research_review | "
         "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
         "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | knowledge_sync | autonomous_learning_loop | autonomous_core | "
-        "multi_agent_daily | multi_agent_weekly | multi_agent_audit | weekly_maintenance"
+        "multi_agent_daily | multi_agent_weekly | multi_agent_audit | weekly_maintenance | official_sources | technical_analysis | weekly_ta_rebuild"
     )
 
 

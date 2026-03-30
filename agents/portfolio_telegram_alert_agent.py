@@ -139,6 +139,9 @@ def _build_candidates() -> list[dict[str, Any]]:
                 'action_bucket': str(quality.get('action_bucket', 'medium') or 'medium'),
                 'urgency_label': str(quality.get('urgency_label', 'mít na očích') or 'mít na očích'),
                 'action_hint': str(quality.get('action_hint') or ''),
+                'buy_decision': str(quality.get('buy_decision') or 'watch'),
+                'buy_trigger': str(quality.get('buy_trigger') or ''),
+                'technical_setup': str(quality.get('technical_setup') or ''),
             }
         )
 
@@ -199,7 +202,12 @@ def build_portfolio_alert_message() -> tuple[str, list[dict[str, Any]], dict[str
         lines.append(
             f"- {item['symbol']} {item['change_pct']}% | cena {item['price']} | trend {trend_cs(item['trend'])} | sentiment {sentiment_cs(item['sentiment'])} | akčnost {item.get('actionability_score', 0.0)} | {item.get('urgency_label')} | zdroj cen {item['source_label']}"
         )
-        lines.append(f"  Podnět: {item.get('action_hint')}{headline}")
+        technical = ''
+        if item.get('buy_decision') and item.get('buy_decision') != 'watch':
+            technical = f" | technika {item.get('buy_decision')} ({item.get('technical_setup')})"
+        lines.append(f"  Podnět: {item.get('action_hint')}{technical}{headline}")
+        if item.get('buy_trigger'):
+            lines.append(f"  Trigger: {item.get('buy_trigger')}")
     lines.append("")
     lines.append("Jen portfolio, jen nová situace a přísnější anti-spam filtr.")
     message = "\n".join(lines).strip()

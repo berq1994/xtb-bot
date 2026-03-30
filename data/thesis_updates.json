@@ -38,5 +38,48 @@
       "TSM",
       "LEU"
     ]
+  },
+  "official_source_count": 0,
+  "technical_summary": {
+    "GOOGL": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "EQT": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "S": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "FCX": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "LEU": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "FSLR": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "CVX": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    },
+    "AMD": {
+      "setup": "none",
+      "decision": "watch",
+      "ta_score": 0.0
+    }
   }
 }

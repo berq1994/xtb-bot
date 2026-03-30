@@ -1,0 +1,76 @@
+official_sources:
+  MSFT:
+    company: Microsoft
+    urls:
+      - https://news.microsoft.com/feed/
+      - https://www.microsoft.com/en-us/Investor/
+  NVDA:
+    company: Nvidia
+    urls:
+      - https://nvidianews.nvidia.com/
+      - https://investor.nvidia.com/
+  TSM:
+    company: Taiwan Semiconductor
+    urls:
+      - https://investor.tsmc.com/english
+      - https://pr.tsmc.com/english/news
+  CVX:
+    company: Chevron
+    urls:
+      - https://www.chevron.com/newsroom
+      - https://www.chevron.com/investors
+  GOOGL:
+    company: Alphabet
+    urls:
+      - https://abc.xyz/investor/
+      - https://blog.google/inside-google/company-announcements/
+  AMD:
+    company: AMD
+    urls:
+      - https://ir.amd.com/news-events/press-releases
+      - https://www.amd.com/en/newsroom.html
+  NVO:
+    company: Novo Nordisk
+    urls:
+      - https://www.novonordisk.com/news-and-media.html
+      - https://www.novonordisk.com/investors.html
+  NBIS:
+    company: Nebius
+    urls:
+      - https://nebius.com/news
+      - https://group.nebius.com/investors
+  IREN:
+    company: IREN
+    urls:
+      - https://investors.iren.com/
+      - https://iren.com/news/
+  LEU:
+    company: Centrus Energy
+    urls:
+      - https://investors.centrusenergy.com/
+      - https://investors.centrusenergy.com/news-releases
+  PLTR:
+    company: Palantir
+    urls:
+      - https://investors.palantir.com/
+      - https://www.palantir.com/newsroom/
+  FCX:
+    company: Freeport-McMoRan
+    urls:
+      - https://investors.fcx.com/
+      - https://www.fcx.com/media/news
+  EQT:
+    company: EQT
+    urls:
+      - https://ir.eqt.com/
+      - https://www.eqt.com/newsroom/
+  CEZ.PR:
+    company: ČEZ
+    urls:
+      - https://www.cez.cz/en/investors
+      - https://www.cez.cz/en/media/press-releases
+  EON.DE:
+    company: E.ON
+    urls:
+      - https://www.eon.com/en/investor-relations.html
+      - https://www.eon.com/en/about-us/media.html

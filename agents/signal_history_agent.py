@@ -128,6 +128,10 @@ def build_snapshot_payload(
                 "playbooks": selected.get("playbooks", []),
                 "study_alignment_score": selected.get("study_alignment_score"),
                 "matched_studies": selected.get("matched_studies", []),
+                "technical_setup": selected.get("technical_setup"),
+                "ta_score": selected.get("ta_score"),
+                "buy_decision": selected.get("buy_decision"),
+                "buy_trigger": selected.get("buy_trigger"),
             },
         }
 
@@ -182,6 +186,10 @@ def build_snapshot_payload(
             "playbooks": [],
             "study_alignment_score": None,
             "matched_studies": [],
+            "technical_setup": None,
+            "ta_score": None,
+            "buy_decision": None,
+            "buy_trigger": None,
         },
     }
 

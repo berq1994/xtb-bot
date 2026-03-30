@@ -207,6 +207,22 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         lines.append("- Bez nové akční fronty nad prahovou hodnotou.")
     lines.append("")
 
+    lines.append("TECHNICKÉ SCÉNÁŘE A HLADINY")
+    ta_rows = [row for row in (action_queue or research_state.get('top_items', [])) if isinstance(row, dict)]
+    if ta_rows:
+        for row in ta_rows[:3]:
+            buy_decision = str(row.get('buy_decision', 'watch'))
+            trigger = str(row.get('buy_trigger', '')).strip()
+            bull = str(row.get('scenario_bull', '')).strip()
+            lines.append(f"- {row.get('symbol')} | setup {row.get('technical_setup', '-')} | akce {buy_decision} | TA {row.get('ta_score', 0)}")
+            if trigger:
+                lines.append(f"  · trigger: {trigger}")
+            if bull:
+                lines.append(f"  · scénář: {bull}")
+    else:
+        lines.append("- Bez nových technických scénářů.")
+    lines.append("")
+
     lines.append("CO DNES HÝBALO PORTFOLIEM")
     if watch_rows:
         for row in watch_rows:

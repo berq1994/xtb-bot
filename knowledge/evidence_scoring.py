@@ -15,12 +15,15 @@ SOURCE_TRUST = {
     "yahoo finance": 0.72,
     "fmp": 0.74,
     "google news": 0.68,
+    "official ir": 0.96,
+    "official": 0.92,
     "scaffold": 0.2,
 }
 
 PROVIDER_TRUST = {
     "google_news_rss": 0.74,
     "fmp_news": 0.7,
+    "official_company_source": 0.97,
     "scaffold": 0.2,
 }
 

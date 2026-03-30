@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import os
@@ -47,6 +46,19 @@ def _regime_bonus(regime: str, trend: str, category: str) -> float:
 
 
 def action_hint(item: dict[str, Any]) -> str:
+    buy_decision = str(item.get('buy_decision') or '').strip()
+    buy_trigger = str(item.get('buy_trigger') or '').strip()
+    if buy_decision == 'buy_breakout':
+        return f'vstup až po potvrzeném breakoutu; trigger: {buy_trigger}'
+    if buy_decision == 'buy_pullback':
+        return f'hledat zdravý pullback v trendu; trigger: {buy_trigger}'
+    if buy_decision == 'buy_reversal':
+        return f'agresivnější obratová varianta; trigger: {buy_trigger}'
+    if buy_decision == 'trim_watch':
+        return f'zvážit výběr části zisku nebo přitažení stopu; trigger: {buy_trigger}'
+    if buy_decision == 'avoid':
+        return f'nekupovat bez nového potvrzení; trigger: {buy_trigger}'
+
     category = str(item.get('category', '')).strip()
     if category == 'portfolio_defense':
         return 'prověřit negativní zprávy, support a hranici, kde už nechceš nést další riziko'
@@ -89,6 +101,10 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
     pnl_value = float(pnl or 0.0) if pnl not in (None, '') else None
     data_quality_score = float(item.get('data_quality_score', 0.7) or 0.7)
     thesis_strength = float(item.get('thesis_strength', 0.45) or 0.45)
+    ta_score = float(item.get('ta_score', 0.0) or 0.0)
+    official_count = int(item.get('official_item_count', 0) or 0)
+    buy_decision = str(item.get('buy_decision') or 'watch').strip()
+    setup_type = str(item.get('technical_setup') or '').strip()
 
     score = 0.0
     score += 1.35 if held else 0.1
@@ -101,6 +117,22 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
     score += _regime_bonus(regime, trend, category)
     score += max(0.0, data_quality_score - 0.55) * 1.4
     score += max(0.0, thesis_strength - 0.45) * 1.0
+    score += max(0.0, ta_score - 4.5) * 0.45
+    score += min(0.9, official_count * 0.28)
+
+    if buy_decision in {'buy_breakout', 'buy_pullback'}:
+        score += 0.75
+    elif buy_decision == 'buy_reversal':
+        score += 0.35
+    elif buy_decision == 'trim_watch' and held:
+        score += 0.45
+    elif buy_decision == 'avoid' and not held:
+        score -= 0.45
+
+    if setup_type == 'breakout':
+        score += 0.25
+    elif setup_type == 'breakdown':
+        score += 0.15 if held else -0.25
 
     if source_count >= 3:
         score += 0.7
@@ -129,8 +161,8 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
         if pnl_value <= -8 and category in {'portfolio_defense', 'drawdown_control'}:
             score += 0.55
 
-    suppress_reason = ''
     suppressed = False
+    suppress_reason = ''
     if data_quality_score < 0.55:
         suppressed = True
         suppress_reason = 'slabá datová kvalita'
@@ -140,6 +172,9 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
     elif not held and evidence_grade == 'D' and source_count <= 1:
         suppressed = True
         suppress_reason = 'slabé potvrzení mimo portfolio'
+    elif not held and buy_decision == 'avoid' and ta_score < 5.0:
+        suppressed = True
+        suppress_reason = 'technicky nepříznivé bez držení v portfoliu'
     elif not held and thesis_strength < 0.4 and score < 3.8:
         suppressed = True
         suppress_reason = 'bez teze a nízká akčnost mimo portfolio'
@@ -200,5 +235,6 @@ def build_action_queue(items: list[dict[str, Any]], regime: str = 'mixed', limit
         float(x.get('actionability_score', 0.0) or 0.0),
         float(x.get('priority_score', 0.0) or 0.0),
         float(x.get('data_quality_score', 0.0) or 0.0),
+        float(x.get('ta_score', 0.0) or 0.0),
     ), reverse=True)
     return queue[:limit_value]

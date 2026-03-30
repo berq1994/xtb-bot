@@ -15,6 +15,8 @@ from knowledge.evidence_scoring import score_news_items
 from knowledge.playbooks import ensure_seed_playbooks, evaluate_playbooks_for_item
 from knowledge.study_library import ensure_seed_studies, match_studies_for_item
 from agents.signal_quality_agent import build_action_queue, score_actionability
+from agents.technical_analysis_agent import build_technical_analysis_map
+from agents.official_company_sources_agent import collect_official_company_news
 
 try:
     from agents.corporate_research_agent import run_corporate_research
@@ -286,6 +288,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     )
     symbols = [str(r.get("symbol", "")).strip().upper() for r in symbols_ranked_for_news if str(r.get("symbol", "")).strip()]
     news_map = build_news_sentiment(symbols)
+    official_map = collect_official_company_news(symbols[:6])
+    ta_map = build_technical_analysis_map(symbols[:8])
     weights = load_signal_weights()
 
     ranked: list[dict] = []
@@ -300,6 +304,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         momentum_20d = float(row.get("momentum_20d", 0.0))
         atr_proxy_pct = float(row.get("atr_proxy_pct", 1.0) or 1.0)
         sentiment = news_map.get(symbol, {})
+        official_items = official_map.get(symbol, []) if isinstance(official_map.get(symbol, []), list) else []
+        merged_news_items = list(official_items) + list(sentiment.get("items", []))
         sentiment_label = str(sentiment.get("sentiment_label", "neutral"))
         sentiment_score = float(sentiment.get("sentiment_score", 0.0))
         held = symbol in portfolio_symbols
@@ -337,20 +343,23 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             "sentiment_score": sentiment_score,
             "category": "watchlist_monitor",
             "priority_score": 0.0,
-            "headlines": sentiment.get("headlines", [])[:3],
+            "headlines": ([item.get("title", "") for item in official_items[:2]] + sentiment.get("headlines", []))[:3],
             "reasons": sentiment.get("reasons", [])[:3],
             "catalysts": sentiment.get("catalysts", []),
-            "news_count": int(sentiment.get("news_count", 0) or 0),
-            "source_count": int(sentiment.get("source_count", 0) or 0),
+            "news_count": int(sentiment.get("news_count", 0) or 0) + len(official_items),
+            "source_count": max(int(sentiment.get("source_count", 0) or 0), 0) + (1 if official_items else 0),
             "regime_alignment": 0.0,
             "theme_overlap_penalty": round(overlap_penalty, 2),
-            "news_items": sentiment.get("items", []),
+            "news_items": merged_news_items,
+            "official_items": official_items,
+            "official_item_count": len(official_items),
             'data_quality_score': float(row.get('data_quality_score', 0.0) or 0.0),
             'data_quality_label': str(row.get('data_quality_label', 'ok')),
             'data_quality_reasons': row.get('data_quality_reasons', []),
             'source': row.get('source', overview.get('source', 'unknown')),
         }
         item["category"] = _category_for(item)
+        ta = ta_map.get(symbol, {}) if isinstance(ta_map.get(symbol, {}), dict) else {}
         evidence = score_news_items(item.get("news_items", []))
         dossier = load_company_dossier(symbol, fallback_name=item.get("name"), themes=item.get("themes", []))
         thesis_strength = _thesis_strength_from_dossier(dossier)
@@ -363,6 +372,15 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             'watch_for': dossier.get('watch_for', [])[:3],
         }
         item['thesis_strength'] = thesis_strength
+        item['technical'] = ta
+        item['technical_setup'] = str(ta.get('setup_type', 'none'))
+        item['technical_regime'] = str(ta.get('trend_regime', 'unknown'))
+        item['ta_score'] = float(ta.get('ta_score', 0.0) or 0.0)
+        item['buy_decision'] = str(ta.get('buy_decision', 'watch'))
+        item['buy_trigger'] = str(ta.get('buy_trigger', ''))
+        item['scenario_bull'] = str(ta.get('scenario_bull', ''))
+        item['scenario_base'] = str(ta.get('scenario_base', ''))
+        item['scenario_bear'] = str(ta.get('scenario_bear', ''))
         item["evidence_score"] = evidence.get("score", 0.0)
         item["evidence_grade"] = evidence.get("grade", "D")
         item["trusted_sources"] = evidence.get("trusted_sources", [])
@@ -391,6 +409,14 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         score += item["study_alignment_score"] * float(weights.get("study_alignment", 1.0))
         score += (thesis_strength - 0.45)
         score += (item['data_quality_score'] - 0.55) * 1.1
+        score += max(0.0, item['ta_score'] - 4.5) * 0.32
+        score += min(0.35, len(official_items) * 0.15)
+        if item['buy_decision'] in {'buy_breakout', 'buy_pullback'}:
+            score += 0.45
+        elif item['buy_decision'] == 'buy_reversal':
+            score += 0.2
+        elif item['buy_decision'] == 'avoid' and not held:
+            score -= 0.35
         score += 1.0 if held else 0.2
         score += 0.2 if atr_proxy_pct <= 2.5 else -0.1
         item["priority_score"] = round(score, 2)
@@ -421,6 +447,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         "weights_used": weights,
         'data_health': {'avg_quality': health.get('avg_quality'), 'counts': health.get('counts')},
         'risk_summary': risk_summary,
+        'official_source_count': sum(len(v) for v in official_map.values()),
+        'technical_summary': {k: {'setup': v.get('setup_type'), 'decision': v.get('buy_decision'), 'ta_score': v.get('ta_score')} for k, v in ta_map.items()},
     }
 
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -432,6 +460,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         'updated_symbols': mem_update.get('updated_symbols', 0),
         'top_symbols': [str(i.get('symbol')) for i in top_items[:5]],
         'risk_summary': risk_summary,
+        'official_source_count': sum(len(v) for v in official_map.values()),
+        'technical_summary': {k: {'setup': v.get('setup_type'), 'decision': v.get('buy_decision'), 'ta_score': v.get('ta_score')} for k, v in ta_map.items()},
     }, ensure_ascii=False, indent=2), encoding='utf-8')
 
     lines = []
@@ -448,6 +478,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
                 f"- {item['symbol']} | akčnost {item['actionability_score']} | bucket {item['action_bucket']} | urgence {item.get('urgency_label')} | score {item['priority_score']} | kategorie {item['category']}"
             )
             lines.append(f"  · podnět: {item.get('action_hint', '')}")
+            if item.get('buy_decision') and item.get('buy_decision') != 'watch':
+                lines.append(f"  · technika: {item.get('buy_decision')} | trigger {item.get('buy_trigger', '')}")
             if item.get('headline_cs'):
                 lines.append(f"  · zpráva: {item['headline_cs']}")
     else:
@@ -461,7 +493,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         playbook_titles = ", ".join(str(p.get("title")) for p in item.get("playbooks", [])[:2])
         study_titles = ", ".join(str(s.get("title")) for s in item.get("matched_studies", [])[:2])
         lines.append(
-            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | data {item['data_quality_label']} ({item['data_quality_score']}) | držená pozice {holding} | kategorie {item['category']}{pnl}"
+            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | data {item['data_quality_label']} ({item['data_quality_score']}) | TA {item.get('technical_setup')} {item.get('ta_score')} | akce {item.get('buy_decision')} | držená pozice {holding} | kategorie {item['category']}{pnl}"
         )
         if playbook_titles:
             lines.append(f"  · playbook: {playbook_titles}")
@@ -469,6 +501,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             lines.append(f"  · studie: {study_titles}")
         if item.get("trusted_sources"):
             lines.append(f"  · zdroje: {', '.join(item['trusted_sources'][:3])}")
+        if item.get('official_item_count'):
+            lines.append(f"  · oficiální zdroje: {item.get('official_item_count')} | trigger: {item.get('buy_trigger', '')}")
         thesis = str(item.get('company_memory', {}).get('thesis') or '').strip()
         if thesis:
             lines.append(f"  · teze: {thesis[:140]}")
@@ -476,6 +510,10 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             lines.append(f"  · news logika: {reason}")
         for reason in item.get("evidence_reasons", [])[:1]:
             lines.append(f"  · evidence: {reason}")
+        if item.get('scenario_bull'):
+            lines.append(f"  · scénář+: {item.get('scenario_bull')}")
+        if item.get('scenario_bear'):
+            lines.append(f"  · scénář-: {item.get('scenario_bear')}")
     lines.append("")
     lines.append("Riziková vrstva:")
     lines.append(f"- Počet držených pozic ve výzkumu: {risk_summary.get('held_count', 0)}")
@@ -487,6 +525,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         lines.append('- Obranně sledované pozice: ' + ', '.join(risk_summary.get('defense_names', [])))
     lines.append("")
     lines.append("Doplňkové výzkumné vrstvy:")
+    lines.append(f"- Oficiální firemní položky načtené v běhu: {sum(len(v) for v in official_map.values())}")
     if external_items:
         for item in external_items[:6]:
             lines.append(f"- {item['source']}: {item['headline']} | impact {item['impact']} | relevance {item['relevance']}")
