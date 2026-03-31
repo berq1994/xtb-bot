@@ -78,21 +78,51 @@ def _feedback_bias() -> dict[str, float]:
     return {"overall_feedback_avg": round(avg_usefulness, 2)}
 
 
+def _decision_bucket(decision: str) -> str:
+    value = str(decision or '').strip().lower()
+    if any(tag in value for tag in ['avoid', 'defensive_only']):
+        return 'avoid'
+    if any(tag in value for tag in ['drawdown', 'portfolio_defense', 'winner_management', 'trim', 'hedge', 'pullback_control']):
+        return 'risk_management'
+    if any(tag in value for tag in ['buy', 'long']):
+        return 'buy_candidate'
+    if 'watch' in value:
+        return 'watch_candidate'
+    return 'other'
+
+
+def _learnable_row(signal: dict, outcome: dict) -> bool:
+    bucket = _decision_bucket(str(outcome.get('decision') or signal.get('decision') or ''))
+    if bucket not in {'buy_candidate', 'watch_candidate'}:
+        return False
+    features = signal.get('features', {}) if isinstance(signal, dict) else {}
+    weak_source = str(features.get('news_source') or features.get('source') or '').strip().lower()
+    if str(features.get('evidence_grade', '?')).strip().upper() in {'D', '?'}:
+        return False
+    if 'scaffold' in weak_source or 'fallback' in weak_source:
+        return False
+    if float(features.get('data_quality_score', 0.0) or 0.0) < 0.6:
+        return False
+    return True
+
+
 def build_learning_summary(limit: int = 80) -> dict:
     history_rows = _load_rows(HISTORY_PATH)[-max(limit * 2, 80):]
     outcome_rows = _load_rows(OUTCOME_PATH)
     weights = load_signal_weights()
     history_index = _build_history_index(history_rows)
 
-    resolved: list[dict] = []
+    resolved_all: list[dict] = []
     for outcome in outcome_rows:
         if outcome.get("outcome_label") not in {"win", "loss", "flat"}:
             continue
         signal = history_index.get(str(outcome.get("signal_id", "")), {})
-        resolved.append({"signal": signal, "outcome": outcome})
+        resolved_all.append({"signal": signal, "outcome": outcome})
 
-    resolved = resolved[-limit:]
+    resolved_all = resolved_all[-limit:]
+    resolved = [row for row in resolved_all if _learnable_row(row.get('signal', {}), row.get('outcome', {}))]
     decision_mix: dict[str, int] = {}
+    raw_decision_mix: dict[str, int] = {}
     labels: dict[str, int] = {}
     outcome_vals: list[float] = []
     positive_sentiment: list[float] = []
@@ -112,11 +142,18 @@ def build_learning_summary(limit: int = 80) -> dict:
     evidence_grade_perf: dict[str, list[float]] = {}
     horizons: dict[str, list[float]] = {'h1d': [], 'h3d': [], 'h5d': [], 'h20d': []}
 
+    for row in resolved_all:
+        signal = row["signal"]
+        outcome = row["outcome"]
+        decision = str(outcome.get("decision") or signal.get("decision") or "unknown")
+        raw_decision_mix[decision] = raw_decision_mix.get(decision, 0) + 1
+
     for row in resolved:
         signal = row["signal"]
         outcome = row["outcome"]
         decision = str(outcome.get("decision") or signal.get("decision") or "unknown")
-        decision_mix[decision] = decision_mix.get(decision, 0) + 1
+        bucket = _decision_bucket(decision)
+        decision_mix[bucket] = decision_mix.get(bucket, 0) + 1
         label = str(outcome.get("outcome_label", "pending"))
         labels[label] = labels.get(label, 0) + 1
         outcome_pct = float(outcome.get("outcome_pct", 0.0))
@@ -125,13 +162,6 @@ def build_learning_summary(limit: int = 80) -> dict:
             if outcome.get(h) not in (None, ''):
                 horizons[h].append(float(outcome[h]))
         features = signal.get("features", {}) if isinstance(signal, dict) else {}
-        weak_source = str(features.get('news_source') or features.get('source') or '').strip().lower()
-        if str(features.get('evidence_grade', '?')).strip().upper() in {'D', '?'}:
-            continue
-        if 'scaffold' in weak_source or 'fallback' in weak_source:
-            continue
-        if float(features.get('data_quality_score', 0.0) or 0.0) < 0.6:
-            continue
         sentiment_label = str(features.get("sentiment_label", "neutral"))
         if sentiment_label == "positive":
             positive_sentiment.append(outcome_pct)
@@ -205,7 +235,7 @@ def build_learning_summary(limit: int = 80) -> dict:
         "feedback": _feedback_bias(),
     }
 
-    return {"count": len(resolved), "avg_outcome": avg_outcome, "win_rate": win_rate, "decision_mix": decision_mix, "labels": labels, "weights": weights, "suggestion": suggestion, "diagnostics": diagnostics}
+    return {"count": len(resolved), "raw_count": len(resolved_all), "avg_outcome": avg_outcome, "win_rate": win_rate, "decision_mix": decision_mix, "raw_decision_mix": raw_decision_mix, "labels": labels, "weights": weights, "suggestion": suggestion, "diagnostics": diagnostics}
 
 
 def adapt_signal_weights(limit: int = 80) -> dict:
@@ -299,11 +329,15 @@ def run_learning_review(limit: int = 80) -> str:
     summary = build_learning_summary(limit=limit)
     lines = []
     lines.append("PŘEHLED UČENÍ – AUTO VRSTVA")
-    lines.append(f"Vyhodnocené vzorky: {summary['count']}")
+    lines.append(f"Vyhodnocené vzorky pro učení: {summary['count']}")
+    lines.append(f"Všechny resolved vzorky: {summary.get('raw_count', summary['count'])}")
     lines.append(f"Průměrný outcome: {summary['avg_outcome']}%")
     lines.append(f"Win rate: {summary['win_rate']}%")
-    lines.append("Mix rozhodnutí:")
+    lines.append("Mix rozhodnutí pro učení:")
     for key, value in summary["decision_mix"].items():
+        lines.append(f"- {key}: {value}")
+    lines.append("Raw mix rozhodnutí:")
+    for key, value in summary.get('raw_decision_mix', {}).items():
         lines.append(f"- {key}: {value}")
     lines.append("Štítky:")
     for key, value in summary["labels"].items():

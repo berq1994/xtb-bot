@@ -49,7 +49,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 5.0,
+      "priority_score": 4.88,
       "headlines": [
         "FCX trading activity remains in focus",
         "Market participants monitor FCX for follow-through"
@@ -152,6 +152,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.57,
@@ -220,7 +221,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 4.96,
+      "priority_score": 4.84,
       "headlines": [
         "EQT trading activity remains in focus",
         "Market participants monitor EQT for follow-through"
@@ -323,6 +324,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
@@ -397,7 +399,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 4.61,
+      "priority_score": 4.49,
       "headlines": [
         "FSLR trading activity remains in focus",
         "Market participants monitor FSLR for follow-through"
@@ -500,6 +502,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -561,7 +564,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 3.81,
+      "priority_score": 3.69,
       "headlines": [
         "NVO trading activity remains in focus",
         "Market participants monitor NVO for follow-through"
@@ -644,6 +647,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -707,7 +711,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 3.81,
+      "priority_score": 3.69,
       "headlines": [
         "IREN trading activity remains in focus",
         "Market participants monitor IREN for follow-through"
@@ -790,6 +794,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
@@ -859,7 +864,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 3.28,
+      "priority_score": 3.16,
       "headlines": [
         "PLTR trading activity remains in focus",
         "Market participants monitor PLTR for follow-through"
@@ -943,6 +948,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -1010,7 +1016,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.88,
+      "priority_score": 2.76,
       "headlines": [
         "GRMN trading activity remains in focus",
         "Market participants monitor GRMN for follow-through"
@@ -1093,6 +1099,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -1156,7 +1163,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 2.85,
+      "priority_score": 2.73,
       "headlines": [
         "NBIS trading activity remains in focus",
         "Market participants monitor NBIS for follow-through"
@@ -1240,6 +1247,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -1314,7 +1322,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.65,
+      "priority_score": 2.53,
       "headlines": [
         "AMD trading activity remains in focus",
         "Market participants monitor AMD for follow-through"
@@ -1418,6 +1426,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -1494,7 +1503,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.63,
+      "priority_score": 2.51,
       "headlines": [
         "Cloud and AI narrative remains constructive",
         "Large-cap quality bid supports resilience"
@@ -1579,6 +1588,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -1648,7 +1658,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.88,
+      "priority_score": 2.76,
       "headlines": [
         "GRMN trading activity remains in focus",
         "Market participants monitor GRMN for follow-through"
@@ -1731,6 +1741,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -1793,7 +1804,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.65,
+      "priority_score": 2.53,
       "headlines": [
         "AMD trading activity remains in focus",
         "Market participants monitor AMD for follow-through"
@@ -1897,6 +1908,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -1972,7 +1984,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 5.0,
+      "priority_score": 4.88,
       "headlines": [
         "FCX trading activity remains in focus",
         "Market participants monitor FCX for follow-through"
@@ -2075,6 +2087,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.57,
@@ -2143,7 +2156,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 4.96,
+      "priority_score": 4.84,
       "headlines": [
         "EQT trading activity remains in focus",
         "Market participants monitor EQT for follow-through"
@@ -2246,6 +2259,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
@@ -2322,7 +2336,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.63,
+      "priority_score": 2.51,
       "headlines": [
         "Cloud and AI narrative remains constructive",
         "Large-cap quality bid supports resilience"
@@ -2407,6 +2421,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -2478,7 +2493,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 5.0,
+      "priority_score": 4.88,
       "headlines": [
         "FCX trading activity remains in focus",
         "Market participants monitor FCX for follow-through"
@@ -2581,6 +2596,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.57,
@@ -2649,7 +2665,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 4.96,
+      "priority_score": 4.84,
       "headlines": [
         "EQT trading activity remains in focus",
         "Market participants monitor EQT for follow-through"
@@ -2752,6 +2768,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
@@ -2826,7 +2843,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 4.61,
+      "priority_score": 4.49,
       "headlines": [
         "FSLR trading activity remains in focus",
         "Market participants monitor FSLR for follow-through"
@@ -2929,6 +2946,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -2990,7 +3008,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 3.81,
+      "priority_score": 3.69,
       "headlines": [
         "NVO trading activity remains in focus",
         "Market participants monitor NVO for follow-through"
@@ -3073,6 +3091,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -3136,7 +3155,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 3.81,
+      "priority_score": 3.69,
       "headlines": [
         "IREN trading activity remains in focus",
         "Market participants monitor IREN for follow-through"
@@ -3219,6 +3238,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
@@ -3288,7 +3308,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 3.28,
+      "priority_score": 3.16,
       "headlines": [
         "PLTR trading activity remains in focus",
         "Market participants monitor PLTR for follow-through"
@@ -3372,6 +3392,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -3439,7 +3460,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.88,
+      "priority_score": 2.76,
       "headlines": [
         "GRMN trading activity remains in focus",
         "Market participants monitor GRMN for follow-through"
@@ -3522,6 +3543,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -3585,7 +3607,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 2.85,
+      "priority_score": 2.73,
       "headlines": [
         "NBIS trading activity remains in focus",
         "Market participants monitor NBIS for follow-through"
@@ -3669,6 +3691,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -3743,7 +3766,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.65,
+      "priority_score": 2.53,
       "headlines": [
         "AMD trading activity remains in focus",
         "Market participants monitor AMD for follow-through"
@@ -3847,6 +3870,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -3923,7 +3947,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.63,
+      "priority_score": 2.51,
       "headlines": [
         "Cloud and AI narrative remains constructive",
         "Large-cap quality bid supports resilience"
@@ -4008,6 +4032,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -4076,7 +4101,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "pullback_control",
-      "priority_score": 2.58,
+      "priority_score": 2.46,
       "headlines": [
         "CVX trading activity remains in focus",
         "Market participants monitor CVX for follow-through"
@@ -4179,6 +4204,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.68,
@@ -4249,7 +4275,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.55,
+      "priority_score": 2.43,
       "headlines": [
         "TSM trading activity remains in focus",
         "Market participants monitor TSM for follow-through"
@@ -4333,6 +4359,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -4407,7 +4434,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.5,
+      "priority_score": 2.38,
       "headlines": [
         "LEU trading activity remains in focus",
         "Market participants monitor LEU for follow-through"
@@ -4510,6 +4537,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -4572,7 +4600,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "winner_management",
-      "priority_score": 2.49,
+      "priority_score": 2.37,
       "headlines": [
         "S trading activity remains in focus",
         "Market participants monitor S for follow-through"
@@ -4675,6 +4703,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -4750,7 +4779,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.48,
+      "priority_score": 2.36,
       "headlines": [
         "AI demand remains strong across data center cycle",
         "Semiconductor leadership supports momentum"
@@ -4834,6 +4863,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -4903,7 +4933,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "drawdown_control",
-      "priority_score": 2.39,
+      "priority_score": 2.27,
       "headlines": [
         "GOOGL trading activity remains in focus",
         "Market participants monitor GOOGL for follow-through"
@@ -5008,6 +5038,7 @@
         "pe_ratio": null,
         "roe": null
       },
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
@@ -5071,7 +5102,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.71,
+      "priority_score": 3.59,
       "headlines": [
         "BDC trading activity remains in focus",
         "Market participants monitor BDC for follow-through"
@@ -5154,6 +5185,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -5211,7 +5243,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.71,
+      "priority_score": 3.59,
       "headlines": [
         "CENX trading activity remains in focus",
         "Market participants monitor CENX for follow-through"
@@ -5294,6 +5326,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -5351,7 +5384,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.71,
+      "priority_score": 3.59,
       "headlines": [
         "GOOG trading activity remains in focus",
         "Market participants monitor GOOG for follow-through"
@@ -5434,6 +5467,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -5491,7 +5525,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.71,
+      "priority_score": 3.59,
       "headlines": [
         "ONDS trading activity remains in focus",
         "Market participants monitor ONDS for follow-through"
@@ -5574,6 +5608,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -5631,7 +5666,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.71,
+      "priority_score": 3.59,
       "headlines": [
         "SNDK trading activity remains in focus",
         "Market participants monitor SNDK for follow-through"
@@ -5714,6 +5749,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -5771,7 +5807,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.21,
+      "priority_score": 2.09,
       "headlines": [
         "AMZN trading activity remains in focus",
         "Market participants monitor AMZN for follow-through"
@@ -5854,6 +5890,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -5904,7 +5941,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.21,
+      "priority_score": 2.09,
       "headlines": [
         "CAG trading activity remains in focus",
         "Market participants monitor CAG for follow-through"
@@ -5987,6 +6024,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6037,7 +6075,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.21,
+      "priority_score": 2.09,
       "headlines": [
         "GEV trading activity remains in focus",
         "Market participants monitor GEV for follow-through"
@@ -6120,6 +6158,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6170,7 +6209,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.21,
+      "priority_score": 2.09,
       "headlines": [
         "NFLX trading activity remains in focus",
         "Market participants monitor NFLX for follow-through"
@@ -6253,6 +6292,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6303,7 +6343,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.21,
+      "priority_score": 2.09,
       "headlines": [
         "SCCO trading activity remains in focus",
         "Market participants monitor SCCO for follow-through"
@@ -6386,6 +6426,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6436,7 +6477,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.41,
+      "priority_score": 1.29,
       "headlines": [
         "AAOI trading activity remains in focus",
         "Market participants monitor AAOI for follow-through"
@@ -6519,6 +6560,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6569,7 +6611,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.41,
+      "priority_score": 1.29,
       "headlines": [
         "Crypto sentiment improves with risk appetite",
         "Volatility remains elevated across digital assets"
@@ -6652,6 +6694,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6702,7 +6745,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.41,
+      "priority_score": 1.29,
       "headlines": [
         "DPZ trading activity remains in focus",
         "Market participants monitor DPZ for follow-through"
@@ -6785,6 +6828,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6835,7 +6879,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.41,
+      "priority_score": 1.29,
       "headlines": [
         "META trading activity remains in focus",
         "Market participants monitor META for follow-through"
@@ -6918,6 +6962,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -6968,7 +7013,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.41,
+      "priority_score": 1.29,
       "headlines": [
         "PYPL trading activity remains in focus",
         "Market participants monitor PYPL for follow-through"
@@ -7051,6 +7096,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7101,7 +7147,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.28,
+      "priority_score": 1.16,
       "headlines": [
         "Consumer demand mixed ahead of product cycle",
         "Mega-cap quality still supports defensive interest"
@@ -7184,6 +7230,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7234,7 +7281,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.28,
+      "priority_score": 1.16,
       "headlines": [
         "BRK-B trading activity remains in focus",
         "Market participants monitor BRK-B for follow-through"
@@ -7317,6 +7364,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7367,7 +7415,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.28,
+      "priority_score": 1.16,
       "headlines": [
         "CVNA trading activity remains in focus",
         "Market participants monitor CVNA for follow-through"
@@ -7450,6 +7498,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7500,7 +7549,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.28,
+      "priority_score": 1.16,
       "headlines": [
         "INTC trading activity remains in focus",
         "Market participants monitor INTC for follow-through"
@@ -7583,6 +7632,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7633,7 +7683,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.28,
+      "priority_score": 1.16,
       "headlines": [
         "PANW trading activity remains in focus",
         "Market participants monitor PANW for follow-through"
@@ -7716,6 +7766,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7766,7 +7817,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.28,
+      "priority_score": 1.16,
       "headlines": [
         "TTD trading activity remains in focus",
         "Market participants monitor TTD for follow-through"
@@ -7849,6 +7900,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -7899,7 +7951,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.0,
+      "priority_score": 0.88,
       "headlines": [
         "BKNG trading activity remains in focus",
         "Market participants monitor BKNG for follow-through"
@@ -7982,6 +8034,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -8032,7 +8085,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.0,
+      "priority_score": 0.88,
       "headlines": [
         "COKE trading activity remains in focus",
         "Market participants monitor COKE for follow-through"
@@ -8115,6 +8168,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -8165,7 +8219,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.0,
+      "priority_score": 0.88,
       "headlines": [
         "IBIT trading activity remains in focus",
         "Market participants monitor IBIT for follow-through"
@@ -8248,6 +8302,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -8298,7 +8353,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.0,
+      "priority_score": 0.88,
       "headlines": [
         "ORCL trading activity remains in focus",
         "Market participants monitor ORCL for follow-through"
@@ -8381,6 +8436,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
@@ -8431,7 +8487,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.0,
+      "priority_score": 0.88,
       "headlines": [
         "SPY trading activity remains in focus",
         "Market participants monitor SPY for follow-through"
@@ -8514,6 +8570,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {},
+      "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
       "study_alignment_score": 0.53,

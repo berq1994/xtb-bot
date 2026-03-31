@@ -59,7 +59,10 @@ def _good_weekly_candidate(row: dict) -> bool:
         return False
     if ta_score < 3.5:
         return False
-    if "Technická data nejsou dostupná" in scenario_bull:
+    provider = str(row.get('fundamental_provider') or row.get('provider') or '').lower()
+    if provider and 'fallback' in provider:
+        return False
+    if "Technická data nejsou dostupná" in scenario_bull or not scenario_bull:
         return False
     return True
 
@@ -74,7 +77,7 @@ def run_weekly_review() -> str:
     avg_outcome = round(mean(float(r.get("outcome_pct", 0.0) or 0.0) for r in resolved), 2) if resolved else None
     top_items = research.get("top_items", []) if isinstance(research, dict) else []
     action_queue = research.get("action_queue", []) if isinstance(research, dict) else []
-    positive_fund = [s for s, row in fundamentals.items() if isinstance(row, dict) and row.get("fundamental_bias") == "positive"]
+    positive_fund = [s for s, row in fundamentals.items() if isinstance(row, dict) and row.get("fundamental_bias") == "positive" and 'fallback' not in str(row.get('provider','')).lower()]
     lines = [
         "TÝDENNÍ REKAPITULACE",
         f"Režim trhu: {research.get('regime', '-')}",

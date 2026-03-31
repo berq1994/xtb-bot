@@ -8,6 +8,7 @@ from typing import Any
 
 import requests
 
+from agents.official_company_sources_agent import collect_official_company_news
 from agents.portfolio_context_agent import load_portfolio_symbols
 from symbol_utils import filter_enabled_symbols, provider_symbol
 
@@ -58,6 +59,75 @@ def _safe_float(value: Any) -> float | None:
         return float(value)
     except Exception:
         return None
+
+
+def _first_value(*values: Any) -> float | None:
+    for value in values:
+        parsed = _safe_float(value)
+        if parsed is not None:
+            return parsed
+    return None
+
+
+def _statement_value(frame: Any, candidates: list[str]) -> float | None:
+    try:
+        if frame is None or getattr(frame, 'empty', True):
+            return None
+        rows = list(getattr(frame, 'index', []) or [])
+        cols = list(getattr(frame, 'columns', []) or [])
+        if not cols:
+            return None
+        current_col = cols[0]
+        for candidate in candidates:
+            for row_name in rows:
+                if str(row_name).strip().lower() == candidate.lower():
+                    value = frame.loc[row_name, current_col]
+                    parsed = _safe_float(value)
+                    if parsed is not None:
+                        return parsed
+    except Exception:
+        return None
+    return None
+
+
+def _statement_growth(frame: Any, candidates: list[str]) -> float | None:
+    try:
+        if frame is None or getattr(frame, 'empty', True):
+            return None
+        rows = list(getattr(frame, 'index', []) or [])
+        cols = list(getattr(frame, 'columns', []) or [])
+        if len(cols) < 2:
+            return None
+        for candidate in candidates:
+            for row_name in rows:
+                if str(row_name).strip().lower() == candidate.lower():
+                    current = _safe_float(frame.loc[row_name, cols[0]])
+                    previous = _safe_float(frame.loc[row_name, cols[1]])
+                    if current is None or previous in (None, 0):
+                        return None
+                    return (current - previous) / abs(previous)
+    except Exception:
+        return None
+    return None
+
+
+def _official_bias(symbol: str, official_by_symbol: dict[str, list[dict[str, Any]]]) -> tuple[str, float, str, str] | None:
+    items = official_by_symbol.get(symbol, []) if isinstance(official_by_symbol, dict) else []
+    if not items:
+        return None
+    joined = ' | '.join(str(i.get('title') or '') for i in items[:3]).lower()
+    score = 0.0
+    reasons: list[str] = []
+    if any(k in joined for k in ['quarterly results', 'results & financials', 'earnings', 'financial results', 'annual report']):
+        score += 0.25
+        reasons.append('načteny oficiální výsledkové materiály')
+    if any(k in joined for k in ['guidance', 'outlook', 'revenue', 'profit']):
+        score += 0.15
+        reasons.append('oficiální materiály zmiňují výhled nebo výsledky')
+    if any(k in joined for k in ['governance documents', 'skip to main content']):
+        score -= 0.1
+    bias = 'positive' if score >= 0.35 else 'neutral'
+    return bias, round(score, 2), ', '.join(reasons) or 'Oficiální zdroje byly načteny, ale bez silného fundamentálního signálu.', 'official_sources_proxy'
 
 
 def _bias_from_payload(profile: dict[str, Any], metrics: dict[str, Any], growth: dict[str, Any]) -> tuple[str, float, str]:
@@ -166,38 +236,96 @@ def _yahoo_fetch(symbol: str) -> dict[str, Any] | None:
         import yfinance as yf
     except Exception:
         return None
+    query = provider_symbol(symbol, "yahoo")
     try:
-        ticker = yf.Ticker(provider_symbol(symbol, "yahoo"))
+        ticker = yf.Ticker(query)
+    except Exception:
+        return None
+
+    info: dict[str, Any] = {}
+    try:
         info = ticker.info or {}
     except Exception:
         info = {}
-    if not isinstance(info, dict) or not info:
-        return None
+    if not isinstance(info, dict):
+        info = {}
+
+    quarterly_income = None
+    income = None
+    quarterly_balance = None
+    balance = None
+    fast_info = {}
+    try:
+        quarterly_income = getattr(ticker, 'quarterly_income_stmt', None)
+    except Exception:
+        quarterly_income = None
+    try:
+        income = getattr(ticker, 'income_stmt', None)
+    except Exception:
+        income = None
+    try:
+        quarterly_balance = getattr(ticker, 'quarterly_balance_sheet', None)
+    except Exception:
+        quarterly_balance = None
+    try:
+        balance = getattr(ticker, 'balance_sheet', None)
+    except Exception:
+        balance = None
+    try:
+        fast_info = dict(getattr(ticker, 'fast_info', {}) or {})
+    except Exception:
+        fast_info = {}
+
+    revenue_growth = _first_value(
+        info.get('revenueGrowth'),
+        _statement_growth(quarterly_income, ['Total Revenue', 'Operating Revenue', 'Revenue']),
+        _statement_growth(income, ['Total Revenue', 'Operating Revenue', 'Revenue']),
+    )
+    earnings_growth = _first_value(
+        info.get('earningsGrowth'),
+        _statement_growth(quarterly_income, ['Net Income', 'Net Income Common Stockholders', 'Net Income Including Noncontrolling Interests']),
+        _statement_growth(income, ['Net Income', 'Net Income Common Stockholders', 'Net Income Including Noncontrolling Interests']),
+    )
+    total_debt = _first_value(
+        info.get('totalDebt'),
+        _statement_value(quarterly_balance, ['Total Debt', 'Long Term Debt And Capital Lease Obligation', 'Long Term Debt']),
+        _statement_value(balance, ['Total Debt', 'Long Term Debt And Capital Lease Obligation', 'Long Term Debt']),
+    )
+    equity = _first_value(
+        info.get('totalStockholderEquity'),
+        _statement_value(quarterly_balance, ['Stockholders Equity', 'Total Equity Gross Minority Interest', 'Common Stock Equity']),
+        _statement_value(balance, ['Stockholders Equity', 'Total Equity Gross Minority Interest', 'Common Stock Equity']),
+    )
+    debt_to_equity = info.get('debtToEquity')
+    if debt_to_equity in (None, '', '-') and total_debt is not None and equity not in (None, 0):
+        debt_to_equity = total_debt / equity
+    pe_ratio = _first_value(info.get('trailingPE'), fast_info.get('trailingPE'))
+    market_cap = _first_value(info.get('marketCap'), fast_info.get('marketCap'))
+    roe = _first_value(info.get('returnOnEquity'))
+
     profile = {
-        "companyName": info.get("longName") or info.get("shortName") or symbol,
-        "sector": info.get("sector"),
-        "industry": info.get("industry"),
-        "marketCap": info.get("marketCap"),
-        "pe": info.get("trailingPE"),
-        "debtToEquity": info.get("debtToEquity"),
-        "returnOnEquity": info.get("returnOnEquity"),
+        'companyName': info.get('longName') or info.get('shortName') or symbol,
+        'sector': info.get('sector'),
+        'industry': info.get('industry'),
+        'marketCap': market_cap,
+        'pe': pe_ratio,
+        'debtToEquity': debt_to_equity,
+        'returnOnEquity': roe,
     }
     metrics = {
-        "trailingPE": info.get("trailingPE"),
-        "debtToEquity": info.get("debtToEquity"),
-        "returnOnEquity": info.get("returnOnEquity"),
+        'trailingPE': pe_ratio,
+        'debtToEquity': debt_to_equity,
+        'returnOnEquity': roe,
     }
     growth = {
-        "revenueGrowth": info.get("revenueGrowth"),
-        "earningsGrowth": info.get("earningsGrowth"),
+        'revenueGrowth': revenue_growth,
+        'earningsGrowth': earnings_growth,
     }
-    has_live = any(v not in (None, "", 0, 0.0) for v in [
-        info.get("trailingPE"), info.get("debtToEquity"), info.get("returnOnEquity"), info.get("revenueGrowth"), info.get("earningsGrowth"), info.get("marketCap")
-    ])
+    has_live = any(v not in (None, '', 0, 0.0) for v in [pe_ratio, debt_to_equity, roe, revenue_growth, earnings_growth, market_cap])
     if not has_live:
         return None
-    return _build_data(symbol, profile, metrics, growth, "yfinance")
-
+    provider = 'yfinance_stmt' if (revenue_growth is not None or debt_to_equity is not None) else 'yfinance'
+    return _build_data(symbol, profile, metrics, growth, provider)
 
 def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[str, Any]]:
     selected = filter_enabled_symbols(symbols or load_portfolio_symbols(limit=MAX_SYMBOLS))[:MAX_SYMBOLS]
@@ -205,6 +333,7 @@ def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[s
     cache.setdefault("symbols", {})
     now = time.time()
     out: dict[str, dict[str, Any]] = {}
+    official_by_symbol = collect_official_company_news(selected, limit_per_symbol=2)
     for symbol in selected:
         cached = cache["symbols"].get(symbol, {}) if isinstance(cache["symbols"].get(symbol, {}), dict) else {}
         if cached.get("expires_at", 0) > now and isinstance(cached.get("data"), dict):
@@ -212,8 +341,19 @@ def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[s
             continue
         data = _yahoo_fetch(symbol) or _fmp_fetch(symbol)
         if not data:
-            data = cached.get("data") if isinstance(cached.get("data"), dict) else _fallback(symbol)
-            data["status"] = data.get("status") or "fallback"
+            inferred = _official_bias(symbol, official_by_symbol)
+            if inferred is not None:
+                bias, score, summary, provider = inferred
+                data = _fallback(symbol, status='official_proxy')
+                data.update({
+                    'provider': provider,
+                    'fundamental_bias': bias,
+                    'fundamental_score': score,
+                    'summary_cs': summary,
+                })
+            else:
+                data = cached.get("data") if isinstance(cached.get("data"), dict) else _fallback(symbol)
+                data["status"] = data.get("status") or "fallback"
         cache["symbols"][symbol] = {"expires_at": now + CACHE_TTL_SECONDS, "data": data}
         out[symbol] = data
     _save_cache(cache)

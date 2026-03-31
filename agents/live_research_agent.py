@@ -399,6 +399,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         item["evidence_reasons"] = evidence.get("reasons", [])
         fundamentals = fundamentals_map.get(symbol, {}) if isinstance(fundamentals_map.get(symbol, {}), dict) else {}
         item["fundamentals"] = fundamentals
+        item["fundamental_provider"] = str(fundamentals.get("provider", fundamentals.get("status", "fallback")))
         item["fundamental_bias"] = str(fundamentals.get("fundamental_bias", "neutral"))
         item["fundamental_score"] = float(fundamentals.get("fundamental_score", 0.0) or 0.0)
         regime_fit = _regime_alignment(str(overview.get("regime", "mixed")), trend, change_pct)
@@ -427,6 +428,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         score += max(0.0, item['ta_score'] - 4.5) * 0.32
         score += min(0.35, len(official_items) * 0.15)
         score += item['fundamental_score'] * 0.45
+        if 'fallback' in str(item.get('fundamental_provider', '')).lower():
+            score -= 0.12
         if str(macro_state.get('macro_risk', 'low')) == 'high' and item['category'] in {'breakout_watch', 'watchlist_monitor'}:
             score -= 0.2
         if item['buy_decision'] in {'buy_breakout', 'buy_pullback'}:

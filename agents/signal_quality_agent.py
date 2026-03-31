@@ -178,6 +178,9 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
     elif not held and thesis_strength < 0.4 and score < 3.8:
         suppressed = True
         suppress_reason = 'bez teze a nízká akčnost mimo portfolio'
+    elif not held and str(item.get('fundamental_provider','')).lower().find('fallback') != -1 and evidence_grade in {'D', '?'} and official_count == 0:
+        suppressed = True
+        suppress_reason = 'slabé fundamenty i důkazy mimo portfolio'
     elif not held and score < 3.4:
         suppressed = True
         suppress_reason = 'nízká akčnost mimo portfolio'
