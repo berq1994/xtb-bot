@@ -1,47 +1,48 @@
 {
   "largest_position": {
-    "symbol": "CSG",
-    "share_pct": 76.58
+    "symbol": "TSM",
+    "share_pct": 16.99
   },
-  "concentration_warning": true,
+  "concentration_warning": false,
   "theme_exposure": {
-    "ai": 14.77,
-    "internet": 0.28,
-    "ads": 0.28,
-    "semis": 9.41,
-    "software": 3.9,
-    "cloud": 5.0,
-    "data": 0.08,
-    "energy": 3.78,
-    "natural_gas": 0.26,
-    "cybersecurity": 0.18,
-    "foundry": 0.51,
-    "infra": 1.36,
-    "healthcare": 0.23,
-    "copper": 0.55,
-    "materials": 0.55,
-    "commodities": 0.55,
-    "uranium": 0.27,
-    "nuclear": 0.27,
-    "consumer_tech": 0.16,
-    "bitcoin": 0.76,
-    "ai_hpc": 0.76,
-    "solar": 0.17,
-    "energy_transition": 0.17,
-    "gold": 3.3,
-    "hedge": 3.3,
-    "defense": 76.58,
-    "industrial": 76.58,
-    "oil": 2.76
+    "ai": 54.66,
+    "internet": 1.02,
+    "ads": 1.02,
+    "semis": 34.14,
+    "software": 15.23,
+    "cloud": 19.22,
+    "data": 0.28,
+    "energy": 14.6,
+    "natural_gas": 0.95,
+    "cybersecurity": 0.66,
+    "foundry": 1.86,
+    "infra": 4.93,
+    "healthcare": 0.85,
+    "copper": 1.99,
+    "materials": 1.99,
+    "commodities": 1.99,
+    "uranium": 0.97,
+    "nuclear": 0.97,
+    "consumer_tech": 0.59,
+    "bitcoin": 2.76,
+    "ai_hpc": 2.76,
+    "solar": 0.6,
+    "energy_transition": 0.6,
+    "gold": 13.01,
+    "hedge": 13.01,
+    "defense": 12.07,
+    "industrial": 12.07,
+    "oil": 10.89
   },
   "crowded_themes": [
-    "defense 76.58%",
-    "industrial 76.58%"
+    "ai 54.66%",
+    "semis 34.14%",
+    "cloud 19.22%"
   ],
   "positions": [
     {
       "symbol": "GOOGL",
-      "share_pct": 0.28,
+      "share_pct": 1.02,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 1.62,
@@ -49,11 +50,12 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "AMD",
-      "share_pct": 0.17,
+      "share_pct": 0.63,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 2.5,
@@ -61,11 +63,12 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "MSFT",
-      "share_pct": 0.17,
+      "share_pct": 0.63,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 0.0,
@@ -73,47 +76,51 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "PLTR",
-      "share_pct": 0.08,
+      "share_pct": 0.28,
       "category": "watchlist_monitor",
       "evidence_grade": "D",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "EQT",
-      "share_pct": 0.26,
+      "share_pct": 0.95,
       "category": "winner_management",
       "evidence_grade": "D",
       "ta_score": 2.06,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "S",
-      "share_pct": 0.18,
+      "share_pct": 0.66,
       "category": "winner_management",
       "evidence_grade": "D",
       "ta_score": 2.5,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "TSM",
-      "share_pct": 0.51,
+      "share_pct": 1.86,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 0.0,
@@ -121,47 +128,51 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "NBIS",
-      "share_pct": 1.36,
+      "share_pct": 4.93,
       "category": "winner_management",
       "evidence_grade": "D",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "NVO",
-      "share_pct": 0.23,
+      "share_pct": 0.85,
       "category": "winner_management",
       "evidence_grade": "D",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "FCX",
-      "share_pct": 0.55,
+      "share_pct": 1.99,
       "category": "winner_management",
       "evidence_grade": "D",
       "ta_score": 2.94,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "LEU",
-      "share_pct": 0.27,
+      "share_pct": 0.97,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 3.38,
@@ -169,11 +180,12 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "GRMN",
-      "share_pct": 0.16,
+      "share_pct": 0.59,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 0.0,
@@ -181,59 +193,64 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "NVDA",
-      "share_pct": 0.35,
+      "share_pct": 1.28,
       "category": "watchlist_monitor",
       "evidence_grade": "D",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "IREN",
-      "share_pct": 0.76,
+      "share_pct": 2.76,
       "category": "winner_management",
       "evidence_grade": "D",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "FSLR",
-      "share_pct": 0.17,
+      "share_pct": 0.6,
       "category": "breakout_watch",
       "evidence_grade": "D",
       "ta_score": 1.62,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     },
     {
       "symbol": "IGLD_HEDGED",
-      "share_pct": 3.3,
+      "share_pct": 13.01,
       "category": "-",
       "evidence_grade": "-",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "TSM",
-      "share_pct": 4.69,
+      "share_pct": 16.99,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 0.0,
@@ -241,11 +258,12 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "MSFT",
-      "share_pct": 3.47,
+      "share_pct": 13.66,
       "category": "drawdown_control",
       "evidence_grade": "D",
       "ta_score": 0.0,
@@ -253,43 +271,48 @@
       "rr_ratio": null,
       "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "NVDA",
-      "share_pct": 3.69,
+      "share_pct": 13.38,
       "category": "watchlist_monitor",
       "evidence_grade": "D",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "CSG",
-      "share_pct": 76.58,
+      "share_pct": 12.07,
       "category": "-",
       "evidence_grade": "-",
       "ta_score": 0.0,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 0.5,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "-"
     },
     {
       "symbol": "CVX",
-      "share_pct": 2.76,
+      "share_pct": 10.89,
       "category": "pullback_control",
       "evidence_grade": "D",
       "ta_score": 2.06,
       "fundamental_bias": "neutral",
       "rr_ratio": null,
-      "suggested_new_allocation_pct": 2.0,
+      "suggested_new_allocation_pct": 0.0,
       "stop_zone": null,
-      "trim_zone": null
+      "trim_zone": null,
+      "ta_status": "history_missing"
     }
-  ]
+  ],
+  "base_currency": "CZK"
 }

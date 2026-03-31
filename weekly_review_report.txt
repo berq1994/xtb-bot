@@ -6,11 +6,9 @@ AKČNÍ FRONTA TÝDNE
 - GRMN | drawdown_control | akčnost 5.02 | urgence dnes sledovat
 - AMD | drawdown_control | akčnost 5.02 | urgence dnes sledovat
 - FCX | winner_management | akčnost 4.92 | urgence dnes sledovat
-- EQT | winner_management | akčnost 4.92 | urgence dnes sledovat
-- MSFT | drawdown_control | akčnost 4.23 | urgence mít na očích
 
 FUNDAMENTÁLNÍ PŘEHLED
-- Bez jasně pozitivního fundamentálního clusteru.
+- Bez jasného pozitivního fundamentálního clusteru.
 
 MAKRO VÝHLED
 - Makro riziko: high
@@ -19,13 +17,9 @@ MAKRO VÝHLED
   · 2026-04-02 | US | Kontrola trhu práce / nezaměstnanost
 
 RIZIKO PORTFOLIA
-- Největší pozice: CSG | 76.58%
-- Koncentrační varování: ano
-- Přeplněná témata: defense 76.58%, industrial 76.58%
+- Největší pozice: TSM | 16.99%
+- Koncentrační varování: ne
+- Přeplněná témata: ai 54.66%, semis 34.14%, cloud 19.22%
 
 TOP POZICE K DALŠÍMU TÝDNU
-- FCX | score 5.0 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
-- EQT | score 4.96 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
-- FSLR | score 4.61 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
-- NVO | score 3.81 | evidence D | TA watch | scénář+ 
-- IREN | score 3.81 | evidence D | TA watch | scénář+ 
+- Tento týden bez čistých kandidátů po kvalitativním filtru.

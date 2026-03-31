@@ -1,6 +1,6 @@
 AUTONOMNÍ JÁDRO
-Čas: 31.03.2026 09:38 CEST
-Automaticky zapsané signály: GRMN, AMD
+Čas: 31.03.2026 10:23 CEST
+Automaticky zapsané signály: žádné nové
 Vyhodnocené outcome vzorky: 0
 Rebalance vah: neproveden
 Nízkovolací FMP režim: ne
@@ -24,21 +24,21 @@ AKČNÍ FRONTA
 
 FUNDAMENTÁLY
 FUNDAMENTÁLNÍ VRSTVA
-- GOOGL | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- GOOGL | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- AMD | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- AMD | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- MSFT | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- MSFT | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- PLTR | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- PLTR | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- EQT | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- EQT | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- S | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- S | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- TSM | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- TSM | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- NBIS | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- NBIS | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
 
 MAKRO KALENDÁŘ
@@ -166,8 +166,8 @@ Makro vrstva:
 
 Riziková vrstva:
 - Počet držených pozic ve výzkumu: 16
-- Největší pozice: TSM | podíl 25.85%
-- Koncentrační varování: ne
+- Největší pozice: TSM | podíl 25.17%
+- Koncentrační varování: ano
 - Hlavní témata: ai (7), energy (3), software (3), semis (3)
 - Obranně sledované pozice: GRMN, AMD, MSFT, TSM, LEU
 
@@ -180,15 +180,15 @@ Doplňkové výzkumné vrstvy:
 
 RISK ENGINE
 RISK ENGINE
-Největší pozice: CSG | podíl 76.58%
-Koncentrační varování: ano
-Přeplněná témata: defense 76.58%, industrial 76.58%
+Největší pozice: TSM | podíl 16.99%
+Koncentrační varování: ne
+Přeplněná témata: ai 54.66%, semis 34.14%, cloud 19.22%
 - GOOGL | RR - | nová alokace 0.0% | stop - | trim -
 - AMD | RR - | nová alokace 0.0% | stop - | trim -
 - MSFT | RR - | nová alokace 0.0% | stop - | trim -
-- PLTR | RR - | nová alokace 2.0% | stop - | trim -
-- EQT | RR - | nová alokace 2.0% | stop - | trim -
-- S | RR - | nová alokace 2.0% | stop - | trim -
+- PLTR | RR - | nová alokace 0.0% | stop - | trim -
+- EQT | RR - | nová alokace 0.0% | stop - | trim -
+- S | RR - | nová alokace 0.0% | stop - | trim -
 
 AKTUALIZACE VÝSLEDKU
 Aktualizováno signálů: 0
@@ -266,11 +266,9 @@ AKČNÍ FRONTA TÝDNE
 - GRMN | drawdown_control | akčnost 5.02 | urgence dnes sledovat
 - AMD | drawdown_control | akčnost 5.02 | urgence dnes sledovat
 - FCX | winner_management | akčnost 4.92 | urgence dnes sledovat
-- EQT | winner_management | akčnost 4.92 | urgence dnes sledovat
-- MSFT | drawdown_control | akčnost 4.23 | urgence mít na očích
 
 FUNDAMENTÁLNÍ PŘEHLED
-- Bez jasně pozitivního fundamentálního clusteru.
+- Bez jasného pozitivního fundamentálního clusteru.
 
 MAKRO VÝHLED
 - Makro riziko: high
@@ -279,15 +277,11 @@ MAKRO VÝHLED
   · 2026-04-02 | US | Kontrola trhu práce / nezaměstnanost
 
 RIZIKO PORTFOLIA
-- Největší pozice: CSG | 76.58%
-- Koncentrační varování: ano
-- Přeplněná témata: defense 76.58%, industrial 76.58%
+- Největší pozice: TSM | 16.99%
+- Koncentrační varování: ne
+- Přeplněná témata: ai 54.66%, semis 34.14%, cloud 19.22%
 
 TOP POZICE K DALŠÍMU TÝDNU
-- FCX | score 5.0 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
-- EQT | score 4.96 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
-- FSLR | score 4.61 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
-- NVO | score 3.81 | evidence D | TA watch | scénář+ 
-- IREN | score 3.81 | evidence D | TA watch | scénář+
+- Tento týden bez čistých kandidátů po kvalitativním filtru.
 
 Rebalance vah přeskočen.

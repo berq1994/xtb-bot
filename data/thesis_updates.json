@@ -11,8 +11,8 @@
   "risk_summary": {
     "held_count": 16,
     "largest_position_symbol": "TSM",
-    "largest_position_share_pct": 25.85,
-    "concentration_warning": false,
+    "largest_position_share_pct": 25.17,
+    "concentration_warning": true,
     "top_themes": [
       [
         "ai",

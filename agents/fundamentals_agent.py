@@ -16,7 +16,7 @@ STATE_PATH = Path("data/fundamentals_state.json")
 REPORT_PATH = Path("fundamentals_report.txt")
 CACHE_TTL_SECONDS = 60 * 60 * 24
 MAX_SYMBOLS = 8
-TIMEOUT = 5
+TIMEOUT = 6
 
 
 def _load_cache() -> dict[str, Any]:
@@ -51,15 +51,24 @@ def _fmp_get(path: str, params: dict[str, Any]) -> Any:
         return None
 
 
+def _safe_float(value: Any) -> float | None:
+    try:
+        if value in (None, "", "-"):
+            return None
+        return float(value)
+    except Exception:
+        return None
+
+
 def _bias_from_payload(profile: dict[str, Any], metrics: dict[str, Any], growth: dict[str, Any]) -> tuple[str, float, str]:
     score = 0.0
     reasons: list[str] = []
-    market_cap = float(profile.get("marketCap") or 0.0)
-    pe = float(metrics.get("peRatioTTM") or profile.get("pe") or 0.0)
-    debt_to_equity = float(metrics.get("debtToEquityTTM") or profile.get("debtToEquity") or 0.0)
-    roe = float(metrics.get("roeTTM") or 0.0)
-    revenue_growth = float(growth.get("growthRevenue") or growth.get("revenueGrowth") or 0.0)
-    net_income_growth = float(growth.get("growthNetIncome") or growth.get("netIncomeGrowth") or 0.0)
+    market_cap = _safe_float(profile.get("marketCap")) or 0.0
+    pe = _safe_float(metrics.get("peRatioTTM") or metrics.get("trailingPE") or profile.get("pe") or profile.get("trailingPE")) or 0.0
+    debt_to_equity = _safe_float(metrics.get("debtToEquityTTM") or metrics.get("debtToEquity") or profile.get("debtToEquity")) or 0.0
+    roe = _safe_float(metrics.get("roeTTM") or metrics.get("returnOnEquity") or profile.get("returnOnEquity")) or 0.0
+    revenue_growth = _safe_float(growth.get("growthRevenue") or growth.get("revenueGrowth")) or 0.0
+    net_income_growth = _safe_float(growth.get("growthNetIncome") or growth.get("netIncomeGrowth") or growth.get("earningsGrowth")) or 0.0
     if revenue_growth > 0.05:
         score += 0.6
         reasons.append("tržby rostou")
@@ -97,10 +106,11 @@ def _bias_from_payload(profile: dict[str, Any], metrics: dict[str, Any], growth:
     return "neutral", round(score, 2), ", ".join(reasons) or "fundamenty bez výrazné převahy"
 
 
-def _fallback(symbol: str) -> dict[str, Any]:
+def _fallback(symbol: str, status: str = "fallback") -> dict[str, Any]:
     return {
         "symbol": symbol,
-        "status": "fallback",
+        "status": status,
+        "provider": status,
         "fundamental_bias": "neutral",
         "fundamental_score": 0.0,
         "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
@@ -110,6 +120,83 @@ def _fallback(symbol: str) -> dict[str, Any]:
         "pe_ratio": None,
         "roe": None,
     }
+
+
+def _build_data(symbol: str, profile: dict[str, Any], metrics: dict[str, Any], growth: dict[str, Any], provider: str) -> dict[str, Any]:
+    bias, score, reason = _bias_from_payload(profile, metrics, growth)
+    pe = _safe_float(metrics.get("peRatioTTM") or metrics.get("trailingPE") or profile.get("pe") or profile.get("trailingPE"))
+    debt = _safe_float(metrics.get("debtToEquityTTM") or metrics.get("debtToEquity") or profile.get("debtToEquity"))
+    roe = _safe_float(metrics.get("roeTTM") or metrics.get("returnOnEquity") or profile.get("returnOnEquity"))
+    rev = _safe_float(growth.get("growthRevenue") or growth.get("revenueGrowth"))
+    ni = _safe_float(growth.get("growthNetIncome") or growth.get("netIncomeGrowth") or growth.get("earningsGrowth"))
+    return {
+        "symbol": symbol,
+        "status": "ok",
+        "provider": provider,
+        "name": profile.get("companyName") or profile.get("longName") or symbol,
+        "sector": profile.get("sector"),
+        "industry": profile.get("industry"),
+        "market_cap": profile.get("marketCap"),
+        "fundamental_bias": bias,
+        "fundamental_score": score,
+        "summary_cs": reason,
+        "revenue_growth": round(rev * 100, 2) if rev is not None else None,
+        "net_income_growth": round(ni * 100, 2) if ni is not None else None,
+        "debt_to_equity": round(debt, 2) if debt is not None else None,
+        "pe_ratio": round(pe, 2) if pe is not None else None,
+        "roe": round(roe * 100, 2) if roe is not None and abs(roe) <= 2 else round(roe, 2) if roe is not None else None,
+    }
+
+
+def _fmp_fetch(symbol: str) -> dict[str, Any] | None:
+    query = provider_symbol(symbol, "fmp")
+    profile_rows = _fmp_get("profile", {"symbol": query})
+    metrics_rows = _fmp_get("key-metrics-ttm", {"symbol": query})
+    growth_rows = _fmp_get("income-statement-growth", {"symbol": query, "limit": 1})
+    profile = profile_rows[0] if isinstance(profile_rows, list) and profile_rows else {}
+    metrics = metrics_rows[0] if isinstance(metrics_rows, list) and metrics_rows else {}
+    growth = growth_rows[0] if isinstance(growth_rows, list) and growth_rows else {}
+    if not (profile or metrics or growth):
+        return None
+    return _build_data(symbol, profile, metrics, growth, "fmp")
+
+
+def _yahoo_fetch(symbol: str) -> dict[str, Any] | None:
+    try:
+        import yfinance as yf
+    except Exception:
+        return None
+    try:
+        ticker = yf.Ticker(provider_symbol(symbol, "yahoo"))
+        info = ticker.info or {}
+    except Exception:
+        info = {}
+    if not isinstance(info, dict) or not info:
+        return None
+    profile = {
+        "companyName": info.get("longName") or info.get("shortName") or symbol,
+        "sector": info.get("sector"),
+        "industry": info.get("industry"),
+        "marketCap": info.get("marketCap"),
+        "pe": info.get("trailingPE"),
+        "debtToEquity": info.get("debtToEquity"),
+        "returnOnEquity": info.get("returnOnEquity"),
+    }
+    metrics = {
+        "trailingPE": info.get("trailingPE"),
+        "debtToEquity": info.get("debtToEquity"),
+        "returnOnEquity": info.get("returnOnEquity"),
+    }
+    growth = {
+        "revenueGrowth": info.get("revenueGrowth"),
+        "earningsGrowth": info.get("earningsGrowth"),
+    }
+    has_live = any(v not in (None, "", 0, 0.0) for v in [
+        info.get("trailingPE"), info.get("debtToEquity"), info.get("returnOnEquity"), info.get("revenueGrowth"), info.get("earningsGrowth"), info.get("marketCap")
+    ])
+    if not has_live:
+        return None
+    return _build_data(symbol, profile, metrics, growth, "yfinance")
 
 
 def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[str, Any]]:
@@ -123,39 +210,10 @@ def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[s
         if cached.get("expires_at", 0) > now and isinstance(cached.get("data"), dict):
             out[symbol] = cached["data"]
             continue
-        query = provider_symbol(symbol, "fmp")
-        profile_rows = _fmp_get("profile", {"symbol": query})
-        metrics_rows = _fmp_get("key-metrics-ttm", {"symbol": query})
-        growth_rows = _fmp_get("income-statement-growth", {"symbol": query, "limit": 1})
-        profile = profile_rows[0] if isinstance(profile_rows, list) and profile_rows else {}
-        metrics = metrics_rows[0] if isinstance(metrics_rows, list) and metrics_rows else {}
-        growth = growth_rows[0] if isinstance(growth_rows, list) and growth_rows else {}
-        if not (profile or metrics or growth):
+        data = _yahoo_fetch(symbol) or _fmp_fetch(symbol)
+        if not data:
             data = cached.get("data") if isinstance(cached.get("data"), dict) else _fallback(symbol)
             data["status"] = data.get("status") or "fallback"
-        else:
-            bias, score, reason = _bias_from_payload(profile, metrics, growth)
-            pe = float(metrics.get("peRatioTTM") or profile.get("pe") or 0.0) or None
-            debt = float(metrics.get("debtToEquityTTM") or profile.get("debtToEquity") or 0.0) or None
-            roe = float(metrics.get("roeTTM") or 0.0) or None
-            rev = float(growth.get("growthRevenue") or growth.get("revenueGrowth") or 0.0) if growth else None
-            ni = float(growth.get("growthNetIncome") or growth.get("netIncomeGrowth") or 0.0) if growth else None
-            data = {
-                "symbol": symbol,
-                "status": "ok",
-                "name": profile.get("companyName") or symbol,
-                "sector": profile.get("sector"),
-                "industry": profile.get("industry"),
-                "market_cap": profile.get("marketCap"),
-                "fundamental_bias": bias,
-                "fundamental_score": score,
-                "summary_cs": reason,
-                "revenue_growth": round(rev * 100, 2) if rev is not None else None,
-                "net_income_growth": round(ni * 100, 2) if ni is not None else None,
-                "debt_to_equity": round(debt, 2) if debt is not None else None,
-                "pe_ratio": round(pe, 2) if pe is not None else None,
-                "roe": round(roe * 100, 2) if roe is not None else None,
-            }
         cache["symbols"][symbol] = {"expires_at": now + CACHE_TTL_SECONDS, "data": data}
         out[symbol] = data
     _save_cache(cache)
@@ -168,8 +226,10 @@ def run_fundamentals(symbols: list[str] | None = None) -> str:
     data = build_fundamentals_map(symbols)
     lines = ["FUNDAMENTÁLNÍ VRSTVA"]
     for symbol, item in data.items():
+        provider = str(item.get("provider") or item.get("status") or "-")
+        revenue = item.get("revenue_growth") if item.get("revenue_growth") is not None else "-"
         lines.append(
-            f"- {symbol} | bias {item.get('fundamental_bias')} | score {item.get('fundamental_score')} | PE {item.get('pe_ratio') or '-'} | D/E {item.get('debt_to_equity') or '-'} | růst tržeb {item.get('revenue_growth') or '-'}%"
+            f"- {symbol} | bias {item.get('fundamental_bias')} | score {item.get('fundamental_score')} | provider {provider} | PE {item.get('pe_ratio') or '-'} | D/E {item.get('debt_to_equity') or '-'} | růst tržeb {revenue}%"
         )
         if item.get("summary_cs"):
             lines.append(f"  · {item.get('summary_cs')}")

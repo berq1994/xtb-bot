@@ -1,17 +1,17 @@
 FUNDAMENTÁLNÍ VRSTVA
-- GOOGL | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- GOOGL | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- AMD | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- AMD | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- MSFT | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- MSFT | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- PLTR | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- PLTR | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- EQT | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- EQT | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- S | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- S | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- TSM | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- TSM | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-- NBIS | bias neutral | score 0.0 | PE - | D/E - | růst tržeb -%
+- NBIS | bias neutral | score 0.0 | provider fallback | PE - | D/E - | růst tržeb -%
   · Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.

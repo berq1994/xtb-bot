@@ -108,8 +108,8 @@ Makro vrstva:
 
 Riziková vrstva:
 - Počet držených pozic ve výzkumu: 16
-- Největší pozice: TSM | podíl 25.85%
-- Koncentrační varování: ne
+- Největší pozice: TSM | podíl 25.17%
+- Koncentrační varování: ano
 - Hlavní témata: ai (7), energy (3), software (3), semis (3)
 - Obranně sledované pozice: GRMN, AMD, MSFT, TSM, LEU
 

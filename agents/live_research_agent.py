@@ -19,6 +19,7 @@ from agents.technical_analysis_agent import build_technical_analysis_map
 from agents.official_company_sources_agent import collect_official_company_news
 from agents.fundamentals_agent import build_fundamentals_map
 from agents.macro_calendar_agent import load_macro_calendar
+from currency_utils import native_value_to_czk
 
 try:
     from agents.corporate_research_agent import run_corporate_research
@@ -96,9 +97,11 @@ def _load_portfolio_meta() -> dict[str, dict]:
             symbol = str(item.get("symbol", "")).strip().upper()
             if not symbol:
                 continue
-            row = meta.setdefault(symbol, {"themes": set(), "value": 0.0, "avg_price": None, "accounts": [], "name": None, "quantity": 0.0})
-            row["value"] += float(item.get("value") or 0.0)
-            row["quantity"] += float(item.get("quantity") or 0.0)
+            row = meta.setdefault(symbol, {"themes": set(), "value": 0.0, "value_czk": 0.0, "avg_price": None, "accounts": [], "name": None, "quantity": 0.0, "currencies": set()})
+            native_value = float(item.get("value") or 0.0)
+            row["value"] += native_value
+            row["value_czk"] += native_value_to_czk(native_value, item.get("ccy") or item.get("currency"))
+            row["quantity"] += float(item.get("quantity") or item.get("qty") or 0.0)
             avg_price = item.get("avg_price")
             if avg_price is not None and row.get("avg_price") is None:
                 try:
@@ -109,6 +112,7 @@ def _load_portfolio_meta() -> dict[str, dict]:
             if isinstance(themes, list):
                 row["themes"].update(str(t).strip() for t in themes if str(t).strip())
             row["accounts"].append(account_name)
+            row["currencies"].add(str(item.get("ccy") or item.get("currency") or "").strip().upper())
             if item.get("name") and row.get("name") is None:
                 row["name"] = str(item.get("name")).strip()
 
@@ -117,9 +121,11 @@ def _load_portfolio_meta() -> dict[str, dict]:
         normalized[symbol] = {
             "themes": sorted(row["themes"]),
             "value": round(float(row["value"]), 2),
+            "value_czk": round(float(row["value_czk"]), 2),
             "quantity": round(float(row["quantity"]), 4),
             "avg_price": row.get("avg_price"),
             "accounts": row.get("accounts", []),
+            "currencies": sorted(row.get("currencies", [])),
             "name": row.get("name") or symbol,
         }
     return normalized
@@ -245,9 +251,9 @@ def _build_risk_summary(items: list[dict]) -> dict:
     held = [i for i in items if i.get('held')]
     if not held:
         return {'held_count': 0, 'concentration_warning': False, 'top_themes': [], 'defense_names': []}
-    total_value = sum(float(i.get('position_value', 0.0) or 0.0) for i in held) or 1.0
-    biggest = max(held, key=lambda x: float(x.get('position_value', 0.0) or 0.0))
-    concentration = round((float(biggest.get('position_value', 0.0) or 0.0) / total_value) * 100, 2)
+    total_value = sum(float(i.get('position_value_czk', i.get('position_value', 0.0)) or 0.0) for i in held) or 1.0
+    biggest = max(held, key=lambda x: float(x.get('position_value_czk', x.get('position_value', 0.0)) or 0.0))
+    concentration = round((float(biggest.get('position_value_czk', biggest.get('position_value', 0.0)) or 0.0) / total_value) * 100, 2)
     theme_count: dict[str, int] = {}
     defense_names: list[str] = []
     for item in held:
@@ -260,7 +266,7 @@ def _build_risk_summary(items: list[dict]) -> dict:
         'held_count': len(held),
         'largest_position_symbol': str(biggest.get('symbol')),
         'largest_position_share_pct': concentration,
-        'concentration_warning': concentration >= 35.0,
+        'concentration_warning': concentration >= 22.0,
         'top_themes': top_themes,
         'defense_names': defense_names[:5],
     }
@@ -340,6 +346,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             "themes": meta.get("themes", []),
             "accounts": meta.get("accounts", []),
             "position_value": meta.get("value", 0.0),
+            "position_value_czk": meta.get("value_czk", 0.0),
             "quantity": meta.get('quantity', 0.0),
             "avg_cost": avg_cost,
             "pnl_vs_cost_pct": pnl_vs_cost_pct,
