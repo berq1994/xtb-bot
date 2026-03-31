@@ -248,6 +248,32 @@ def _thesis_strength_from_dossier(dossier: dict) -> float:
 
 
 
+def _strong_long_context(item: dict) -> bool:
+    category = str(item.get('category') or '').strip().lower()
+    trend = str(item.get('trend') or '').strip().lower()
+    m5 = float(item.get('momentum_5d', 0.0) or 0.0)
+    m20 = float(item.get('momentum_20d', 0.0) or 0.0)
+    held = bool(item.get('held'))
+    pnl = float(item.get('pnl_vs_cost_pct', 0.0) or 0.0)
+    ta_score = float(item.get('ta_score', 0.0) or 0.0)
+    ta_setup = str(item.get('technical_setup') or '').strip().lower()
+    ta_decision = str(item.get('buy_decision') or '').strip().lower()
+    overlap = float(item.get('theme_overlap_penalty', 0.0) or 0.0)
+    fundamental_score = float(item.get('fundamental_score', 0.0) or 0.0)
+    fundamental_bias = str(item.get('fundamental_bias') or '').strip().lower()
+    return (
+        category in {'winner_management', 'breakout_watch', 'pullback_control'}
+        and trend == 'up'
+        and m5 > 0
+        and m20 >= 0
+        and ta_decision not in {'avoid', 'defensive_only'}
+        and ta_setup != 'breakdown'
+        and ta_score >= 2.0
+        and overlap <= 0.2
+        and (held or pnl > 0 or fundamental_score >= 0.15 or fundamental_bias in {'positive', 'bullish'})
+    )
+
+
 def _quality_class(item: dict) -> str:
     source_name = str(item.get('news_source') or item.get('source') or '').lower()
     evidence_grade = str(item.get('evidence_grade') or 'D').upper()
@@ -259,12 +285,15 @@ def _quality_class(item: dict) -> str:
     ta_score = float(item.get('ta_score', 0.0) or 0.0)
     weak_news = ('scaffold' in source_name) or evidence_grade in {'D', '?'}
     weak_fund = 'fallback' in fundamental_provider and official_count == 0
-    if data_quality < 0.55:
+    strong_long = _strong_long_context(item)
+    if data_quality < 0.45:
         return 'blocked'
-    if not held and weak_news and weak_fund:
+    if not held and weak_news and weak_fund and not strong_long:
         return 'blocked'
-    if held and category not in {'portfolio_defense', 'drawdown_control'} and weak_news and official_count == 0 and ta_score < 4.5:
+    if held and category not in {'portfolio_defense', 'drawdown_control'} and weak_news and official_count == 0 and ta_score < 2.0 and not strong_long:
         return 'blocked'
+    if strong_long:
+        return 'noisy'
     if weak_news or weak_fund:
         return 'noisy'
     return 'clean'
@@ -275,7 +304,8 @@ def _top_item_allowed(item: dict) -> bool:
     if quality == 'clean':
         return True
     if quality == 'noisy':
-        return bool(item.get('held')) and str(item.get('category') or '') in {'portfolio_defense', 'drawdown_control', 'winner_management'}
+        category = str(item.get('category') or '')
+        return (bool(item.get('held')) and category in {'portfolio_defense', 'drawdown_control', 'winner_management'}) or _strong_long_context(item)
     return False
 
 
@@ -284,7 +314,8 @@ def _action_queue_allowed(item: dict) -> bool:
     if quality == 'clean':
         return True
     if quality == 'noisy':
-        return bool(item.get('held')) and str(item.get('category') or '') in {'portfolio_defense', 'drawdown_control'}
+        category = str(item.get('category') or '')
+        return (bool(item.get('held')) and category in {'portfolio_defense', 'drawdown_control'}) or _strong_long_context(item)
     return False
 
 

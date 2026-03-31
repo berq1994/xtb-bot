@@ -125,6 +125,18 @@ def _merge_missing_signal_context(signal: dict, latest_index: dict[str, dict], f
             "playbooks": latest.get("playbooks", []),
             "study_alignment_score": latest.get("study_alignment_score"),
             "matched_studies": latest.get("matched_studies", []),
+            "trend": latest.get("trend"),
+            "momentum_5d": latest.get("momentum_5d"),
+            "momentum_20d": latest.get("momentum_20d"),
+            "theme_overlap_penalty": latest.get("theme_overlap_penalty"),
+            "held": latest.get("held"),
+            "pnl_vs_cost_pct": latest.get("pnl_vs_cost_pct"),
+            "category": latest.get("category"),
+            "priority_score": latest.get("priority_score"),
+            "actionability_score": latest.get("actionability_score"),
+            "action_bucket": latest.get("action_bucket"),
+            "urgency_label": latest.get("urgency_label"),
+            "thesis_strength": latest.get("thesis_strength"),
         })
     if fundamentals_row:
         feature_defaults.update({
@@ -185,6 +197,71 @@ def _evidence_rank(value: str) -> int:
     return grades.get(str(value or "").strip().upper(), 0)
 
 
+def _quality_rank(value: str) -> int:
+    mapping = {"": 0, "blocked": 0, "noisy": 1, "clean": 2}
+    return mapping.get(str(value or "").strip().lower(), 0)
+
+
+def _safe_float(value, default: float = 0.0) -> float:
+    try:
+        return float(value or 0.0)
+    except Exception:
+        return default
+
+
+def _long_support_score(signal: dict) -> float:
+    features = signal.get("features", {}) if isinstance(signal.get("features"), dict) else {}
+    trend = str(features.get("trend") or signal.get("trend") or "").strip().lower()
+    m5 = _safe_float(features.get("momentum_5d") or signal.get("momentum_5d"))
+    m20 = _safe_float(features.get("momentum_20d") or signal.get("momentum_20d"))
+    pnl = _safe_float(features.get("pnl_vs_cost_pct") or signal.get("pnl_vs_cost_pct"))
+    overlap = _safe_float(features.get("theme_overlap_penalty") or signal.get("theme_overlap_penalty"))
+    held = bool(features.get("held") if features.get("held") is not None else signal.get("held"))
+    category = str(features.get("category") or signal.get("category") or signal.get("ticket", {}).get("category") or signal.get("supervisor", {}).get("reason") or "").strip().lower()
+    ta_score = _safe_float(features.get("ta_score") or signal.get("ta_score"))
+    ta_setup = str(features.get("technical_setup") or signal.get("technical_setup") or "").strip().lower()
+    ta_decision = str(features.get("buy_decision") or signal.get("buy_decision") or "").strip().lower()
+    official_count = int(features.get("official_item_count") or signal.get("official_item_count") or 0)
+    fundamental_score = _safe_float(features.get("fundamental_score") or signal.get("fundamental_score") or signal.get("fundamentals", {}).get("fundamental_score"))
+    fundamental_bias = str(features.get("fundamental_bias") or signal.get("fundamental_bias") or signal.get("fundamentals", {}).get("fundamental_bias") or "").strip().lower()
+    evidence_grade = str(features.get("evidence_grade") or "").strip().upper()
+    evidence_score = _safe_float(features.get("evidence_score"))
+    score = 0.0
+    if trend == "up":
+        score += 0.35
+    elif trend == "flat":
+        score += 0.1
+    if m5 > 0:
+        score += 0.2
+    if m5 >= 2:
+        score += 0.1
+    if m20 > 0:
+        score += 0.2
+    if m20 >= 4:
+        score += 0.1
+    if held and pnl > 0:
+        score += 0.2
+    if overlap <= 0.15:
+        score += 0.1
+    if category in {"winner_management", "breakout_watch", "pullback_control"}:
+        score += 0.15
+    if ta_score >= 2.0:
+        score += 0.15
+    if ta_decision not in {"avoid", "defensive_only"}:
+        score += 0.1
+    if ta_setup not in {"breakdown"}:
+        score += 0.05
+    if official_count > 0:
+        score += 0.25
+    if fundamental_score >= 0.2 or fundamental_bias in {"positive", "bullish"}:
+        score += 0.25
+    if evidence_grade in {"A", "B", "C"}:
+        score += 0.2
+    elif evidence_score >= 0.2:
+        score += 0.1
+    return round(score, 2)
+
+
 def _is_weak_value(key: str, value) -> bool:
     if _is_emptyish(value):
         return True
@@ -225,6 +302,10 @@ def _is_weak_value(key: str, value) -> bool:
 
 
 def _merge_prefer(current, latest, key: str):
+    if key == 'quality_class':
+        return latest if _quality_rank(latest) > _quality_rank(current) else current
+    if key == 'evidence_grade':
+        return latest if _evidence_rank(latest) > _evidence_rank(current) else current
     if _is_weak_value(key, current) and not _is_weak_value(key, latest):
         return latest
     return current
@@ -331,6 +412,8 @@ def _row_quality(signal: dict, outcome: dict) -> str:
     weak_ta_but_fundamental = ta_decision in {"watch", ""} and ta_setup in {"none", "range", "pullback"}
     positive_fundamental = has_live_fundamental and (fundamental_score >= 0.15 or fundamental_bias in {'positive', 'bullish'})
     official_supported = official_count > 0
+    long_support_score = _long_support_score(signal)
+    legacy_long_ok = long_support_score >= 1.05 and dq >= 0.45 and ta_decision != 'avoid' and ta_setup != 'breakdown'
     long_recovery_context = supportive_ta and (
         positive_fundamental
         or (official_supported and dq >= 0.45 and ta_score >= 1.0)
@@ -346,7 +429,7 @@ def _row_quality(signal: dict, outcome: dict) -> str:
             return 'noisy'
         if dq >= 0.5 and has_strong_context and (supportive_ta or weak_ta_but_fundamental):
             return 'noisy'
-        if long_recovery_context:
+        if long_recovery_context or legacy_long_ok:
             return 'noisy'
         if has_live_fundamental and positive_fundamental and dq >= 0.4 and ta_score >= 1.1 and ta_decision != 'avoid':
             return 'noisy'
@@ -361,7 +444,7 @@ def _row_quality(signal: dict, outcome: dict) -> str:
             return 'noisy'
         if dq >= 0.4 and has_live_fundamental and ta_score >= 1.5 and ta_decision != 'avoid':
             return 'noisy'
-        if long_recovery_context:
+        if long_recovery_context or legacy_long_ok:
             return 'noisy'
         return 'reject'
 
