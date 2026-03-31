@@ -19,6 +19,22 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install requests pyyaml pandas yfinance
+      - name: Restore state cache
+        id: restore_state
+        uses: actions/cache/restore@v4
+        with:
+
+          path: |
+            .state
+            data/openbb_signal_history.jsonl
+            data/outcome_tracking.jsonl
+            data/autonomous_learning_state.json
+            data/phase5_signal_weights.json
+            data/user_feedback.jsonl
+          key: xtb-state-sync-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-sync-${{ github.ref_name }}-
+            xtb-state-sync-
       - name: Run weekly review stack
         env:
           TIMEZONE: Europe/Prague
@@ -33,3 +49,16 @@ jobs:
           python run_agent.py risk_engine
           python run_agent.py weekly_review
           python run_agent.py learning_review
+      - name: Save state snapshot
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+
+          path: |
+            .state
+            data/openbb_signal_history.jsonl
+            data/outcome_tracking.jsonl
+            data/autonomous_learning_state.json
+            data/phase5_signal_weights.json
+            data/user_feedback.jsonl
+          key: xtb-state-sync-${{ github.ref_name }}-${{ github.run_id }}

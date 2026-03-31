@@ -39,9 +39,33 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Restore state cache
-        uses: actions/cache@v4
+        id: restore_state
+        uses: actions/cache/restore@v4
         with:
-          path: .state
-          key: xtb-state-autonomous-core-low-call
+
+          path: |
+            .state
+            data/openbb_signal_history.jsonl
+            data/outcome_tracking.jsonl
+            data/autonomous_learning_state.json
+            data/phase5_signal_weights.json
+            data/user_feedback.jsonl
+          key: xtb-state-sync-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: |
+            xtb-state-sync-${{ github.ref_name }}-
+            xtb-state-sync-
       - name: Run autonomous core
         run: python run_agent.py autonomous_core
+      - name: Save state snapshot
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+
+          path: |
+            .state
+            data/openbb_signal_history.jsonl
+            data/outcome_tracking.jsonl
+            data/autonomous_learning_state.json
+            data/phase5_signal_weights.json
+            data/user_feedback.jsonl
+          key: xtb-state-sync-${{ github.ref_name }}-${{ github.run_id }}
