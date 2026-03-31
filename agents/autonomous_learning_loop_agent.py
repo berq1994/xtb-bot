@@ -49,20 +49,48 @@ def _decision_bucket(signal: dict) -> str:
 
 def _signal_quality(signal: dict) -> str:
     features = signal.get("features", {}) if isinstance(signal.get("features"), dict) else {}
-    data_source = str(features.get("data_source") or features.get("source") or "").lower()
-    grade = str(features.get("evidence_grade") or "?")
-    dq = float(features.get('data_quality_score', 0.0) or 0.0)
-    official_count = int(features.get('official_item_count', 0) or 0)
+    data_source = str(features.get("data_source") or features.get("source") or signal.get('source') or "").lower()
+    grade = str(features.get("evidence_grade") or "?").upper()
+    dq = float(features.get('data_quality_score', signal.get('data_quality_score', 0.0)) or 0.0)
+    official_count = int(features.get('official_item_count', signal.get('official_item_count', 0)) or 0)
+    fundamental_provider = str(
+        signal.get('fundamental_provider')
+        or features.get('fundamental_provider')
+        or signal.get('fundamentals', {}).get('provider', '')
+        or ''
+    ).strip().lower()
+    fundamental_score = float(
+        signal.get('fundamental_score')
+        or features.get('fundamental_score')
+        or signal.get('fundamentals', {}).get('fundamental_score', 0.0)
+        or 0.0
+    )
+    quality_class = str(signal.get('quality_class') or features.get('quality_class') or '').strip().lower()
     bucket = _decision_bucket(signal)
     has_scaffold = 'scaffold' in data_source
     has_fallback = 'fallback' in data_source
-    if not has_scaffold and not has_fallback and grade in {"A", "B", "C"} and dq >= 0.75:
-        return "clean"
-    if bucket == 'buy_candidate' and (grade in {'D', '?'} or has_scaffold or dq < 0.6) and official_count == 0:
+    has_strong_context = official_count > 0 or (fundamental_provider and fundamental_provider != 'fallback') or abs(fundamental_score) >= 0.25
+    if quality_class == 'clean':
+        return 'clean'
+    if quality_class == 'noisy':
+        return 'noisy'
+    if not has_scaffold and not has_fallback and grade in {"A", "B"} and dq >= 0.7:
+        return 'clean'
+    if grade == 'C' and dq >= 0.65 and (not has_scaffold or has_strong_context):
+        return 'clean'
+    if bucket == 'buy_candidate':
+        if dq >= 0.6 and (grade in {'A', 'B', 'C'} or has_strong_context):
+            return 'noisy'
         return 'reject'
-    if bucket == 'risk_management' and dq < 0.5:
+    if bucket == 'risk_management':
+        if dq >= 0.45 or has_strong_context:
+            return 'noisy'
         return 'reject'
-    return "noisy"
+    if bucket == 'watch':
+        if dq >= 0.5 and (grade in {'A', 'B', 'C'} or has_strong_context or not has_scaffold):
+            return 'noisy'
+        return 'reject'
+    return 'reject'
 
 
 def _is_quality_signal(signal: dict) -> bool:

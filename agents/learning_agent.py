@@ -92,30 +92,80 @@ def _decision_bucket(decision: str) -> str:
 
 
 def _row_quality(signal: dict, outcome: dict) -> str:
-    bucket = _decision_bucket(str(outcome.get('decision') or signal.get('decision') or ''))
+    decision = str(outcome.get('decision') or signal.get('decision') or '')
+    bucket = _decision_bucket(decision)
     if bucket not in {'buy_candidate', 'watch_candidate', 'risk_management'}:
         return 'reject'
+
     features = signal.get('features', {}) if isinstance(signal, dict) else {}
+    quality_class = str(
+        signal.get('quality_class')
+        or features.get('quality_class')
+        or signal.get('quality_label')
+        or ''
+    ).strip().lower()
     weak_source = str(
         features.get('news_source')
         or features.get('source')
         or features.get('data_source')
+        or signal.get('source')
         or ''
     ).strip().lower()
     grade = str(features.get('evidence_grade', '?')).strip().upper()
-    dq = float(features.get('data_quality_score', 0.0) or 0.0)
-    official_count = int(features.get('official_item_count', 0) or 0)
+    dq = float(features.get('data_quality_score', signal.get('data_quality_score', 0.0)) or 0.0)
+    official_count = int(
+        features.get('official_item_count', signal.get('official_item_count', 0) or 0) or 0
+    )
+    fundamental_provider = str(
+        signal.get('fundamental_provider')
+        or features.get('fundamental_provider')
+        or signal.get('fundamentals', {}).get('provider', '')
+        or ''
+    ).strip().lower()
+    fundamental_score = float(
+        signal.get('fundamental_score')
+        or features.get('fundamental_score')
+        or signal.get('fundamentals', {}).get('fundamental_score', 0.0)
+        or 0.0
+    )
     has_scaffold = 'scaffold' in weak_source
     has_fallback = 'fallback' in weak_source
-    if grade in {'A', 'B', 'C'} and not has_scaffold and not has_fallback and dq >= 0.75:
+    has_live_fundamental = bool(fundamental_provider and fundamental_provider != 'fallback')
+    has_strong_context = official_count > 0 or has_live_fundamental or abs(fundamental_score) >= 0.25
+
+    if quality_class == 'clean':
         return 'clean'
-    if bucket == 'buy_candidate' and (grade in {'D', '?'} or has_scaffold or dq < 0.6) and official_count == 0:
+    if quality_class == 'noisy' and bucket in {'buy_candidate', 'watch_candidate', 'risk_management'}:
+        return 'noisy'
+
+    if grade in {'A', 'B'} and not has_scaffold and dq >= 0.7:
+        return 'clean'
+    if grade == 'C' and dq >= 0.65 and (not has_scaffold or has_strong_context):
+        return 'clean'
+
+    if not features:
+        if bucket in {'buy_candidate', 'watch_candidate', 'risk_management'}:
+            return 'noisy'
         return 'reject'
-    if bucket == 'watch_candidate' and has_scaffold and grade in {'D', '?'} and official_count == 0:
+
+    if bucket == 'buy_candidate':
+        if dq >= 0.6 and (grade in {'A', 'B', 'C'} or has_strong_context):
+            return 'noisy'
         return 'reject'
-    if bucket == 'risk_management' and dq < 0.5:
+
+    if bucket == 'watch_candidate':
+        if dq >= 0.5 and (grade in {'A', 'B', 'C'} or has_strong_context or not has_scaffold):
+            return 'noisy'
+        if dq >= 0.45 and has_strong_context:
+            return 'noisy'
         return 'reject'
-    return 'noisy'
+
+    if bucket == 'risk_management':
+        if dq >= 0.45 or has_strong_context:
+            return 'noisy'
+        return 'reject'
+
+    return 'reject'
 
 
 def _learnable_row(signal: dict, outcome: dict) -> bool:
