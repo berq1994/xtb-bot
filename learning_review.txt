@@ -8,6 +8,7 @@ Win rate: 0.0%
 Mix rozhodnutí pro učení:
 Raw mix rozhodnutí:
 Odmítnuté raw buckety:
+Důvody odmítnutí:
 Štítky:
 Diagnostika:
 - positive_sentiment_avg: None

@@ -6,6 +6,7 @@ from pathlib import Path
 from statistics import mean
 
 RESEARCH_STATE_PATH = Path("data/research_live_state.json")
+FUNDAMENTALS_STATE_PATH = Path("data/fundamentals_state.json")
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
 OUTCOME_PATH = Path("data/outcome_tracking.jsonl")
 WEIGHTS_PATH = Path("data/phase5_signal_weights.json")
@@ -64,47 +65,75 @@ def _load_latest_research_index() -> dict[str, dict]:
     return index
 
 
-def _merge_missing_signal_context(signal: dict, latest_index: dict[str, dict]) -> dict:
+def _merge_missing_signal_context(signal: dict, latest_index: dict[str, dict], fundamentals_index: dict[str, dict] | None = None) -> dict:
     if not isinstance(signal, dict):
         return {}
     symbol = str(signal.get("ticket_symbol") or signal.get("ticket", {}).get("symbol") or "").strip().upper()
     latest = latest_index.get(symbol) if symbol else None
-    if not latest:
+    fundamentals_row = (fundamentals_index or {}).get(symbol) if symbol else None
+    if not latest and not fundamentals_row:
         return signal
+
     merged = dict(signal)
-    merged.setdefault("source", latest.get("source"))
-    merged.setdefault("quality_class", latest.get("quality_class"))
-    merged.setdefault("official_item_count", latest.get("official_item_count"))
-    merged.setdefault("fundamental_provider", latest.get("fundamental_provider"))
-    merged.setdefault("fundamental_score", latest.get("fundamental_score"))
-    merged.setdefault("fundamental_bias", latest.get("fundamental_bias"))
-    merged.setdefault("data_quality_score", latest.get("data_quality_score"))
-    if isinstance(latest.get("fundamentals"), dict) and not isinstance(merged.get("fundamentals"), dict):
-        merged["fundamentals"] = latest.get("fundamentals")
+
+    if latest:
+        top_defaults = {
+            "source": latest.get("source"),
+            "quality_class": latest.get("quality_class"),
+            "official_item_count": latest.get("official_item_count"),
+            "fundamental_provider": latest.get("fundamental_provider"),
+            "fundamental_score": latest.get("fundamental_score"),
+            "fundamental_bias": latest.get("fundamental_bias"),
+            "data_quality_score": latest.get("data_quality_score"),
+            "buy_decision": latest.get("buy_decision"),
+            "technical_setup": latest.get("technical_setup"),
+            "ta_score": latest.get("ta_score"),
+        }
+        for key, value in top_defaults.items():
+            merged[key] = _merge_prefer(merged.get(key), value, key)
+        if isinstance(latest.get("fundamentals"), dict):
+            current_fundamentals = merged.get("fundamentals") if isinstance(merged.get("fundamentals"), dict) else {}
+            if not current_fundamentals or str(current_fundamentals.get("provider", "")).strip().lower() == "fallback":
+                merged["fundamentals"] = latest.get("fundamentals")
+
+    if fundamentals_row:
+        merged["fundamental_provider"] = _merge_prefer(merged.get("fundamental_provider"), fundamentals_row.get("status"), "fundamental_provider")
+        merged["fundamental_score"] = _merge_prefer(merged.get("fundamental_score"), fundamentals_row.get("fundamental_score"), "fundamental_score")
+        merged["fundamental_bias"] = _merge_prefer(merged.get("fundamental_bias"), fundamentals_row.get("fundamental_bias"), "fundamental_bias")
+        current_fundamentals = merged.get("fundamentals") if isinstance(merged.get("fundamentals"), dict) else {}
+        if not current_fundamentals or str(current_fundamentals.get("provider", "")).strip().lower() == "fallback":
+            merged["fundamentals"] = dict(fundamentals_row)
+
     features = dict(merged.get("features") or {})
-    feature_defaults = {
-        "quality_class": latest.get("quality_class"),
-        "data_quality_score": latest.get("data_quality_score"),
-        "evidence_grade": latest.get("evidence_grade"),
-        "evidence_score": latest.get("evidence_score"),
-        "official_item_count": latest.get("official_item_count"),
-        "fundamental_provider": latest.get("fundamental_provider"),
-        "fundamental_score": latest.get("fundamental_score"),
-        "buy_decision": latest.get("buy_decision"),
-        "technical_setup": latest.get("technical_setup"),
-        "ta_score": latest.get("ta_score"),
-        "source": latest.get("source"),
-        "data_source": latest.get("source"),
-        "news_providers": latest.get("news_providers", []),
-        "playbooks": latest.get("playbooks", []),
-        "study_alignment_score": latest.get("study_alignment_score"),
-        "matched_studies": latest.get("matched_studies", []),
-    }
+    feature_defaults = {}
+    if latest:
+        feature_defaults.update({
+            "quality_class": latest.get("quality_class"),
+            "data_quality_score": latest.get("data_quality_score"),
+            "evidence_grade": latest.get("evidence_grade"),
+            "evidence_score": latest.get("evidence_score"),
+            "official_item_count": latest.get("official_item_count"),
+            "fundamental_provider": latest.get("fundamental_provider"),
+            "fundamental_score": latest.get("fundamental_score"),
+            "fundamental_bias": latest.get("fundamental_bias"),
+            "buy_decision": latest.get("buy_decision"),
+            "technical_setup": latest.get("technical_setup"),
+            "ta_score": latest.get("ta_score"),
+            "source": latest.get("source"),
+            "data_source": latest.get("source"),
+            "news_providers": latest.get("news_providers", []),
+            "playbooks": latest.get("playbooks", []),
+            "study_alignment_score": latest.get("study_alignment_score"),
+            "matched_studies": latest.get("matched_studies", []),
+        })
+    if fundamentals_row:
+        feature_defaults.update({
+            "fundamental_provider": fundamentals_row.get("status"),
+            "fundamental_score": fundamentals_row.get("fundamental_score"),
+            "fundamental_bias": fundamentals_row.get("fundamental_bias"),
+        })
     for key, value in feature_defaults.items():
-        current = features.get(key)
-        if current in (None, "", [], {}):
-            if value not in (None, "", [], {}):
-                features[key] = value
+        features[key] = _merge_prefer(features.get(key), value, key)
     merged["features"] = features
     return merged
 
@@ -126,6 +155,79 @@ def _save_weights(weights: dict) -> None:
     WEIGHTS_PATH.parent.mkdir(parents=True, exist_ok=True)
     WEIGHTS_PATH.write_text(json.dumps(weights, ensure_ascii=False, indent=2), encoding="utf-8")
 
+
+
+
+def _load_fundamentals_index() -> dict[str, dict]:
+    if not FUNDAMENTALS_STATE_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(FUNDAMENTALS_STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    if not isinstance(payload, dict):
+        return {}
+    out: dict[str, dict] = {}
+    for key, value in payload.items():
+        if isinstance(value, dict):
+            symbol = str(value.get("symbol") or key or "").strip().upper()
+            if symbol:
+                out[symbol] = value
+    return out
+
+
+def _is_emptyish(value) -> bool:
+    return value in (None, "", [], {})
+
+
+def _evidence_rank(value: str) -> int:
+    grades = {"A": 4, "B": 3, "C": 2, "D": 1, "?": 0, "": 0}
+    return grades.get(str(value or "").strip().upper(), 0)
+
+
+def _is_weak_value(key: str, value) -> bool:
+    if _is_emptyish(value):
+        return True
+    if key in {"source", "data_source", "news_source"}:
+        text = str(value).strip().lower()
+        return (not text) or ("scaffold" in text) or ("fallback" in text)
+    if key == "quality_class":
+        return str(value).strip().lower() in {"", "blocked", "noisy"}
+    if key == "official_item_count":
+        return int(value or 0) <= 0
+    if key == "fundamental_provider":
+        text = str(value).strip().lower()
+        return (not text) or text == "fallback"
+    if key == "fundamental_score":
+        return abs(float(value or 0.0)) < 0.05
+    if key == "fundamental_bias":
+        return str(value).strip().lower() in {"", "neutral"}
+    if key == "data_quality_score":
+        return float(value or 0.0) < 0.55
+    if key == "evidence_grade":
+        return _evidence_rank(str(value)) <= 1
+    if key == "evidence_score":
+        return float(value or 0.0) < 0.35
+    if key == "buy_decision":
+        return str(value).strip().lower() in {"", "watch", "avoid"}
+    if key == "technical_setup":
+        return str(value).strip().lower() in {"", "none", "unknown"}
+    if key == "ta_score":
+        return float(value or 0.0) < 1.0
+    if key == "study_alignment_score":
+        return float(value or 0.0) < 0.55
+    if key == "news_providers":
+        vals = [str(v).lower() for v in (value or [])]
+        return not vals or all(("scaffold" in v) or ("fallback" in v) for v in vals)
+    if key == "playbooks":
+        return not bool(value)
+    return False
+
+
+def _merge_prefer(current, latest, key: str):
+    if _is_weak_value(key, current) and not _is_weak_value(key, latest):
+        return latest
+    return current
 
 def _build_history_index(rows: list[dict]) -> dict[str, dict]:
     out: dict[str, dict] = {}
@@ -199,6 +301,12 @@ def _row_quality(signal: dict, outcome: dict) -> str:
     has_scaffold = 'scaffold' in weak_source
     has_fallback = 'fallback' in weak_source
     has_live_fundamental = bool(fundamental_provider and fundamental_provider != 'fallback')
+    fundamental_bias = str(
+        signal.get('fundamental_bias')
+        or features.get('fundamental_bias')
+        or signal.get('fundamentals', {}).get('fundamental_bias', '')
+        or ''
+    ).strip().lower()
     has_strong_context = official_count > 0 or has_live_fundamental or abs(fundamental_score) >= 0.25
 
     if quality_class == 'clean':
@@ -219,21 +327,41 @@ def _row_quality(signal: dict, outcome: dict) -> str:
     ta_setup = str(features.get("technical_setup") or signal.get("technical_setup") or "").strip().lower()
     ta_decision = str(features.get("buy_decision") or signal.get("buy_decision") or "").strip().lower()
     ta_score = float(features.get("ta_score", signal.get("ta_score", 0.0)) or 0.0)
-    supportive_ta = ta_decision not in {"avoid", "defensive_only"} and ta_setup not in {"breakdown"}
+    supportive_ta = ta_decision not in {"avoid", "defensive_only"} and ta_setup not in {"breakdown", "none"}
+    weak_ta_but_fundamental = ta_decision in {"watch", ""} and ta_setup in {"none", "range", "pullback"}
+    positive_fundamental = has_live_fundamental and (fundamental_score >= 0.15 or fundamental_bias in {'positive', 'bullish'})
+    official_supported = official_count > 0
+    long_recovery_context = supportive_ta and (
+        positive_fundamental
+        or (official_supported and dq >= 0.45 and ta_score >= 1.0)
+        or (has_live_fundamental and dq >= 0.45 and ta_score >= 1.25 and fundamental_score >= 0.1)
+        or (grade in {'A', 'B', 'C'} and dq >= 0.5 and not has_scaffold)
+        or (weak_ta_but_fundamental and positive_fundamental and dq >= 0.45)
+    )
 
     if bucket == 'buy_candidate':
         if dq >= 0.58 and (grade in {'A', 'B', 'C'} or has_strong_context):
             return 'noisy'
-        if dq >= 0.5 and has_strong_context and supportive_ta:
+        if dq >= 0.45 and positive_fundamental and (grade in {'C', 'D', '?'} or has_strong_context) and ta_decision != 'avoid':
+            return 'noisy'
+        if dq >= 0.5 and has_strong_context and (supportive_ta or weak_ta_but_fundamental):
+            return 'noisy'
+        if long_recovery_context:
+            return 'noisy'
+        if has_live_fundamental and positive_fundamental and dq >= 0.4 and ta_score >= 1.1 and ta_decision != 'avoid':
             return 'noisy'
         return 'reject'
 
     if bucket == 'watch_candidate':
         if dq >= 0.5 and (grade in {'A', 'B', 'C'} or has_strong_context or not has_scaffold):
             return 'noisy'
+        if dq >= 0.45 and positive_fundamental and (grade in {'C', 'D', '?'} or has_strong_context) and ta_decision != 'avoid':
+            return 'noisy'
         if dq >= 0.45 and has_strong_context and supportive_ta:
             return 'noisy'
         if dq >= 0.4 and has_live_fundamental and ta_score >= 1.5 and ta_decision != 'avoid':
+            return 'noisy'
+        if long_recovery_context:
             return 'noisy'
         return 'reject'
 
@@ -255,13 +383,14 @@ def build_learning_summary(limit: int = 80) -> dict:
     weights = load_signal_weights()
     history_index = _build_history_index(history_rows)
     latest_research_index = _load_latest_research_index()
+    fundamentals_index = _load_fundamentals_index()
 
     resolved_all: list[dict] = []
     for outcome in outcome_rows:
         if outcome.get("outcome_label") not in {"win", "loss", "flat"}:
             continue
         signal = history_index.get(str(outcome.get("signal_id", "")), {})
-        signal = _merge_missing_signal_context(signal, latest_research_index)
+        signal = _merge_missing_signal_context(signal, latest_research_index, fundamentals_index)
         resolved_all.append({"signal": signal, "outcome": outcome})
 
     resolved_all = resolved_all[-limit:]
@@ -271,6 +400,7 @@ def build_learning_summary(limit: int = 80) -> dict:
     decision_mix: dict[str, int] = {}
     raw_decision_mix: dict[str, int] = {}
     rejected_mix: dict[str, int] = {}
+    rejected_reasons: dict[str, int] = {}
     labels: dict[str, int] = {}
     outcome_vals: list[float] = []
     positive_sentiment: list[float] = []
@@ -297,6 +427,20 @@ def build_learning_summary(limit: int = 80) -> dict:
         raw_decision_mix[decision] = raw_decision_mix.get(decision, 0) + 1
         if not _learnable_row(signal, outcome):
             rejected_mix[decision] = rejected_mix.get(decision, 0) + 1
+            features = signal.get('features', {}) if isinstance(signal, dict) else {}
+            reason = []
+            if str(features.get('evidence_grade', '?')).upper() in {'D', '?'}:
+                reason.append('weak_evidence')
+            if float(features.get('data_quality_score', signal.get('data_quality_score', 0.0)) or 0.0) < 0.5:
+                reason.append('low_data_quality')
+            ta_decision = str(features.get('buy_decision') or signal.get('buy_decision') or '').lower()
+            ta_setup = str(features.get('technical_setup') or signal.get('technical_setup') or '').lower()
+            if ta_decision == 'avoid' or ta_setup == 'breakdown':
+                reason.append('ta_block')
+            if not reason:
+                reason.append('gate')
+            reason_key = '+'.join(reason)
+            rejected_reasons[reason_key] = rejected_reasons.get(reason_key, 0) + 1
 
     for row in resolved:
         signal = row["signal"]
@@ -395,6 +539,7 @@ def build_learning_summary(limit: int = 80) -> dict:
         "decision_mix": decision_mix,
         "raw_decision_mix": raw_decision_mix,
         "rejected_mix": rejected_mix,
+        "rejected_reasons": rejected_reasons,
         "labels": labels,
         "weights": weights,
         "suggestion": suggestion,
@@ -507,6 +652,9 @@ def run_learning_review(limit: int = 80) -> str:
         lines.append(f"- {key}: {value}")
     lines.append("Odmítnuté raw buckety:")
     for key, value in summary.get('rejected_mix', {}).items():
+        lines.append(f"- {key}: {value}")
+    lines.append("Důvody odmítnutí:")
+    for key, value in summary.get('rejected_reasons', {}).items():
         lines.append(f"- {key}: {value}")
     lines.append("Štítky:")
     for key, value in summary["labels"].items():
