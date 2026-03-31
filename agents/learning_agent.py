@@ -104,8 +104,17 @@ def _row_quality(signal: dict, outcome: dict) -> str:
     ).strip().lower()
     grade = str(features.get('evidence_grade', '?')).strip().upper()
     dq = float(features.get('data_quality_score', 0.0) or 0.0)
-    if grade in {'A', 'B', 'C'} and 'scaffold' not in weak_source and dq >= 0.75:
+    official_count = int(features.get('official_item_count', 0) or 0)
+    has_scaffold = 'scaffold' in weak_source
+    has_fallback = 'fallback' in weak_source
+    if grade in {'A', 'B', 'C'} and not has_scaffold and not has_fallback and dq >= 0.75:
         return 'clean'
+    if bucket == 'buy_candidate' and (grade in {'D', '?'} or has_scaffold or dq < 0.6) and official_count == 0:
+        return 'reject'
+    if bucket == 'watch_candidate' and has_scaffold and grade in {'D', '?'} and official_count == 0:
+        return 'reject'
+    if bucket == 'risk_management' and dq < 0.5:
+        return 'reject'
     return 'noisy'
 
 

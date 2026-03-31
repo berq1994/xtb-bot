@@ -1,12 +1,12 @@
 {
   "generated_from": "live_research",
-  "updated_symbols": 10,
+  "updated_symbols": 6,
   "top_symbols": [
-    "FCX",
-    "EQT",
-    "FSLR",
-    "NVO",
-    "IREN"
+    "GRMN",
+    "AMD",
+    "TSM",
+    "MSFT",
+    "LEU"
   ],
   "risk_summary": {
     "held_count": 16,
@@ -19,7 +19,7 @@
         7
       ],
       [
-        "energy",
+        "semis",
         3
       ],
       [
@@ -27,15 +27,15 @@
         3
       ],
       [
-        "semis",
+        "energy",
         3
       ]
     ],
     "defense_names": [
       "GRMN",
       "AMD",
-      "MSFT",
       "TSM",
+      "MSFT",
       "LEU"
     ]
   },

@@ -3,9 +3,9 @@ Režim trhu: risk_off
 Průměrný outcome posledních resolved vzorků: -%
 
 AKČNÍ FRONTA TÝDNE
-- GRMN | drawdown_control | akčnost 5.02 | urgence dnes sledovat
-- AMD | drawdown_control | akčnost 5.02 | urgence dnes sledovat
-- FCX | winner_management | akčnost 4.92 | urgence dnes sledovat
+- LEU | drawdown_control | akčnost 5.82 | urgence mít na očích
+- GOOGL | drawdown_control | akčnost 5.82 | urgence mít na očích
+- GRMN | drawdown_control | akčnost 5.02 | urgence mít na očích
 
 FUNDAMENTÁLNÍ PŘEHLED
 - Bez jasného pozitivního fundamentálního clusteru.

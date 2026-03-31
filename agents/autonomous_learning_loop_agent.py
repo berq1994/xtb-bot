@@ -52,8 +52,16 @@ def _signal_quality(signal: dict) -> str:
     data_source = str(features.get("data_source") or features.get("source") or "").lower()
     grade = str(features.get("evidence_grade") or "?")
     dq = float(features.get('data_quality_score', 0.0) or 0.0)
-    if "scaffold" not in data_source and "fallback" not in data_source and grade in {"A", "B", "C"} and dq >= 0.75:
+    official_count = int(features.get('official_item_count', 0) or 0)
+    bucket = _decision_bucket(signal)
+    has_scaffold = 'scaffold' in data_source
+    has_fallback = 'fallback' in data_source
+    if not has_scaffold and not has_fallback and grade in {"A", "B", "C"} and dq >= 0.75:
         return "clean"
+    if bucket == 'buy_candidate' and (grade in {'D', '?'} or has_scaffold or dq < 0.6) and official_count == 0:
+        return 'reject'
+    if bucket == 'risk_management' and dq < 0.5:
+        return 'reject'
     return "noisy"
 
 
@@ -98,8 +106,9 @@ def run_autonomous_learning_loop(limit: int = 120) -> str:
         bucket = _decision_bucket(signal)
         quality = _signal_quality(signal)
         by_bucket.setdefault(bucket, []).append(result)
-        by_quality[quality].append(result)
-        if bucket in {'buy_candidate', 'watch', 'risk_management'}:
+        if quality in by_quality:
+            by_quality[quality].append(result)
+        if bucket in {'buy_candidate', 'watch', 'risk_management'} and quality != 'reject':
             learnable_resolved.append((signal, outcome))
         category = str(signal.get("ticket", {}).get("category") or signal.get("supervisor", {}).get("reason") or "unknown")
         by_category.setdefault(category, []).append(result)

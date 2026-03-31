@@ -247,6 +247,47 @@ def _thesis_strength_from_dossier(dossier: dict) -> float:
     return round(min(1.0, strength), 2)
 
 
+
+def _quality_class(item: dict) -> str:
+    source_name = str(item.get('news_source') or item.get('source') or '').lower()
+    evidence_grade = str(item.get('evidence_grade') or 'D').upper()
+    data_quality = float(item.get('data_quality_score', 0.0) or 0.0)
+    official_count = int(item.get('official_item_count', 0) or 0)
+    fundamental_provider = str(item.get('fundamental_provider') or '').lower()
+    held = bool(item.get('held'))
+    category = str(item.get('category') or '')
+    ta_score = float(item.get('ta_score', 0.0) or 0.0)
+    weak_news = ('scaffold' in source_name) or evidence_grade in {'D', '?'}
+    weak_fund = 'fallback' in fundamental_provider and official_count == 0
+    if data_quality < 0.55:
+        return 'blocked'
+    if not held and weak_news and weak_fund:
+        return 'blocked'
+    if held and category not in {'portfolio_defense', 'drawdown_control'} and weak_news and official_count == 0 and ta_score < 4.5:
+        return 'blocked'
+    if weak_news or weak_fund:
+        return 'noisy'
+    return 'clean'
+
+
+def _top_item_allowed(item: dict) -> bool:
+    quality = str(item.get('quality_class') or _quality_class(item))
+    if quality == 'clean':
+        return True
+    if quality == 'noisy':
+        return bool(item.get('held')) and str(item.get('category') or '') in {'portfolio_defense', 'drawdown_control', 'winner_management'}
+    return False
+
+
+def _action_queue_allowed(item: dict) -> bool:
+    quality = str(item.get('quality_class') or _quality_class(item))
+    if quality == 'clean':
+        return True
+    if quality == 'noisy':
+        return bool(item.get('held')) and str(item.get('category') or '') in {'portfolio_defense', 'drawdown_control'}
+    return False
+
+
 def _build_risk_summary(items: list[dict]) -> dict:
     held = [i for i in items if i.get('held')]
     if not held:
@@ -445,14 +486,18 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
 
     for item in ranked:
         item.update(score_actionability(item, str(overview.get('regime', 'mixed'))))
+        item['quality_class'] = _quality_class(item)
 
     ranked.sort(key=lambda x: (
+        2 if str(x.get('quality_class')) == 'clean' else 1 if str(x.get('quality_class')) == 'noisy' else 0,
         1 if bool(x.get('held')) else 0,
         float(x.get('priority_score', 0.0) or 0.0),
         float(x.get('data_quality_score', 0.0) or 0.0),
     ), reverse=True)
-    top_items = ranked[:10]
-    action_queue = build_action_queue(top_items, str(overview.get('regime', 'mixed')), limit=5)
+    top_items = [row for row in ranked if _top_item_allowed(row)][:10]
+    if not top_items:
+        top_items = ranked[:10]
+    action_queue = [row for row in build_action_queue(ranked, str(overview.get('regime', 'mixed')), limit=12) if _action_queue_allowed(row)][:5]
     external_items = _external_modules()
     risk_summary = _build_risk_summary(ranked)
 
@@ -518,7 +563,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         playbook_titles = ", ".join(str(p.get("title")) for p in item.get("playbooks", [])[:2])
         study_titles = ", ".join(str(s.get("title")) for s in item.get("matched_studies", [])[:2])
         lines.append(
-            f"- {item['symbol']} | score {item['priority_score']} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | data {item['data_quality_label']} ({item['data_quality_score']}) | TA {item.get('technical_setup')} {item.get('ta_score')} | akce {item.get('buy_decision')} | držená pozice {holding} | kategorie {item['category']}{pnl}"
+            f"- {item['symbol']} | score {item['priority_score']} | kvalita {item.get('quality_class')} | pohyb {item['change_pct']}% | 5d {item['momentum_5d']}% | trend {item['trend']} | sentiment {item['sentiment_label']} | evidence {item['evidence_grade']} ({item['evidence_score']}) | data {item['data_quality_label']} ({item['data_quality_score']}) | TA {item.get('technical_setup')} {item.get('ta_score')} | akce {item.get('buy_decision')} | držená pozice {holding} | kategorie {item['category']}{pnl}"
         )
         if playbook_titles:
             lines.append(f"  · playbook: {playbook_titles}")

@@ -1,6 +1,6 @@
 AUTONOMNÍ JÁDRO
-Čas: 31.03.2026 10:56 CEST
-Automaticky zapsané signály: žádné nové
+Čas: 31.03.2026 12:40 CEST
+Automaticky zapsané signály: LEU, GOOGL
 Vyhodnocené outcome vzorky: 0
 Rebalance vah: neproveden
 Nízkovolací FMP režim: ne
@@ -16,11 +16,11 @@ VÁHY PŘED -> PO
 - trend: 1.0 -> 1.0
 
 AKČNÍ FRONTA
-- GRMN | akčnost 5.02 | bucket high | kategorie drawdown_control
-- AMD | akčnost 5.02 | bucket high | kategorie drawdown_control
-- FCX | akčnost 4.92 | bucket high | kategorie winner_management
-- EQT | akčnost 4.92 | bucket high | kategorie winner_management
-- MSFT | akčnost 4.23 | bucket medium | kategorie drawdown_control
+- LEU | akčnost 5.82 | bucket medium | kategorie drawdown_control
+- GOOGL | akčnost 5.82 | bucket medium | kategorie drawdown_control
+- GRMN | akčnost 5.02 | bucket medium | kategorie drawdown_control
+- AMD | akčnost 5.02 | bucket medium | kategorie drawdown_control
+- TSM | akčnost 5.02 | bucket medium | kategorie drawdown_control
 
 FUNDAMENTÁLY
 FUNDAMENTÁLNÍ VRSTVA
@@ -53,7 +53,7 @@ KNOWLEDGE SYNC
 KNOWLEDGE SYNC
 Dossiers v paměti: 45
 Nově vytvořeno: 0
-Aktualizováno z research: 10
+Aktualizováno z research: 6
 
 STRUČNÝ STAV
 LIVE RESEARCH
@@ -63,84 +63,26 @@ Velikost watchlistu: 42
 Datová kvalita: 0.65 | good 0 | ok 42 | weak 0 | bad 0
 
 Akční fronta:
-- GRMN | akčnost 5.02 | bucket high | urgence dnes sledovat | score 2.76 | kategorie drawdown_control
+- LEU | akčnost 5.82 | bucket medium | urgence mít na očích | score 2.48 | kategorie drawdown_control
   · podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv
-- AMD | akčnost 5.02 | bucket high | urgence dnes sledovat | score 2.53 | kategorie drawdown_control
+- GOOGL | akčnost 5.82 | bucket medium | urgence mít na očích | score 2.37 | kategorie drawdown_control
   · podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv
-- FCX | akčnost 4.92 | bucket high | urgence dnes sledovat | score 4.88 | kategorie winner_management
-  · podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup
-- EQT | akčnost 4.92 | bucket high | urgence dnes sledovat | score 4.84 | kategorie winner_management
-  · podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup
-- MSFT | akčnost 4.23 | bucket medium | urgence mít na očích | score 2.51 | kategorie drawdown_control
+- GRMN | akčnost 5.02 | bucket medium | urgence mít na očích | score 2.76 | kategorie drawdown_control
+  · podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv
+- AMD | akčnost 5.02 | bucket medium | urgence mít na očích | score 2.53 | kategorie drawdown_control
+  · podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv
+- TSM | akčnost 5.02 | bucket medium | urgence mít na očích | score 2.53 | kategorie drawdown_control
   · podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv
 
 Hlavní priority:
-- FCX | score 4.88 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.94 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 147.7%
-  · playbook: Winner management, Breakout backed by evidence
-  · studie: Geopolitical event transmission, Quality and defense in risk-off regime
-  · zdroje: scaffold
-  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: sledovaný zdroj: scaffold
-  · evidence: část zpráv je jen scaffold / slabý provider
-  · scénář+: Technická data nejsou dostupná.
-  · scénář-: Bez dat nelze stanovit obranný scénář.
-- EQT | score 4.84 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.06 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 114.1%
-  · playbook: Winner management, Risk-off rotation
-  · studie: Quality and defense in risk-off regime, Geopolitical event transmission
-  · zdroje: scaffold
-  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: sledovaný zdroj: scaffold
-  · evidence: část zpráv je jen scaffold / slabý provider
-  · scénář+: Technická data nejsou dostupná.
-  · scénář-: Bez dat nelze stanovit obranný scénář.
-- FSLR | score 4.49 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 1.62 | akce watch | držená pozice ano | kategorie breakout_watch | P/L vs nákup 1.01%
-  · playbook: Breakout backed by evidence
-  · studie: Quality and defense in risk-off regime, Geopolitical event transmission
-  · zdroje: scaffold
-  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: sledovaný zdroj: scaffold
-  · evidence: část zpráv je jen scaffold / slabý provider
-  · scénář+: Technická data nejsou dostupná.
-  · scénář-: Bez dat nelze stanovit obranný scénář.
-- NVO | score 3.69 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 186.72%
-  · playbook: Winner management
-  · studie: Quality and defense in risk-off regime, Geopolitical event transmission
-  · zdroje: scaffold
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: použita starší cache, aby se omezil scaffold režim
-  · evidence: část zpráv je jen scaffold / slabý provider
-- IREN | score 3.69 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 357.93%
-  · playbook: Winner management, Risk-off rotation
-  · studie: Quality and defense in risk-off regime, Geopolitical event transmission
-  · zdroje: scaffold
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: použita starší cache, aby se omezil scaffold režim
-  · evidence: část zpráv je jen scaffold / slabý provider
-- PLTR | score 3.16 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie watchlist_monitor | P/L vs nákup -4.85%
-  · playbook: Crowded theme penalty
-  · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
-  · zdroje: scaffold
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: použita starší cache, aby se omezil scaffold režim
-  · evidence: část zpráv je jen scaffold / slabý provider
-- GRMN | score 2.76 | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -26.83%
+- GRMN | score 2.76 | kvalita noisy | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -26.83%
   · playbook: Portfolio defense on negative news
   · studie: Quality and defense in risk-off regime, Geopolitical event transmission
   · zdroje: scaffold
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: použita starší cache, aby se omezil scaffold režim
   · evidence: část zpráv je jen scaffold / slabý provider
-- NBIS | score 2.73 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 78.64%
-  · playbook: Winner management, Crowded theme penalty
-  · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
-  · zdroje: scaffold
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: použita starší cache, aby se omezil scaffold režim
-  · evidence: část zpráv je jen scaffold / slabý provider
-- AMD | score 2.53 | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.5 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -45.57%
+- AMD | score 2.53 | kvalita noisy | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.5 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -45.57%
   · playbook: Crowded theme penalty, Portfolio defense on negative news
   · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
   · zdroje: scaffold
@@ -150,13 +92,40 @@ Hlavní priority:
   · evidence: část zpráv je jen scaffold / slabý provider
   · scénář+: Technická data nejsou dostupná.
   · scénář-: Bez dat nelze stanovit obranný scénář.
-- MSFT | score 2.51 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -70.36%
+- TSM | score 2.53 | kvalita noisy | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -58.71%
+  · playbook: Crowded theme penalty, Portfolio defense on negative news
+  · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
+  · zdroje: scaffold
+  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
+  · news logika: použita starší cache, aby se omezil scaffold režim
+  · evidence: část zpráv je jen scaffold / slabý provider
+- MSFT | score 2.51 | kvalita noisy | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -70.36%
   · playbook: Crowded theme penalty
   · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
   · zdroje: scaffold
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: použita starší cache, aby se omezil scaffold režim
   · evidence: část zpráv je jen scaffold / slabý provider
+- LEU | score 2.48 | kvalita noisy | pohyb -1.3% | 5d -1.95% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 3.38 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -24.67%
+  · playbook: Portfolio defense on negative news
+  · studie: Quality and defense in risk-off regime, Geopolitical event transmission
+  · zdroje: scaffold
+  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
+  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
+  · news logika: sledovaný zdroj: scaffold
+  · evidence: část zpráv je jen scaffold / slabý provider
+  · scénář+: Technická data nejsou dostupná.
+  · scénář-: Bez dat nelze stanovit obranný scénář.
+- GOOGL | score 2.37 | kvalita noisy | pohyb -1.3% | 5d -1.95% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 1.62 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -67.36%
+  · playbook: Portfolio defense on negative news
+  · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
+  · zdroje: scaffold
+  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
+  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
+  · news logika: sledovaný zdroj: scaffold
+  · evidence: část zpráv je jen scaffold / slabý provider
+  · scénář+: Technická data nejsou dostupná.
+  · scénář-: Bez dat nelze stanovit obranný scénář.
 
 Makro vrstva:
 - Riziko kalendáře: high
@@ -168,8 +137,8 @@ Riziková vrstva:
 - Počet držených pozic ve výzkumu: 16
 - Největší pozice: TSM | podíl 25.17%
 - Koncentrační varování: ano
-- Hlavní témata: ai (7), energy (3), software (3), semis (3)
-- Obranně sledované pozice: GRMN, AMD, MSFT, TSM, LEU
+- Hlavní témata: ai (7), semis (3), software (3), energy (3)
+- Obranně sledované pozice: GRMN, AMD, TSM, MSFT, LEU
 
 Doplňkové výzkumné vrstvy:
 - Oficiální firemní položky načtené v běhu: 0
@@ -197,12 +166,12 @@ Pending: 8
 Soubor: data/outcome_tracking.jsonl
 
 PŘEHLED VÝSLEDKŮ
-Počet vzorků: 25
+Počet vzorků: 27
 Vyhodnoceno: 0
 Průměrný výsledek %: 0.0
 Win rate: 0.0%
 Štítky:
-- čeká: 25
+- čeká: 27
 Horizonty:
 - h1d: 0.0% | vzorky 0
 - h3d: 0.0% | vzorky 0
@@ -212,10 +181,13 @@ Horizonty:
 PŘEHLED UČENÍ – AUTO VRSTVA
 Vyhodnocené vzorky pro učení: 0
 Všechny resolved vzorky: 0
+Čisté vzorky: 0
+Noisy vzorky: 0
 Průměrný outcome: 0.0%
 Win rate: 0.0%
 Mix rozhodnutí pro učení:
 Raw mix rozhodnutí:
+Odmítnuté raw buckety:
 Štítky:
 Diagnostika:
 - positive_sentiment_avg: None
@@ -249,6 +221,7 @@ Doporučení: Málo dat pro adaptaci vah.
 AUTONOMNÍ LEARNING LOOP
 Vyhodnocené vzorky celkem: 0
 Čisté buy vzorky pro učení: 0
+Fallback učící vzorky: 0
 Bucket buy_candidate avg: -
 Bucket risk_management avg: -
 Bucket avoid avg: -
@@ -265,9 +238,9 @@ Režim trhu: risk_off
 Průměrný outcome posledních resolved vzorků: -%
 
 AKČNÍ FRONTA TÝDNE
-- GRMN | drawdown_control | akčnost 5.02 | urgence dnes sledovat
-- AMD | drawdown_control | akčnost 5.02 | urgence dnes sledovat
-- FCX | winner_management | akčnost 4.92 | urgence dnes sledovat
+- LEU | drawdown_control | akčnost 5.82 | urgence mít na očích
+- GOOGL | drawdown_control | akčnost 5.82 | urgence mít na očích
+- GRMN | drawdown_control | akčnost 5.02 | urgence mít na očích
 
 FUNDAMENTÁLNÍ PŘEHLED
 - Bez jasného pozitivního fundamentálního clusteru.

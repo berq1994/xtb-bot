@@ -1,7 +1,7 @@
 {
   "symbols": {
     "GOOGL": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "GOOGL",
         "status": "fallback",
@@ -16,7 +16,7 @@
       }
     },
     "AMD": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "AMD",
         "status": "fallback",
@@ -31,7 +31,7 @@
       }
     },
     "MSFT": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.039525,
       "data": {
         "symbol": "MSFT",
         "status": "fallback",
@@ -46,7 +46,7 @@
       }
     },
     "PLTR": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.039525,
       "data": {
         "symbol": "PLTR",
         "status": "fallback",
@@ -61,7 +61,7 @@
       }
     },
     "EQT": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "EQT",
         "status": "fallback",
@@ -76,7 +76,7 @@
       }
     },
     "S": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "S",
         "status": "fallback",
@@ -91,7 +91,7 @@
       }
     },
     "TSM": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.039525,
       "data": {
         "symbol": "TSM",
         "status": "fallback",
@@ -106,7 +106,7 @@
       }
     },
     "NBIS": {
-      "expires_at": 1775028992.7045598,
+      "expires_at": 1774957257.039525,
       "data": {
         "symbol": "NBIS",
         "status": "fallback",
@@ -121,7 +121,7 @@
       }
     },
     "FCX": {
-      "expires_at": 1775029112.4254742,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "FCX",
         "status": "fallback",
@@ -136,7 +136,7 @@
       }
     },
     "LEU": {
-      "expires_at": 1775029112.4254742,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "LEU",
         "status": "fallback",
@@ -151,7 +151,7 @@
       }
     },
     "FSLR": {
-      "expires_at": 1775029112.4254742,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "FSLR",
         "status": "fallback",
@@ -166,7 +166,7 @@
       }
     },
     "CVX": {
-      "expires_at": 1775029112.4254742,
+      "expires_at": 1774957257.140585,
       "data": {
         "symbol": "CVX",
         "status": "fallback",

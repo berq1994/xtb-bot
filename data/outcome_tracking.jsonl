@@ -23,3 +23,5 @@
 {"signal_id": "2026-03-30T10:27:45.151605+00:00|AMD", "timestamp": "2026-03-30T10:27:45.151612+00:00", "symbol": "AMD", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 106.3}
 {"signal_id": "2026-03-31T07:38:49.276136+00:00|GRMN", "timestamp": "2026-03-31T07:38:49.276144+00:00", "symbol": "GRMN", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 175.85}
 {"signal_id": "2026-03-31T07:38:49.276454+00:00|AMD", "timestamp": "2026-03-31T07:38:49.276457+00:00", "symbol": "AMD", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 106.3}
+{"signal_id": "2026-03-31T10:40:57.468353+00:00|LEU", "timestamp": "2026-03-31T10:40:57.468371+00:00", "symbol": "LEU", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 167.79}
+{"signal_id": "2026-03-31T10:40:57.469586+00:00|GOOGL", "timestamp": "2026-03-31T10:40:57.469596+00:00", "symbol": "GOOGL", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 98.7}

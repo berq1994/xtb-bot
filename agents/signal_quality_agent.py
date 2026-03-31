@@ -175,6 +175,9 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
     elif not held and buy_decision == 'avoid' and ta_score < 5.0:
         suppressed = True
         suppress_reason = 'technicky nepříznivé bez držení v portfoliu'
+    elif held and category not in {'portfolio_defense', 'drawdown_control'} and 'scaffold' in source_name and evidence_grade in {'D', '?'} and official_count == 0 and ta_score < 4.5:
+        suppressed = True
+        suppress_reason = 'držené, ale jen scaffold bez technické opory'
     elif not held and thesis_strength < 0.4 and score < 3.8:
         suppressed = True
         suppress_reason = 'bez teze a nízká akčnost mimo portfolio'
@@ -199,9 +202,9 @@ def score_actionability(item: dict[str, Any], regime: str = 'mixed') -> dict[str
 
     if evidence_grade in {'D', '?'} or 'scaffold' in source_name:
         if bucket == 'urgent':
-            bucket = 'high' if held else 'low'
-        elif bucket == 'high' and not held:
-            bucket = 'medium'
+            bucket = 'medium' if held else 'low'
+        elif bucket == 'high':
+            bucket = 'medium' if held else 'low'
 
     delivery_channel = 'telegram' if held and bucket in {'urgent', 'high'} else ('email' if bucket in {'high', 'medium'} else 'none')
 

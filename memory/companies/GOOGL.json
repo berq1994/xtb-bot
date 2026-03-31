@@ -26,6 +26,9 @@
     "změna guidance nebo regulatoriky"
   ],
   "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-  "latest_observations": [],
-  "last_updated": "2026-03-26T14:59:45.362561+00:00"
+  "latest_observations": [
+    "score 2.37 | trend down | sentiment neutral | headline GOOGL trading activity remains in focus",
+    "score 2.27 | trend down | sentiment neutral | headline GOOGL trading activity remains in focus"
+  ],
+  "last_updated": "2026-03-31T10:40:57.450554+00:00"
 }

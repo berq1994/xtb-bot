@@ -336,8 +336,11 @@ def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[s
     official_by_symbol = collect_official_company_news(selected, limit_per_symbol=2)
     for symbol in selected:
         cached = cache["symbols"].get(symbol, {}) if isinstance(cache["symbols"].get(symbol, {}), dict) else {}
-        if cached.get("expires_at", 0) > now and isinstance(cached.get("data"), dict):
-            out[symbol] = cached["data"]
+        cached_data = cached.get("data") if isinstance(cached.get("data"), dict) else {}
+        cached_provider = str(cached_data.get("provider") or cached_data.get("status") or "").lower()
+        cached_has_live = bool(cached_data) and 'fallback' not in cached_provider and 'official_proxy' not in cached_provider
+        if cached.get("expires_at", 0) > now and cached_has_live:
+            out[symbol] = cached_data
             continue
         data = _yahoo_fetch(symbol) or _fmp_fetch(symbol)
         if not data:
@@ -352,10 +355,12 @@ def build_fundamentals_map(symbols: list[str] | None = None) -> dict[str, dict[s
                     'summary_cs': summary,
                 })
             else:
-                data = cached.get("data") if isinstance(cached.get("data"), dict) else _fallback(symbol)
+                data = cached_data if isinstance(cached_data, dict) and cached_data else _fallback(symbol)
                 data["status"] = data.get("status") or "fallback"
-        cache["symbols"][symbol] = {"expires_at": now + CACHE_TTL_SECONDS, "data": data}
+        ttl = CACHE_TTL_SECONDS if 'fallback' not in str(data.get('provider') or data.get('status') or '').lower() else 60 * 60
+        cache["symbols"][symbol] = {"expires_at": now + ttl, "data": data}
         out[symbol] = data
+        continue
     _save_cache(cache)
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
     STATE_PATH.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")

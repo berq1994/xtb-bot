@@ -24,975 +24,6 @@
   ],
   "top_items": [
     {
-      "symbol": "FCX",
-      "name": "Freeport-McMoRan",
-      "price": 165.12,
-      "change_pct": 1.3,
-      "trend": "up",
-      "momentum_5d": 1.95,
-      "momentum_20d": 3.9,
-      "atr_proxy_pct": 1.17,
-      "held": true,
-      "themes": [
-        "commodities",
-        "copper",
-        "materials"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 165.71,
-      "position_value_czk": 3811.33,
-      "quantity": 2.6944,
-      "avg_cost": 66.66,
-      "pnl_vs_cost_pct": 147.7,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 4.88,
-      "headlines": [
-        "FCX trading activity remains in focus",
-        "Market participants monitor FCX for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "FCX trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor FCX for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Freeport-McMoRan",
-        "sector_hints": [
-          "komodity"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {
-        "symbol": "FCX",
-        "status": "history_missing",
-        "trend_regime": "bullish",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 2.94,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
-      "technical_setup": "none",
-      "technical_regime": "bullish",
-      "ta_score": 2.94,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {
-        "symbol": "FCX",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.57,
-      "matched_studies": [
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.57
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Geopolitical event transmission, Quality and defense in risk-off regime"
-      ],
-      "playbook_score": 0.6,
-      "playbooks": [
-        {
-          "id": "winner_management",
-          "title": "Winner management",
-          "category": "risk",
-          "score": 0.6
-        },
-        {
-          "id": "breakout_with_evidence",
-          "title": "Breakout backed by evidence",
-          "category": "offense",
-          "score": 0.45
-        }
-      ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "EQT",
-      "name": "EQT",
-      "price": 129.66,
-      "change_pct": 1.3,
-      "trend": "up",
-      "momentum_5d": 1.95,
-      "momentum_20d": 3.9,
-      "atr_proxy_pct": 1.17,
-      "held": true,
-      "themes": [
-        "energy",
-        "natural_gas"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 78.99,
-      "position_value_czk": 1816.77,
-      "quantity": 1.2387,
-      "avg_cost": 60.56,
-      "pnl_vs_cost_pct": 114.1,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 4.84,
-      "headlines": [
-        "EQT trading activity remains in focus",
-        "Market participants monitor EQT for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.12,
-      "news_items": [
-        {
-          "title": "EQT trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor EQT for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "EQT",
-        "sector_hints": [
-          "energie"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cena komodit",
-          "regulace a geopolitika"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {
-        "symbol": "EQT",
-        "status": "history_missing",
-        "trend_regime": "bearish",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 2.06,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
-      "technical_setup": "none",
-      "technical_regime": "bearish",
-      "ta_score": 2.06,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {
-        "symbol": "EQT",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.65,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.65
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.57
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.6,
-      "playbooks": [
-        {
-          "id": "winner_management",
-          "title": "Winner management",
-          "category": "risk",
-          "score": 0.6
-        },
-        {
-          "id": "risk_off_rotation",
-          "title": "Risk-off rotation",
-          "category": "defense",
-          "score": 0.55
-        },
-        {
-          "id": "breakout_with_evidence",
-          "title": "Breakout backed by evidence",
-          "category": "offense",
-          "score": 0.45
-        }
-      ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "FSLR",
-      "name": "First Solar",
-      "price": 200.57,
-      "change_pct": 1.3,
-      "trend": "up",
-      "momentum_5d": 1.95,
-      "momentum_20d": 3.9,
-      "atr_proxy_pct": 1.17,
-      "held": true,
-      "themes": [
-        "energy_transition",
-        "solar"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 50.33,
-      "position_value_czk": 1157.59,
-      "quantity": 0.2518,
-      "avg_cost": 198.56,
-      "pnl_vs_cost_pct": 1.01,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "breakout_watch",
-      "priority_score": 4.49,
-      "headlines": [
-        "FSLR trading activity remains in focus",
-        "Market participants monitor FSLR for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "FSLR trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor FSLR for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "First Solar",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {
-        "symbol": "FSLR",
-        "status": "history_missing",
-        "trend_regime": "bearish",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 1.62,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
-      "technical_setup": "none",
-      "technical_regime": "bearish",
-      "ta_score": 1.62,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {
-        "symbol": "FSLR",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.45,
-      "playbooks": [
-        {
-          "id": "breakout_with_evidence",
-          "title": "Breakout backed by evidence",
-          "category": "offense",
-          "score": 0.45
-        }
-      ],
-      "actionability_score": 3.97,
-      "action_bucket": "medium",
-      "urgency_label": "mít na očích",
-      "delivery_channel": "email",
-      "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "NVO",
-      "name": "Novo Nordisk",
-      "price": 157.01,
-      "change_pct": 0.65,
-      "trend": "up",
-      "momentum_5d": 0.98,
-      "momentum_20d": 1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "healthcare"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 70.83,
-      "position_value_czk": 1629.09,
-      "quantity": 1.8248,
-      "avg_cost": 54.76,
-      "pnl_vs_cost_pct": 186.72,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 3.69,
-      "headlines": [
-        "NVO trading activity remains in focus",
-        "Market participants monitor NVO for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "NVO trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor NVO for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Novo Nordisk",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.6,
-      "playbooks": [
-        {
-          "id": "winner_management",
-          "title": "Winner management",
-          "category": "risk",
-          "score": 0.6
-        }
-      ],
-      "actionability_score": 4.12,
-      "action_bucket": "medium",
-      "urgency_label": "mít na očích",
-      "delivery_channel": "email",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "IREN",
-      "name": "Iris Energy",
-      "price": 192.24,
-      "change_pct": 0.65,
-      "trend": "up",
-      "momentum_5d": 0.98,
-      "momentum_20d": 1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai_hpc",
-        "bitcoin",
-        "energy"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 229.84,
-      "position_value_czk": 5286.32,
-      "quantity": 5.4797,
-      "avg_cost": 41.98,
-      "pnl_vs_cost_pct": 357.93,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 3.69,
-      "headlines": [
-        "IREN trading activity remains in focus",
-        "Market participants monitor IREN for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.12,
-      "news_items": [
-        {
-          "title": "IREN trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor IREN for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Iris Energy",
-        "sector_hints": [
-          "energie"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cena komodit",
-          "regulace a geopolitika"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.65,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.65
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.57
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.6,
-      "playbooks": [
-        {
-          "id": "winner_management",
-          "title": "Winner management",
-          "category": "risk",
-          "score": 0.6
-        },
-        {
-          "id": "risk_off_rotation",
-          "title": "Risk-off rotation",
-          "category": "defense",
-          "score": 0.55
-        }
-      ],
-      "actionability_score": 4.12,
-      "action_bucket": "medium",
-      "urgency_label": "mít na očích",
-      "delivery_channel": "email",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "PLTR",
-      "name": "Palantir",
-      "price": 121.79,
-      "change_pct": 0.65,
-      "trend": "up",
-      "momentum_5d": 0.98,
-      "momentum_20d": 1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "data",
-        "software"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 23.68,
-      "position_value_czk": 544.64,
-      "quantity": 0.1562,
-      "avg_cost": 128.0,
-      "pnl_vs_cost_pct": -4.85,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 3.16,
-      "headlines": [
-        "PLTR trading activity remains in focus",
-        "Market participants monitor PLTR for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.24,
-      "news_items": [
-        {
-          "title": "PLTR trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor PLTR for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Palantir",
-        "sector_hints": [
-          "technologie / AI",
-          "software"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 2.62,
-      "action_bucket": "low",
-      "urgency_label": "jen informačně",
-      "delivery_channel": "none",
-      "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
-      "suppressed": true,
-      "suppress_reason": "slabý pohyb bez nutnosti zásahu"
-    },
-    {
       "symbol": "GRMN",
       "name": "Garmin",
       "price": 175.85,
@@ -1130,172 +161,13 @@
         }
       ],
       "actionability_score": 5.02,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "NBIS",
-      "name": "Nebius Group",
-      "price": 149.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "cloud",
-        "infra"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 411.38,
-      "position_value_czk": 9461.74,
-      "quantity": 3.6704,
-      "avg_cost": 83.41,
-      "pnl_vs_cost_pct": 78.64,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 2.73,
-      "headlines": [
-        "NBIS trading activity remains in focus",
-        "Market participants monitor NBIS for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.17,
-      "news_items": [
-        {
-          "title": "NBIS trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor NBIS for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Nebius Group",
-        "sector_hints": [
-          "technologie / AI",
-          "cloud"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "valuační riziko",
-          "vyšší citlivost na sentiment a sazby"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.6,
-      "playbooks": [
-        {
-          "id": "winner_management",
-          "title": "Winner management",
-          "category": "risk",
-          "score": 0.6
-        },
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 3.48,
       "action_bucket": "medium",
       "urgency_label": "mít na očích",
       "delivery_channel": "email",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
     },
     {
       "symbol": "AMD",
@@ -1469,12 +341,175 @@
         }
       ],
       "actionability_score": 5.02,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
       "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC",
+      "price": 141.08,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "ai",
+        "foundry",
+        "semis"
+      ],
+      "accounts": [
+        "xtb",
+        "raiffeisenbank"
+      ],
+      "position_value": 1572.98,
+      "position_value_czk": 36178.54,
+      "quantity": 0.4389,
+      "avg_cost": 341.71,
+      "pnl_vs_cost_pct": -58.71,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.53,
+      "headlines": [
+        "TSM trading activity remains in focus",
+        "Market participants monitor TSM for follow-through"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.24,
+      "news_items": [
+        {
+          "title": "TSM trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor TSM for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Taiwan Semiconductor ADR",
+        "sector_hints": [
+          "technologie / AI",
+          "polovodiče"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "cykličnost poptávky",
+          "capex a supply chain"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {},
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
+          "category": "risk",
+          "score": 0.5
+        },
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
     },
     {
       "symbol": "MSFT",
@@ -1630,11 +665,698 @@
       "delivery_channel": "email",
       "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "LEU",
+      "name": "Centrus Energy",
+      "price": 167.79,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "nuclear",
+        "uranium"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 80.75,
+      "position_value_czk": 1857.25,
+      "quantity": 0.4027,
+      "avg_cost": 222.75,
+      "pnl_vs_cost_pct": -24.67,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.48,
+      "headlines": [
+        "LEU trading activity remains in focus",
+        "Market participants monitor LEU for follow-through"
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "LEU trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor LEU for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Centrus Energy",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "LEU",
+        "status": "history_missing",
+        "trend_regime": "bullish",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 3.38,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "bullish",
+      "ta_score": 3.38,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {
+        "symbol": "LEU",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.53,
+      "matched_studies": [
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.82,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet",
+      "price": 98.7,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "ads",
+        "ai",
+        "internet"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 85.48,
+      "position_value_czk": 1966.04,
+      "quantity": 0.2769,
+      "avg_cost": 302.43,
+      "pnl_vs_cost_pct": -67.36,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.37,
+      "headlines": [
+        "GOOGL trading activity remains in focus",
+        "Market participants monitor GOOGL for follow-through"
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.12,
+      "news_items": [
+        {
+          "title": "GOOGL trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GOOGL for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Alphabet",
+        "sector_hints": [
+          "digitální reklama",
+          "technologie / AI",
+          "internet"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "valuační riziko",
+          "vyšší citlivost na sentiment a sazby"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "GOOGL",
+        "status": "history_missing",
+        "trend_regime": "bearish",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 1.62,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "bearish",
+      "ta_score": 1.62,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {
+        "symbol": "GOOGL",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.82,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
     }
   ],
   "action_queue": [
     {
+      "symbol": "LEU",
+      "name": "Centrus Energy",
+      "price": 167.79,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "nuclear",
+        "uranium"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 80.75,
+      "position_value_czk": 1857.25,
+      "quantity": 0.4027,
+      "avg_cost": 222.75,
+      "pnl_vs_cost_pct": -24.67,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.48,
+      "headlines": [
+        "LEU trading activity remains in focus",
+        "Market participants monitor LEU for follow-through"
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "LEU trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor LEU for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Centrus Energy",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "LEU",
+        "status": "history_missing",
+        "trend_regime": "bullish",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 3.38,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "bullish",
+      "ta_score": 3.38,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {
+        "symbol": "LEU",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.53,
+      "matched_studies": [
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.82,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet",
+      "price": 98.7,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "ads",
+        "ai",
+        "internet"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 85.48,
+      "position_value_czk": 1966.04,
+      "quantity": 0.2769,
+      "avg_cost": 302.43,
+      "pnl_vs_cost_pct": -67.36,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.37,
+      "headlines": [
+        "GOOGL trading activity remains in focus",
+        "Market participants monitor GOOGL for follow-through"
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.12,
+      "news_items": [
+        {
+          "title": "GOOGL trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GOOGL for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Alphabet",
+        "sector_hints": [
+          "digitální reklama",
+          "technologie / AI",
+          "internet"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "valuační riziko",
+          "vyšší citlivost na sentiment a sazby"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "GOOGL",
+        "status": "history_missing",
+        "trend_regime": "bearish",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 1.62,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "bearish",
+      "ta_score": 1.62,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {
+        "symbol": "GOOGL",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.82,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
       "symbol": "GRMN",
       "name": "Garmin",
       "price": 175.85,
@@ -1772,12 +1494,13 @@
         }
       ],
       "actionability_score": 5.02,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
       "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
     },
     {
       "symbol": "AMD",
@@ -1951,55 +1674,59 @@
         }
       ],
       "actionability_score": 5.02,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
       "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
     },
     {
-      "symbol": "FCX",
-      "name": "Freeport-McMoRan",
-      "price": 165.12,
-      "change_pct": 1.3,
-      "trend": "up",
-      "momentum_5d": 1.95,
-      "momentum_20d": 3.9,
-      "atr_proxy_pct": 1.17,
+      "symbol": "TSM",
+      "name": "TSMC",
+      "price": 141.08,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
       "held": true,
       "themes": [
-        "commodities",
-        "copper",
-        "materials"
+        "ai",
+        "foundry",
+        "semis"
       ],
       "accounts": [
-        "xtb"
+        "xtb",
+        "raiffeisenbank"
       ],
-      "position_value": 165.71,
-      "position_value_czk": 3811.33,
-      "quantity": 2.6944,
-      "avg_cost": 66.66,
-      "pnl_vs_cost_pct": 147.7,
+      "position_value": 1572.98,
+      "position_value_czk": 36178.54,
+      "quantity": 0.4389,
+      "avg_cost": 341.71,
+      "pnl_vs_cost_pct": -58.71,
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 4.88,
+      "category": "drawdown_control",
+      "priority_score": 2.53,
       "headlines": [
-        "FCX trading activity remains in focus",
-        "Market participants monitor FCX for follow-through"
+        "TSM trading activity remains in focus",
+        "Market participants monitor TSM for follow-through"
       ],
       "reasons": [
-        "sledovaný zdroj: scaffold"
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
       "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.0,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.24,
       "news_items": [
         {
-          "title": "FCX trading activity remains in focus",
+          "title": "TSM trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2007,7 +1734,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor FCX for follow-through",
+          "title": "Market participants monitor TSM for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2024,9 +1751,170 @@
       ],
       "source": "fallback",
       "company_memory": {
-        "name": "Freeport-McMoRan",
+        "name": "Taiwan Semiconductor ADR",
         "sector_hints": [
-          "komodity"
+          "technologie / AI",
+          "polovodiče"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "cykličnost poptávky",
+          "capex a supply chain"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {},
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
+          "category": "risk",
+          "score": 0.5
+        },
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    }
+  ],
+  "all_items": [
+    {
+      "symbol": "GRMN",
+      "name": "Garmin",
+      "price": 175.85,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "consumer_tech"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 48.95,
+      "position_value_czk": 1125.85,
+      "quantity": 0.2081,
+      "avg_cost": 240.33,
+      "pnl_vs_cost_pct": -26.83,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.76,
+      "headlines": [
+        "GRMN trading activity remains in focus",
+        "Market participants monitor GRMN for follow-through"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "GRMN trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GRMN for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Garmin",
+        "sector_hints": [
+          "obecná equity / watchlist"
         ],
         "key_catalysts": [
           "výsledky",
@@ -2044,26 +1932,15 @@
         ]
       },
       "thesis_strength": 0.75,
-      "technical": {
-        "symbol": "FCX",
-        "status": "history_missing",
-        "trend_regime": "bullish",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 2.94,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
+      "technical": {},
       "technical_setup": "none",
-      "technical_regime": "bullish",
-      "ta_score": 2.94,
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
       "buy_decision": "watch",
       "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
       "evidence_score": 0.12,
       "evidence_grade": "D",
       "trusted_sources": [
@@ -2075,91 +1952,75 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
-      "fundamentals": {
-        "symbol": "FCX",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
+      "fundamentals": {},
       "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
-      "study_alignment_score": 0.57,
+      "study_alignment_score": 0.53,
       "matched_studies": [
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.57
-        },
         {
           "id": "risk_off_quality",
           "title": "Quality and defense in risk-off regime",
           "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
           "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Geopolitical event transmission, Quality and defense in risk-off regime"
-      ],
-      "playbook_score": 0.6,
-      "playbooks": [
-        {
-          "id": "winner_management",
-          "title": "Winner management",
-          "category": "risk",
-          "score": 0.6
         },
         {
-          "id": "breakout_with_evidence",
-          "title": "Breakout backed by evidence",
-          "category": "offense",
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
           "score": 0.45
         }
       ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
     },
     {
-      "symbol": "EQT",
-      "name": "EQT",
-      "price": 129.66,
-      "change_pct": 1.3,
-      "trend": "up",
-      "momentum_5d": 1.95,
-      "momentum_20d": 3.9,
-      "atr_proxy_pct": 1.17,
+      "symbol": "AMD",
+      "name": "AMD",
+      "price": 106.3,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
       "held": true,
       "themes": [
-        "energy",
-        "natural_gas"
+        "ai",
+        "semis"
       ],
       "accounts": [
         "xtb"
       ],
-      "position_value": 78.99,
-      "position_value_czk": 1816.77,
-      "quantity": 1.2387,
-      "avg_cost": 60.56,
-      "pnl_vs_cost_pct": 114.1,
+      "position_value": 52.45,
+      "position_value_czk": 1206.35,
+      "quantity": 0.256,
+      "avg_cost": 195.3,
+      "pnl_vs_cost_pct": -45.57,
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 4.84,
+      "category": "drawdown_control",
+      "priority_score": 2.53,
       "headlines": [
-        "EQT trading activity remains in focus",
-        "Market participants monitor EQT for follow-through"
+        "AMD trading activity remains in focus",
+        "Market participants monitor AMD for follow-through"
       ],
       "reasons": [
         "sledovaný zdroj: scaffold"
@@ -2167,11 +2028,11 @@
       "catalysts": [],
       "news_count": 2,
       "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.12,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.24,
       "news_items": [
         {
-          "title": "EQT trading activity remains in focus",
+          "title": "AMD trading activity remains in focus",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2179,7 +2040,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor EQT for follow-through",
+          "title": "Market participants monitor AMD for follow-through",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2196,9 +2057,10 @@
       ],
       "source": "fallback",
       "company_memory": {
-        "name": "EQT",
+        "name": "AMD",
         "sector_hints": [
-          "energie"
+          "technologie / AI",
+          "polovodiče"
         ],
         "key_catalysts": [
           "výsledky",
@@ -2206,8 +2068,8 @@
           "sektorový sentiment"
         ],
         "key_risks": [
-          "cena komodit",
-          "regulace a geopolitika"
+          "cykličnost poptávky",
+          "capex a supply chain"
         ],
         "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
         "watch_for": [
@@ -2217,24 +2079,24 @@
       },
       "thesis_strength": 0.75,
       "technical": {
-        "symbol": "EQT",
+        "symbol": "AMD",
         "status": "history_missing",
-        "trend_regime": "bearish",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 2.06,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "bearish",
-      "ta_score": 2.06,
+      "technical_regime": "neutral",
+      "ta_score": 2.5,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -2248,7 +2110,7 @@
         "část zpráv je jen scaffold / slabý provider"
       ],
       "fundamentals": {
-        "symbol": "EQT",
+        "symbol": "AMD",
         "status": "fallback",
         "fundamental_bias": "neutral",
         "fundamental_score": 0.0,
@@ -2262,52 +2124,215 @@
       "fundamental_provider": "fallback",
       "fundamental_bias": "neutral",
       "fundamental_score": 0.0,
-      "study_alignment_score": 0.65,
+      "study_alignment_score": 0.54,
       "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
         {
           "id": "risk_off_quality",
           "title": "Quality and defense in risk-off regime",
           "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.65
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.57
+          "score": 0.53
         }
       ],
       "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
       ],
-      "playbook_score": 0.6,
+      "playbook_score": 0.5,
       "playbooks": [
         {
-          "id": "winner_management",
-          "title": "Winner management",
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
           "category": "risk",
-          "score": 0.6
+          "score": 0.5
         },
         {
-          "id": "risk_off_rotation",
-          "title": "Risk-off rotation",
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
           "category": "defense",
-          "score": 0.55
-        },
-        {
-          "id": "breakout_with_evidence",
-          "title": "Breakout backed by evidence",
-          "category": "offense",
-          "score": 0.45
+          "score": 0.5
         }
       ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
+      "actionability_score": 5.02,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC",
+      "price": 141.08,
+      "change_pct": -0.65,
+      "trend": "down",
+      "momentum_5d": -0.98,
+      "momentum_20d": -1.95,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "ai",
+        "foundry",
+        "semis"
+      ],
+      "accounts": [
+        "xtb",
+        "raiffeisenbank"
+      ],
+      "position_value": 1572.98,
+      "position_value_czk": 36178.54,
+      "quantity": 0.4389,
+      "avg_cost": 341.71,
+      "pnl_vs_cost_pct": -58.71,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.53,
+      "headlines": [
+        "TSM trading activity remains in focus",
+        "Market participants monitor TSM for follow-through"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.24,
+      "news_items": [
+        {
+          "title": "TSM trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor TSM for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Taiwan Semiconductor ADR",
+        "sector_hints": [
+          "technologie / AI",
+          "polovodiče"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "cykličnost poptávky",
+          "capex a supply chain"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {},
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
+          "category": "risk",
+          "score": 0.5
+        },
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.02,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
     },
     {
       "symbol": "MSFT",
@@ -2463,10 +2488,352 @@
       "delivery_channel": "email",
       "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
-      "suppress_reason": ""
-    }
-  ],
-  "all_items": [
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "LEU",
+      "name": "Centrus Energy",
+      "price": 167.79,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "nuclear",
+        "uranium"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 80.75,
+      "position_value_czk": 1857.25,
+      "quantity": 0.4027,
+      "avg_cost": 222.75,
+      "pnl_vs_cost_pct": -24.67,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.48,
+      "headlines": [
+        "LEU trading activity remains in focus",
+        "Market participants monitor LEU for follow-through"
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.0,
+      "news_items": [
+        {
+          "title": "LEU trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor LEU for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Centrus Energy",
+        "sector_hints": [
+          "obecná equity / watchlist"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "LEU",
+        "status": "history_missing",
+        "trend_regime": "bullish",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 3.38,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "bullish",
+      "ta_score": 3.38,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {
+        "symbol": "LEU",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.53,
+      "matched_studies": [
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        },
+        {
+          "id": "event_driven_geopolitics",
+          "title": "Geopolitical event transmission",
+          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
+          "score": 0.45
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.82,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet",
+      "price": 98.7,
+      "change_pct": -1.3,
+      "trend": "down",
+      "momentum_5d": -1.95,
+      "momentum_20d": -3.9,
+      "atr_proxy_pct": 1.17,
+      "held": true,
+      "themes": [
+        "ads",
+        "ai",
+        "internet"
+      ],
+      "accounts": [
+        "xtb"
+      ],
+      "position_value": 85.48,
+      "position_value_czk": 1966.04,
+      "quantity": 0.2769,
+      "avg_cost": 302.43,
+      "pnl_vs_cost_pct": -67.36,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.37,
+      "headlines": [
+        "GOOGL trading activity remains in focus",
+        "Market participants monitor GOOGL for follow-through"
+      ],
+      "reasons": [
+        "sledovaný zdroj: scaffold"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.25,
+      "theme_overlap_penalty": 0.12,
+      "news_items": [
+        {
+          "title": "GOOGL trading activity remains in focus",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Market participants monitor GOOGL for follow-through",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Alphabet",
+        "sector_hints": [
+          "digitální reklama",
+          "technologie / AI",
+          "internet"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "valuační riziko",
+          "vyšší citlivost na sentiment a sazby"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {
+        "symbol": "GOOGL",
+        "status": "history_missing",
+        "trend_regime": "bearish",
+        "setup_type": "none",
+        "buy_decision": "watch",
+        "buy_trigger": "",
+        "ta_score": 1.62,
+        "scenario_bull": "Technická data nejsou dostupná.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
+        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
+      },
+      "technical_setup": "none",
+      "technical_regime": "bearish",
+      "ta_score": 1.62,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "Technická data nejsou dostupná.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
+      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {
+        "symbol": "GOOGL",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_provider": "fallback",
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "portfolio_defense_negative_news",
+          "title": "Portfolio defense on negative news",
+          "category": "defense",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 5.82,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": "",
+      "quality_class": "noisy"
+    },
     {
       "symbol": "FCX",
       "name": "Freeport-McMoRan",
@@ -2633,12 +3000,13 @@
         }
       ],
       "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "EQT",
@@ -2811,12 +3179,13 @@
         }
       ],
       "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "FSLR",
@@ -2982,7 +3351,8 @@
       "delivery_channel": "email",
       "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "NVO",
@@ -3127,7 +3497,8 @@
       "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "IREN",
@@ -3280,7 +3651,8 @@
       "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "PLTR",
@@ -3434,152 +3806,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabý pohyb bez nutnosti zásahu"
-    },
-    {
-      "symbol": "GRMN",
-      "name": "Garmin",
-      "price": 175.85,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "consumer_tech"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 48.95,
-      "position_value_czk": 1125.85,
-      "quantity": 0.2081,
-      "avg_cost": 240.33,
-      "pnl_vs_cost_pct": -26.83,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.76,
-      "headlines": [
-        "GRMN trading activity remains in focus",
-        "Market participants monitor GRMN for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "GRMN trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor GRMN for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Garmin",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 5.02,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "slabý pohyb bez nutnosti zásahu",
+      "quality_class": "blocked"
     },
     {
       "symbol": "NBIS",
@@ -3739,342 +3967,8 @@
       "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "AMD",
-      "name": "AMD",
-      "price": 106.3,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "semis"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 52.45,
-      "position_value_czk": 1206.35,
-      "quantity": 0.256,
-      "avg_cost": 195.3,
-      "pnl_vs_cost_pct": -45.57,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.53,
-      "headlines": [
-        "AMD trading activity remains in focus",
-        "Market participants monitor AMD for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.24,
-      "news_items": [
-        {
-          "title": "AMD trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor AMD for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "AMD",
-        "sector_hints": [
-          "technologie / AI",
-          "polovodiče"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cykličnost poptávky",
-          "capex a supply chain"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {
-        "symbol": "AMD",
-        "status": "history_missing",
-        "trend_regime": "neutral",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 2.5,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
-      "technical_setup": "none",
-      "technical_regime": "neutral",
-      "ta_score": 2.5,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {
-        "symbol": "AMD",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        },
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 5.02,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "MSFT",
-      "name": "Microsoft",
-      "price": 114.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "cloud",
-        "software"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1100.78,
-      "position_value_czk": 27414.34,
-      "quantity": 0.1299,
-      "avg_cost": 384.62,
-      "pnl_vs_cost_pct": -70.36,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.51,
-      "headlines": [
-        "Cloud and AI narrative remains constructive",
-        "Large-cap quality bid supports resilience"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.29,
-      "news_items": [
-        {
-          "title": "Cloud and AI narrative remains constructive",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Large-cap quality bid supports resilience",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Microsoft Corporation",
-        "sector_hints": [
-          "technologie / AI",
-          "cloud",
-          "software"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 4.23,
-      "action_bucket": "medium",
-      "urgency_label": "mít na očích",
-      "delivery_channel": "email",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "CVX",
@@ -4246,334 +4140,8 @@
       "delivery_channel": "email",
       "action_hint": "ověřit, zda jde o zdravý pullback a ne počátek většího oslabení",
       "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "TSM",
-      "name": "TSMC",
-      "price": 141.08,
-      "change_pct": -0.65,
-      "trend": "down",
-      "momentum_5d": -0.98,
-      "momentum_20d": -1.95,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "foundry",
-        "semis"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1572.98,
-      "position_value_czk": 36178.54,
-      "quantity": 0.4389,
-      "avg_cost": 341.71,
-      "pnl_vs_cost_pct": -58.71,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.43,
-      "headlines": [
-        "TSM trading activity remains in focus",
-        "Market participants monitor TSM for follow-through"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.24,
-      "news_items": [
-        {
-          "title": "TSM trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor TSM for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Taiwan Semiconductor ADR",
-        "sector_hints": [
-          "technologie / AI",
-          "polovodiče"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cykličnost poptávky",
-          "capex a supply chain"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.65,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {},
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        },
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 4.92,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
-    },
-    {
-      "symbol": "LEU",
-      "name": "Centrus Energy",
-      "price": 167.79,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": true,
-      "themes": [
-        "nuclear",
-        "uranium"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 80.75,
-      "position_value_czk": 1857.25,
-      "quantity": 0.4027,
-      "avg_cost": 222.75,
-      "pnl_vs_cost_pct": -24.67,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.38,
-      "headlines": [
-        "LEU trading activity remains in focus",
-        "Market participants monitor LEU for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.0,
-      "news_items": [
-        {
-          "title": "LEU trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor LEU for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Centrus Energy",
-        "sector_hints": [
-          "obecná equity / watchlist"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "fundamentální změna thesis",
-          "slabá kvalita zpráv"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.65,
-      "technical": {
-        "symbol": "LEU",
-        "status": "history_missing",
-        "trend_regime": "bullish",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 3.38,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
-      "technical_setup": "none",
-      "technical_regime": "bullish",
-      "ta_score": 3.38,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {
-        "symbol": "LEU",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.53,
-      "matched_studies": [
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 5.72,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "S",
@@ -4746,12 +4314,13 @@
         }
       ],
       "actionability_score": 4.97,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "",
+      "quality_class": "blocked"
     },
     {
       "symbol": "NVDA",
@@ -4905,182 +4474,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabý pohyb bez nutnosti zásahu"
-    },
-    {
-      "symbol": "GOOGL",
-      "name": "Alphabet",
-      "price": 98.7,
-      "change_pct": -1.3,
-      "trend": "down",
-      "momentum_5d": -1.95,
-      "momentum_20d": -3.9,
-      "atr_proxy_pct": 1.17,
-      "held": true,
-      "themes": [
-        "ads",
-        "ai",
-        "internet"
-      ],
-      "accounts": [
-        "xtb"
-      ],
-      "position_value": 85.48,
-      "position_value_czk": 1966.04,
-      "quantity": 0.2769,
-      "avg_cost": 302.43,
-      "pnl_vs_cost_pct": -67.36,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "drawdown_control",
-      "priority_score": 2.27,
-      "headlines": [
-        "GOOGL trading activity remains in focus",
-        "Market participants monitor GOOGL for follow-through"
-      ],
-      "reasons": [
-        "sledovaný zdroj: scaffold"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.25,
-      "theme_overlap_penalty": 0.12,
-      "news_items": [
-        {
-          "title": "GOOGL trading activity remains in focus",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Market participants monitor GOOGL for follow-through",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Alphabet",
-        "sector_hints": [
-          "digitální reklama",
-          "technologie / AI",
-          "internet"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "valuační riziko",
-          "vyšší citlivost na sentiment a sazby"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.65,
-      "technical": {
-        "symbol": "GOOGL",
-        "status": "history_missing",
-        "trend_regime": "bearish",
-        "setup_type": "none",
-        "buy_decision": "watch",
-        "buy_trigger": "",
-        "ta_score": 1.62,
-        "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
-        "scenario_bear": "Bez dat nelze stanovit obranný scénář."
-      },
-      "technical_setup": "none",
-      "technical_regime": "bearish",
-      "ta_score": 1.62,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
-      "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "fundamentals": {
-        "symbol": "GOOGL",
-        "status": "fallback",
-        "fundamental_bias": "neutral",
-        "fundamental_score": 0.0,
-        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
-        "revenue_growth": null,
-        "net_income_growth": null,
-        "debt_to_equity": null,
-        "pe_ratio": null,
-        "roe": null
-      },
-      "fundamental_provider": "fallback",
-      "fundamental_bias": "neutral",
-      "fundamental_score": 0.0,
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "portfolio_defense_negative_news",
-          "title": "Portfolio defense on negative news",
-          "category": "defense",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 5.72,
-      "action_bucket": "high",
-      "urgency_label": "dnes sledovat",
-      "delivery_channel": "telegram",
-      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
-      "suppressed": false,
-      "suppress_reason": ""
+      "suppress_reason": "slabý pohyb bez nutnosti zásahu",
+      "quality_class": "blocked"
     },
     {
       "symbol": "BDC",
@@ -5221,7 +4616,8 @@
       "delivery_channel": "none",
       "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "CENX",
@@ -5362,7 +4758,8 @@
       "delivery_channel": "none",
       "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "GOOG",
@@ -5503,7 +4900,8 @@
       "delivery_channel": "none",
       "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "ONDS",
@@ -5644,7 +5042,8 @@
       "delivery_channel": "none",
       "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "SNDK",
@@ -5785,7 +5184,8 @@
       "delivery_channel": "none",
       "action_hint": "čekat na potvrzení síly a zdrojů, nehonit slabý breakout",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "AMZN",
@@ -5919,7 +5319,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "CAG",
@@ -6053,7 +5454,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "GEV",
@@ -6187,7 +5589,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "NFLX",
@@ -6321,7 +5724,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "SCCO",
@@ -6455,7 +5859,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "AAOI",
@@ -6589,7 +5994,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "BTC-USD",
@@ -6723,7 +6129,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "DPZ",
@@ -6857,7 +6264,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "META",
@@ -6991,7 +6399,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "PYPL",
@@ -7125,7 +6534,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "AAPL",
@@ -7259,7 +6669,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "BRK-B",
@@ -7393,7 +6804,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "CVNA",
@@ -7527,7 +6939,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "INTC",
@@ -7661,7 +7074,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "PANW",
@@ -7795,7 +7209,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "TTD",
@@ -7929,7 +7344,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "BKNG",
@@ -8063,7 +7479,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "COKE",
@@ -8197,7 +7614,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "IBIT",
@@ -8331,7 +7749,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "ORCL",
@@ -8465,7 +7884,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     },
     {
       "symbol": "SPY",
@@ -8599,7 +8019,8 @@
       "delivery_channel": "none",
       "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
       "suppressed": true,
-      "suppress_reason": "slabé potvrzení mimo portfolio"
+      "suppress_reason": "slabé potvrzení mimo portfolio",
+      "quality_class": "blocked"
     }
   ],
   "external_items": [
@@ -8662,7 +8083,7 @@
         7
       ],
       [
-        "energy",
+        "semis",
         3
       ],
       [
@@ -8670,15 +8091,15 @@
         3
       ],
       [
-        "semis",
+        "energy",
         3
       ]
     ],
     "defense_names": [
       "GRMN",
       "AMD",
-      "MSFT",
       "TSM",
+      "MSFT",
       "LEU"
     ]
   },

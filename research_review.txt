@@ -1,10 +1,10 @@
 PŘEHLED VÝSLEDKŮ
-Počet vzorků: 25
+Počet vzorků: 27
 Vyhodnoceno: 0
 Průměrný výsledek %: 0.0
 Win rate: 0.0%
 Štítky:
-- čeká: 25
+- čeká: 27
 Horizonty:
 - h1d: 0.0% | vzorky 0
 - h3d: 0.0% | vzorky 0

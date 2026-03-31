@@ -21,7 +21,7 @@ REPORT_PATH = Path("official_company_sources_report.txt")
 REQUEST_TIMEOUT = 8
 CACHE_TTL_SECONDS = 60 * 60 * 6
 MAX_ITEMS_PER_SYMBOL = 2
-MAX_SYMBOLS_PER_RUN = 4
+MAX_SYMBOLS_PER_RUN = 8
 
 
 def _load_config() -> dict[str, dict[str, Any]]:
@@ -205,7 +205,10 @@ def _parse_html(raw: str, base_url: str) -> list[dict[str, str]]:
 
 def collect_official_company_news(symbols: list[str] | None = None, limit_per_symbol: int = MAX_ITEMS_PER_SYMBOL) -> dict[str, list[dict[str, Any]]]:
     config = _load_config()
-    selected = filter_enabled_symbols(symbols or load_portfolio_symbols(limit=MAX_SYMBOLS_PER_RUN))[:MAX_SYMBOLS_PER_RUN]
+    base_symbols = list(symbols or load_portfolio_symbols(limit=MAX_SYMBOLS_PER_RUN))
+    selected = filter_enabled_symbols(base_symbols)
+    if not symbols:
+        selected = selected[:MAX_SYMBOLS_PER_RUN]
     cache = _load_cache()
     cache.setdefault('symbols', {})
     now = time.time()
@@ -245,9 +248,15 @@ def collect_official_company_news(symbols: list[str] | None = None, limit_per_sy
                     except Exception:
                         pass
             for item in parsed:
+                title = _normalize(item.get('title', ''))
+                if not title:
+                    continue
+                low_title = title.lower()
+                if low_title in {'skip to main content', 'investor relations'}:
+                    continue
                 rows.append({
                     'symbol': symbol,
-                    'title': item.get('title', ''),
+                    'title': title,
                     'summary': item.get('summary', ''),
                     'link': item.get('link', str(url)),
                     'published': item.get('published', ''),
