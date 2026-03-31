@@ -133,6 +133,19 @@ def _swing_levels(close):
     return float(recent.min()), float(recent.max())
 
 
+def _frame_from_closes(closes: list[float]):
+    if pd is None or len(closes) < 80:
+        return None
+    frame = pd.DataFrame({'Close': [float(x) for x in closes if x is not None]})
+    if len(frame) < 80:
+        return None
+    frame['Open'] = frame['Close'].shift(1).fillna(frame['Close'])
+    frame['High'] = frame[['Open','Close']].max(axis=1)
+    frame['Low'] = frame[['Open','Close']].min(axis=1)
+    frame['Volume'] = 0
+    return frame[['Open','High','Low','Close','Volume']].tail(320)
+
+
 def _build_from_df(symbol: str, df) -> dict[str, Any]:
     close = df['Close'].astype(float)
     high = df['High'].astype(float) if 'High' in df.columns else close
@@ -272,13 +285,28 @@ def build_technical_analysis_map(symbols: list[str] | None = None) -> dict[str, 
     cache.setdefault('symbols', {})
     now = time.time()
     out: dict[str, dict[str, Any]] = {}
+    overview_rows = {}
+    try:
+        from integrations.openbb_engine.market_overview import generate_market_overview
+        overview = generate_market_overview(selected)
+        overview_rows = {str(r.get('symbol','')).upper(): dict(r) for r in overview.get('symbols', []) if str(r.get('symbol','')).strip()}
+    except Exception:
+        overview_rows = {}
     for symbol in selected:
         cached = cache['symbols'].get(symbol, {}) if isinstance(cache['symbols'].get(symbol, {}), dict) else {}
         if cached.get('expires_at', 0) > now and isinstance(cached.get('data'), dict):
             out[symbol] = cached['data']
             continue
         df = _fetch_history(symbol)
+        if (df is None or len(df) < 80) and overview_rows.get(symbol, {}).get('closes'):
+            df = _frame_from_closes(list(overview_rows.get(symbol, {}).get('closes', [])))
         data = _build_from_df(symbol, df) if df is not None and len(df) >= 80 else _empty(symbol, 'history_missing')
+        if data.get('status') != 'ok' and overview_rows.get(symbol):
+            row = overview_rows.get(symbol, {})
+            data['trend_regime'] = 'bullish' if str(row.get('trend')) == 'up' else 'bearish' if str(row.get('trend')) == 'down' else 'neutral'
+            data['ta_score'] = round(max(0.0, min(5.0, 2.5 + float(row.get('momentum_5d', 0.0))/4.0 + float(row.get('momentum_20d', 0.0))/10.0)), 2)
+            data['buy_decision'] = 'watch'
+            data['scenario_base'] = f"Provizorní technický stav z market overview; cena {row.get('price')} a trend {row.get('trend')}."
         cache['symbols'][symbol] = {'expires_at': now + CACHE_TTL_SECONDS, 'data': data}
         out[symbol] = data
     _save_cache(cache)

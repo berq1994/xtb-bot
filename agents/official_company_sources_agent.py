@@ -18,7 +18,7 @@ from symbol_utils import filter_enabled_symbols
 CONFIG_PATH = Path("config/official_sources.yml")
 CACHE_PATH = Path("data/official_company_sources_cache.json")
 REPORT_PATH = Path("official_company_sources_report.txt")
-REQUEST_TIMEOUT = 2
+REQUEST_TIMEOUT = 8
 CACHE_TTL_SECONDS = 60 * 60 * 6
 MAX_ITEMS_PER_SYMBOL = 2
 MAX_SYMBOLS_PER_RUN = 4
@@ -62,9 +62,87 @@ def _stable_request(url: str) -> str:
         "User-Agent": "Mozilla/5.0 (compatible; XTBResearchBot/1.0)",
         "Accept": "application/rss+xml, application/xml, text/xml, text/html;q=0.9",
     }
-    response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
+    response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT, allow_redirects=True)
     response.raise_for_status()
     return response.text
+
+
+def _discover_feed_urls(raw: str, base_url: str) -> list[str]:
+    urls: list[str] = []
+    for match in re.finditer(r"<link[^>]+type=['\"](?:application/rss\+xml|application/atom\+xml|text/xml)['\"][^>]+href=['\"](?P<href>[^'\"]+)['\"]", raw, re.I):
+        href = _normalize(match.group('href'))
+        if href:
+            urls.append(urljoin(base_url, href))
+    # common feed path guesses for IR/news pages
+    guesses = ['feed/', 'rss', 'rss.xml', 'feed.xml', 'news/feed/', 'newsroom/feed/']
+    if not urls:
+        for suffix in guesses:
+            urls.append(urljoin(base_url if base_url.endswith('/') else base_url+'/', suffix))
+    # unique preserving order
+    out=[]; seen=set()
+    for u in urls:
+        if u and u not in seen:
+            seen.add(u); out.append(u)
+    return out[:4]
+
+
+def _slug_to_title(url: str) -> str:
+    slug = re.sub(r'.*/', '', str(url).rstrip('/'))
+    slug = re.sub(r'[-_]+', ' ', slug)
+    slug = re.sub(r'\.html?$', '', slug, flags=re.I)
+    title = _normalize(slug).title()
+    return title
+
+
+def _parse_sitemap(raw: str, base_url: str) -> list[dict[str, str]]:
+    items: list[dict[str, str]] = []
+    try:
+        root = ET.fromstring(raw)
+    except Exception:
+        return items
+    urls = []
+    for loc in root.findall('.//{*}loc')[:200]:
+        link = _normalize(loc.text or '')
+        if link:
+            urls.append(link)
+    keywords = ('news', 'press', 'release', 'earnings', 'results', 'investor', 'announcement')
+    seen = set()
+    for link in reversed(urls):
+        low = link.lower()
+        if not any(k in low for k in keywords):
+            continue
+        title = _slug_to_title(link)
+        if len(title) < 16 or title.lower() in seen:
+            continue
+        seen.add(title.lower())
+        items.append({'title': title, 'summary': '', 'link': link, 'published': ''})
+        if len(items) >= 4:
+            break
+    return items
+
+
+def _parse_jsonld(raw: str, base_url: str) -> list[dict[str, str]]:
+    items=[]
+    for match in re.finditer(r"<script[^>]+type=['\"]application/ld\+json['\"][^>]*>(?P<body>.*?)</script>", raw, re.I | re.S):
+        body = match.group('body')
+        body = re.sub(r'^[^\[{]*', '', body).strip()
+        try:
+            payload = json.loads(body)
+        except Exception:
+            continue
+        stack = payload if isinstance(payload, list) else [payload]
+        for row in stack:
+            if not isinstance(row, dict):
+                continue
+            title = _normalize(row.get('headline') or row.get('name') or '')
+            link = _normalize(row.get('url') or '')
+            summary = _normalize(row.get('description') or '')
+            published = _normalize(row.get('datePublished') or row.get('dateCreated') or '')
+            if len(title) >= 18:
+                items.append({'title': title, 'summary': summary, 'link': urljoin(base_url, link) if link else base_url, 'published': published})
+            if len(items) >= 4:
+                return items
+    return items
 
 
 def _parse_xml(raw: str, base_url: str) -> list[dict[str, str]]:
@@ -95,8 +173,9 @@ def _parse_xml(raw: str, base_url: str) -> list[dict[str, str]]:
 
 def _parse_html(raw: str, base_url: str) -> list[dict[str, str]]:
     patterns = [
-        re.compile(r"<a[^>]+href=['\"](?P<href>[^'\"]+)['\"][^>]*>(?P<title>.*?)</a>", re.I | re.S),
-        re.compile(r"<h[1-4][^>]*>(?P<title>.*?)</h[1-4]>", re.I | re.S),
+        re.compile(r"<(?:a|h2|h3|h4)[^>]+href=['\"](?P<href>[^'\"]+)['\"][^>]*>(?P<title>.*?)</(?:a|h2|h3|h4)>", re.I | re.S),
+        re.compile(r"<(?:h1|h2|h3|h4)[^>]*>(?P<title>.*?)</(?:h1|h2|h3|h4)>", re.I | re.S),
+        re.compile(r"data-title=['\"](?P<title>[^'\"]+)['\"]", re.I | re.S),
     ]
     out: list[dict[str, str]] = []
     seen: set[str] = set()
@@ -104,7 +183,7 @@ def _parse_html(raw: str, base_url: str) -> list[dict[str, str]]:
         for match in pattern.finditer(raw):
             title = _normalize(match.groupdict().get('title') or '')
             href = _normalize(match.groupdict().get('href') or '')
-            if len(title) < 18:
+            if len(title) < 16:
                 continue
             low = title.lower()
             if any(word in low for word in ['cookie', 'privacy', 'login', 'subscribe', 'menu', 'investor relations']) and len(title) < 40:
@@ -147,7 +226,24 @@ def collect_official_company_news(symbols: list[str] | None = None, limit_per_sy
                 raw = _stable_request(str(url))
             except Exception:
                 continue
-            parsed = _parse_xml(raw, str(url)) or _parse_html(raw, str(url))
+            parsed = _parse_xml(raw, str(url)) or _parse_jsonld(raw, str(url)) or _parse_html(raw, str(url))
+            if not parsed:
+                for feed_url in _discover_feed_urls(raw, str(url)):
+                    try:
+                        feed_raw = _stable_request(feed_url)
+                    except Exception:
+                        continue
+                    parsed = _parse_xml(feed_raw, str(feed_url)) or _parse_sitemap(feed_raw, str(feed_url))
+                    if parsed:
+                        break
+            if not parsed:
+                root = re.match(r'https?://[^/]+', str(url))
+                if root:
+                    try:
+                        sitemap_raw = _stable_request(root.group(0) + '/sitemap.xml')
+                        parsed = _parse_sitemap(sitemap_raw, root.group(0))
+                    except Exception:
+                        pass
             for item in parsed:
                 rows.append({
                     'symbol': symbol,
