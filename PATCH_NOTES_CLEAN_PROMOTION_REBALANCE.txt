@@ -1,0 +1,12 @@
+CLEAN PROMOTION REBALANCE PATCH
+
+What changed:
+- lowered the clean promotion threshold for long candidates with strong broader context
+- live fundamentals + TA + official support can now override weak legacy evidence more often
+- learning_agent and autonomous_learning_loop_agent now classify some buy_candidate rows as clean even when legacy evidence grade is weak, if the combined context is strong enough
+- research state now stores quality_reason for easier debugging
+- signal history now saves quality_reason for future learning context
+
+Goal:
+- move the system from 0 clean samples toward first real clean candidates
+- keep bad signals blocked while allowing fundamentally supported long setups to graduate from noisy to clean

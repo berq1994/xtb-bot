@@ -370,16 +370,29 @@ def _quality_class(item: dict) -> str:
     clean_long_score = _clean_long_score(item)
     supportive_fund = fundamental_score >= 0.2 or fundamental_bias in {'positive', 'bullish'}
     supportive_evidence = evidence_grade in {'A', 'B', 'C'} or evidence_score >= 0.45 or official_count > 0
+    supportive_ta = ta_decision not in {'avoid', 'defensive_only'} and ta_setup not in {'breakdown', 'none'}
+    medium_clean_context = (
+        clean_long_score >= 0.9
+        and data_quality >= 0.5
+        and ta_decision not in {'avoid', 'defensive_only'}
+        and ta_setup != 'breakdown'
+        and (
+            (supportive_fund and (official_count > 0 or ta_score >= 1.5 or strong_long))
+            or (supportive_fund and supportive_ta)
+            or (official_count > 0 and ta_score >= 1.4)
+            or (supportive_evidence and supportive_fund and ta_score >= 1.5)
+        )
+    )
 
     if data_quality < 0.45:
         return 'blocked'
-    if clean_long_score >= 1.1 and data_quality >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (supportive_fund or supportive_evidence):
+    if (clean_long_score >= 1.1 and data_quality >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (supportive_fund or supportive_evidence)) or medium_clean_context:
         return 'clean'
     if not held and weak_news and weak_fund and not strong_long:
         return 'blocked'
     if held and category not in {'portfolio_defense', 'drawdown_control'} and weak_news and official_count == 0 and ta_score < 2.0 and not strong_long and clean_long_score < 0.95:
         return 'blocked'
-    if strong_long or clean_long_score >= 0.9:
+    if strong_long or clean_long_score >= 0.82:
         return 'noisy'
     if weak_news or weak_fund:
         return 'noisy'
@@ -606,6 +619,12 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     for item in ranked:
         item.update(score_actionability(item, str(overview.get('regime', 'mixed'))))
         item['quality_class'] = _quality_class(item)
+        if str(item.get('quality_class')) == 'clean':
+            item['quality_reason'] = 'clean_rebalanced_long_context'
+        elif str(item.get('quality_class')) == 'noisy':
+            item['quality_reason'] = 'noisy_supported_but_not_clean'
+        else:
+            item['quality_reason'] = 'blocked_or_rejected'
 
     ranked.sort(key=lambda x: (
         2 if str(x.get('quality_class')) == 'clean' else 1 if str(x.get('quality_class')) == 'noisy' else 0,

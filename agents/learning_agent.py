@@ -491,13 +491,26 @@ def _row_quality(signal: dict, outcome: dict) -> str:
     weak_ta_but_fundamental = ta_decision in {"watch", ""} and ta_setup in {"none", "range", "pullback"}
     positive_fundamental = has_live_fundamental and (fundamental_score >= 0.15 or fundamental_bias in {'positive', 'bullish'})
     official_supported = official_count > 0
-    if bucket == 'buy_candidate' and clean_long_score >= 1.1 and dq >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (positive_fundamental or supportive_evidence or has_strong_context):
+    medium_clean_context = (
+        bucket == 'buy_candidate'
+        and clean_long_score >= 0.9
+        and dq >= 0.5
+        and ta_decision not in {'avoid', 'defensive_only'}
+        and ta_setup != 'breakdown'
+        and (
+            (positive_fundamental and (official_supported or ta_score >= 1.5 or supportive_ta))
+            or (official_supported and ta_score >= 1.4)
+            or (supportive_evidence and positive_fundamental and ta_score >= 1.5)
+            or (has_strong_context and supportive_ta and clean_long_score >= 1.0)
+        )
+    )
+    if bucket == 'buy_candidate' and ((clean_long_score >= 1.1 and dq >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (positive_fundamental or supportive_evidence or has_strong_context)) or medium_clean_context):
         return 'clean'
     if quality_class == 'noisy' and bucket in {'buy_candidate', 'watch_candidate', 'risk_management'}:
         return 'noisy'
     long_support_score = _long_support_score(signal)
     legacy_long_ok = long_support_score >= 1.05 and dq >= 0.45 and ta_decision != 'avoid' and ta_setup != 'breakdown'
-    promoted_clean_long = clean_long_score >= 1.1 and dq >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (positive_fundamental or supportive_ta or official_supported)
+    promoted_clean_long = medium_clean_context or (clean_long_score >= 1.1 and dq >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (positive_fundamental or supportive_ta or official_supported))
     long_recovery_context = supportive_ta and (
         positive_fundamental
         or (official_supported and dq >= 0.45 and ta_score >= 1.0)
