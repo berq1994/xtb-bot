@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from statistics import mean
 
+RESEARCH_STATE_PATH = Path("data/research_live_state.json")
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
 OUTCOME_PATH = Path("data/outcome_tracking.jsonl")
 WEIGHTS_PATH = Path("data/phase5_signal_weights.json")
@@ -39,6 +40,73 @@ def _load_rows(path: Path) -> list[dict]:
                 rows.append(row)
     return rows
 
+
+
+
+def _load_latest_research_index() -> dict[str, dict]:
+    if not RESEARCH_STATE_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(RESEARCH_STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    rows = []
+    if isinstance(payload, dict):
+        for key in ("top_items", "all_items"):
+            value = payload.get(key, [])
+            if isinstance(value, list):
+                rows.extend([r for r in value if isinstance(r, dict)])
+    index: dict[str, dict] = {}
+    for row in rows:
+        symbol = str(row.get("symbol") or "").strip().upper()
+        if symbol and symbol not in index:
+            index[symbol] = row
+    return index
+
+
+def _merge_missing_signal_context(signal: dict, latest_index: dict[str, dict]) -> dict:
+    if not isinstance(signal, dict):
+        return {}
+    symbol = str(signal.get("ticket_symbol") or signal.get("ticket", {}).get("symbol") or "").strip().upper()
+    latest = latest_index.get(symbol) if symbol else None
+    if not latest:
+        return signal
+    merged = dict(signal)
+    merged.setdefault("source", latest.get("source"))
+    merged.setdefault("quality_class", latest.get("quality_class"))
+    merged.setdefault("official_item_count", latest.get("official_item_count"))
+    merged.setdefault("fundamental_provider", latest.get("fundamental_provider"))
+    merged.setdefault("fundamental_score", latest.get("fundamental_score"))
+    merged.setdefault("fundamental_bias", latest.get("fundamental_bias"))
+    merged.setdefault("data_quality_score", latest.get("data_quality_score"))
+    if isinstance(latest.get("fundamentals"), dict) and not isinstance(merged.get("fundamentals"), dict):
+        merged["fundamentals"] = latest.get("fundamentals")
+    features = dict(merged.get("features") or {})
+    feature_defaults = {
+        "quality_class": latest.get("quality_class"),
+        "data_quality_score": latest.get("data_quality_score"),
+        "evidence_grade": latest.get("evidence_grade"),
+        "evidence_score": latest.get("evidence_score"),
+        "official_item_count": latest.get("official_item_count"),
+        "fundamental_provider": latest.get("fundamental_provider"),
+        "fundamental_score": latest.get("fundamental_score"),
+        "buy_decision": latest.get("buy_decision"),
+        "technical_setup": latest.get("technical_setup"),
+        "ta_score": latest.get("ta_score"),
+        "source": latest.get("source"),
+        "data_source": latest.get("source"),
+        "news_providers": latest.get("news_providers", []),
+        "playbooks": latest.get("playbooks", []),
+        "study_alignment_score": latest.get("study_alignment_score"),
+        "matched_studies": latest.get("matched_studies", []),
+    }
+    for key, value in feature_defaults.items():
+        current = features.get(key)
+        if current in (None, "", [], {}):
+            if value not in (None, "", [], {}):
+                features[key] = value
+    merged["features"] = features
+    return merged
 
 def load_signal_weights() -> dict:
     if not WEIGHTS_PATH.exists():
@@ -148,20 +216,29 @@ def _row_quality(signal: dict, outcome: dict) -> str:
             return 'noisy'
         return 'reject'
 
+    ta_setup = str(features.get("technical_setup") or signal.get("technical_setup") or "").strip().lower()
+    ta_decision = str(features.get("buy_decision") or signal.get("buy_decision") or "").strip().lower()
+    ta_score = float(features.get("ta_score", signal.get("ta_score", 0.0)) or 0.0)
+    supportive_ta = ta_decision not in {"avoid", "defensive_only"} and ta_setup not in {"breakdown"}
+
     if bucket == 'buy_candidate':
-        if dq >= 0.6 and (grade in {'A', 'B', 'C'} or has_strong_context):
+        if dq >= 0.58 and (grade in {'A', 'B', 'C'} or has_strong_context):
+            return 'noisy'
+        if dq >= 0.5 and has_strong_context and supportive_ta:
             return 'noisy'
         return 'reject'
 
     if bucket == 'watch_candidate':
         if dq >= 0.5 and (grade in {'A', 'B', 'C'} or has_strong_context or not has_scaffold):
             return 'noisy'
-        if dq >= 0.45 and has_strong_context:
+        if dq >= 0.45 and has_strong_context and supportive_ta:
+            return 'noisy'
+        if dq >= 0.4 and has_live_fundamental and ta_score >= 1.5 and ta_decision != 'avoid':
             return 'noisy'
         return 'reject'
 
     if bucket == 'risk_management':
-        if dq >= 0.45 or has_strong_context:
+        if dq >= 0.4 or has_strong_context:
             return 'noisy'
         return 'reject'
 
@@ -177,12 +254,14 @@ def build_learning_summary(limit: int = 80) -> dict:
     outcome_rows = _load_rows(OUTCOME_PATH)
     weights = load_signal_weights()
     history_index = _build_history_index(history_rows)
+    latest_research_index = _load_latest_research_index()
 
     resolved_all: list[dict] = []
     for outcome in outcome_rows:
         if outcome.get("outcome_label") not in {"win", "loss", "flat"}:
             continue
         signal = history_index.get(str(outcome.get("signal_id", "")), {})
+        signal = _merge_missing_signal_context(signal, latest_research_index)
         resolved_all.append({"signal": signal, "outcome": outcome})
 
     resolved_all = resolved_all[-limit:]

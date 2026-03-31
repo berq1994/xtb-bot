@@ -132,7 +132,19 @@ def build_snapshot_payload(
                 "ta_score": selected.get("ta_score"),
                 "buy_decision": selected.get("buy_decision"),
                 "buy_trigger": selected.get("buy_trigger"),
+                "quality_class": selected.get("quality_class"),
+                "official_item_count": selected.get("official_item_count"),
+                "fundamental_provider": selected.get("fundamental_provider"),
+                "fundamental_score": selected.get("fundamental_score"),
+                "data_quality_score": selected.get("data_quality_score"),
             },
+            "quality_class": selected.get("quality_class"),
+            "official_item_count": selected.get("official_item_count"),
+            "fundamental_provider": selected.get("fundamental_provider"),
+            "fundamental_score": selected.get("fundamental_score"),
+            "fundamental_bias": selected.get("fundamental_bias"),
+            "fundamentals": selected.get("fundamentals", {}),
+            "data_quality_score": selected.get("data_quality_score"),
         }
 
     if isinstance(overview_or_watchlist, dict):

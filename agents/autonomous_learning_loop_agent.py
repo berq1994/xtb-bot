@@ -6,11 +6,79 @@ from statistics import mean
 
 from agents.learning_agent import load_signal_weights
 
+RESEARCH_STATE_PATH = Path("data/research_live_state.json")
 HISTORY_PATH = Path("data/openbb_signal_history.jsonl")
 OUTCOME_PATH = Path("data/outcome_tracking.jsonl")
 STATE_PATH = Path("data/autonomous_learning_state.json")
 REPORT_PATH = Path("autonomous_learning_report.txt")
 
+
+
+
+def _load_latest_research_index() -> dict[str, dict]:
+    if not RESEARCH_STATE_PATH.exists():
+        return {}
+    try:
+        payload = json.loads(RESEARCH_STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    rows = []
+    if isinstance(payload, dict):
+        for key in ("top_items", "all_items"):
+            value = payload.get(key, [])
+            if isinstance(value, list):
+                rows.extend([r for r in value if isinstance(r, dict)])
+    index: dict[str, dict] = {}
+    for row in rows:
+        symbol = str(row.get("symbol") or "").strip().upper()
+        if symbol and symbol not in index:
+            index[symbol] = row
+    return index
+
+
+def _merge_missing_signal_context(signal: dict, latest_index: dict[str, dict]) -> dict:
+    if not isinstance(signal, dict):
+        return {}
+    symbol = str(signal.get("ticket_symbol") or signal.get("ticket", {}).get("symbol") or "").strip().upper()
+    latest = latest_index.get(symbol) if symbol else None
+    if not latest:
+        return signal
+    merged = dict(signal)
+    merged.setdefault("source", latest.get("source"))
+    merged.setdefault("quality_class", latest.get("quality_class"))
+    merged.setdefault("official_item_count", latest.get("official_item_count"))
+    merged.setdefault("fundamental_provider", latest.get("fundamental_provider"))
+    merged.setdefault("fundamental_score", latest.get("fundamental_score"))
+    merged.setdefault("fundamental_bias", latest.get("fundamental_bias"))
+    merged.setdefault("data_quality_score", latest.get("data_quality_score"))
+    if isinstance(latest.get("fundamentals"), dict) and not isinstance(merged.get("fundamentals"), dict):
+        merged["fundamentals"] = latest.get("fundamentals")
+    features = dict(merged.get("features") or {})
+    feature_defaults = {
+        "quality_class": latest.get("quality_class"),
+        "data_quality_score": latest.get("data_quality_score"),
+        "evidence_grade": latest.get("evidence_grade"),
+        "evidence_score": latest.get("evidence_score"),
+        "official_item_count": latest.get("official_item_count"),
+        "fundamental_provider": latest.get("fundamental_provider"),
+        "fundamental_score": latest.get("fundamental_score"),
+        "buy_decision": latest.get("buy_decision"),
+        "technical_setup": latest.get("technical_setup"),
+        "ta_score": latest.get("ta_score"),
+        "source": latest.get("source"),
+        "data_source": latest.get("source"),
+        "news_providers": latest.get("news_providers", []),
+        "playbooks": latest.get("playbooks", []),
+        "study_alignment_score": latest.get("study_alignment_score"),
+        "matched_studies": latest.get("matched_studies", []),
+    }
+    for key, value in feature_defaults.items():
+        current = features.get(key)
+        if current in (None, "", [], {}):
+            if value not in (None, "", [], {}):
+                features[key] = value
+    merged["features"] = features
+    return merged
 
 def _load_jsonl(path: Path) -> list[dict]:
     if not path.exists():
@@ -69,7 +137,12 @@ def _signal_quality(signal: dict) -> str:
     bucket = _decision_bucket(signal)
     has_scaffold = 'scaffold' in data_source
     has_fallback = 'fallback' in data_source
-    has_strong_context = official_count > 0 or (fundamental_provider and fundamental_provider != 'fallback') or abs(fundamental_score) >= 0.25
+    has_live_fundamental = bool(fundamental_provider and fundamental_provider != 'fallback')
+    has_strong_context = official_count > 0 or has_live_fundamental or abs(fundamental_score) >= 0.25
+    ta_setup = str(features.get("technical_setup") or signal.get("technical_setup") or "").strip().lower()
+    ta_decision = str(features.get("buy_decision") or signal.get("buy_decision") or "").strip().lower()
+    ta_score = float(features.get("ta_score", signal.get("ta_score", 0.0)) or 0.0)
+    supportive_ta = ta_decision not in {"avoid", "defensive_only"} and ta_setup not in {"breakdown"}
     if quality_class == 'clean':
         return 'clean'
     if quality_class == 'noisy':
@@ -79,15 +152,21 @@ def _signal_quality(signal: dict) -> str:
     if grade == 'C' and dq >= 0.65 and (not has_scaffold or has_strong_context):
         return 'clean'
     if bucket == 'buy_candidate':
-        if dq >= 0.6 and (grade in {'A', 'B', 'C'} or has_strong_context):
+        if dq >= 0.58 and (grade in {'A', 'B', 'C'} or has_strong_context):
+            return 'noisy'
+        if dq >= 0.5 and has_strong_context and supportive_ta:
             return 'noisy'
         return 'reject'
     if bucket == 'risk_management':
-        if dq >= 0.45 or has_strong_context:
+        if dq >= 0.4 or has_strong_context:
             return 'noisy'
         return 'reject'
     if bucket == 'watch':
         if dq >= 0.5 and (grade in {'A', 'B', 'C'} or has_strong_context or not has_scaffold):
+            return 'noisy'
+        if dq >= 0.45 and has_strong_context and supportive_ta:
+            return 'noisy'
+        if dq >= 0.4 and has_live_fundamental and ta_score >= 1.5 and ta_decision != 'avoid':
             return 'noisy'
         return 'reject'
     return 'reject'
@@ -109,7 +188,8 @@ def run_autonomous_learning_loop(limit: int = 120) -> str:
         REPORT_PATH.write_text(output, encoding="utf-8")
         return output
 
-    history_index = {_signal_id(row): row for row in history[-max(limit * 3, 120):]}
+    latest_research_index = _load_latest_research_index()
+    history_index = {_signal_id(row): _merge_missing_signal_context(row, latest_research_index) for row in history[-max(limit * 3, 120):]}
     resolved: list[tuple[dict, dict]] = []
     for row in outcomes[-max(limit * 3, 120):]:
         if row.get("outcome_label") not in {"win", "loss", "flat"}:
