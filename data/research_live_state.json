@@ -111,22 +111,22 @@
       "technical": {
         "symbol": "FCX",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bullish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.94,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bullish",
+      "ta_score": 2.94,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -139,6 +139,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "FCX",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.57,
       "matched_studies": [
         {
@@ -267,22 +281,22 @@
       "technical": {
         "symbol": "EQT",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.06,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 2.06,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -295,6 +309,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "EQT",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
       "matched_studies": [
         {
@@ -366,7 +394,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 4.81,
+      "priority_score": 4.61,
       "headlines": [
         "FSLR trading activity remains in focus",
         "Market participants monitor FSLR for follow-through"
@@ -429,22 +457,22 @@
       "technical": {
         "symbol": "FSLR",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 1.62,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 1.62,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -457,6 +485,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "FSLR",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -523,7 +565,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -597,6 +639,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -665,7 +710,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -739,6 +784,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
       "matched_studies": [
         {
@@ -805,7 +853,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 3.48,
+      "priority_score": 3.28,
       "headlines": [
         "PLTR trading activity remains in focus",
         "Market participants monitor PLTR for follow-through"
@@ -813,7 +861,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -888,6 +936,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -960,7 +1011,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -1034,6 +1085,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -1102,7 +1156,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -1177,6 +1231,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -1223,155 +1280,6 @@
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
       "suppress_reason": ""
-    },
-    {
-      "symbol": "NVDA",
-      "name": "Nvidia",
-      "price": 184.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "semis"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1222.53,
-      "quantity": 0.0,
-      "avg_cost": 186.44,
-      "pnl_vs_cost_pct": -1.31,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 2.68,
-      "headlines": [
-        "AI demand remains strong across data center cycle",
-        "Semiconductor leadership supports momentum"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.24,
-      "news_items": [
-        {
-          "title": "AI demand remains strong across data center cycle",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Semiconductor leadership supports momentum",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Nvidia Corp",
-        "sector_hints": [
-          "technologie / AI",
-          "polovodiče"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cykličnost poptávky",
-          "capex a supply chain"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 1.98,
-      "action_bucket": "low",
-      "urgency_label": "jen informačně",
-      "delivery_channel": "none",
-      "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
-      "suppressed": true,
-      "suppress_reason": "slabý pohyb bez nutnosti zásahu"
     },
     {
       "symbol": "AMD",
@@ -1461,22 +1369,22 @@
       "technical": {
         "symbol": "AMD",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "neutral",
+      "ta_score": 2.5,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -1489,6 +1397,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "AMD",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -1535,6 +1457,160 @@
       "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
       "suppress_reason": ""
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft",
+      "price": 114.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "ai",
+        "cloud",
+        "software"
+      ],
+      "accounts": [
+        "xtb",
+        "raiffeisenbank"
+      ],
+      "position_value": 1100.78,
+      "quantity": 0.0,
+      "avg_cost": 384.62,
+      "pnl_vs_cost_pct": -70.36,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "drawdown_control",
+      "priority_score": 2.63,
+      "headlines": [
+        "Cloud and AI narrative remains constructive",
+        "Large-cap quality bid supports resilience"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.29,
+      "news_items": [
+        {
+          "title": "Cloud and AI narrative remains constructive",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Large-cap quality bid supports resilience",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Microsoft Corporation",
+        "sector_hints": [
+          "technologie / AI",
+          "cloud",
+          "software"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "fundamentální změna thesis",
+          "slabá kvalita zpráv"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
+          "category": "risk",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 4.23,
+      "action_bucket": "medium",
+      "urgency_label": "mít na očích",
+      "delivery_channel": "email",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
+      "suppressed": false,
+      "suppress_reason": ""
     }
   ],
   "action_queue": [
@@ -1569,7 +1645,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -1643,6 +1719,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -1766,22 +1845,22 @@
       "technical": {
         "symbol": "AMD",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "neutral",
+      "ta_score": 2.5,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -1794,6 +1873,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "AMD",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -1929,22 +2022,22 @@
       "technical": {
         "symbol": "FCX",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bullish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.94,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bullish",
+      "ta_score": 2.94,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -1957,6 +2050,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "FCX",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.57,
       "matched_studies": [
         {
@@ -2085,22 +2192,22 @@
       "technical": {
         "symbol": "EQT",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.06,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 2.06,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -2113,6 +2220,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "EQT",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
       "matched_studies": [
         {
@@ -2161,46 +2282,49 @@
       "suppress_reason": ""
     },
     {
-      "symbol": "NVO",
-      "name": "Novo Nordisk",
-      "price": 157.01,
-      "change_pct": 0.65,
-      "trend": "up",
-      "momentum_5d": 0.98,
-      "momentum_20d": 1.95,
+      "symbol": "MSFT",
+      "name": "Microsoft",
+      "price": 114.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
       "atr_proxy_pct": 1.0,
       "held": true,
       "themes": [
-        "healthcare"
+        "ai",
+        "cloud",
+        "software"
       ],
       "accounts": [
-        "xtb"
+        "xtb",
+        "raiffeisenbank"
       ],
-      "position_value": 70.83,
+      "position_value": 1100.78,
       "quantity": 0.0,
-      "avg_cost": 54.76,
-      "pnl_vs_cost_pct": 186.72,
+      "avg_cost": 384.62,
+      "pnl_vs_cost_pct": -70.36,
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
-      "category": "winner_management",
-      "priority_score": 3.81,
+      "category": "drawdown_control",
+      "priority_score": 2.63,
       "headlines": [
-        "NVO trading activity remains in focus",
-        "Market participants monitor NVO for follow-through"
+        "Cloud and AI narrative remains constructive",
+        "Large-cap quality bid supports resilience"
       ],
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
       "source_count": 1,
-      "regime_alignment": -0.35,
-      "theme_overlap_penalty": 0.0,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.29,
       "news_items": [
         {
-          "title": "NVO trading activity remains in focus",
+          "title": "Cloud and AI narrative remains constructive",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2208,7 +2332,7 @@
           "provider": "scaffold"
         },
         {
-          "title": "Market participants monitor NVO for follow-through",
+          "title": "Large-cap quality bid supports resilience",
           "summary": "",
           "link": "",
           "source": "scaffold",
@@ -2225,9 +2349,11 @@
       ],
       "source": "fallback",
       "company_memory": {
-        "name": "Novo Nordisk",
+        "name": "Microsoft Corporation",
         "sector_hints": [
-          "obecná equity / watchlist"
+          "technologie / AI",
+          "cloud",
+          "software"
         ],
         "key_catalysts": [
           "výsledky",
@@ -2265,38 +2391,47 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
-      "study_alignment_score": 0.53,
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
       "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
         {
           "id": "risk_off_quality",
           "title": "Quality and defense in risk-off regime",
           "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
           "score": 0.53
-        },
-        {
-          "id": "event_driven_geopolitics",
-          "title": "Geopolitical event transmission",
-          "summary": "Geopolitické šoky se přelévají přes energie, obranu, sazby a komodity. Relevance je vyšší u firem s přímou sektorovou citlivostí.",
-          "score": 0.45
         }
       ],
       "study_notes": [
-        "studie potvrzují setup: Quality and defense in risk-off regime, Geopolitical event transmission"
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
       ],
-      "playbook_score": 0.6,
+      "playbook_score": 0.5,
       "playbooks": [
         {
-          "id": "winner_management",
-          "title": "Winner management",
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
           "category": "risk",
-          "score": 0.6
+          "score": 0.5
         }
       ],
-      "actionability_score": 4.12,
+      "actionability_score": 4.23,
       "action_bucket": "medium",
       "urgency_label": "mít na očích",
       "delivery_channel": "email",
-      "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
+      "action_hint": "zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv",
       "suppressed": false,
       "suppress_reason": ""
     }
@@ -2390,22 +2525,22 @@
       "technical": {
         "symbol": "FCX",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bullish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.94,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bullish",
+      "ta_score": 2.94,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -2418,6 +2553,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "FCX",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.57,
       "matched_studies": [
         {
@@ -2546,22 +2695,22 @@
       "technical": {
         "symbol": "EQT",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.06,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 2.06,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -2574,6 +2723,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "EQT",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
       "matched_studies": [
         {
@@ -2645,7 +2808,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 4.81,
+      "priority_score": 4.61,
       "headlines": [
         "FSLR trading activity remains in focus",
         "Market participants monitor FSLR for follow-through"
@@ -2708,22 +2871,22 @@
       "technical": {
         "symbol": "FSLR",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 1.62,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 1.62,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -2736,6 +2899,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "FSLR",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -2802,7 +2979,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -2876,6 +3053,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -2944,7 +3124,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -3018,6 +3198,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.65,
       "matched_studies": [
         {
@@ -3084,7 +3267,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 3.48,
+      "priority_score": 3.28,
       "headlines": [
         "PLTR trading activity remains in focus",
         "Market participants monitor PLTR for follow-through"
@@ -3092,7 +3275,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -3167,6 +3350,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -3239,7 +3425,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -3313,6 +3499,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -3381,7 +3570,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -3456,6 +3645,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -3502,155 +3694,6 @@
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
       "suppress_reason": ""
-    },
-    {
-      "symbol": "NVDA",
-      "name": "Nvidia",
-      "price": 184.0,
-      "change_pct": 0.0,
-      "trend": "flat",
-      "momentum_5d": 0.0,
-      "momentum_20d": 0.0,
-      "atr_proxy_pct": 1.0,
-      "held": true,
-      "themes": [
-        "ai",
-        "semis"
-      ],
-      "accounts": [
-        "xtb",
-        "raiffeisenbank"
-      ],
-      "position_value": 1222.53,
-      "quantity": 0.0,
-      "avg_cost": 186.44,
-      "pnl_vs_cost_pct": -1.31,
-      "sentiment_label": "neutral",
-      "sentiment_score": 0.0,
-      "category": "watchlist_monitor",
-      "priority_score": 2.68,
-      "headlines": [
-        "AI demand remains strong across data center cycle",
-        "Semiconductor leadership supports momentum"
-      ],
-      "reasons": [
-        "použita starší cache, aby se omezil scaffold režim",
-        "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
-      ],
-      "catalysts": [],
-      "news_count": 2,
-      "source_count": 1,
-      "regime_alignment": 0.0,
-      "theme_overlap_penalty": 0.24,
-      "news_items": [
-        {
-          "title": "AI demand remains strong across data center cycle",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        },
-        {
-          "title": "Semiconductor leadership supports momentum",
-          "summary": "",
-          "link": "",
-          "source": "scaffold",
-          "published": "",
-          "provider": "scaffold"
-        }
-      ],
-      "official_items": [],
-      "official_item_count": 0,
-      "data_quality_score": 0.65,
-      "data_quality_label": "ok",
-      "data_quality_reasons": [
-        "fallback_source"
-      ],
-      "source": "fallback",
-      "company_memory": {
-        "name": "Nvidia Corp",
-        "sector_hints": [
-          "technologie / AI",
-          "polovodiče"
-        ],
-        "key_catalysts": [
-          "výsledky",
-          "guidance",
-          "sektorový sentiment"
-        ],
-        "key_risks": [
-          "cykličnost poptávky",
-          "capex a supply chain"
-        ],
-        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
-        "watch_for": [
-          "silný pohyb ceny s více zdroji",
-          "změna guidance nebo regulatoriky"
-        ]
-      },
-      "thesis_strength": 0.75,
-      "technical": {},
-      "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
-      "buy_decision": "watch",
-      "buy_trigger": "",
-      "scenario_bull": "",
-      "scenario_base": "",
-      "scenario_bear": "",
-      "evidence_score": 0.12,
-      "evidence_grade": "D",
-      "trusted_sources": [
-        "scaffold"
-      ],
-      "news_providers": [
-        "scaffold"
-      ],
-      "evidence_reasons": [
-        "část zpráv je jen scaffold / slabý provider"
-      ],
-      "study_alignment_score": 0.54,
-      "matched_studies": [
-        {
-          "id": "post_earnings_drift",
-          "title": "Post-earnings drift and guidance follow-through",
-          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
-          "score": 0.54
-        },
-        {
-          "id": "volatility_risk_filter",
-          "title": "Volatility filter and evidence discipline",
-          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
-          "score": 0.54
-        },
-        {
-          "id": "risk_off_quality",
-          "title": "Quality and defense in risk-off regime",
-          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
-          "score": 0.53
-        }
-      ],
-      "study_notes": [
-        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
-      ],
-      "playbook_score": 0.5,
-      "playbooks": [
-        {
-          "id": "crowded_theme_penalty",
-          "title": "Crowded theme penalty",
-          "category": "risk",
-          "score": 0.5
-        }
-      ],
-      "actionability_score": 1.98,
-      "action_bucket": "low",
-      "urgency_label": "jen informačně",
-      "delivery_channel": "none",
-      "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
-      "suppressed": true,
-      "suppress_reason": "slabý pohyb bez nutnosti zásahu"
     },
     {
       "symbol": "AMD",
@@ -3740,22 +3783,22 @@
       "technical": {
         "symbol": "AMD",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "neutral",
+      "ta_score": 2.5,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -3768,6 +3811,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "AMD",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -3849,7 +3906,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -3925,6 +3982,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -4053,22 +4113,22 @@
       "technical": {
         "symbol": "CVX",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.06,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 141.08 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 2.06,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 141.08 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -4081,6 +4141,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "CVX",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.68,
       "matched_studies": [
         {
@@ -4156,7 +4230,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -4231,6 +4305,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -4365,22 +4442,22 @@
       "technical": {
         "symbol": "LEU",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bullish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 3.38,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bullish",
+      "ta_score": 3.38,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -4393,6 +4470,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "LEU",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -4515,22 +4606,22 @@
       "technical": {
         "symbol": "S",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 114.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "neutral",
+      "ta_score": 2.5,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 114.0 a trend flat.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -4543,6 +4634,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "S",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -4589,6 +4694,158 @@
       "action_hint": "hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup",
       "suppressed": false,
       "suppress_reason": ""
+    },
+    {
+      "symbol": "NVDA",
+      "name": "Nvidia",
+      "price": 184.0,
+      "change_pct": 0.0,
+      "trend": "flat",
+      "momentum_5d": 0.0,
+      "momentum_20d": 0.0,
+      "atr_proxy_pct": 1.0,
+      "held": true,
+      "themes": [
+        "ai",
+        "semis"
+      ],
+      "accounts": [
+        "xtb",
+        "raiffeisenbank"
+      ],
+      "position_value": 1222.53,
+      "quantity": 0.0,
+      "avg_cost": 186.44,
+      "pnl_vs_cost_pct": -1.31,
+      "sentiment_label": "neutral",
+      "sentiment_score": 0.0,
+      "category": "watchlist_monitor",
+      "priority_score": 2.48,
+      "headlines": [
+        "AI demand remains strong across data center cycle",
+        "Semiconductor leadership supports momentum"
+      ],
+      "reasons": [
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim",
+        "použita starší cache, aby se omezil scaffold režim"
+      ],
+      "catalysts": [],
+      "news_count": 2,
+      "source_count": 1,
+      "regime_alignment": 0.0,
+      "theme_overlap_penalty": 0.24,
+      "news_items": [
+        {
+          "title": "AI demand remains strong across data center cycle",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        },
+        {
+          "title": "Semiconductor leadership supports momentum",
+          "summary": "",
+          "link": "",
+          "source": "scaffold",
+          "published": "",
+          "provider": "scaffold"
+        }
+      ],
+      "official_items": [],
+      "official_item_count": 0,
+      "data_quality_score": 0.65,
+      "data_quality_label": "ok",
+      "data_quality_reasons": [
+        "fallback_source"
+      ],
+      "source": "fallback",
+      "company_memory": {
+        "name": "Nvidia Corp",
+        "sector_hints": [
+          "technologie / AI",
+          "polovodiče"
+        ],
+        "key_catalysts": [
+          "výsledky",
+          "guidance",
+          "sektorový sentiment"
+        ],
+        "key_risks": [
+          "cykličnost poptávky",
+          "capex a supply chain"
+        ],
+        "thesis": "Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.",
+        "watch_for": [
+          "silný pohyb ceny s více zdroji",
+          "změna guidance nebo regulatoriky"
+        ]
+      },
+      "thesis_strength": 0.75,
+      "technical": {},
+      "technical_setup": "none",
+      "technical_regime": "unknown",
+      "ta_score": 0.0,
+      "buy_decision": "watch",
+      "buy_trigger": "",
+      "scenario_bull": "",
+      "scenario_base": "",
+      "scenario_bear": "",
+      "evidence_score": 0.12,
+      "evidence_grade": "D",
+      "trusted_sources": [
+        "scaffold"
+      ],
+      "news_providers": [
+        "scaffold"
+      ],
+      "evidence_reasons": [
+        "část zpráv je jen scaffold / slabý provider"
+      ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
+      "study_alignment_score": 0.54,
+      "matched_studies": [
+        {
+          "id": "post_earnings_drift",
+          "title": "Post-earnings drift and guidance follow-through",
+          "summary": "Po silných výsledcích a zvýšeném guidance často následuje více denní follow-through, hlavně u kvalitních firem s více potvrzujícími zdroji.",
+          "score": 0.54
+        },
+        {
+          "id": "volatility_risk_filter",
+          "title": "Volatility filter and evidence discipline",
+          "summary": "U příliš volatilních titulů bez více kvalitních zdrojů má být priorita snížená. Vysoká volatilita sama o sobě není edge.",
+          "score": 0.54
+        },
+        {
+          "id": "risk_off_quality",
+          "title": "Quality and defense in risk-off regime",
+          "summary": "V risk-off režimu funguje obranná logika: snižovat slabé growth pozice, sledovat utility, zlato a kvalitní cash-flow firmy.",
+          "score": 0.53
+        }
+      ],
+      "study_notes": [
+        "studie potvrzují setup: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline"
+      ],
+      "playbook_score": 0.5,
+      "playbooks": [
+        {
+          "id": "crowded_theme_penalty",
+          "title": "Crowded theme penalty",
+          "category": "risk",
+          "score": 0.5
+        }
+      ],
+      "actionability_score": 1.98,
+      "action_bucket": "low",
+      "urgency_label": "jen informačně",
+      "delivery_channel": "none",
+      "action_hint": "zkontrolovat graf, zprávy a relevance k portfoliu",
+      "suppressed": true,
+      "suppress_reason": "slabý pohyb bez nutnosti zásahu"
     },
     {
       "symbol": "GOOGL",
@@ -4680,22 +4937,22 @@
       "technical": {
         "symbol": "GOOGL",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 1.62,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       },
       "technical_setup": "none",
-      "technical_regime": "unknown",
-      "ta_score": 0.0,
+      "technical_regime": "bearish",
+      "ta_score": 1.62,
       "buy_decision": "watch",
       "buy_trigger": "",
       "scenario_bull": "Technická data nejsou dostupná.",
-      "scenario_base": "Vyčkat na nová data.",
+      "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
       "scenario_bear": "Bez dat nelze stanovit obranný scénář.",
       "evidence_score": 0.12,
       "evidence_grade": "D",
@@ -4708,6 +4965,20 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {
+        "symbol": "GOOGL",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      },
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.54,
       "matched_studies": [
         {
@@ -4768,7 +5039,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.91,
+      "priority_score": 3.71,
       "headlines": [
         "BDC trading activity remains in focus",
         "Market participants monitor BDC for follow-through"
@@ -4776,7 +5047,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -4850,6 +5121,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -4904,7 +5178,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.91,
+      "priority_score": 3.71,
       "headlines": [
         "CENX trading activity remains in focus",
         "Market participants monitor CENX for follow-through"
@@ -4912,7 +5186,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -4986,6 +5260,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5040,7 +5317,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.91,
+      "priority_score": 3.71,
       "headlines": [
         "GOOG trading activity remains in focus",
         "Market participants monitor GOOG for follow-through"
@@ -5048,7 +5325,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5122,6 +5399,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5176,7 +5456,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.91,
+      "priority_score": 3.71,
       "headlines": [
         "ONDS trading activity remains in focus",
         "Market participants monitor ONDS for follow-through"
@@ -5184,7 +5464,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5258,6 +5538,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5312,7 +5595,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "breakout_watch",
-      "priority_score": 3.91,
+      "priority_score": 3.71,
       "headlines": [
         "SNDK trading activity remains in focus",
         "Market participants monitor SNDK for follow-through"
@@ -5320,7 +5603,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5394,6 +5677,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5448,7 +5734,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.41,
+      "priority_score": 2.21,
       "headlines": [
         "AMZN trading activity remains in focus",
         "Market participants monitor AMZN for follow-through"
@@ -5456,7 +5742,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5530,6 +5816,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5577,7 +5866,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.41,
+      "priority_score": 2.21,
       "headlines": [
         "CAG trading activity remains in focus",
         "Market participants monitor CAG for follow-through"
@@ -5585,7 +5874,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5659,6 +5948,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5706,7 +5998,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.41,
+      "priority_score": 2.21,
       "headlines": [
         "GEV trading activity remains in focus",
         "Market participants monitor GEV for follow-through"
@@ -5714,7 +6006,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5788,6 +6080,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5835,7 +6130,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.41,
+      "priority_score": 2.21,
       "headlines": [
         "NFLX trading activity remains in focus",
         "Market participants monitor NFLX for follow-through"
@@ -5843,7 +6138,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -5917,6 +6212,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -5964,7 +6262,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 2.41,
+      "priority_score": 2.21,
       "headlines": [
         "SCCO trading activity remains in focus",
         "Market participants monitor SCCO for follow-through"
@@ -5972,7 +6270,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6046,6 +6344,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6093,7 +6394,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.61,
+      "priority_score": 1.41,
       "headlines": [
         "AAOI trading activity remains in focus",
         "Market participants monitor AAOI for follow-through"
@@ -6101,7 +6402,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6175,6 +6476,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6222,7 +6526,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.61,
+      "priority_score": 1.41,
       "headlines": [
         "Crypto sentiment improves with risk appetite",
         "Volatility remains elevated across digital assets"
@@ -6230,7 +6534,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6304,6 +6608,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6351,7 +6658,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.61,
+      "priority_score": 1.41,
       "headlines": [
         "DPZ trading activity remains in focus",
         "Market participants monitor DPZ for follow-through"
@@ -6359,7 +6666,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6433,6 +6740,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6480,7 +6790,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.61,
+      "priority_score": 1.41,
       "headlines": [
         "META trading activity remains in focus",
         "Market participants monitor META for follow-through"
@@ -6488,7 +6798,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6562,6 +6872,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6609,7 +6922,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.61,
+      "priority_score": 1.41,
       "headlines": [
         "PYPL trading activity remains in focus",
         "Market participants monitor PYPL for follow-through"
@@ -6617,7 +6930,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6691,6 +7004,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6738,7 +7054,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.48,
+      "priority_score": 1.28,
       "headlines": [
         "Consumer demand mixed ahead of product cycle",
         "Mega-cap quality still supports defensive interest"
@@ -6746,7 +7062,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6820,6 +7136,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6867,7 +7186,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.48,
+      "priority_score": 1.28,
       "headlines": [
         "BRK-B trading activity remains in focus",
         "Market participants monitor BRK-B for follow-through"
@@ -6875,7 +7194,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -6949,6 +7268,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -6996,7 +7318,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.48,
+      "priority_score": 1.28,
       "headlines": [
         "CVNA trading activity remains in focus",
         "Market participants monitor CVNA for follow-through"
@@ -7004,7 +7326,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7078,6 +7400,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7125,7 +7450,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.48,
+      "priority_score": 1.28,
       "headlines": [
         "INTC trading activity remains in focus",
         "Market participants monitor INTC for follow-through"
@@ -7133,7 +7458,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7207,6 +7532,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7254,7 +7582,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.48,
+      "priority_score": 1.28,
       "headlines": [
         "PANW trading activity remains in focus",
         "Market participants monitor PANW for follow-through"
@@ -7262,7 +7590,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7336,6 +7664,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7383,7 +7714,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.48,
+      "priority_score": 1.28,
       "headlines": [
         "TTD trading activity remains in focus",
         "Market participants monitor TTD for follow-through"
@@ -7391,7 +7722,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7465,6 +7796,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7512,7 +7846,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.2,
+      "priority_score": 1.0,
       "headlines": [
         "BKNG trading activity remains in focus",
         "Market participants monitor BKNG for follow-through"
@@ -7520,7 +7854,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7594,6 +7928,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7641,7 +7978,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.2,
+      "priority_score": 1.0,
       "headlines": [
         "COKE trading activity remains in focus",
         "Market participants monitor COKE for follow-through"
@@ -7649,7 +7986,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7723,6 +8060,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7770,7 +8110,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.2,
+      "priority_score": 1.0,
       "headlines": [
         "IBIT trading activity remains in focus",
         "Market participants monitor IBIT for follow-through"
@@ -7778,7 +8118,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7852,6 +8192,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -7899,7 +8242,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.2,
+      "priority_score": 1.0,
       "headlines": [
         "ORCL trading activity remains in focus",
         "Market participants monitor ORCL for follow-through"
@@ -7907,7 +8250,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -7981,6 +8324,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -8028,7 +8374,7 @@
       "sentiment_label": "neutral",
       "sentiment_score": 0.0,
       "category": "watchlist_monitor",
-      "priority_score": 1.2,
+      "priority_score": 1.0,
       "headlines": [
         "SPY trading activity remains in focus",
         "Market participants monitor SPY for follow-through"
@@ -8036,7 +8382,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "catalysts": [],
       "news_count": 2,
@@ -8110,6 +8456,9 @@
       "evidence_reasons": [
         "část zpráv je jen scaffold / slabý provider"
       ],
+      "fundamentals": {},
+      "fundamental_bias": "neutral",
+      "fundamental_score": 0.0,
       "study_alignment_score": 0.53,
       "matched_studies": [
         {
@@ -8224,42 +8573,101 @@
     "GOOGL": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 1.62
     },
     "EQT": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.06
     },
     "S": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.5
     },
     "FCX": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.94
     },
     "LEU": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 3.38
     },
     "FSLR": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 1.62
     },
     "CVX": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.06
     },
     "AMD": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.5
     }
+  },
+  "fundamentals_summary": {
+    "GOOGL": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "EQT": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "S": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "FCX": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "LEU": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "FSLR": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "CVX": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "AMD": {
+      "bias": "neutral",
+      "score": 0.0
+    }
+  },
+  "macro_calendar": {
+    "source": "fallback",
+    "events": [
+      {
+        "date": "2026-03-31",
+        "country": "US",
+        "event": "Kontrola makro kalendáře: inflace / CPI",
+        "importance": "high"
+      },
+      {
+        "date": "2026-04-01",
+        "country": "US",
+        "event": "Kontrola centrálních bank / sazby",
+        "importance": "high"
+      },
+      {
+        "date": "2026-04-02",
+        "country": "US",
+        "event": "Kontrola trhu práce / nezaměstnanost",
+        "importance": "medium"
+      }
+    ],
+    "macro_risk": "high",
+    "window_days": 7
   }
 }

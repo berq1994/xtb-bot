@@ -201,6 +201,26 @@ def main():
         return
 
 
+
+    if mode == "fundamentals":
+        from agents.fundamentals_agent import run_fundamentals
+        print(run_fundamentals())
+        return
+
+    if mode == "macro_calendar":
+        from agents.macro_calendar_agent import run_macro_calendar
+        print(run_macro_calendar())
+        return
+
+    if mode == "risk_engine":
+        from agents.risk_engine_agent import run_risk_engine
+        print(run_risk_engine())
+        return
+
+    if mode == "weekly_review":
+        from agents.weekly_review_agent import run_weekly_review
+        print(run_weekly_review())
+        return
     if mode == "official_sources":
         from agents.official_company_sources_agent import run_official_company_sources
         print(run_official_company_sources().get("report", ""))
@@ -276,7 +296,7 @@ def main():
         "research_live | thesis_update | research_memory_update | research_review | "
         "log_signal | learning_review | rebalance_weights | performance_review | full_cycle | "
         "schedule_plan | outcome_update | outcome_review | fmp_levels | production_cycle | email_morning_digest | email_evening_digest | telegram_portfolio_alerts | auto_research | knowledge_sync | autonomous_learning_loop | autonomous_core | "
-        "multi_agent_daily | multi_agent_weekly | multi_agent_audit | weekly_maintenance | official_sources | technical_analysis | weekly_ta_rebuild"
+        "multi_agent_daily | multi_agent_weekly | multi_agent_audit | weekly_maintenance | fundamentals | macro_calendar | risk_engine | weekly_review | official_sources | technical_analysis | weekly_ta_rebuild"
     )
 
 

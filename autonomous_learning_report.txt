@@ -1,5 +1,11 @@
 AUTONOMNÍ LEARNING LOOP
-Vyhodnocené vzorky: 0
+Vyhodnocené vzorky celkem: 0
+Čisté buy vzorky pro učení: 0
+Bucket buy_candidate avg: -
+Bucket risk_management avg: -
+Bucket avoid avg: -
+Kvalita clean avg: -
+Kvalita noisy avg: -
 Preferované kategorie: žádné
 Nejlepší evidence grade: -
 Slabý evidence grade: -

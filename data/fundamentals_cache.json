@@ -1,0 +1,184 @@
+{
+  "symbols": {
+    "GOOGL": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "GOOGL",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "AMD": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "AMD",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "MSFT": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "MSFT",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "PLTR": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "PLTR",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "EQT": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "EQT",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "S": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "S",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "TSM": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "TSM",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "NBIS": {
+      "expires_at": 1775028992.7045598,
+      "data": {
+        "symbol": "NBIS",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "FCX": {
+      "expires_at": 1775029112.4254742,
+      "data": {
+        "symbol": "FCX",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "LEU": {
+      "expires_at": 1775029112.4254742,
+      "data": {
+        "symbol": "LEU",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "FSLR": {
+      "expires_at": 1775029112.4254742,
+      "data": {
+        "symbol": "FSLR",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    },
+    "CVX": {
+      "expires_at": 1775029112.4254742,
+      "data": {
+        "symbol": "CVX",
+        "status": "fallback",
+        "fundamental_bias": "neutral",
+        "fundamental_score": 0.0,
+        "summary_cs": "Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.",
+        "revenue_growth": null,
+        "net_income_growth": null,
+        "debt_to_equity": null,
+        "pe_ratio": null,
+        "roe": null
+      }
+    }
+  }
+}

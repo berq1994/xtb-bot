@@ -1,0 +1,28 @@
+{
+  "expires_at": 1774985794.004716,
+  "data": {
+    "source": "fallback",
+    "events": [
+      {
+        "date": "2026-03-31",
+        "country": "US",
+        "event": "Kontrola makro kalendáře: inflace / CPI",
+        "importance": "high"
+      },
+      {
+        "date": "2026-04-01",
+        "country": "US",
+        "event": "Kontrola centrálních bank / sazby",
+        "importance": "high"
+      },
+      {
+        "date": "2026-04-02",
+        "country": "US",
+        "event": "Kontrola trhu práce / nezaměstnanost",
+        "importance": "medium"
+      }
+    ],
+    "macro_risk": "high",
+    "window_days": 7
+  }
+}

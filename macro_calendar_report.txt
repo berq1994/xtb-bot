@@ -1,0 +1,6 @@
+MAKRO KALENDÁŘ
+Zdroj: fallback
+Makro riziko: high
+- 2026-03-31 | US | Kontrola makro kalendáře: inflace / CPI | importance high
+- 2026-04-01 | US | Kontrola centrálních bank / sazby | importance high
+- 2026-04-02 | US | Kontrola trhu práce / nezaměstnanost | importance medium

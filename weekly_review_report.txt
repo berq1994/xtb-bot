@@ -1,0 +1,31 @@
+TÝDENNÍ REKAPITULACE
+Režim trhu: risk_off
+Průměrný outcome posledních resolved vzorků: -%
+
+AKČNÍ FRONTA TÝDNE
+- GRMN | drawdown_control | akčnost 5.02 | urgence dnes sledovat
+- AMD | drawdown_control | akčnost 5.02 | urgence dnes sledovat
+- FCX | winner_management | akčnost 4.92 | urgence dnes sledovat
+- EQT | winner_management | akčnost 4.92 | urgence dnes sledovat
+- MSFT | drawdown_control | akčnost 4.23 | urgence mít na očích
+
+FUNDAMENTÁLNÍ PŘEHLED
+- Bez jasně pozitivního fundamentálního clusteru.
+
+MAKRO VÝHLED
+- Makro riziko: high
+  · 2026-03-31 | US | Kontrola makro kalendáře: inflace / CPI
+  · 2026-04-01 | US | Kontrola centrálních bank / sazby
+  · 2026-04-02 | US | Kontrola trhu práce / nezaměstnanost
+
+RIZIKO PORTFOLIA
+- Největší pozice: CSG | 76.58%
+- Koncentrační varování: ano
+- Přeplněná témata: defense 76.58%, industrial 76.58%
+
+TOP POZICE K DALŠÍMU TÝDNU
+- FCX | score 5.0 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
+- EQT | score 4.96 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
+- FSLR | score 4.61 | evidence D | TA watch | scénář+ Technická data nejsou dostupná.
+- NVO | score 3.81 | evidence D | TA watch | scénář+ 
+- IREN | score 3.81 | evidence D | TA watch | scénář+ 

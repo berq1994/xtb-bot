@@ -1,0 +1,32 @@
+name: risk-engine
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install requests pyyaml pandas yfinance
+      - name: Build research first
+        env:
+          TIMEZONE: Europe/Prague
+          FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
+          FMPAPIKEY: ${{ secrets.FMPAPIKEY }}
+          FMP_LOW_CALL_MODE: '1'
+        run: |
+          python run_agent.py fundamentals
+          python run_agent.py macro_calendar
+          python run_agent.py technical_analysis
+          python run_agent.py official_sources
+          python run_agent.py research_live
+          python run_agent.py risk_engine

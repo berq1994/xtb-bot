@@ -1,32 +1,32 @@
 {
   "symbols": {
     "GOOGL": {
-      "expires_at": 1774895212.1585824,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "GOOGL",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 1.62,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 98.7 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
     "AMD": {
-      "expires_at": 1774895212.1585824,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "AMD",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 149.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
@@ -61,32 +61,32 @@
       }
     },
     "EQT": {
-      "expires_at": 1774895212.1585824,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "EQT",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.06,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 106.3 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
     "S": {
-      "expires_at": 1774895212.1585824,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "S",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "neutral",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.5,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 114.0 a trend flat.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
@@ -121,62 +121,62 @@
       }
     },
     "FCX": {
-      "expires_at": 1774895248.66861,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "FCX",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bullish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.94,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 121.79 a trend up.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
     "LEU": {
-      "expires_at": 1774895248.66861,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "LEU",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bullish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 3.38,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 129.66 a trend up.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
     "FSLR": {
-      "expires_at": 1774895248.66861,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "FSLR",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 1.62,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 133.25 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     },
     "CVX": {
-      "expires_at": 1774895248.66861,
+      "expires_at": 1774971492.4048603,
       "data": {
         "symbol": "CVX",
         "status": "history_missing",
-        "trend_regime": "unknown",
+        "trend_regime": "bearish",
         "setup_type": "none",
         "buy_decision": "watch",
         "buy_trigger": "",
-        "ta_score": 0.0,
+        "ta_score": 2.06,
         "scenario_bull": "Technická data nejsou dostupná.",
-        "scenario_base": "Vyčkat na nová data.",
+        "scenario_base": "Provizorní technický stav z market overview; cena 141.08 a trend down.",
         "scenario_bear": "Bez dat nelze stanovit obranný scénář."
       }
     }

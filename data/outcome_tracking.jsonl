@@ -21,3 +21,5 @@
 {"signal_id": "2026-03-30T08:59:09.663440+00:00|FCX", "timestamp": "2026-03-30T08:59:09.663449+00:00", "symbol": "FCX", "decision": "watch_long", "direction": "long", "entry_price": 165.12}
 {"signal_id": "2026-03-30T10:27:45.150875+00:00|GRMN", "timestamp": "2026-03-30T10:27:45.150887+00:00", "symbol": "GRMN", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 175.85}
 {"signal_id": "2026-03-30T10:27:45.151605+00:00|AMD", "timestamp": "2026-03-30T10:27:45.151612+00:00", "symbol": "AMD", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 106.3}
+{"signal_id": "2026-03-31T07:38:49.276136+00:00|GRMN", "timestamp": "2026-03-31T07:38:49.276144+00:00", "symbol": "GRMN", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 175.85}
+{"signal_id": "2026-03-31T07:38:49.276454+00:00|AMD", "timestamp": "2026-03-31T07:38:49.276457+00:00", "symbol": "AMD", "decision": "watch_hedge", "direction": "short_watch", "entry_price": 106.3}

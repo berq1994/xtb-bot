@@ -1,6 +1,6 @@
 {
   "GOOGL": {
-    "fetched_at": 1774861129.4849615,
+    "fetched_at": 1774942595.28097,
     "payload": {
       "headlines": [
         "GOOGL trading activity remains in focus",
@@ -37,7 +37,7 @@
     }
   },
   "EQT": {
-    "fetched_at": 1774861134.4879932,
+    "fetched_at": 1774942600.2834387,
     "payload": {
       "headlines": [
         "EQT trading activity remains in focus",
@@ -74,7 +74,7 @@
     }
   },
   "S": {
-    "fetched_at": 1774861134.4909923,
+    "fetched_at": 1774942600.2858417,
     "payload": {
       "headlines": [
         "S trading activity remains in focus",
@@ -111,7 +111,7 @@
     }
   },
   "FCX": {
-    "fetched_at": 1774861139.4941056,
+    "fetched_at": 1774942605.287897,
     "payload": {
       "headlines": [
         "FCX trading activity remains in focus",
@@ -148,7 +148,7 @@
     }
   },
   "LEU": {
-    "fetched_at": 1774861139.4977195,
+    "fetched_at": 1774942605.290068,
     "payload": {
       "headlines": [
         "LEU trading activity remains in focus",
@@ -185,7 +185,7 @@
     }
   },
   "FSLR": {
-    "fetched_at": 1774861144.5006065,
+    "fetched_at": 1774942610.292636,
     "payload": {
       "headlines": [
         "FSLR trading activity remains in focus",
@@ -259,7 +259,7 @@
     }
   },
   "AMD": {
-    "fetched_at": 1774861149.5073004,
+    "fetched_at": 1774942615.2977626,
     "payload": {
       "headlines": [
         "AMD trading activity remains in focus",
@@ -296,7 +296,7 @@
     }
   },
   "PLTR": {
-    "fetched_at": 1774861149.5073152,
+    "fetched_at": 1774942615.2977836,
     "payload": {
       "headlines": [
         "PLTR trading activity remains in focus",
@@ -323,7 +323,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -335,7 +335,7 @@
     }
   },
   "TSM": {
-    "fetched_at": 1774861149.507321,
+    "fetched_at": 1774942615.2977903,
     "payload": {
       "headlines": [
         "TSM trading activity remains in focus",
@@ -362,7 +362,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -374,7 +374,7 @@
     }
   },
   "NVO": {
-    "fetched_at": 1774861149.5073242,
+    "fetched_at": 1774942615.2977934,
     "payload": {
       "headlines": [
         "NVO trading activity remains in focus",
@@ -401,7 +401,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -413,7 +413,7 @@
     }
   },
   "GRMN": {
-    "fetched_at": 1774861149.5073273,
+    "fetched_at": 1774942615.297797,
     "payload": {
       "headlines": [
         "GRMN trading activity remains in focus",
@@ -440,7 +440,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -452,7 +452,7 @@
     }
   },
   "IREN": {
-    "fetched_at": 1774861149.5073295,
+    "fetched_at": 1774942615.2977996,
     "payload": {
       "headlines": [
         "IREN trading activity remains in focus",
@@ -479,7 +479,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -491,7 +491,7 @@
     }
   },
   "CVX": {
-    "fetched_at": 1774861144.5038936,
+    "fetched_at": 1774942610.2949274,
     "payload": {
       "headlines": [
         "CVX trading activity remains in focus",
@@ -528,7 +528,7 @@
     }
   },
   "MSFT": {
-    "fetched_at": 1774861149.5073314,
+    "fetched_at": 1774942615.2978024,
     "payload": {
       "headlines": [
         "Cloud and AI narrative remains constructive",
@@ -555,7 +555,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -567,7 +567,7 @@
     }
   },
   "NBIS": {
-    "fetched_at": 1774861149.5073335,
+    "fetched_at": 1774942615.2978046,
     "payload": {
       "headlines": [
         "NBIS trading activity remains in focus",
@@ -594,7 +594,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -606,7 +606,7 @@
     }
   },
   "NVDA": {
-    "fetched_at": 1774861149.5073357,
+    "fetched_at": 1774942615.2978072,
     "payload": {
       "headlines": [
         "AI demand remains strong across data center cycle",
@@ -633,7 +633,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -645,7 +645,7 @@
     }
   },
   "AMZN": {
-    "fetched_at": 1774861149.5073617,
+    "fetched_at": 1774942615.2978373,
     "payload": {
       "headlines": [
         "AMZN trading activity remains in focus",
@@ -672,7 +672,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -684,7 +684,7 @@
     }
   },
   "BDC": {
-    "fetched_at": 1774861149.5073373,
+    "fetched_at": 1774942615.2978096,
     "payload": {
       "headlines": [
         "BDC trading activity remains in focus",
@@ -711,7 +711,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -723,7 +723,7 @@
     }
   },
   "CAG": {
-    "fetched_at": 1774861149.5073655,
+    "fetched_at": 1774942615.29784,
     "payload": {
       "headlines": [
         "CAG trading activity remains in focus",
@@ -750,7 +750,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -762,7 +762,7 @@
     }
   },
   "CENX": {
-    "fetched_at": 1774861149.5073414,
+    "fetched_at": 1774942615.297816,
     "payload": {
       "headlines": [
         "CENX trading activity remains in focus",
@@ -789,7 +789,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -801,7 +801,7 @@
     }
   },
   "GEV": {
-    "fetched_at": 1774861149.5073688,
+    "fetched_at": 1774942615.2978432,
     "payload": {
       "headlines": [
         "GEV trading activity remains in focus",
@@ -828,7 +828,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -840,7 +840,7 @@
     }
   },
   "GOOG": {
-    "fetched_at": 1774861149.5073457,
+    "fetched_at": 1774942615.2978227,
     "payload": {
       "headlines": [
         "GOOG trading activity remains in focus",
@@ -867,7 +867,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -879,7 +879,7 @@
     }
   },
   "NFLX": {
-    "fetched_at": 1774861149.5073717,
+    "fetched_at": 1774942615.2978468,
     "payload": {
       "headlines": [
         "NFLX trading activity remains in focus",
@@ -906,7 +906,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -918,7 +918,7 @@
     }
   },
   "ONDS": {
-    "fetched_at": 1774861149.5073514,
+    "fetched_at": 1774942615.297828,
     "payload": {
       "headlines": [
         "ONDS trading activity remains in focus",
@@ -945,7 +945,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -957,7 +957,7 @@
     }
   },
   "SCCO": {
-    "fetched_at": 1774861149.507375,
+    "fetched_at": 1774942615.2983265,
     "payload": {
       "headlines": [
         "SCCO trading activity remains in focus",
@@ -984,7 +984,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -996,7 +996,7 @@
     }
   },
   "SNDK": {
-    "fetched_at": 1774861149.507356,
+    "fetched_at": 1774942615.297832,
     "payload": {
       "headlines": [
         "SNDK trading activity remains in focus",
@@ -1023,7 +1023,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1035,7 +1035,7 @@
     }
   },
   "AAOI": {
-    "fetched_at": 1774861149.507379,
+    "fetched_at": 1774942615.298329,
     "payload": {
       "headlines": [
         "AAOI trading activity remains in focus",
@@ -1062,7 +1062,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1074,7 +1074,7 @@
     }
   },
   "BKNG": {
-    "fetched_at": 1774861149.5073395,
+    "fetched_at": 1774942615.2978134,
     "payload": {
       "headlines": [
         "BKNG trading activity remains in focus",
@@ -1101,7 +1101,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1113,7 +1113,7 @@
     }
   },
   "BTC-USD": {
-    "fetched_at": 1774861149.5073805,
+    "fetched_at": 1774942615.29833,
     "payload": {
       "headlines": [
         "Crypto sentiment improves with risk appetite",
@@ -1140,7 +1140,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1152,7 +1152,7 @@
     }
   },
   "COKE": {
-    "fetched_at": 1774861149.5073438,
+    "fetched_at": 1774942615.2978194,
     "payload": {
       "headlines": [
         "COKE trading activity remains in focus",
@@ -1179,7 +1179,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1191,7 +1191,7 @@
     }
   },
   "DPZ": {
-    "fetched_at": 1774861149.507382,
+    "fetched_at": 1774942615.2983308,
     "payload": {
       "headlines": [
         "DPZ trading activity remains in focus",
@@ -1218,7 +1218,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1230,7 +1230,7 @@
     }
   },
   "IBIT": {
-    "fetched_at": 1774861149.507348,
+    "fetched_at": 1774942615.2978249,
     "payload": {
       "headlines": [
         "IBIT trading activity remains in focus",
@@ -1257,7 +1257,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1269,7 +1269,7 @@
     }
   },
   "META": {
-    "fetched_at": 1774861149.5073838,
+    "fetched_at": 1774942615.2983322,
     "payload": {
       "headlines": [
         "META trading activity remains in focus",
@@ -1296,7 +1296,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1308,7 +1308,7 @@
     }
   },
   "ORCL": {
-    "fetched_at": 1774861149.5073535,
+    "fetched_at": 1774942615.2978299,
     "payload": {
       "headlines": [
         "ORCL trading activity remains in focus",
@@ -1335,7 +1335,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1347,7 +1347,7 @@
     }
   },
   "PYPL": {
-    "fetched_at": 1774861149.5073853,
+    "fetched_at": 1774942615.2983332,
     "payload": {
       "headlines": [
         "PYPL trading activity remains in focus",
@@ -1374,7 +1374,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1386,7 +1386,7 @@
     }
   },
   "SPY": {
-    "fetched_at": 1774861149.5073576,
+    "fetched_at": 1774942615.297834,
     "payload": {
       "headlines": [
         "SPY trading activity remains in focus",
@@ -1413,7 +1413,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1425,7 +1425,7 @@
     }
   },
   "AAPL": {
-    "fetched_at": 1774861149.5073595,
+    "fetched_at": 1774942615.297836,
     "payload": {
       "headlines": [
         "Consumer demand mixed ahead of product cycle",
@@ -1452,7 +1452,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1464,7 +1464,7 @@
     }
   },
   "BRK-B": {
-    "fetched_at": 1774861149.5073633,
+    "fetched_at": 1774942615.297839,
     "payload": {
       "headlines": [
         "BRK-B trading activity remains in focus",
@@ -1491,7 +1491,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1503,7 +1503,7 @@
     }
   },
   "CVNA": {
-    "fetched_at": 1774861149.5073671,
+    "fetched_at": 1774942615.2978413,
     "payload": {
       "headlines": [
         "CVNA trading activity remains in focus",
@@ -1530,7 +1530,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1542,7 +1542,7 @@
     }
   },
   "INTC": {
-    "fetched_at": 1774861149.5073705,
+    "fetched_at": 1774942615.297845,
     "payload": {
       "headlines": [
         "INTC trading activity remains in focus",
@@ -1569,7 +1569,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1581,7 +1581,7 @@
     }
   },
   "PANW": {
-    "fetched_at": 1774861149.5073733,
+    "fetched_at": 1774942615.2983236,
     "payload": {
       "headlines": [
         "PANW trading activity remains in focus",
@@ -1608,7 +1608,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",
@@ -1620,7 +1620,7 @@
     }
   },
   "TTD": {
-    "fetched_at": 1774861149.5073771,
+    "fetched_at": 1774942615.2983282,
     "payload": {
       "headlines": [
         "TTD trading activity remains in focus",
@@ -1647,7 +1647,7 @@
       "reasons": [
         "použita starší cache, aby se omezil scaffold režim",
         "použita starší cache, aby se omezil scaffold režim",
-        "další symboly jedou v rychlém fallback režimu"
+        "použita starší cache, aby se omezil scaffold režim"
       ],
       "sentiment_score": 0.0,
       "sentiment_label": "neutral",

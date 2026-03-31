@@ -17,6 +17,8 @@ from knowledge.study_library import ensure_seed_studies, match_studies_for_item
 from agents.signal_quality_agent import build_action_queue, score_actionability
 from agents.technical_analysis_agent import build_technical_analysis_map
 from agents.official_company_sources_agent import collect_official_company_news
+from agents.fundamentals_agent import build_fundamentals_map
+from agents.macro_calendar_agent import load_macro_calendar
 
 try:
     from agents.corporate_research_agent import run_corporate_research
@@ -290,6 +292,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
     news_map = build_news_sentiment(symbols)
     official_map = collect_official_company_news(symbols[:6])
     ta_map = build_technical_analysis_map(symbols[:8])
+    fundamentals_map = build_fundamentals_map(symbols[:8])
+    macro_state = load_macro_calendar(7)
     weights = load_signal_weights()
 
     ranked: list[dict] = []
@@ -386,6 +390,10 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         item["trusted_sources"] = evidence.get("trusted_sources", [])
         item["news_providers"] = evidence.get("providers", [])
         item["evidence_reasons"] = evidence.get("reasons", [])
+        fundamentals = fundamentals_map.get(symbol, {}) if isinstance(fundamentals_map.get(symbol, {}), dict) else {}
+        item["fundamentals"] = fundamentals
+        item["fundamental_bias"] = str(fundamentals.get("fundamental_bias", "neutral"))
+        item["fundamental_score"] = float(fundamentals.get("fundamental_score", 0.0) or 0.0)
         regime_fit = _regime_alignment(str(overview.get("regime", "mixed")), trend, change_pct)
         item["regime_alignment"] = round(regime_fit, 2)
         studies = match_studies_for_item(item, str(overview.get("regime", "mixed")))
@@ -411,6 +419,9 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         score += (item['data_quality_score'] - 0.55) * 1.1
         score += max(0.0, item['ta_score'] - 4.5) * 0.32
         score += min(0.35, len(official_items) * 0.15)
+        score += item['fundamental_score'] * 0.45
+        if str(macro_state.get('macro_risk', 'low')) == 'high' and item['category'] in {'breakout_watch', 'watchlist_monitor'}:
+            score -= 0.2
         if item['buy_decision'] in {'buy_breakout', 'buy_pullback'}:
             score += 0.45
         elif item['buy_decision'] == 'buy_reversal':
@@ -449,6 +460,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         'risk_summary': risk_summary,
         'official_source_count': sum(len(v) for v in official_map.values()),
         'technical_summary': {k: {'setup': v.get('setup_type'), 'decision': v.get('buy_decision'), 'ta_score': v.get('ta_score')} for k, v in ta_map.items()},
+        'fundamentals_summary': {k: {'bias': v.get('fundamental_bias'), 'score': v.get('fundamental_score')} for k, v in fundamentals_map.items()},
+        'macro_calendar': macro_state,
     }
 
     STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -462,6 +475,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         'risk_summary': risk_summary,
         'official_source_count': sum(len(v) for v in official_map.values()),
         'technical_summary': {k: {'setup': v.get('setup_type'), 'decision': v.get('buy_decision'), 'ta_score': v.get('ta_score')} for k, v in ta_map.items()},
+        'fundamentals_summary': {k: {'bias': v.get('fundamental_bias'), 'score': v.get('fundamental_score')} for k, v in fundamentals_map.items()},
+        'macro_calendar': macro_state,
     }, ensure_ascii=False, indent=2), encoding='utf-8')
 
     lines = []
@@ -503,6 +518,8 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             lines.append(f"  · zdroje: {', '.join(item['trusted_sources'][:3])}")
         if item.get('official_item_count'):
             lines.append(f"  · oficiální zdroje: {item.get('official_item_count')} | trigger: {item.get('buy_trigger', '')}")
+        if item.get('fundamentals', {}).get('summary_cs'):
+            lines.append(f"  · fundamenty: {item.get('fundamentals', {}).get('summary_cs')}")
         thesis = str(item.get('company_memory', {}).get('thesis') or '').strip()
         if thesis:
             lines.append(f"  · teze: {thesis[:140]}")
@@ -514,6 +531,11 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
             lines.append(f"  · scénář+: {item.get('scenario_bull')}")
         if item.get('scenario_bear'):
             lines.append(f"  · scénář-: {item.get('scenario_bear')}")
+    lines.append("")
+    lines.append("Makro vrstva:")
+    lines.append(f"- Riziko kalendáře: {macro_state.get('macro_risk', '-')}")
+    for event in (macro_state.get('events', []) if isinstance(macro_state, dict) else [])[:3]:
+        lines.append(f"  · {event.get('date')} | {event.get('country')} | {event.get('event')}")
     lines.append("")
     lines.append("Riziková vrstva:")
     lines.append(f"- Počet držených pozic ve výzkumu: {risk_summary.get('held_count', 0)}")

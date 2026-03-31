@@ -10,14 +10,18 @@
     "study_alignment": 1.0
   },
   "sample_count": 0,
+  "core_sample_count": 0,
+  "bucket_avg": {},
+  "quality_avg": {},
   "category_avg": {},
   "evidence_grade_avg": {},
   "playbook_avg": {},
-  "study_alignment_avg": {},
+  "horizon_avg": {},
   "thresholds": {
     "raise_priority_evidence_grade": null,
     "avoid_evidence_grade": null,
     "preferred_categories": [],
-    "weak_playbooks": []
+    "weak_playbooks": [],
+    "learning_mode": "clean_buy_signals"
   }
 }

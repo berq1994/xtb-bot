@@ -44,42 +44,101 @@
     "GOOGL": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 1.62
     },
     "EQT": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.06
     },
     "S": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.5
     },
     "FCX": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.94
     },
     "LEU": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 3.38
     },
     "FSLR": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 1.62
     },
     "CVX": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.06
     },
     "AMD": {
       "setup": "none",
       "decision": "watch",
-      "ta_score": 0.0
+      "ta_score": 2.5
     }
+  },
+  "fundamentals_summary": {
+    "GOOGL": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "EQT": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "S": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "FCX": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "LEU": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "FSLR": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "CVX": {
+      "bias": "neutral",
+      "score": 0.0
+    },
+    "AMD": {
+      "bias": "neutral",
+      "score": 0.0
+    }
+  },
+  "macro_calendar": {
+    "source": "fallback",
+    "events": [
+      {
+        "date": "2026-03-31",
+        "country": "US",
+        "event": "Kontrola makro kalendáře: inflace / CPI",
+        "importance": "high"
+      },
+      {
+        "date": "2026-04-01",
+        "country": "US",
+        "event": "Kontrola centrálních bank / sazby",
+        "importance": "high"
+      },
+      {
+        "date": "2026-04-02",
+        "country": "US",
+        "event": "Kontrola trhu práce / nezaměstnanost",
+        "importance": "medium"
+      }
+    ],
+    "macro_risk": "high",
+    "window_days": 7
   }
 }

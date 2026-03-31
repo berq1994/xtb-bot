@@ -1,0 +1,10 @@
+RISK ENGINE
+Největší pozice: CSG | podíl 76.58%
+Koncentrační varování: ano
+Přeplněná témata: defense 76.58%, industrial 76.58%
+- GOOGL | RR - | nová alokace 0.0% | stop - | trim -
+- AMD | RR - | nová alokace 0.0% | stop - | trim -
+- MSFT | RR - | nová alokace 0.0% | stop - | trim -
+- PLTR | RR - | nová alokace 2.0% | stop - | trim -
+- EQT | RR - | nová alokace 2.0% | stop - | trim -
+- S | RR - | nová alokace 2.0% | stop - | trim -

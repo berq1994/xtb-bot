@@ -13,32 +13,35 @@ Akční fronta:
   · podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup
 - EQT | akčnost 4.92 | bucket high | urgence dnes sledovat | score 4.96 | kategorie winner_management
   · podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup
-- NVO | akčnost 4.12 | bucket medium | urgence mít na očích | score 3.81 | kategorie winner_management
-  · podnět: hlídat částečný výběr zisku nebo přitažení stopu, ne honit další vstup
+- MSFT | akčnost 4.23 | bucket medium | urgence mít na očích | score 2.63 | kategorie drawdown_control
+  · podnět: zkontrolovat, zda nejde o změnu teze, ne jen běžný výkyv
 
 Hlavní priority:
-- FCX | score 5.0 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 147.7%
+- FCX | score 5.0 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.94 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 147.7%
   · playbook: Winner management, Breakout backed by evidence
   · studie: Geopolitical event transmission, Quality and defense in risk-off regime
   · zdroje: scaffold
+  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: sledovaný zdroj: scaffold
   · evidence: část zpráv je jen scaffold / slabý provider
   · scénář+: Technická data nejsou dostupná.
   · scénář-: Bez dat nelze stanovit obranný scénář.
-- EQT | score 4.96 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 114.1%
+- EQT | score 4.96 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.06 | akce watch | držená pozice ano | kategorie winner_management | P/L vs nákup 114.1%
   · playbook: Winner management, Risk-off rotation
   · studie: Quality and defense in risk-off regime, Geopolitical event transmission
   · zdroje: scaffold
+  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: sledovaný zdroj: scaffold
   · evidence: část zpráv je jen scaffold / slabý provider
   · scénář+: Technická data nejsou dostupná.
   · scénář-: Bez dat nelze stanovit obranný scénář.
-- FSLR | score 4.81 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie breakout_watch | P/L vs nákup 1.01%
+- FSLR | score 4.61 | pohyb 1.3% | 5d 1.95% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 1.62 | akce watch | držená pozice ano | kategorie breakout_watch | P/L vs nákup 1.01%
   · playbook: Breakout backed by evidence
   · studie: Quality and defense in risk-off regime, Geopolitical event transmission
   · zdroje: scaffold
+  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: sledovaný zdroj: scaffold
   · evidence: část zpráv je jen scaffold / slabý provider
@@ -58,7 +61,7 @@ Hlavní priority:
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: použita starší cache, aby se omezil scaffold režim
   · evidence: část zpráv je jen scaffold / slabý provider
-- PLTR | score 3.48 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie watchlist_monitor | P/L vs nákup -4.85%
+- PLTR | score 3.28 | pohyb 0.65% | 5d 0.98% | trend up | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie watchlist_monitor | P/L vs nákup -4.85%
   · playbook: Crowded theme penalty
   · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
   · zdroje: scaffold
@@ -79,22 +82,29 @@ Hlavní priority:
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: použita starší cache, aby se omezil scaffold režim
   · evidence: část zpráv je jen scaffold / slabý provider
-- NVDA | score 2.68 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie watchlist_monitor | P/L vs nákup -1.31%
+- AMD | score 2.65 | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 2.5 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -45.57%
+  · playbook: Crowded theme penalty, Portfolio defense on negative news
+  · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
+  · zdroje: scaffold
+  · fundamenty: Fundamentální vrstva nemá dost live dat; výchozí neutrální pohled.
+  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
+  · news logika: sledovaný zdroj: scaffold
+  · evidence: část zpráv je jen scaffold / slabý provider
+  · scénář+: Technická data nejsou dostupná.
+  · scénář-: Bez dat nelze stanovit obranný scénář.
+- MSFT | score 2.63 | pohyb 0.0% | 5d 0.0% | trend flat | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -70.36%
   · playbook: Crowded theme penalty
   · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
   · zdroje: scaffold
   · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
   · news logika: použita starší cache, aby se omezil scaffold režim
   · evidence: část zpráv je jen scaffold / slabý provider
-- AMD | score 2.65 | pohyb -0.65% | 5d -0.98% | trend down | sentiment neutral | evidence D (0.12) | data ok (0.65) | TA none 0.0 | akce watch | držená pozice ano | kategorie drawdown_control | P/L vs nákup -45.57%
-  · playbook: Crowded theme penalty, Portfolio defense on negative news
-  · studie: Post-earnings drift and guidance follow-through, Volatility filter and evidence discipline
-  · zdroje: scaffold
-  · teze: Neutrální výchozí teze – čeká na další upřesnění z research vrstvy.
-  · news logika: sledovaný zdroj: scaffold
-  · evidence: část zpráv je jen scaffold / slabý provider
-  · scénář+: Technická data nejsou dostupná.
-  · scénář-: Bez dat nelze stanovit obranný scénář.
+
+Makro vrstva:
+- Riziko kalendáře: high
+  · 2026-03-31 | US | Kontrola makro kalendáře: inflace / CPI
+  · 2026-04-01 | US | Kontrola centrálních bank / sazby
+  · 2026-04-02 | US | Kontrola trhu práce / nezaměstnanost
 
 Riziková vrstva:
 - Počet držených pozic ve výzkumu: 16

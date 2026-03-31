@@ -12,6 +12,10 @@ from agents.learning_agent import load_signal_weights, run_learning_review, run_
 from agents.live_research_agent import run_live_research
 from agents.outcome_tracking_agent import OUTCOME_PATH, run_outcome_review, run_outcome_update
 from agents.signal_history_agent import build_snapshot_payload, append_history_entry
+from agents.fundamentals_agent import run_fundamentals
+from agents.macro_calendar_agent import run_macro_calendar
+from agents.risk_engine_agent import run_risk_engine
+from agents.weekly_review_agent import run_weekly_review
 
 try:
     from zoneinfo import ZoneInfo
@@ -151,13 +155,17 @@ def run_autonomous_core() -> str:
     now_local = _now_local()
     before_weights = load_signal_weights()
 
+    fundamentals_report = run_fundamentals()
+    macro_report = run_macro_calendar()
     knowledge_sync = run_knowledge_sync()
     research_report = run_live_research()
+    risk_report = run_risk_engine()
     auto_logged = _auto_log_top_research_items(state)
     outcome_update = run_outcome_update()
     outcome_review = run_outcome_review()
     learning_review = run_learning_review()
     autonomous_learning = run_autonomous_learning_loop()
+    weekly_review = run_weekly_review()
 
     resolved_count = _resolved_count()
     rebalanced = False
@@ -201,11 +209,20 @@ def run_autonomous_core() -> str:
 
     lines.extend([
         '',
+        'FUNDAMENTÁLY',
+        fundamentals_report.strip(),
+        '',
+        'MAKRO KALENDÁŘ',
+        macro_report.strip(),
+        '',
         'KNOWLEDGE SYNC',
         knowledge_sync.strip(),
         '',
         'STRUČNÝ STAV',
         research_report.strip(),
+        '',
+        'RISK ENGINE',
+        risk_report.strip(),
         '',
         outcome_update.strip(),
         '',
@@ -214,6 +231,9 @@ def run_autonomous_core() -> str:
         learning_review.strip(),
         '',
         autonomous_learning.strip(),
+        '',
+        'TÝDENNÍ REVIEW',
+        weekly_review.strip(),
         '',
         rebalance_report.strip(),
     ])

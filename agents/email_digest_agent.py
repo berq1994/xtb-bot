@@ -27,6 +27,9 @@ OUTPUT_PATH = Path("daily_digest_email.txt")
 STATE_PATH = Path(".state/delivery/email_digest_state.json")
 REQUEST_TIMEOUT = 5
 RESEARCH_STATE_PATH = Path("data/research_live_state.json")
+FUNDAMENTALS_STATE_PATH = Path("data/fundamentals_state.json")
+MACRO_STATE_PATH = Path("data/macro_calendar_state.json")
+RISK_ENGINE_PATH = Path("data/risk_engine_state.json")
 
 
 def _now_local() -> datetime:
@@ -62,6 +65,17 @@ def _load_research_state() -> dict[str, Any]:
     except Exception:
         return {}
 
+
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        return payload if isinstance(payload, dict) else {}
+    except Exception:
+        return {}
 
 def _normalize_text(value: str) -> str:
     text = re.sub(r"<[^>]+>", " ", str(value or ""))
@@ -160,6 +174,9 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
     action_queue = research_state.get('action_queue', []) if isinstance(research_state, dict) else []
     risk_summary = research_state.get('risk_summary', {}) if isinstance(research_state, dict) else {}
     data_health = research_state.get('data_health', {}) if isinstance(research_state, dict) else {}
+    fundamentals_state = _load_json(FUNDAMENTALS_STATE_PATH)
+    macro_state = _load_json(MACRO_STATE_PATH)
+    risk_engine = _load_json(RISK_ENGINE_PATH)
 
     watch_rows: list[dict[str, Any]] = []
     for row in sorted(portfolio_rows, key=lambda x: abs(float(x.get("change_pct", 0.0))), reverse=True):
@@ -223,6 +240,19 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         lines.append("- Bez nových technických scénářů.")
     lines.append("")
 
+    lines.append("FUNDAMENTÁLY A MAKRO")
+    if fundamentals_state:
+        positive = [s for s, row in fundamentals_state.items() if isinstance(row, dict) and row.get('fundamental_bias') == 'positive']
+        negative = [s for s, row in fundamentals_state.items() if isinstance(row, dict) and row.get('fundamental_bias') == 'negative']
+        lines.append(f"- Fundamentálně podpůrné tituly: {', '.join(positive[:4]) if positive else 'žádné výrazné'}")
+        if negative:
+            lines.append(f"- Fundamentálně slabší tituly: {', '.join(negative[:4])}")
+    if macro_state:
+        lines.append(f"- Makro riziko: {macro_state.get('macro_risk', '-')}")
+        for row in (macro_state.get('events', []) if isinstance(macro_state, dict) else [])[:3]:
+            lines.append(f"  · {row.get('date')} | {row.get('country')} | {row.get('event')}")
+    lines.append("")
+
     lines.append("CO DNES HÝBALO PORTFOLIEM")
     if watch_rows:
         for row in watch_rows:
@@ -239,6 +269,10 @@ def build_email_digest(slot: str = "morning") -> tuple[str, str, dict[str, Any]]
         lines.append(f"- Koncentrační varování: {'ano' if risk_summary.get('concentration_warning') else 'ne'}")
     if data_health:
         lines.append(f"- Datová kvalita research vrstvy: {data_health.get('avg_quality', 0.0)}")
+    if risk_engine:
+        alloc_rows = risk_engine.get('positions', [])[:3] if isinstance(risk_engine.get('positions', []), list) else []
+        alloc_text = ', '.join(f"{r.get('symbol')} {r.get('suggested_new_allocation_pct')}%" for r in alloc_rows) if alloc_rows else '-'
+        lines.append(f"- Doporučené limity nové alokace: {alloc_text}")
     lines.append("")
 
     lines.append("POZNÁMKA")
