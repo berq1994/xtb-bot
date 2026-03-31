@@ -143,6 +143,7 @@ def build_snapshot_payload(
                 "action_bucket": selected.get("action_bucket"),
                 "urgency_label": selected.get("urgency_label"),
                 "thesis_strength": selected.get("thesis_strength"),
+                "clean_long_score": selected.get("clean_long_score"),
             },
             "quality_class": selected.get("quality_class"),
             "official_item_count": selected.get("official_item_count"),

@@ -105,6 +105,7 @@ def _merge_missing_signal_context(signal: dict, latest_index: dict[str, dict], f
             "action_bucket": latest.get("action_bucket"),
             "urgency_label": latest.get("urgency_label"),
             "thesis_strength": latest.get("thesis_strength"),
+            "clean_long_score": latest.get("clean_long_score"),
         })
     if fundamentals_row:
         feature_defaults.update({
@@ -192,6 +193,57 @@ def _long_support_score(signal: dict) -> float:
     if fundamental_score >= 0.2 or fundamental_bias in {"positive", "bullish"}: score += 0.25
     if evidence_grade in {"A", "B", "C"}: score += 0.2
     elif evidence_score >= 0.2: score += 0.1
+    return round(score, 2)
+
+
+
+def _clean_long_score(signal: dict) -> float:
+    features = signal.get("features", {}) if isinstance(signal.get("features"), dict) else {}
+    trend = str(features.get("trend") or signal.get("trend") or "").strip().lower()
+    m5 = _safe_float(features.get("momentum_5d") or signal.get("momentum_5d"))
+    m20 = _safe_float(features.get("momentum_20d") or signal.get("momentum_20d"))
+    overlap = _safe_float(features.get("theme_overlap_penalty") or signal.get("theme_overlap_penalty"))
+    held = bool(features.get("held") if features.get("held") is not None else signal.get("held"))
+    pnl = _safe_float(features.get("pnl_vs_cost_pct") or signal.get("pnl_vs_cost_pct"))
+    category = str(features.get("category") or signal.get("category") or signal.get("ticket", {}).get("category") or signal.get("supervisor", {}).get("reason") or "").strip().lower()
+    ta_score = _safe_float(features.get("ta_score") or signal.get("ta_score"))
+    ta_setup = str(features.get("technical_setup") or signal.get("technical_setup") or "").strip().lower()
+    ta_decision = str(features.get("buy_decision") or signal.get("buy_decision") or "").strip().lower()
+    official_count = int(features.get("official_item_count") or signal.get("official_item_count") or 0)
+    fundamental_score = _safe_float(features.get("fundamental_score") or signal.get("fundamental_score") or signal.get("fundamentals", {}).get("fundamental_score"))
+    fundamental_bias = str(features.get("fundamental_bias") or signal.get("fundamental_bias") or signal.get("fundamentals", {}).get("fundamental_bias") or "").strip().lower()
+    evidence_grade = str(features.get("evidence_grade") or "").strip().upper()
+    evidence_score = _safe_float(features.get("evidence_score"))
+    data_quality = _safe_float(features.get("data_quality_score") or signal.get("data_quality_score"))
+    study_alignment = _safe_float(features.get("study_alignment_score"))
+    playbooks = features.get("playbooks") or []
+    score = 0.0
+    if trend == 'up': score += 0.3
+    elif trend == 'flat': score += 0.08
+    if m5 > 0: score += 0.12
+    if m5 >= 2.0: score += 0.08
+    if m20 > 0: score += 0.12
+    if m20 >= 4.0: score += 0.08
+    if overlap <= 0.15: score += 0.1
+    elif overlap <= 0.25: score += 0.05
+    if ta_score >= 2.0: score += 0.12
+    if ta_score >= 3.5: score += 0.12
+    if ta_setup in {'pullback', 'breakout', 'range'}: score += 0.08
+    elif ta_setup not in {'', 'none', 'unknown', 'breakdown'}: score += 0.04
+    if ta_decision in {'buy_breakout', 'buy_pullback', 'buy_reversal'}: score += 0.18
+    elif ta_decision not in {'avoid', 'defensive_only'}: score += 0.05
+    if official_count > 0: score += 0.18
+    if fundamental_score >= 0.2 or fundamental_bias in {'positive', 'bullish'}: score += 0.18
+    if fundamental_score >= 0.45: score += 0.1
+    if data_quality >= 0.6: score += 0.08
+    if data_quality >= 0.75: score += 0.08
+    if evidence_grade in {'A', 'B'}: score += 0.18
+    elif evidence_grade == 'C': score += 0.12
+    elif evidence_score >= 0.45: score += 0.06
+    if study_alignment >= 0.6: score += 0.08
+    if playbooks: score += 0.05
+    if held and pnl > 0: score += 0.05
+    if category in {'winner_management', 'breakout_watch', 'pullback_control'}: score += 0.06
     return round(score, 2)
 
 
@@ -315,8 +367,11 @@ def _signal_quality(signal: dict) -> str:
     weak_ta_but_fundamental = ta_decision in {"watch", ""} and ta_setup in {"none", "range", "pullback"}
     positive_fundamental = has_live_fundamental and (fundamental_score >= 0.15 or fundamental_bias in {'positive', 'bullish'})
     official_supported = official_count > 0
+    clean_long_score = max(_clean_long_score(signal), _safe_float(features.get('clean_long_score')))
+    supportive_evidence = grade in {'A', 'B', 'C'} or _safe_float(features.get('evidence_score')) >= 0.45 or official_count > 0
     long_support_score = _long_support_score(signal)
     legacy_long_ok = long_support_score >= 1.05 and dq >= 0.45 and ta_decision != 'avoid' and ta_setup != 'breakdown'
+    promoted_clean_long = clean_long_score >= 1.1 and dq >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (positive_fundamental or supportive_ta or official_supported)
     long_recovery_context = supportive_ta and (
         positive_fundamental
         or (official_supported and dq >= 0.45 and ta_score >= 1.0)
@@ -326,13 +381,17 @@ def _signal_quality(signal: dict) -> str:
     )
     if quality_class == 'clean':
         return 'clean'
-    if quality_class == 'noisy':
-        return 'noisy'
     if not has_scaffold and not has_fallback and grade in {"A", "B"} and dq >= 0.7:
         return 'clean'
     if grade == 'C' and dq >= 0.65 and (not has_scaffold or has_strong_context):
         return 'clean'
+    if bucket == 'buy_candidate' and clean_long_score >= 1.1 and dq >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (positive_fundamental or supportive_evidence or has_strong_context):
+        return 'clean'
+    if quality_class == 'noisy':
+        return 'noisy'
     if bucket == 'buy_candidate':
+        if promoted_clean_long:
+            return 'clean'
         if dq >= 0.58 and (grade in {'A', 'B', 'C'} or has_strong_context):
             return 'noisy'
         if dq >= 0.45 and positive_fundamental and (grade in {'C', 'D', '?'} or has_strong_context) and ta_decision != 'avoid':

@@ -1,0 +1,7 @@
+CLEAN CANDIDATE QUALITY FIX
+
+- přidán clean_long_score do live_research_agent, learning_agent a autonomous_learning_loop_agent
+- silné long setupy se mohou označit jako quality_class=clean i při slabší news evidence, pokud mají dost podpory z TA/fundamentů/oficialních zdrojů
+- learning review nově umí povýšit buy_candidate na clean podle clean_long_score
+- do signal history se ukládá clean_long_score pro budoucí učení
+- weak_evidence se nepočítá tak agresivně, pokud má signál silný clean-long kontext

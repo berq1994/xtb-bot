@@ -274,25 +274,112 @@ def _strong_long_context(item: dict) -> bool:
     )
 
 
+def _clean_long_score(item: dict) -> float:
+    trend = str(item.get('trend') or '').strip().lower()
+    m5 = float(item.get('momentum_5d', 0.0) or 0.0)
+    m20 = float(item.get('momentum_20d', 0.0) or 0.0)
+    overlap = float(item.get('theme_overlap_penalty', 0.0) or 0.0)
+    ta_score = float(item.get('ta_score', 0.0) or 0.0)
+    ta_setup = str(item.get('technical_setup') or '').strip().lower()
+    ta_decision = str(item.get('buy_decision') or '').strip().lower()
+    official_count = int(item.get('official_item_count', 0) or 0)
+    fundamental_score = float(item.get('fundamental_score', 0.0) or 0.0)
+    fundamental_bias = str(item.get('fundamental_bias') or '').strip().lower()
+    data_quality = float(item.get('data_quality_score', 0.0) or 0.0)
+    evidence_grade = str(item.get('evidence_grade') or '').strip().upper()
+    evidence_score = float(item.get('evidence_score', 0.0) or 0.0)
+    study_alignment = float(item.get('study_alignment_score', 0.0) or 0.0)
+    playbook_score = float(item.get('playbook_score', 0.0) or 0.0)
+    held = bool(item.get('held'))
+    pnl = float(item.get('pnl_vs_cost_pct', 0.0) or 0.0)
+    category = str(item.get('category') or '').strip().lower()
+
+    score = 0.0
+    if trend == 'up':
+        score += 0.3
+    elif trend == 'flat':
+        score += 0.08
+    if m5 > 0:
+        score += 0.12
+    if m5 >= 2.0:
+        score += 0.08
+    if m20 > 0:
+        score += 0.12
+    if m20 >= 4.0:
+        score += 0.08
+    if overlap <= 0.15:
+        score += 0.1
+    elif overlap <= 0.25:
+        score += 0.05
+    if ta_score >= 2.0:
+        score += 0.12
+    if ta_score >= 3.5:
+        score += 0.12
+    if ta_setup in {'pullback', 'breakout', 'range'}:
+        score += 0.08
+    elif ta_setup not in {'breakdown', 'none', ''}:
+        score += 0.04
+    if ta_decision in {'buy_breakout', 'buy_pullback', 'buy_reversal'}:
+        score += 0.18
+    elif ta_decision not in {'avoid', 'defensive_only'}:
+        score += 0.05
+    if official_count > 0:
+        score += 0.18
+    if fundamental_score >= 0.2 or fundamental_bias in {'positive', 'bullish'}:
+        score += 0.18
+    if fundamental_score >= 0.45:
+        score += 0.1
+    if data_quality >= 0.6:
+        score += 0.08
+    if data_quality >= 0.75:
+        score += 0.08
+    if evidence_grade in {'A', 'B'}:
+        score += 0.18
+    elif evidence_grade == 'C':
+        score += 0.12
+    elif evidence_score >= 0.45:
+        score += 0.06
+    if study_alignment >= 0.6:
+        score += 0.08
+    if playbook_score >= 0.6:
+        score += 0.05
+    if held and pnl > 0:
+        score += 0.05
+    if category in {'winner_management', 'breakout_watch', 'pullback_control'}:
+        score += 0.06
+    return round(score, 2)
+
+
 def _quality_class(item: dict) -> str:
     source_name = str(item.get('news_source') or item.get('source') or '').lower()
     evidence_grade = str(item.get('evidence_grade') or 'D').upper()
+    evidence_score = float(item.get('evidence_score', 0.0) or 0.0)
     data_quality = float(item.get('data_quality_score', 0.0) or 0.0)
     official_count = int(item.get('official_item_count', 0) or 0)
     fundamental_provider = str(item.get('fundamental_provider') or '').lower()
     held = bool(item.get('held'))
     category = str(item.get('category') or '')
     ta_score = float(item.get('ta_score', 0.0) or 0.0)
+    ta_setup = str(item.get('technical_setup') or '').strip().lower()
+    ta_decision = str(item.get('buy_decision') or '').strip().lower()
+    fundamental_score = float(item.get('fundamental_score', 0.0) or 0.0)
+    fundamental_bias = str(item.get('fundamental_bias') or '').strip().lower()
     weak_news = ('scaffold' in source_name) or evidence_grade in {'D', '?'}
     weak_fund = 'fallback' in fundamental_provider and official_count == 0
     strong_long = _strong_long_context(item)
+    clean_long_score = _clean_long_score(item)
+    supportive_fund = fundamental_score >= 0.2 or fundamental_bias in {'positive', 'bullish'}
+    supportive_evidence = evidence_grade in {'A', 'B', 'C'} or evidence_score >= 0.45 or official_count > 0
+
     if data_quality < 0.45:
         return 'blocked'
+    if clean_long_score >= 1.1 and data_quality >= 0.58 and ta_decision not in {'avoid', 'defensive_only'} and ta_setup != 'breakdown' and (supportive_fund or supportive_evidence):
+        return 'clean'
     if not held and weak_news and weak_fund and not strong_long:
         return 'blocked'
-    if held and category not in {'portfolio_defense', 'drawdown_control'} and weak_news and official_count == 0 and ta_score < 2.0 and not strong_long:
+    if held and category not in {'portfolio_defense', 'drawdown_control'} and weak_news and official_count == 0 and ta_score < 2.0 and not strong_long and clean_long_score < 0.95:
         return 'blocked'
-    if strong_long:
+    if strong_long or clean_long_score >= 0.9:
         return 'noisy'
     if weak_news or weak_fund:
         return 'noisy'
@@ -305,7 +392,7 @@ def _top_item_allowed(item: dict) -> bool:
         return True
     if quality == 'noisy':
         category = str(item.get('category') or '')
-        return (bool(item.get('held')) and category in {'portfolio_defense', 'drawdown_control', 'winner_management'}) or _strong_long_context(item)
+        return (bool(item.get('held')) and category in {'portfolio_defense', 'drawdown_control', 'winner_management'}) or _strong_long_context(item) or _clean_long_score(item) >= 1.0
     return False
 
 
@@ -315,7 +402,7 @@ def _action_queue_allowed(item: dict) -> bool:
         return True
     if quality == 'noisy':
         category = str(item.get('category') or '')
-        return (bool(item.get('held')) and category in {'portfolio_defense', 'drawdown_control'}) or _strong_long_context(item)
+        return (bool(item.get('held')) and category in {'portfolio_defense', 'drawdown_control'}) or _strong_long_context(item) or _clean_long_score(item) >= 1.0
     return False
 
 
@@ -483,6 +570,7 @@ def run_live_research(watchlist: Iterable[str] | None = None) -> str:
         playbooks = evaluate_playbooks_for_item(item, str(overview.get("regime", "mixed")))
         item["playbook_score"] = playbooks.get("match_score", 0.0)
         item["playbooks"] = playbooks.get("matches", [])
+        item['clean_long_score'] = _clean_long_score(item)
 
         score = 0.0
         score += _clip(abs(change_pct) / 1.5, 0.0, 2.2) * float(weights.get("momentum", 1.0))
