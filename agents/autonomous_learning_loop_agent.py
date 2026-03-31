@@ -47,15 +47,18 @@ def _decision_bucket(signal: dict) -> str:
     return "watch"
 
 
-def _is_quality_signal(signal: dict) -> bool:
+def _signal_quality(signal: dict) -> str:
     features = signal.get("features", {}) if isinstance(signal.get("features"), dict) else {}
-    data_source = str(features.get("data_source") or "").lower()
+    data_source = str(features.get("data_source") or features.get("source") or "").lower()
     grade = str(features.get("evidence_grade") or "?")
-    if "scaffold" in data_source or "fallback" in data_source:
-        return False
-    if grade in {"D", "?"}:
-        return False
-    return True
+    dq = float(features.get('data_quality_score', 0.0) or 0.0)
+    if "scaffold" not in data_source and "fallback" not in data_source and grade in {"A", "B", "C"} and dq >= 0.75:
+        return "clean"
+    return "noisy"
+
+
+def _is_quality_signal(signal: dict) -> bool:
+    return _signal_quality(signal) == 'clean'
 
 
 def _avg(values: list[float]) -> float | None:
@@ -88,12 +91,16 @@ def run_autonomous_learning_loop(limit: int = 120) -> str:
     by_horizon: dict[str, list[float]] = {"h1d": [], "h3d": [], "h5d": [], "h20d": []}
     core_resolved: list[tuple[dict, dict]] = []
 
+    learnable_resolved: list[tuple[dict, dict]] = []
     for signal, outcome in resolved:
         features = signal.get("features", {}) if isinstance(signal.get("features"), dict) else {}
         result = float(outcome.get("outcome_pct", 0.0) or 0.0)
         bucket = _decision_bucket(signal)
+        quality = _signal_quality(signal)
         by_bucket.setdefault(bucket, []).append(result)
-        by_quality["clean" if _is_quality_signal(signal) else "noisy"].append(result)
+        by_quality[quality].append(result)
+        if bucket in {'buy_candidate', 'watch', 'risk_management'}:
+            learnable_resolved.append((signal, outcome))
         category = str(signal.get("ticket", {}).get("category") or signal.get("supervisor", {}).get("reason") or "unknown")
         by_category.setdefault(category, []).append(result)
         grade = str(features.get("evidence_grade") or "?")
@@ -105,8 +112,13 @@ def run_autonomous_learning_loop(limit: int = 120) -> str:
             pid = str(playbook.get("id") if isinstance(playbook, dict) else playbook)
             if pid:
                 by_playbook.setdefault(pid, []).append(result)
-        if bucket == "buy_candidate" and _is_quality_signal(signal):
+        if bucket == "buy_candidate" and quality == 'clean':
             core_resolved.append((signal, outcome))
+
+    if not core_resolved:
+        for signal, outcome in learnable_resolved:
+            if _decision_bucket(signal) in {'buy_candidate', 'risk_management'}:
+                core_resolved.append((signal, outcome))
 
     core_results = [float(out.get("outcome_pct", 0.0) or 0.0) for _, out in core_resolved]
     core_grade: dict[str, list[float]] = {}
@@ -156,7 +168,8 @@ def run_autonomous_learning_loop(limit: int = 120) -> str:
     lines = [
         "AUTONOMNÍ LEARNING LOOP",
         f"Vyhodnocené vzorky celkem: {len(resolved)}",
-        f"Čisté buy vzorky pro učení: {len(core_resolved)}",
+        f"Čisté buy vzorky pro učení: {sum(1 for s, _ in core_resolved if _signal_quality(s) == 'clean')}",
+        f"Fallback učící vzorky: {sum(1 for s, _ in core_resolved if _signal_quality(s) != 'clean')}",
         f"Bucket buy_candidate avg: {_avg(by_bucket.get('buy_candidate', [])) if by_bucket.get('buy_candidate') else '-'}",
         f"Bucket risk_management avg: {_avg(by_bucket.get('risk_management', [])) if by_bucket.get('risk_management') else '-'}",
         f"Bucket avoid avg: {_avg(by_bucket.get('avoid', [])) if by_bucket.get('avoid') else '-'}",

@@ -91,19 +91,26 @@ def _decision_bucket(decision: str) -> str:
     return 'other'
 
 
-def _learnable_row(signal: dict, outcome: dict) -> bool:
+def _row_quality(signal: dict, outcome: dict) -> str:
     bucket = _decision_bucket(str(outcome.get('decision') or signal.get('decision') or ''))
-    if bucket not in {'buy_candidate', 'watch_candidate'}:
-        return False
+    if bucket not in {'buy_candidate', 'watch_candidate', 'risk_management'}:
+        return 'reject'
     features = signal.get('features', {}) if isinstance(signal, dict) else {}
-    weak_source = str(features.get('news_source') or features.get('source') or '').strip().lower()
-    if str(features.get('evidence_grade', '?')).strip().upper() in {'D', '?'}:
-        return False
-    if 'scaffold' in weak_source or 'fallback' in weak_source:
-        return False
-    if float(features.get('data_quality_score', 0.0) or 0.0) < 0.6:
-        return False
-    return True
+    weak_source = str(
+        features.get('news_source')
+        or features.get('source')
+        or features.get('data_source')
+        or ''
+    ).strip().lower()
+    grade = str(features.get('evidence_grade', '?')).strip().upper()
+    dq = float(features.get('data_quality_score', 0.0) or 0.0)
+    if grade in {'A', 'B', 'C'} and 'scaffold' not in weak_source and dq >= 0.75:
+        return 'clean'
+    return 'noisy'
+
+
+def _learnable_row(signal: dict, outcome: dict) -> bool:
+    return _row_quality(signal, outcome) in {'clean', 'noisy'}
 
 
 def build_learning_summary(limit: int = 80) -> dict:
@@ -121,8 +128,11 @@ def build_learning_summary(limit: int = 80) -> dict:
 
     resolved_all = resolved_all[-limit:]
     resolved = [row for row in resolved_all if _learnable_row(row.get('signal', {}), row.get('outcome', {}))]
+    clean_resolved = [row for row in resolved if _row_quality(row.get('signal', {}), row.get('outcome', {})) == 'clean']
+    noisy_resolved = [row for row in resolved if _row_quality(row.get('signal', {}), row.get('outcome', {})) == 'noisy']
     decision_mix: dict[str, int] = {}
     raw_decision_mix: dict[str, int] = {}
+    rejected_mix: dict[str, int] = {}
     labels: dict[str, int] = {}
     outcome_vals: list[float] = []
     positive_sentiment: list[float] = []
@@ -147,6 +157,8 @@ def build_learning_summary(limit: int = 80) -> dict:
         outcome = row["outcome"]
         decision = str(outcome.get("decision") or signal.get("decision") or "unknown")
         raw_decision_mix[decision] = raw_decision_mix.get(decision, 0) + 1
+        if not _learnable_row(signal, outcome):
+            rejected_mix[decision] = rejected_mix.get(decision, 0) + 1
 
     for row in resolved:
         signal = row["signal"]
@@ -235,7 +247,21 @@ def build_learning_summary(limit: int = 80) -> dict:
         "feedback": _feedback_bias(),
     }
 
-    return {"count": len(resolved), "raw_count": len(resolved_all), "avg_outcome": avg_outcome, "win_rate": win_rate, "decision_mix": decision_mix, "raw_decision_mix": raw_decision_mix, "labels": labels, "weights": weights, "suggestion": suggestion, "diagnostics": diagnostics}
+    return {
+        "count": len(resolved),
+        "raw_count": len(resolved_all),
+        "clean_count": len(clean_resolved),
+        "noisy_count": len(noisy_resolved),
+        "avg_outcome": avg_outcome,
+        "win_rate": win_rate,
+        "decision_mix": decision_mix,
+        "raw_decision_mix": raw_decision_mix,
+        "rejected_mix": rejected_mix,
+        "labels": labels,
+        "weights": weights,
+        "suggestion": suggestion,
+        "diagnostics": diagnostics,
+    }
 
 
 def adapt_signal_weights(limit: int = 80) -> dict:
@@ -331,6 +357,8 @@ def run_learning_review(limit: int = 80) -> str:
     lines.append("PŘEHLED UČENÍ – AUTO VRSTVA")
     lines.append(f"Vyhodnocené vzorky pro učení: {summary['count']}")
     lines.append(f"Všechny resolved vzorky: {summary.get('raw_count', summary['count'])}")
+    lines.append(f"Čisté vzorky: {summary.get('clean_count', 0)}")
+    lines.append(f"Noisy vzorky: {summary.get('noisy_count', 0)}")
     lines.append(f"Průměrný outcome: {summary['avg_outcome']}%")
     lines.append(f"Win rate: {summary['win_rate']}%")
     lines.append("Mix rozhodnutí pro učení:")
@@ -338,6 +366,9 @@ def run_learning_review(limit: int = 80) -> str:
         lines.append(f"- {key}: {value}")
     lines.append("Raw mix rozhodnutí:")
     for key, value in summary.get('raw_decision_mix', {}).items():
+        lines.append(f"- {key}: {value}")
+    lines.append("Odmítnuté raw buckety:")
+    for key, value in summary.get('rejected_mix', {}).items():
         lines.append(f"- {key}: {value}")
     lines.append("Štítky:")
     for key, value in summary["labels"].items():

@@ -1,10 +1,13 @@
 PŘEHLED UČENÍ – AUTO VRSTVA
 Vyhodnocené vzorky pro učení: 0
 Všechny resolved vzorky: 0
+Čisté vzorky: 0
+Noisy vzorky: 0
 Průměrný outcome: 0.0%
 Win rate: 0.0%
 Mix rozhodnutí pro učení:
 Raw mix rozhodnutí:
+Odmítnuté raw buckety:
 Štítky:
 Diagnostika:
 - positive_sentiment_avg: None

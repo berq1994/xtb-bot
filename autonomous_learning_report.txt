@@ -1,6 +1,7 @@
 AUTONOMNÍ LEARNING LOOP
 Vyhodnocené vzorky celkem: 0
 Čisté buy vzorky pro učení: 0
+Fallback učící vzorky: 0
 Bucket buy_candidate avg: -
 Bucket risk_management avg: -
 Bucket avoid avg: -
